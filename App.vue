@@ -15,5 +15,10 @@
 <style>
 	/*每个页面公共css */
 	@import "./common/uni.css";
-	@import "./common/fonts/iconfont.css";
+	
+	/*https://www.iconfont.cn
+	*login weibo
+	*/
+	@import "//at.alicdn.com/t/font_1094459_28mpqygk0gq.css";
+	/* @import "./common/fonts/iconfont.css"; */
 </style>
