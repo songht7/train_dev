@@ -1,5 +1,6 @@
 <template name="uni-icon">
-    <view class="uni-icon" :class="['uni-icon-'+type]" :style="{color:color,'font-size':fontSize}" @click="onClick()"></view>
+   <!-- <view class="uni-icon" :class="['uni-icon-'+type]" :style="{color:color,'font-size':fontSize}" @click="onClick()"></view> -->
+    <view class="iconfont" :class="['icon-'+type]" :style="{color:color,'font-size':fontSize}" @click="onClick()"></view>
 </template>
 
 <script>

@@ -1,7 +1,12 @@
 <template>
 	<view class="content">
-		<view>123
-			<uni-icon type="chatbubble-filled" size="42" color="#333"></uni-icon>
+		<view>
+			<uni-icon type="boshimao1" size="50" color="#999"></uni-icon>
+			<uni-icon type="icon_likegood_fill" size="50" color="#999"></uni-icon>
+			<uni-icon type="ai-book" size="50" color="#999"></uni-icon>
+			<uni-icon type="gongwenbao1" size="50" color="#999"></uni-icon>
+			<uni-icon type="zhiliang" size="50" color="#999"></uni-icon>
+			<uni-icon type="deng" size="50" color="#999"></uni-icon>
         </view>
 	</view>
 </template>
