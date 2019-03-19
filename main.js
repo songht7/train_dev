@@ -6,6 +6,9 @@ Vue.config.productionTip = false
 import uniIcon from "./components/uni-icon.vue"
 Vue.component("uni-icon",uniIcon)
 
+Vue.prototype.websiteUrl = 'http://main.meetji.com';
+Vue.prototype.sourceUrl = 'http://api_test.meetji.com';
+
 App.mpType = 'app'
 
 const app = new Vue({

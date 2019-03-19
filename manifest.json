@@ -1,7 +1,7 @@
 {
-    "name" : "培训网",
+    "name" : "职照培训平台",
     "appid" : "__UNI__F049441",
-    "description" : "",
+    "description" : "职照，培训",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -58,5 +58,8 @@
         "setting" : {
             "urlCheck" : true
         }
+    },
+    "h5" : {
+        "title" : "职照培训平台"
     }
 }
