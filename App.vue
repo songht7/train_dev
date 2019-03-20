@@ -19,6 +19,6 @@
 	/*https://www.iconfont.cn
 	*login weibo
 	*/
-	@import "//at.alicdn.com/t/font_1094459_3ki9pqiao0n.css";
+	@import "//at.alicdn.com/t/font_1094459_u7w54i0zpu.css";
 	/* @import "./common/fonts/iconfont.css"; */
 </style>

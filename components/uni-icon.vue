@@ -41,7 +41,7 @@
 		/*必需加前缀 -webkit- 才支持这个text值 */
 		-webkit-text-fill-color: transparent;
 		/*text-fill-color会覆盖color所定义的字体颜色： */
-		background-image: -webkit-linear-gradient(#BFBFBF,#666666);
+		background-image: -webkit-linear-gradient(#EDAE53,#E68530);
 	}
 	.uni-icon-boshimao1 {
 		background-image: -webkit-linear-gradient(#FFFFFF,#FEF1F0);

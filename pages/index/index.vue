@@ -132,7 +132,7 @@
 					"link": ""
 				}, {
 					"id": 9,
-					"icon": "laba",
+					"icon": "laba-fill",
 					"val": "市场单元",
 					"link": ""
 				}, {
@@ -166,10 +166,6 @@
 </script>
 
 <style>
-	.block {
-		margin: 20upx;
-	}
-
 	.search-box {
 		background: #F0F0F0;
 		border-radius: 5upx;
