@@ -25,14 +25,19 @@ export default {
 	actions: {
 		menu_2(ctx) {
 			let menu_list = [{
-					name: '企业用户',
-					name_code: 'company',
-					icon: 'dashaxiaoqudizhi01'
+					name: '学习进度监测',
+					name_code: 'cpn-p1',
+					icon: ''
 				},
 				{
-					name: '个人用户',
-					name_code: 'user',
-					icon: 'wo'
+					name: '课程参与度',
+					name_code: 'cpn-p2',
+					icon: ''
+				},
+				{
+					name: '考试合格率',
+					name_code: 'cpn-p3',
+					icon: ''
 				}
 			]
 			ctx.commit("change_nav_list", menu_list)
