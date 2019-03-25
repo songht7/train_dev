@@ -7,8 +7,8 @@
 			<input type="text" class="search-input" confirm-type="search" value="" placeholder="质检进阶课程" placeholder-style="color:#999" />
 		</view>
 		<view class="block slidebox">
-			<view class="swiper-box" v-if="swiperList.length">
-				<swiper class="swiper" indicator-dots="indicatorDots" autoplay="autoplay" circular="circular" interval="interval"
+			<view class="swiper-block" v-if="swiperList.length">
+				<swiper class="swiper-box swiper-slide" indicator-dots="indicatorDots" autoplay="autoplay" circular="circular" interval="interval"
 				 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
 					<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 						<view class="vli">
@@ -67,7 +67,7 @@
 				category: [{
 						"id": 1,
 						"val": "培训",
-						"link": "",
+						"link": "/pages/train/index",
 						"icon": "boshimao1",
 						"size": 50
 					},
@@ -184,7 +184,7 @@
 		padding: 4upx 20upx 4upx 10upx;
 	}
 
-	.swiper {
+	.swiper-slide {
 		height: 270upx;
 	}
 

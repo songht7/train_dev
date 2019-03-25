@@ -1,6 +1,6 @@
 <template>
-	<view class="load-more">
-		<view class="loading-img" v-show="loadingType === 1 && showImage">
+	<view class="uni-load-more">
+		<view class="uni-load-more__img" v-show="status === 'loading' && showIcon">
 			<view class="load1">
 				<view :style="{background:color}"></view>
 				<view :style="{background:color}"></view>
@@ -20,20 +20,20 @@
 				<view :style="{background:color}"></view>
 			</view>
 		</view>
-		<text class="loading-text" :style="{color:color}">{{loadingType === 0 ? contentText.contentdown : (loadingType === 1 ? contentText.contentrefresh : contentText.contentnomore)}}</text>
+		<text class="uni-load-more__text" :style="{color:color}">{{status === 'more' ? contentText.contentdown : (status === 'loading' ? contentText.contentrefresh : contentText.contentnomore)}}</text>
 	</view>
 </template>
 
 <script>
 	export default {
-		name: "load-more",
+		name: "uni-load-more",
 		props: {
-			loadingType: {
-				//上拉的状态：0-loading前；1-loading中；2-没有更多了
-				type: Number,
-				default: 0
+			status: {
+				//上拉的状态：more-loading前；loading-loading中；noMore-没有更多了
+				type: String,
+				default: 'more'
 			},
-			showImage: {
+			showIcon: {
 				type: Boolean,
 				default: true
 			},
@@ -59,134 +59,136 @@
 </script>
 
 <style>
-	.load-more {
+	@charset "UTF-8";
+
+	.uni-load-more {
 		display: flex;
 		flex-direction: row;
 		height: 80upx;
 		align-items: center;
-		justify-content: center;
+		justify-content: center
 	}
 
-	.loading-img {
+	.uni-load-more__text {
+		font-size: 28upx;
+		color: #999
+	}
+
+	.uni-load-more__img {
 		height: 24px;
 		width: 24px;
-		margin-right: 10px;
+		margin-right: 10px
 	}
 
-	.loading-text {
-		font-size: 28upx;
-		color: #777777;
+	.uni-load-more__img>view {
+		position: absolute
 	}
 
-	.loading-img>view {
+	.uni-load-more__img>view view {
+		width: 6px;
+		height: 2px;
+		border-top-left-radius: 1px;
+		border-bottom-left-radius: 1px;
+		background: #999;
 		position: absolute;
+		opacity: .2;
+		transform-origin: 50%;
+		animation: load 1.56s ease infinite
+	}
+
+	.uni-load-more__img>view view:nth-child(1) {
+		transform: rotate(90deg);
+		top: 2px;
+		left: 9px
+	}
+
+	.uni-load-more__img>view view:nth-child(2) {
+		transform: rotate(180deg);
+		top: 11px;
+		right: 0
+	}
+
+	.uni-load-more__img>view view:nth-child(3) {
+		transform: rotate(270deg);
+		bottom: 2px;
+		left: 9px
+	}
+
+	.uni-load-more__img>view view:nth-child(4) {
+		top: 11px;
+		left: 0
 	}
 
 	.load1,
 	.load2,
 	.load3 {
 		height: 24px;
-		width: 24px;
+		width: 24px
 	}
 
 	.load2 {
-		transform: rotate(30deg);
+		transform: rotate(30deg)
 	}
 
 	.load3 {
-		transform: rotate(60deg);
-	}
-
-	.loading-img>view view {
-		width: 6px;
-		height: 2px;
-		border-top-left-radius: 1px;
-		border-bottom-left-radius: 1px;
-		background: #777;
-		position: absolute;
-		opacity: 0.2;
-		transform-origin: 50%;
-		-webkit-animation: load 1.56s ease infinite;
-	}
-
-	.loading-img>view view:nth-child(1) {
-		transform: rotate(90deg);
-		top: 2px;
-		left: 9px;
-	}
-
-	.loading-img>view view:nth-child(2) {
-		-webkit-transform: rotate(180deg);
-		top: 11px;
-		right: 0px;
-	}
-
-	.loading-img>view view:nth-child(3) {
-		transform: rotate(270deg);
-		bottom: 2px;
-		left: 9px;
-	}
-
-	.loading-img>view view:nth-child(4) {
-		top: 11px;
-		left: 0px;
+		transform: rotate(60deg)
 	}
 
 	.load1 view:nth-child(1) {
-		animation-delay: 0s;
+		animation-delay: 0s
 	}
 
 	.load2 view:nth-child(1) {
-		animation-delay: 0.13s;
+		animation-delay: .13s
 	}
 
 	.load3 view:nth-child(1) {
-		animation-delay: 0.26s;
+		animation-delay: .26s
 	}
 
 	.load1 view:nth-child(2) {
-		animation-delay: 0.39s;
+		animation-delay: .39s
 	}
 
 	.load2 view:nth-child(2) {
-		animation-delay: 0.52s;
+		animation-delay: .52s
 	}
 
 	.load3 view:nth-child(2) {
-		animation-delay: 0.65s;
+		animation-delay: .65s
 	}
 
 	.load1 view:nth-child(3) {
-		animation-delay: 0.78s;
+		animation-delay: .78s
 	}
 
 	.load2 view:nth-child(3) {
-		animation-delay: 0.91s;
+		animation-delay: .91s
 	}
 
 	.load3 view:nth-child(3) {
-		animation-delay: 1.04s;
+		animation-delay: 1.04s
 	}
 
 	.load1 view:nth-child(4) {
-		animation-delay: 1.17s;
+		animation-delay: 1.17s
 	}
 
 	.load2 view:nth-child(4) {
-		animation-delay: 1.30s;
+		animation-delay: 1.3s
 	}
 
 	.load3 view:nth-child(4) {
-		animation-delay: 1.43s;
+		animation-delay: 1.43s
 	}
 
 	@-webkit-keyframes load {
 		0% {
-			opacity: 1;
+			opacity: 1
 		}
 
 		100% {
-			opacity: 0.2;
+			opacity: .2
 		}
 	}
 </style>

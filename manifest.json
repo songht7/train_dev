@@ -60,6 +60,10 @@
         }
     },
     "h5" : {
-        "title" : "职照培训平台"
+        "title" : "职照培训平台",
+        "template" : "template.h5.html",
+        "router" : {
+            "mode" : "hash"
+        }
     }
 }

@@ -60,7 +60,7 @@ const store = new Vuex.Store({
 				key: "user",
 				success: function(res) {
 					user = res.data;
-					if (user.UserName) {
+					if (user.UserId) {
 						ctx.dispatch("menu_" + user.UserType);
 					}
 					ctx.commit("get_user", user)

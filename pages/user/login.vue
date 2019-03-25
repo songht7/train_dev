@@ -50,7 +50,8 @@
 				let formData = e.detail.value;
 				//that.loading = true
 				console.log(formData);
-				formData["UserType"] = that.UserType
+				formData["UserId"] = "1";
+				formData["UserType"] = that.UserType;
 				uni.setStorage({
 					key: "user",
 					data: formData

@@ -12,6 +12,12 @@
 					}
 				}
 			}
+		},{
+			"path": "pages/train/index",
+			"style": {
+				"navigationBarTitleText": "培训列表",
+				"enablePullDownRefresh": true
+			}
 		},
 		{
 			"path": "pages/user/login",
