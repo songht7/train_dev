@@ -10,6 +10,9 @@ Vue.prototype.$store = store;
 import uniIcon from "./components/uni-icon.vue"
 Vue.component("uni-icon",uniIcon)
 
+import tabBar from "./components/tab-bar.vue"
+Vue.component("tab-bar",tabBar)
+
 Vue.prototype.websiteUrl = 'http://main.meetji.com';
 Vue.prototype.sourceUrl = 'http://api_test.meetji.com';
 

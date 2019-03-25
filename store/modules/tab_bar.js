@@ -3,16 +3,16 @@ export default {
 		footer_nav: [{
 				name: '企业用户',
 				name_code: 'company',
-				icon: 'dashaxiaoqudizhi01',
 				link: "/pages/user/login?type=company",
-				flex - dir: "row"
+				icon: 'dashaxiaoqudizhi01',
+				flex_dir: "flex-row"
 			},
 			{
 				name: '个人用户',
 				name_code: 'user',
-				icon: 'wo',
 				link: "/pages/user/login?type=user",
-				flex - dir: "row"
+				icon: 'wo',
+				flex_dir: "flex-row"
 			}
 
 		],
@@ -32,19 +32,22 @@ export default {
 					name: '学习进度监测',
 					name_code: 'cpn-p1',
 					link: "/pages/company/rate-learning/index",
-					icon: ''
+					icon: '',
+					flex_dir: "flex-row"
 				},
 				{
 					name: '课程参与度',
 					name_code: 'cpn-p2',
 					link: "/pages/company/rate-partake/index",
-					icon: ''
+					icon: '',
+					flex_dir: "flex-row"
 				},
 				{
 					name: '考试合格率',
 					name_code: 'cpn-p3',
 					link: "/pages/company/rate-exam/index",
-					icon: ''
+					icon: '',
+					flex_dir: "flex-row"
 				}
 			]
 			ctx.commit("change_nav_list", menu_list)
@@ -55,21 +58,21 @@ export default {
 					name_code: 'user-home',
 					link: "/pages/index",
 					icon: 'home',
-					flex - dir: "column"
+					flex_dir: "flex-column"
 				},
 				{
 					name: '消息',
 					name_code: 'user-msg',
 					link: "/pages/user/msg/index",
 					icon: 'xiaoxi',
-					flex - dir: "column"
+					flex_dir: "flex-column"
 				},
 				{
 					name: '我的',
 					name_code: 'user-my',
 					link: "/pages/user/center/index",
 					icon: 'wo',
-					flex - dir: "column"
+					flex_dir: "flex-column"
 				},
 			]
 

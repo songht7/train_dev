@@ -49,6 +49,7 @@
 				<img class="ad-img" src="http://api_test.meetji.com/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg" />
 			</view>
 		</view>
+		<tab-bar></tab-bar>
 	</view>
 </template>
 
@@ -157,7 +158,7 @@
 
 		},
 		onShow() {
-
+			this.$store.dispatch('cheack_user')
 		},
 		methods: {
 
@@ -270,5 +271,8 @@
 	.ctg-icon-sub {
 		background: none;
 	}
-	.ad-img{width: 100%;}
+
+	.ad-img {
+		width: 100%;
+	}
 </style>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import tab_bar from "./modules/tab_bar.js"
-Vue use(Vuex)
+Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
@@ -23,7 +23,8 @@ const store = new Vuex.Store({
 			}
 
 		},
-		cheack_user(state, data) {
+		get_user(state, data) {
+			console.log(data)
 			state.user = data
 		},
 		update_list(state, data) {
@@ -34,25 +35,38 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
-		get_data(ctx){
+		get_data(ctx) {
 			console.log(ctx)
-			ctx.commit("switch_loading","1")
+			ctx.commit("switch_loading", "1")
 			uni.request({
-				url:ctx.state.base_url+"/topics",
-				data:{
-					page :1,
-					tab :"share",
-					limit :10,
-					mdrender :false
+				url: ctx.state.base_url + "/topics",
+				data: {
+					page: 1,
+					tab: "share",
+					limit: 10,
+					mdrender: false
 				},
 				success(res) {
-					ctx.commit("update_list",res.data.data)
+					ctx.commit("update_list", res.data.data)
 				},
-				complete(){
-					ctx.commit("switch_loading","0")
+				complete() {
+					ctx.commit("switch_loading", "0")
 				}
 			})
-		}
+		},
+		cheack_user(ctx) {
+			var user = "";
+			uni.getStorage({
+				key: "user",
+				success: function(res) {
+					user = res.data;
+					if (user.UserName) {
+						ctx.dispatch("menu_" + user.UserType);
+					}
+					ctx.commit("get_user", user)
+				}
+			})
+		},
 	},
 	modules: {
 		tab_bar
