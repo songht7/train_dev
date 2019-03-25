@@ -3,7 +3,7 @@
 		<view class="tab_main">
 			<view class="tab_item" v-for="(item,index) in footer_nav" :key="index" :style="'width:'+item_width">
 				<view class="tab_block" :class="item.flex_dir" @click="navto(index,item.link)">
-					<uni-icon :type="item.icon" color="#008CEE"></uni-icon>
+					<uni-icon :type="item.icon" v-if="item.icon" color="#008CEE"></uni-icon>
 					<view class="tab_name">
 						{{item.name}}
 					</view>
