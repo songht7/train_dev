@@ -12,11 +12,22 @@
 					}
 				}
 			}
-		},{
+		}, {
 			"path": "pages/train/index",
 			"style": {
 				"navigationBarTitleText": "培训列表",
 				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/train/unitlist",
+			"style": {
+				"navigationBarTitleText": "单元列表",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
 			}
 		},
 		{

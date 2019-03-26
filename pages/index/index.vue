@@ -184,32 +184,6 @@
 		padding: 4upx 20upx 4upx 10upx;
 	}
 
-	.swiper-slide {
-		height: 270upx;
-	}
-
-	.vli {
-		width: 100%;
-		height: 100%;
-	}
-
-	.vli2 {
-		width: 100%;
-		margin: 0 auto;
-		height: 100%;
-	}
-
-	.slideImg {
-		width: 100%;
-		height: 100%;
-		display: inline-block;
-	}
-
-	.slidebox .uni-swiper-dots-horizontal {
-		padding: 5upx 10upx;
-		background: rgba(54, 54, 54, 0.5);
-	}
-
 	.ctgs {
 		display: flex;
 		justify-content: space-between;
