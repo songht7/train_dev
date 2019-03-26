@@ -1,52 +1,54 @@
 <template>
 	<view class="content pages">
-		<view class="block search-box">
-			<view class="flex-left">
-				<uni-icon type="shousuo" size="20" color="#919191"></uni-icon>
+		<view class="page-main">
+			<view class="block search-box">
+				<view class="flex-left">
+					<uni-icon type="shousuo" size="20" color="#919191"></uni-icon>
+				</view>
+				<input type="text" class="search-input" confirm-type="search" value="" placeholder="质检进阶课程" placeholder-style="color:#999" />
 			</view>
-			<input type="text" class="search-input" confirm-type="search" value="" placeholder="质检进阶课程" placeholder-style="color:#999" />
-		</view>
-		<view class="block slidebox">
-			<view class="swiper-block" v-if="swiperList.length">
-				<swiper class="swiper-box swiper-slide" indicator-dots="indicatorDots" autoplay="autoplay" circular="circular" interval="interval"
-				 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
-					<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
-						<view class="vli">
-							<view class="vli2">
-								<image class="slideImg" @click="linkTo(slide.link)" lazy-load="true" :src="sourceUrl+slide.original_src" mode="aspectFill"></image>
+			<view class="block slidebox">
+				<view class="swiper-block" v-if="swiperList.length">
+					<swiper class="swiper-box swiper-slide" indicator-dots="indicatorDots" autoplay="autoplay" circular="circular"
+					 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
+						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
+							<view class="vli">
+								<view class="vli2">
+									<image class="slideImg" @click="linkTo(slide.link)" lazy-load="true" :src="sourceUrl+slide.original_src" mode="aspectFill"></image>
+								</view>
 							</view>
-						</view>
-					</swiper-item>
-				</swiper>
+						</swiper-item>
+					</swiper>
+				</view>
 			</view>
-		</view>
-		<view class="block category-box">
-			<view class="ctgs">
-				<block v-for="(ctg,c) in category" :key="c">
-					<navigator class="ctg-link" :url="ctg.link">
-						<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
-							<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icon>
-						</view>
-						<text class="ctg-txt">{{ctg.val}}</text>
-					</navigator>
-				</block>
-			</view>
-			<view class="ctgs ctgs-sub">
-				<block v-for="(ctg,s) in categorySub" :key="s">
-					<view class="ctg-link ctg-link-sub">
-						<navigator class="link-btn link-btn-sub" :url="ctg.link">
-							<view class="ctg-icon-sub" :class="['ctg-'+ctg.icon]">
-								<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
+			<view class="block category-box">
+				<view class="ctgs">
+					<block v-for="(ctg,c) in category" :key="c">
+						<navigator class="ctg-link" :url="ctg.link">
+							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
+								<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icon>
 							</view>
 							<text class="ctg-txt">{{ctg.val}}</text>
 						</navigator>
-					</view>
-				</block>
+					</block>
+				</view>
+				<view class="ctgs ctgs-sub">
+					<block v-for="(ctg,s) in categorySub" :key="s">
+						<view class="ctg-link ctg-link-sub">
+							<navigator class="link-btn link-btn-sub" :url="ctg.link">
+								<view class="ctg-icon-sub" :class="['ctg-'+ctg.icon]">
+									<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
+								</view>
+								<text class="ctg-txt">{{ctg.val}}</text>
+							</navigator>
+						</view>
+					</block>
+				</view>
 			</view>
-		</view>
-		<view class="block">
-			<view @click="Contact('13918181818')">
-				<img class="ad-img" src="http://api_test.meetji.com/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg" />
+			<view class="block">
+				<view @click="Contact('13918181818')">
+					<img class="ad-img" src="http://api_test.meetji.com/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg" />
+				</view>
 			</view>
 		</view>
 		<tab-bar></tab-bar>
@@ -81,7 +83,7 @@
 						"id": 3,
 						"icon": "ai-book",
 						"val": "文库",
-						"link": ""
+						"link": "/pages/library/index"
 					},
 					{
 						"id": 4,

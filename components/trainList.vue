@@ -4,7 +4,7 @@
 			<view class="train-list" v-if="data.title">
 				<view class="train-block">
 					<view v-if="showImg" class="image-section">
-						<image class="image-list" v-if="data.image_url" :src="data.image_url"></image>
+						<image class="image-full" v-if="data.image_url" :src="data.image_url"></image>
 					</view>
 					<view class="train-infos">
 						<view class="train-title">
@@ -101,8 +101,4 @@
 		overflow: hidden;
 	}
 
-	.image-list{
-		width: 100%;
-		height: 100%;
-	}
 </style>

@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
+		sourceUrl:"http://api_test.meetji.com",
 		loading: "0",
 		base_url: "",
 		user: {},

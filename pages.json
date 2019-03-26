@@ -29,6 +29,22 @@
 					}
 				}
 			}
+		}, {
+			"path": "pages/library/index",
+			"style": {
+				"navigationBarTitleText": "文库",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/library/detail",
+			"style": {
+				"navigationBarTitleText": "文库详情",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
 		},
 		{
 			"path": "pages/user/login",
