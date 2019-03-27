@@ -133,6 +133,42 @@
 	left: 5%;
 }
 
+/* 底部按钮 - 返回，开始测试... */
+.fix-button {
+	position: fixed;
+	height: 100upx;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: #fff;
+	color: #929292;
+	border-top: 2upx solid #D1D1D1;
+}
+
+.fbtn-main {
+	display: flex;
+	height: 100%;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+	padding: 0 20upx;
+}
+
+.fbtns {
+	border: 4upx solid #008CEE;
+	border-radius: 8upx;
+	text-align: center;
+	font-size: 30upx;
+	color: #008CEE;
+	width: 48%;
+	padding: 8upx 0;
+}
+.fbtns-clr-full{
+	background: #008CEE;
+	color: #FFFFFF;
+}
+
+
 /*通用 */
 page {
 	background-color: #F4F5F6;
@@ -145,7 +181,11 @@ view {
 	font-size: 28upx;
 	line-height: 1.8;
 }
-.page-main{padding-bottom: 120upx;}
+
+.page-main {
+	padding-bottom: 120upx;
+}
+
 progress,
 checkbox-group {
 	width: 100%;

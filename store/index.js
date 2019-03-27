@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		sourceUrl:"http://api_test.meetji.com",
+		sourceUrl: "http://api_test.meetji.com",
 		loading: "0",
 		base_url: "",
 		user: {},
@@ -68,6 +68,17 @@ const store = new Vuex.Store({
 				}
 			})
 		},
+		goback(ctx) {
+			try {
+				uni.navigateBack({
+					delta: 1
+				});
+			} catch (e) {
+				uni.navigateTo({
+					url: '/pages/index/index'
+				});
+			}
+		}
 	},
 	modules: {
 		tab_bar

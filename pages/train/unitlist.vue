@@ -25,6 +25,13 @@
 				选项卡2的内容
 			</view>
 		</view>
+		
+		<view class="fix-button">
+			<view class="fbtn-main">
+				<view class="fbtns btn-goback" @click="$store.dispatch('goback')">返回</view>
+				<view class="fbtns fbtns-clr-full btn-totest" @click="to_test(1)">开始测试</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -44,7 +51,7 @@
 				segmented: [
 					'介绍',
 					'目录'
-				],
+				]
 			}
 		},
 		onLoad() {
@@ -70,7 +77,9 @@
 			},
 			previewImage() {
 				uni.previewImage({
-					urls: [this.$store.state.sourceUrl+"/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg",this.$store.state.sourceUrl+"/data/image_doc/77b0cb2473b3d3f4b73c3090183b3c2b.jpg"]
+					urls: [this.$store.state.sourceUrl + "/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg", this.$store.state.sourceUrl +
+						"/data/image_doc/77b0cb2473b3d3f4b73c3090183b3c2b.jpg"
+					]
 				});
 			},
 			videoErrorCallback: function(e) {
@@ -79,6 +88,11 @@
 					showCancel: false
 				})
 			},
+			to_test(id){
+				uni.navigateTo({
+					url:"/pages/train/test"
+				})
+			}
 		}
 	}
 </script>
@@ -94,6 +108,5 @@
 
 	.unit-content {
 		padding: 30upx;
-		height: 1000px;
 	}
 </style>

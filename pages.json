@@ -30,6 +30,11 @@
 				}
 			}
 		}, {
+			"path": "pages/train/test",
+			"style": {
+				"navigationBarTitleText": "单元测试"
+			}
+		}, {
 			"path": "pages/library/index",
 			"style": {
 				"navigationBarTitleText": "文库",
