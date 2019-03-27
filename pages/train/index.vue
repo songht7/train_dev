@@ -38,7 +38,7 @@
 				tabIndex: 0,
 				newsitems: [],
 				list: {
-					"id":1,
+					"id": 1,
 					"title": "质量快速入门",
 					"overview": "来这里，一周入门质检",
 					"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
@@ -74,9 +74,10 @@
 				}]
 			}
 		},
-		onLoad: function() {
+		onLoad: function(e) {
 			this.newsitems = this.randomfn()
 			console.log(this.randomfn())
+			this.tabIndex = e.c;
 		},
 		methods: {
 			goDetail(e) {
@@ -172,5 +173,6 @@
 	.swiper-tab-list {
 		display: inline-block;
 	}
+
 	/* #endif */
 </style>

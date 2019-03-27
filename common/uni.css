@@ -162,12 +162,27 @@
 	color: #008CEE;
 	width: 48%;
 	padding: 8upx 0;
+	overflow: hidden;
 }
-.fbtns-clr-full{
+
+.fbtns-clr-full {
 	background: #008CEE;
 	color: #FFFFFF;
 }
 
+.fbtn-big {
+	width: 80%;
+}
+
+.collect {
+	width: 15%;
+	display: flex;
+	flex-direction: column;
+	border: none;
+	align-content: space-between;
+	color: #929292;
+}
+.collected{color: #008CEE;}
 
 /*通用 */
 page {

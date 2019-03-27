@@ -35,6 +35,22 @@
 				"navigationBarTitleText": "单元测试"
 			}
 		}, {
+			"path": "pages/technical/index",
+			"style": {
+				"navigationBarTitleText": "技术支持",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/technical/detail",
+			"style": {
+				"navigationBarTitleText": "技术详情",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
+		}, {
 			"path": "pages/library/index",
 			"style": {
 				"navigationBarTitleText": "文库",

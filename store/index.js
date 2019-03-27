@@ -8,6 +8,7 @@ const store = new Vuex.Store({
 		sourceUrl: "http://api_test.meetji.com",
 		loading: "0",
 		base_url: "",
+		phoneNumber:"4008200000",
 		user: {},
 		data: ""
 	},
@@ -78,6 +79,11 @@ const store = new Vuex.Store({
 					url: '/pages/index/index'
 				});
 			}
+		},
+		makePhoneCall(ctx) {
+			uni.makePhoneCall({
+				phoneNumber: ctx.state.phoneNumber
+			});
 		}
 	},
 	modules: {

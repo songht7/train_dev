@@ -2,23 +2,20 @@
 	<view class="article-detail">
 		<view class="banner">
 			<image class="banner-img" :src="sourceUrl+banner.original_src"></image>
-			<view class="banner-title">{{banner.title}}</view>
 		</view>
+		<view class="banner-title">{{banner.title}}</view>
 		<view class="article-meta">
-			<text class="article-time">{{banner.published_at}}</text>
-			<text class="article-author">{{banner.author_name}}</text>
+			<text class="article-author">21人已办理</text>
 		</view>
 		<view class="article-content">
 			<rich-text :nodes="htmlString"></rich-text>
 		</view>
+
 		<view class="fix-button">
 			<view class="fbtn-main">
-				<view class="fbtns fbtn-big btn-goback" @click="$store.dispatch('goback')">返回</view>
-				<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(1)">
-					<view>
-						<uni-icon :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icon>
-						<view>收藏</view>
-					</view>
+				<view class="fbtns btn-goback" @click="$store.dispatch('goback')">返回</view>
+				<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
+					<uni-icon type="dianhua1" size="25" color="#fff"></uni-icon>咨询我们
 				</view>
 			</view>
 		</view>
@@ -29,9 +26,9 @@
 		data() {
 			return {
 				isCollect: false,
-				title: '如何写出一份优秀的个人简历',
+				title: 'IOS 9001 认证',
 				banner: {
-					"title": "如何写出一份优秀的个人简历",
+					"title": "IOS 9001 认证",
 					"author_name": "职照小编",
 					"published_at": "2019-3-20",
 					"original_src": "/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg"
@@ -42,7 +39,7 @@
 		onLoad(event) {
 			this.getDetail();
 			uni.setNavigationBarTitle({
-				title: "如何写出一份优秀的个人简历"
+				title: "IOS 9001 认证"
 			});
 		},
 		methods: {
@@ -58,9 +55,6 @@
 				// 						console.log('fail');
 				// 					}
 				// 				})
-			},
-			collect(id) {
-				this.isCollect = !this.isCollect
 			}
 		}
 	}
@@ -79,21 +73,14 @@
 	}
 
 	.banner-title {
-		max-height: 84upx;
-		overflow: hidden;
-		position: absolute;
-		left: 30upx;
-		bottom: 30upx;
-		width: 90%;
-		font-size: 32upx;
-		font-weight: 400;
-		line-height: 42upx;
-		color: white;
-		z-index: 11;
+		padding: 30upx 3% 10upx;
+		font-size: 44upx;
+		font-weight: 500;
+		color: #222222;
 	}
 
 	.article-meta {
-		padding: 20upx 40upx;
+		padding: 0 3% 20upx;
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-start;
@@ -102,7 +89,6 @@
 
 	.article-text {
 		font-size: 26upx;
-		line-height: 50upx;
 		margin: 0 20upx;
 	}
 
@@ -112,7 +98,7 @@
 	}
 
 	.article-content {
-		padding: 0 30upx;
+		padding: 0 3%;
 		overflow: hidden;
 		font-size: 30upx;
 		margin-bottom: 30upx;

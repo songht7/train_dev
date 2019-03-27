@@ -46,7 +46,7 @@
 				</view>
 			</view>
 			<view class="block">
-				<view @click="Contact('13918181818')">
+				<view @click="$store.dispatch('makePhoneCall')">
 					<img class="ad-img" src="http://api_test.meetji.com/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg" />
 				</view>
 			</view>
@@ -77,7 +77,7 @@
 						"id": 2,
 						"icon": "icon_likegood_fill",
 						"val": "技术支持",
-						"link": ""
+						"link": "/pages/technical/index"
 					},
 					{
 						"id": 3,
@@ -97,17 +97,17 @@
 					"id": 1,
 					"icon": "zhiliang",
 					"val": "质量单元",
-					"link": ""
+					"link": "/pages/train/index?c=0"
 				}, {
 					"id": 2,
 					"icon": "deng",
 					"val": "工艺单元",
-					"link": ""
+					"link": "/pages/train/index?c=1"
 				}, {
 					"id": 3,
 					"icon": "wuliuqiache2",
 					"val": "物流单元",
-					"link": ""
+					"link": "/pages/train/index?c=2"
 				}, {
 					"id": 4,
 					"icon": "caigouon",
