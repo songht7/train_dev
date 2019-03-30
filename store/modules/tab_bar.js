@@ -1,21 +1,22 @@
+const nav_default = [{
+		name: '企业用户',
+		name_code: 'company',
+		link: "/pages/user/login?type=company",
+		icon: 'dashaxiaoqudizhi01',
+		flex_dir: "flex-row"
+	},
+	{
+		name: '个人用户',
+		name_code: 'user',
+		link: "/pages/user/login?type=user",
+		icon: 'wo',
+		flex_dir: "flex-row"
+	}
+
+]
 export default {
 	state: {
-		footer_nav: [{
-				name: '企业用户',
-				name_code: 'company',
-				link: "/pages/user/login?type=company",
-				icon: 'dashaxiaoqudizhi01',
-				flex_dir: "flex-row"
-			},
-			{
-				name: '个人用户',
-				name_code: 'user',
-				link: "/pages/user/login?type=user",
-				icon: 'wo',
-				flex_dir: "flex-row"
-			}
-
-		],
+		footer_nav: nav_default,
 		now_page_index: 0,
 	},
 	mutations: {
@@ -27,6 +28,10 @@ export default {
 		}
 	},
 	actions: {
+		menu_default(ctx) {
+			let menu_list = nav_default
+			ctx.commit("change_nav_list", menu_list)
+		},
 		menu_company(ctx) {
 			let menu_list = [{
 					name: '学习进度监测',

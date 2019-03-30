@@ -7,7 +7,7 @@
 					<image class="user-portrait" v-show="$store.state.user.Portrait" :src="$store.state.user.Portrait" mode="aspectFill"></image>
 				</view>
 				<view class="user-infos">
-					<view class="user-name txt-sross">{{UserId?$store.state.user.UserName:"用户名"}}</view>
+					<view class="user-name txt-sross">{{UserId?$store.state.user.UserName:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
 					<view class="user-more my-collection"><text>我的收藏</text></view>
 					<view class="user-more my-resume"><text>我的简历</text></view>
 				</view>
@@ -137,6 +137,7 @@
 		line-height: 2;
 		width: 100%;
 	}
+	.logout{font-weight: 200;}
 
 	.user-more {
 		border: 2upx solid #929292;

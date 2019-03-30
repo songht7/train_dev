@@ -8,7 +8,7 @@ const store = new Vuex.Store({
 		sourceUrl: "http://api_test.meetji.com",
 		loading: "0",
 		base_url: "",
-		phoneNumber:"4008200000",
+		phoneNumber: "4008200000",
 		user: {},
 		data: ""
 	},
@@ -69,7 +69,7 @@ const store = new Vuex.Store({
 				}
 			})
 		},
-		cheack_page(ctx,index){
+		cheack_page(ctx, index) {
 			if (ctx.state.user.UserId) {
 				ctx.commit("change_page", index)
 			} else {
@@ -78,16 +78,28 @@ const store = new Vuex.Store({
 				})
 			}
 		},
-		goback(ctx) {
-			try {
+		goback(ctx, url) {
+			if (url) {
+				uni.navigateTo({
+					url: url
+				});
+			} else {
 				uni.navigateBack({
 					delta: 1
 				});
-			} catch (e) {
-				uni.navigateTo({
-					url: '/pages/index/index'
-				});
 			}
+		},
+		logout(ctx) {
+			uni.removeStorage({
+				key: 'user',
+				success: function(res) {
+					ctx.commit("get_user", {})
+					ctx.dispatch("menu_default")
+					uni.redirectTo({
+						url: '/pages/index/index'
+					});
+				}
+			});
 		},
 		makePhoneCall(ctx) {
 			uni.makePhoneCall({

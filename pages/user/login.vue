@@ -1,20 +1,22 @@
 <template>
-	<view class="login-box">
-		<form @submit="formSubmit">
-			<view class="uni-form-item uni-column">
-				<input class="uni-input train-input" name="UserName" placeholder="用户名/邮箱/手机号" />
-			</view>
-			<view class="uni-form-item uni-column">
-				<view class="with-fun">
-					<input class="uni-input train-input" password name="Password" :value="inputClearValue" @input="clearInput" />
-					<view class="uni-icon uni-icon-clear" v-if="showClearIcon" @click="clearIcon"></view>
+	<view class="login-box pages">
+		<view class="page-main">
+			<form @submit="formSubmit">
+				<view class="uni-form-item uni-column">
+					<input class="uni-input train-input" name="UserName" placeholder="用户名/邮箱/手机号" />
 				</view>
-			</view>
-			<view class="uni-btn-v">
-				<button formType="submit">登录</button>
-				<view class="nav-black">返回</view>
-			</view>
-		</form>
+				<view class="uni-form-item uni-column">
+					<view class="with-fun">
+						<input class="uni-input train-input" password name="Password" :value="inputClearValue" @input="clearInput" />
+						<view class="uni-icon uni-icon-clear" v-if="showClearIcon" @click="clearIcon"></view>
+					</view>
+				</view>
+				<view class="uni-btn-v">
+					<button class="log-btn" formType="submit">登录</button>
+					<view class="log-btn nav-black" @click="$store.dispatch('goback','/pages/index/index')">返回</view>
+				</view>
+			</form>
+		</view>
 	</view>
 </template>
 
@@ -58,7 +60,7 @@
 					data: formData
 				});
 				setTimeout(function() {
-					that.$store.commit("change_page",0)
+					that.$store.commit("change_page", 0)
 					uni.redirectTo({
 						url: "/"
 					})
@@ -83,5 +85,24 @@
 <style>
 	.train-input {
 		background: #F4F4F4;
+	}
+
+	.uni-btn-v {
+		display: flex;
+		align-content: space-between;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.log-btn {
+		width: 48%;
+	}
+
+	.nav-black {
+		text-align: center;
+		line-break: 2;
+		border: 2upx solid #008CEE;
+		color: #008CEE;
+		height: 100%;
 	}
 </style>
