@@ -47,7 +47,7 @@
 			</view>
 			<view class="block">
 				<view @click="$store.dispatch('makePhoneCall')">
-					<img class="ad-img" src="http://api_test.meetji.com/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg" />
+					<img class="ad-img" src="/static/img-1.png" />
 				</view>
 			</view>
 		</view>

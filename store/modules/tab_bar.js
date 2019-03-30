@@ -56,21 +56,21 @@ export default {
 			let menu_list = [{
 					name: '首页',
 					name_code: 'user-home',
-					link: "/pages/index",
-					icon: 'home',
+					link: "/pages/index/index",
+					icon: 'home-full',
 					flex_dir: "flex-column"
 				},
 				{
 					name: '消息',
 					name_code: 'user-msg',
-					link: "/pages/user/msg/index",
+					link: "/pages/user/message",
 					icon: 'xiaoxi',
 					flex_dir: "flex-column"
 				},
 				{
 					name: '我的',
 					name_code: 'user-my',
-					link: "/pages/user/center/index",
+					link: "/pages/user/index",
 					icon: 'wo',
 					flex_dir: "flex-column"
 				},

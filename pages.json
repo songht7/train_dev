@@ -72,6 +72,26 @@
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
+		}, {
+			"path": "pages/user/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
+		}, {
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "用户中心",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
 		}
 	],
 	"globalStyle": {

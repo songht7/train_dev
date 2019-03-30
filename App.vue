@@ -23,6 +23,6 @@
 	/*https://www.iconfont.cn
 	*login weibo
 	*/
-	@import "//at.alicdn.com/t/font_1094459_u7w54i0zpu.css";
+	@import "//at.alicdn.com/t/font_1094459_b0m25g492kk.css";
 	/* @import "./common/fonts/iconfont.css"; */
 </style>

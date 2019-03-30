@@ -2,8 +2,8 @@
 	<view class="tab_bar">
 		<view class="tab_main">
 			<view class="tab_item" v-for="(item,index) in footer_nav" :key="index" :style="'width:'+item_width">
-				<view class="tab_block" :class="item.flex_dir" @click="navto(index,item.link)">
-					<uni-icon :type="item.icon" v-if="item.icon" color="#008CEE"></uni-icon>
+				<view class="tab_block" :class="[item.flex_dir,index==now_index?'tab_bat_active':'']" @click="navto(index,item.link)">
+					<uni-icon :type="item.icon" v-if="item.icon" :size="25" :color="index==now_index?'#008CEE':'#929292'"></uni-icon>
 					<view class="tab_name">
 						{{item.name}}
 					</view>
@@ -25,7 +25,7 @@
 		methods: {
 			navto(index, url) {
 				this.$store.commit("change_page", index)
-				uni.navigateTo({
+				uni.redirectTo({
 					url: url
 				})
 			}
@@ -73,7 +73,6 @@
 		left: 0;
 		width: 100%;
 		background: #fff;
-		color: #929292;
 		border-top: 2upx solid #D1D1D1;
 	}
 
@@ -107,5 +106,11 @@
 		align-items: center;
 		text-align: center;
 		font-size: 28upx;
+		color: #929292;
+		line-height: 1;
+	}
+	.tab_name{line-height: 1;}
+	.tab_bat_active {
+		color: #008CEE;
 	}
 </style>

@@ -57,6 +57,7 @@
 					data: formData
 				});
 				setTimeout(function() {
+					that.$store.commit("change_page",0)
 					uni.redirectTo({
 						url: "/"
 					})
