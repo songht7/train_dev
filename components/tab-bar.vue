@@ -109,7 +109,11 @@
 		color: #929292;
 		line-height: 1;
 	}
-	.tab_name{line-height: 1;}
+
+	.tab_name {
+		line-height: 1;
+	}
+
 	.tab_bat_active {
 		color: #008CEE;
 	}

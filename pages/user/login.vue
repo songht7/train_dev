@@ -51,6 +51,7 @@
 				//that.loading = true
 				console.log(formData);
 				formData["UserId"] = "1";
+				formData["Portrait"] = "/static/logo.png";
 				formData["UserType"] = that.UserType;
 				uni.setStorage({
 					key: "user",

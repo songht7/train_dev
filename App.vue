@@ -9,6 +9,14 @@
 		},
 		onShow: function () {
 			console.log('App Show')
+// 			var pages = getCurrentPages();
+// 			var page = pages[pages.length - 1];
+// 			console.log(page.route)
+// 			if(page.route){
+// 				uni.navigateTo({
+// 					url:`/${page.route}`
+// 				})
+// 			}
 		},
 		onHide: function () {
 			//console.log('App Hide')

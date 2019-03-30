@@ -161,6 +161,7 @@
 		},
 		onShow() {
 			this.$store.dispatch('cheack_user')
+			this.$store.commit("change_page", 0)
 		},
 		methods: {
 

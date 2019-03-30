@@ -10,13 +10,17 @@
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+				UserId:this.$store.state.user.UserId || ''
+			}
 		},
 		onLoad() {
 
 		},
 		onShow() {
-			this.$store.dispatch('cheack_user')
+			var that=this;
+			that.$store.dispatch('cheack_user');
+			that.$store.dispatch("cheack_page",1)
 		},
 		methods: {
 

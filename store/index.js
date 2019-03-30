@@ -69,6 +69,15 @@ const store = new Vuex.Store({
 				}
 			})
 		},
+		cheack_page(ctx,index){
+			if (ctx.state.user.UserId) {
+				ctx.commit("change_page", index)
+			} else {
+				uni.navigateTo({
+					url: "/pages/index/index"
+				})
+			}
+		},
 		goback(ctx) {
 			try {
 				uni.navigateBack({

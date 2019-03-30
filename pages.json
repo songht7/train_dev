@@ -76,6 +76,7 @@
 			"path": "pages/user/message",
 			"style": {
 				"navigationBarTitleText": "消息",
+				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": {
 						"type": "transparent"
@@ -86,6 +87,7 @@
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "用户中心",
+				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": {
 						"type": "transparent"
