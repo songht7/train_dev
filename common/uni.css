@@ -39,6 +39,12 @@
 	color: #00bf47;
 }
 
+.txt-sross {
+	font-size: 34upx;
+	color: #222222;
+	font-weight: 600;
+}
+
 .pages {
 	width: 92.8%;
 	padding: 20upx 3.6%;
@@ -133,6 +139,68 @@
 	left: 5%;
 }
 
+/*list*/
+
+.list-row {
+	background: #FFFFFF;
+	margin-bottom: 30upx;
+	border-bottom: 20upx solid #F2F2F3;
+}
+
+.list-row:last-child {
+	border-bottom: none
+}
+
+.list-block {
+	padding: 30upx 20upx;
+}
+
+.list-block,
+.list-more {
+	display: flex;
+	justify-content: flex-start;
+	align-content: center;
+	flex-direction: column;
+}
+
+.list-more {
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.list-title {
+	color: #222222;
+	font-size: 34upx;
+	line-height: 1.6;
+	padding-bottom: 10upx;
+}
+
+.list-more {
+	color: #929292;
+	font-size: 26upx;
+	line-height: 1.4;
+}
+
+.list-ov {
+	line-height: 1.4;
+	padding-bottom: 20upx;
+}
+
+.list-left {
+	display: flex;
+	align-content: space-between;
+	flex: 1 1 0%;
+	flex-direction: column;
+}
+
+.list-right {
+	width: 30%;
+	height: 134upx;
+	border-radius: 8upx;
+	margin-left: 10upx;
+	overflow: hidden;
+}
+
 /* 底部按钮 - 返回，开始测试... */
 .fix-button {
 	position: fixed;
@@ -182,7 +250,10 @@
 	align-content: space-between;
 	color: #929292;
 }
-.collected{color: #008CEE;}
+
+.collected {
+	color: #008CEE;
+}
 
 /*通用 */
 page {
