@@ -36,21 +36,21 @@ export default {
 			let menu_list = [{
 					name: '学习进度监测',
 					name_code: 'cpn-p1',
-					link: "/pages/company/rate-learning/index",
+					link: "/pages/company/learning",
 					icon: '',
 					flex_dir: "flex-row"
 				},
 				{
 					name: '课程参与度',
 					name_code: 'cpn-p2',
-					link: "/pages/company/rate-partake/index",
+					link: "/pages/company/partake",
 					icon: '',
 					flex_dir: "flex-row"
 				},
 				{
 					name: '考试合格率',
 					name_code: 'cpn-p3',
-					link: "/pages/company/rate-exam/index",
+					link: "/pages/company/pass",
 					icon: '',
 					flex_dir: "flex-row"
 				}

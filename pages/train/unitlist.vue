@@ -25,11 +25,12 @@
 				选项卡2的内容
 			</view>
 		</view>
-		
+
 		<view class="fix-button">
 			<view class="fbtn-main">
 				<view class="fbtns btn-goback" @click="$store.dispatch('goback')">返回</view>
-				<view class="fbtns fbtns-clr-full btn-totest" @click="to_test(1)">开始测试</view>
+				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':''" v-show="current === 0" @click="joinlearning(1)">{{isJoinTxt}}</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current === 1" @click="to_test(1)">开始测试</view>
 			</view>
 		</view>
 	</view>
@@ -47,10 +48,12 @@
 					"media_type": "video",
 					"url": "https://dcloud-img.oss-cn-hangzhou.aliyuncs.com/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4g"
 				}],
+				isJoined: false,
+				isJoinTxt: "加入学习",
 				current: 0,
 				segmented: [
 					'介绍',
-					'目录'
+					'课程目录'
 				]
 			}
 		},
@@ -88,9 +91,14 @@
 					showCancel: false
 				})
 			},
-			to_test(id){
+			joinlearning(id) {
+				var that = this;
+				that.isJoined = !that.isJoined;
+				that.isJoinTxt = that.isJoined ? "学习完成后开启测试" : "加入学习";
+			},
+			to_test(id) {
 				uni.navigateTo({
-					url:"/pages/train/test"
+					url: "/pages/train/test"
 				})
 			}
 		}
@@ -108,5 +116,11 @@
 
 	.unit-content {
 		padding: 30upx;
+	}
+
+	.is-joined {
+		background: #929292;
+		color: #FFFFFF;
+		border-color: #929292;
 	}
 </style>

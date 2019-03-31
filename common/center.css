@@ -1,0 +1,177 @@
+.user-center {
+	width: 93%;
+	padding: 30upx 3%;
+}
+
+.user-block {
+	padding-bottom: 40upx;
+}
+
+.user-head {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: center;
+	flex-direction: row;
+	padding-bottom: 20upx;
+}
+
+.portrait {
+	width: 125upx;
+	height: 125upx;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.user-portrait {
+	width: 100%;
+	height: 100%
+}
+
+.user-infos {
+	flex: 1 1 0%;
+	padding: 0 20upx;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.user-name {
+	line-height: 2;
+	width: 100%;
+}
+
+.logout {
+	font-weight: 200;
+	padding: 0 10upx;
+	font-size: 26upx;
+}
+
+.user-more {
+	border: 2upx solid #929292;
+	border-radius: 30upx;
+	color: #929292;
+	padding: 0 20upx;
+	margin-right: 20upx;
+}
+
+.job {
+	border: none;
+	border-radius: 0;
+	padding: 0;
+}
+
+.user-edit {
+	width: 60upx;
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column-reverse;
+	height: 100%;
+}
+
+.user-class-info {
+	border: 2upx solid #E0E0E0;
+	border-radius: 8upx;
+	box-shadow: 0 0 10upx 3upx #E0E0E0;
+}
+
+.user-my-class {
+	padding: 20upx 0;
+	display: flex;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+.my-class-block {
+	height: 150upx;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	width: 33%;
+	border-right: 2upx solid #E0E0E0;
+}
+
+.my-class-block:last-child {
+	border-right: none;
+}
+
+.class-overview {
+	font-size: 24upx;
+}
+
+.class-count {
+	font-size: 52upx;
+	color: #008CEE;
+}
+
+.class-state-green {
+	color: #3BC1B0;
+}
+
+.class-state-red {
+	color: #EE6858;
+}
+
+.my-class-head {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+}
+
+.class-tip {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-content: center;
+	align-items: center;
+}
+
+.class-icon {
+	background: linear-gradient(#48AFBE, #58D3BE);
+	width: 50upx;
+	height: 50upx;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-right: 10upx;
+}
+
+.class-more {
+	font-size: 28upx;
+	color: #929292;
+}
+
+.class-list-row {
+	border-bottom: none;
+}
+
+.class-list-left {
+	display: flex;
+	flex-direction: column;
+	align-content: space-between;
+	align-items: flex-start;
+	height: 134upx;
+}
+
+.class-progress {
+	width: 95%;
+}
+
+.progress-box {
+	display: flex;
+	flex-direction: column;
+	height: 50upx;
+}
+
+.percent {
+	text-align: right;
+}

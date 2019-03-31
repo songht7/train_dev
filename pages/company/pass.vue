@@ -8,11 +8,7 @@
 				</view>
 				<view class="user-infos">
 					<view class="user-name txt-sross">{{UserId?$store.state.user.UserName:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
-					<view class="user-more my-collection"><text>我的收藏</text></view>
-					<view class="user-more my-resume"><text>我的简历</text></view>
-				</view>
-				<view class="user-edit">
-					<uni-icon type="shezhi" :size="30" color="#D8D8D8"></uni-icon>
+					<view class="user-more job"><text>教学管理员</text></view>
 				</view>
 			</view>
 		</view>

@@ -94,6 +94,17 @@
 					}
 				}
 			}
+		}, {
+			"path": "pages/company/pass",
+			"style": {
+				"navigationBarTitleText": "考试合格率",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
 		}
 	],
 	"globalStyle": {

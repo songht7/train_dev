@@ -47,7 +47,7 @@
 			</view>
 			<view class="block">
 				<view @click="$store.dispatch('makePhoneCall')">
-					<img class="ad-img" src="/static/img-1.png" />
+					<img class="ad-img" src="@/static/img-1.png" />
 				</view>
 			</view>
 		</view>
