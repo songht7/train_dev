@@ -1,9 +1,9 @@
 <template>
 	<view class="tab_bar">
 		<view class="tab_main">
-			<view class="tab_item" v-for="(item,index) in footer_nav" :key="index" :style="'width:'+item_width">
-				<view class="tab_block" :class="[item.flex_dir,index==now_index?'tab_bat_active':'']" @click="navto(index,item.link)">
-					<uni-icon :type="item.icon" v-if="item.icon" :size="25" :color="index==now_index?'#008CEE':'#929292'"></uni-icon>
+			<view :class="['tab_item',`tab-${item.name_code}`]" v-for="(item,index) in footer_nav" :key="index" :style="'width:'+item_width">
+				<view :class="['tab_block',`tab-bk-${item.name_code}`,item.flex_dir,index==now_index?'tab_bat_active':'']" @click="navto(index,item.link)">
+					<uni-icon :type="item.icon" v-if="item.icon" :size="25" :color="iconColor(item,index)"></uni-icon>
 					<view class="tab_name">
 						{{item.name}}
 					</view>
@@ -23,6 +23,20 @@
 		},
 		onShow() {},
 		methods: {
+			iconColor(item, index) {
+				switch (item.name_code) {
+					case "company":
+						return '#FFFFFF'
+						break;
+					case "user":
+						return '#008CEE'
+						break;
+					default:
+						let clr = index == this.now_index ? '#008CEE' : '#929292';
+						return clr
+						break;
+				}
+			},
 			navto(index, url) {
 				this.$store.commit("change_page", index)
 				uni.redirectTo({
@@ -38,7 +52,7 @@
 						return '100%'
 						break;
 					case 2:
-						return '50%'
+						return '46%'
 						break;
 					case 3:
 						return '33.33%'
@@ -80,13 +94,14 @@
 		width: 100%;
 		height: 100%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
 		align-content: center;
 		align-items: center;
 	}
 
 	.tab_item {
 		width: 33.33%;
+		height: 80%;
 		display: flex;
 		justify-content: center;
 	}
@@ -108,13 +123,38 @@
 		font-size: 28upx;
 		color: #929292;
 		line-height: 1;
+		width: 100%;
+		height: 100%;
+	}
+
+	.tab-company {
+		background: #008CEE;
+		color: #ffffff;
+	}
+
+	.tab-bk-company {
+		color: #ffffff;
+	}
+
+	.tab-bk-user {
+		color: #008CEE;
+	}
+
+	.tab-company,
+	.tab-user {
+		border-radius: 10upx;
+		border: 4upx solid #008CEE;
 	}
 
 	.tab_name {
 		line-height: 1;
 	}
 
-	.tab_bat_active {
+	.tab_bat_active .tab_name {
 		color: #008CEE;
+	}
+
+	.tab-bk-company.tab_bat_active .tab_name {
+		color: #ffffff;
 	}
 </style>

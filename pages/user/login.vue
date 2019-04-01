@@ -3,17 +3,17 @@
 		<view class="page-main">
 			<form @submit="formSubmit">
 				<view class="uni-form-item uni-column">
-					<input class="uni-input train-input" name="UserName" placeholder="用户名/邮箱/手机号" />
+					<input class="uni-input train-input" name="UserName" data-key="UserName" @input="setData" :placeholder="UserType=='company'?'用户名':'用户名/邮箱/手机号'" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="with-fun">
-						<input class="uni-input train-input" password name="Password" :value="inputClearValue" @input="clearInput" />
-						<view class="uni-icon uni-icon-clear" v-if="showClearIcon" @click="clearIcon"></view>
+						<input class="uni-input train-input" password name="Password" data-key="Password" @input="setData" placeholder="登录密码" />
 					</view>
 				</view>
 				<view class="uni-btn-v">
-					<button class="log-btn" formType="submit">登录</button>
-					<view class="log-btn nav-black" @click="$store.dispatch('goback','/pages/index/index')">返回</view>
+					<view class="log-btn btn-submit" @click="formSubmit">登录</view>
+					<!-- <button formType="submit" :loading="loading" class="log-btn btn-submit">登录</button> -->
+					<view class="log-btn btn-back" @click="$store.dispatch('goback','/pages/index/index')">返回</view>
 				</view>
 			</form>
 		</view>
@@ -21,13 +21,16 @@
 </template>
 
 <script>
+	var graceChecker = require("@/common/graceChecker.js");
 	export default {
 		data() {
 			return {
 				UserType: "",
 				loading: false,
-				inputClearValue: '',
-				showClearIcon: false,
+				formData: {
+					"UserName": "",
+					"Password": ""
+				}
 			};
 		},
 		onLoad(e) {
@@ -49,35 +52,52 @@
 					return
 				}
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
-				let formData = e.detail.value;
+				let _formData = that.formData;
+				//let _formData = e.detail.value;
 				//that.loading = true
-				console.log(formData);
-				formData["UserId"] = "1";
-				formData["Portrait"] = "/static/logo.png";
-				formData["UserType"] = that.UserType;
-				uni.setStorage({
-					key: "user",
-					data: formData
-				});
-				setTimeout(function() {
-					that.$store.commit("change_page", 0)
-					uni.redirectTo({
-						url: "/"
-					})
-				}, 2000)
-			},
-			clearInput: function(event) {
-				this.inputClearValue = event.target.value;
-				if (event.target.value.length > 0) {
-					this.showClearIcon = true;
+				console.log(_formData);
+				var rule = [{
+						name: "UserName",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "用户名不能为空"
+					},
+					{
+						name: "Password",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "密码不能为空"
+					}
+				];
+				//进行表单检查
+				var checkRes = graceChecker.check(_formData, rule);
+				if (checkRes) {
+					_formData["UserId"] = "1";
+					_formData["Portrait"] = "/static/logo.png";
+					_formData["UserType"] = that.UserType;
+					uni.setStorage({
+						key: "user",
+						data: _formData
+					});
+					setTimeout(function() {
+						that.$store.commit("change_page", 0)
+						uni.redirectTo({
+							url: "/"
+						})
+					}, 2000)
 				} else {
-					this.showClearIcon = false;
+					uni.showToast({
+						title: graceChecker.error,
+						icon: "none"
+					});
+					that.loading = false
 				}
 			},
-			clearIcon: function() {
-				this.inputClearValue = '';
-				this.showClearIcon = false;
-			},
+			setData(e) {
+				//console.log(e);
+				var that = this;
+				that.formData[`${e.currentTarget.dataset.key}`] = e.detail.value;
+			}
 		}
 	}
 </script>
@@ -98,11 +118,24 @@
 		width: 48%;
 	}
 
-	.nav-black {
+	.log-btn {
 		text-align: center;
 		line-break: 2;
-		border: 2upx solid #008CEE;
+		font-size: 36upx;
+		border: 4upx solid #008CEE;
 		color: #008CEE;
 		height: 100%;
+		height: 86upx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10upx;
+		padding: 0;
+		margin: 0;
+	}
+
+	.btn-submit {
+		background: #008CEE;
+		color: #ffffff;
 	}
 </style>
