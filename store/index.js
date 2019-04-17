@@ -81,11 +81,15 @@ const store = new Vuex.Store({
 		goback(ctx, url) {
 			if (url) {
 				uni.navigateTo({
-					url: url
+					url: url,
+					animationType: 'pop-out',
+					animationDuration: 1000
 				});
 			} else {
 				uni.navigateBack({
-					delta: 1
+					delta: 1,
+					animationType: 'slide-out-right',
+					animationDuration: 1000
 				});
 			}
 		},
