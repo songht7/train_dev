@@ -17,19 +17,21 @@
 				</view>
 			</view>
 		</form>
-		<uni-popup :show="type === 'score'" position="middle" mode="insert" @hidePopup="togglePopup('')">
+		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
 			<view class="uni-center center-box score-box">
-				<view class="score-top">
+				<view class="score-block score-top">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
-					<view class="score-top-val ">
-						<uni-icon type="al-star" isGradient="isGradient" size="45" color="#FFDA76"></uni-icon>
+					<view class="score-top-val score-star">
+						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
+						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="50" color="#FFDA76"></uni-icon>
+						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
 					</view>
 				</view>
-				<view class="score-middle">
+				<view class="score-block score-middle">
 					<view class="score-ov">您的成绩</view>
 					<view class="score">{{score}}</view>
 				</view>
-				<view class="score-bottom">
+				<view class="score-block score-bottom">
 					<view class="score-btn">继续学习</view>
 				</view>
 			</view>
@@ -115,18 +117,37 @@
 		border: none;
 	}
 
+	.uni-popup-middle {
+		width: 80%;
+	}
+
 	.score-box {
 		background: #fff;
 		border-radius: 10upx;
 		width: 100%;
 		overflow: hidden;
+		color: #56CEBE;
+		padding: 0 0 30upx;
 	}
 
-	.score-top{position: relative;overflow: hidden;}
+	.score-block {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-content: center;
+		align-items: center;
+	}
+
+	.score-top {
+		position: relative;
+		overflow: hidden;
+		padding: 40upx 0 20upx;
+	}
+
 	.score-top::before {
 		position: absolute;
 		left: -50%;
-		top: -130%;
+		top: -125%;
 		width: 200%;
 		height: 200%;
 		content: "";
@@ -134,5 +155,41 @@
 		z-index: 0;
 		border-radius: 50%;
 	}
-	.score-top-val{position: relative;z-index: 1;}
+
+	.score-top-val {
+		position: relative;
+		z-index: 1;
+	}
+
+	.score-des {
+		font-size: 60upx;
+		line-height: 2;
+		color: #fff;
+	}
+
+	.score-star {
+		display: flex;
+		justify-content: space-around;
+		width: 80%;
+		align-items: center;
+	}
+
+	.score-ov {
+		font-size: 28upx;
+	}
+
+	.score {
+		font-size: 130upx;
+		line-height: 1;
+		padding: 10upx 0 50upx;
+	}
+
+	.score-btn {
+		color: #fff;
+		background: #56CEBE;
+		line-height: 2.4;
+		width: 80%;
+		border-radius: 10upx;
+		font-size: 32upx;
+	}
 </style>

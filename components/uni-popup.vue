@@ -1,13 +1,15 @@
 <template>
 	<view>
 		<view class="uni-mask" v-show="show" :style="{ top: offsetTop + 'px' }" @click="hide" @touchmove.stop.prevent="moveHandle"></view>
-		<view class="uni-popup" :class="'uni-popup-' + position + ' ' + 'uni-popup-' + mode" v-show="show">
+		<view class="uni-popup" :class="'uni-popup-' + position + ' ' + 'uni-popup-' + mode + ' ' + 'uni-popup-' + width"
+		 v-show="show" :style="'width:'+setWidth(width)">
 			{{ msg }}
 			<slot></slot>
 			<view v-if="position === 'middle' && mode === 'insert'" class=" uni-icon uni-icon-close" :class="{
 					'uni-close-bottom': buttonMode === 'bottom',
 					'uni-close-right': buttonMode === 'right'
-				}" @click="closeMask"></view>
+				}"
+			 @click="closeMask"></view>
 		</view>
 	</view>
 </template>
@@ -37,6 +39,13 @@
 			mode: {
 				type: String,
 				default: 'insert'
+			},
+			/**
+			 * 宽度
+			 */
+			width: {
+				type: String,
+				default: '80'
 			},
 			/**
 			 * 额外信息
@@ -71,7 +80,11 @@
 				}
 			}
 		},
+		computed: {},
 		methods: {
+			setWidth(w) {
+				return `${w}%`
+			},
 			hide() {
 				if (this.mode === 'insert' && this.position === 'middle') return;
 				this.$emit('hidePopup');
