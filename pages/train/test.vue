@@ -17,9 +17,21 @@
 				</view>
 			</view>
 		</form>
-		<uni-popup :show="type === 'score'" position="middle" mode="fixed" @hidePopup="togglePopup('')">
+		<uni-popup :show="type === 'score'" position="middle" mode="insert" @hidePopup="togglePopup('')">
 			<view class="uni-center center-box score-box">
-				成绩99
+				<view class="score-top">
+					<view class="score-top-val score-des">{{scoreDes}}</view>
+					<view class="score-top-val ">
+						<uni-icon type="al-star" isGradient="isGradient" size="45" color="#FFDA76"></uni-icon>
+					</view>
+				</view>
+				<view class="score-middle">
+					<view class="score-ov">您的成绩</view>
+					<view class="score">{{score}}</view>
+				</view>
+				<view class="score-bottom">
+					<view class="score-btn">继续学习</view>
+				</view>
 			</view>
 		</uni-popup>
 	</view>
@@ -34,7 +46,9 @@
 				test_leng: 5,
 				loading: false,
 				submitData: [],
-				type: ''
+				type: '',
+				scoreDes: "成绩不合格",
+				score: 0
 			}
 		},
 		onLoad() {
@@ -73,7 +87,7 @@
 			},
 			formSubmit(e) {
 				var that = this;
-				that.togglePopup('score')
+				that.togglePopup('score');
 				if (that.loading == true) {
 					return
 				}
@@ -105,5 +119,20 @@
 		background: #fff;
 		border-radius: 10upx;
 		width: 100%;
+		overflow: hidden;
 	}
+
+	.score-top{position: relative;overflow: hidden;}
+	.score-top::before {
+		position: absolute;
+		left: -50%;
+		top: -130%;
+		width: 200%;
+		height: 200%;
+		content: "";
+		background: #EA5950;
+		z-index: 0;
+		border-radius: 50%;
+	}
+	.score-top-val{position: relative;z-index: 1;}
 </style>

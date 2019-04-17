@@ -55,4 +55,7 @@
 	.uni-icon-gongwenbao1 {
 		background-image: -webkit-linear-gradient(#FFFFFF,#DAF3F0);
 	}
+	.uni-icon-al-star {
+		background-image: -webkit-linear-gradient(#FFDA76,#FFC05A);
+	}
 </style>

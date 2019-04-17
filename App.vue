@@ -31,6 +31,6 @@
 	/*https://www.iconfont.cn
 	*login weibo
 	*/
-	@import "//at.alicdn.com/t/font_1094459_b0m25g492kk.css";
+	@import "//at.alicdn.com/t/font_1094459_bi6vn59a0xq.css";
 	/* @import "./common/fonts/iconfont.css"; */
 </style>
