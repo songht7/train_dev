@@ -18,13 +18,13 @@
 			</view>
 		</form>
 		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
-			<view class="uni-center center-box score-box">
-				<view class="score-block score-top">
+			<view class="uni-center center-box score-box" :class="scoreState">
+				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
 					<view class="score-top-val score-star">
-						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
+						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
 						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="50" color="#FFDA76"></uni-icon>
-						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
+						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
 					</view>
 				</view>
 				<view class="score-block score-middle">
@@ -32,7 +32,7 @@
 					<view class="score">{{score}}</view>
 				</view>
 				<view class="score-block score-bottom">
-					<view class="score-btn">继续学习</view>
+					<view class="score-btn" :class="scoreState">继续学习</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -50,7 +50,8 @@
 				submitData: [],
 				type: '',
 				scoreDes: "成绩不合格",
-				score: 0
+				score: 0,
+				scoreState: "stateRed" //stateRed不合格 /stateGreen合格
 			}
 		},
 		onLoad() {
@@ -90,6 +91,17 @@
 			formSubmit(e) {
 				var that = this;
 				that.togglePopup('score');
+				//const genRandom = (min, max) => (Math.random() * (max - min + 1) | 0) + min;
+				let genRandom = (Math.random() * (60 - 59 + 1) | 0) + 59;
+				console.log(genRandom)
+				that.score = genRandom;
+				if (genRandom >= 60) {
+					that.scoreDes = "成绩合格";
+					that.scoreState = "stateGreen";
+				} else {
+					that.scoreDes = "成绩不合格";
+					that.scoreState = "stateRed";
+				}
 				if (that.loading == true) {
 					return
 				}
@@ -126,8 +138,12 @@
 		border-radius: 10upx;
 		width: 100%;
 		overflow: hidden;
-		color: #56CEBE;
+		color: #F04B3F;
 		padding: 0 0 30upx;
+	}
+
+	.score-box.stateGreen {
+		color: #56CEBE;
 	}
 
 	.score-block {
@@ -151,9 +167,13 @@
 		width: 200%;
 		height: 200%;
 		content: "";
-		background: #EA5950;
+		background: linear-gradient(#F58568, #EA5950);
 		z-index: 0;
 		border-radius: 50%;
+	}
+
+	.score-top.stateGreen::before {
+		background: linear-gradient(#48AFBE, #58D3BE);
 	}
 
 	.score-top-val {
@@ -186,10 +206,14 @@
 
 	.score-btn {
 		color: #fff;
-		background: #56CEBE;
+		background: #F04B3F;
 		line-height: 2.4;
 		width: 80%;
 		border-radius: 10upx;
 		font-size: 32upx;
+	}
+
+	.score-btn.stateGreen {
+		background: #56CEBE;
 	}
 </style>
