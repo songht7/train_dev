@@ -15,16 +15,16 @@
 				</view>
 			</view>
 		</view>
-		<view class="fix-button">
-			<view class="fbtn-main">
-				<view class="fbtns btn-goback" @click="$store.dispatch('goback')">返回</view>
-				<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')"><uni-icon type="dianhua1" size="25" color="#fff"></uni-icon>咨询我们</view>
+		<fix-button>
+			<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
+				<uni-icon type="dianhua1" size="25" color="#fff"></uni-icon>咨询我们
 			</view>
-		</view>
+		</fix-button>
 	</view>
 </template>
 
 <script>
+	import fixButton from '@/components/fix-button.vue'
 	export default {
 		data() {
 			return {}
@@ -36,7 +36,9 @@
 			this.$store.dispatch('cheack_user')
 		},
 		onReady: function(res) {},
-		components: {},
+		components: {
+			fixButton
+		},
 		computed: {},
 		methods: {
 			goDetail: function(id) {

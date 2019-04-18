@@ -8,23 +8,23 @@
 					</view>
 				</block>
 			</view>
-			<view class="fix-button">
-				<view class="fbtn-main">
-					<view class="fbtns btn-goback" v-show="current===1" @click="$store.dispatch('goback')">退出测试</view>
-					<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
-					<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_leng" @click="test_more('next')">下一题</view>
-					<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_leng" @click="formSubmit">提交</view>
-				</view>
-			</view>
+			<fix-button gobackShow="hide">
+				<view class="fbtns btn-goback" v-show="current===1" @click="$store.dispatch('goback')">退出测试</view>
+				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_leng" @click="test_more('next')">下一题</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_leng" @click="formSubmit">提交</view>
+			</fix-button>
 		</form>
 		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
 			<view class="uni-center center-box score-box" :class="scoreState">
 				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
 					<view class="score-top-val score-star">
-						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
+						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35"
+						 color="#FFDA76"></uni-icon>
 						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="50" color="#FFDA76"></uni-icon>
-						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35" color="#FFDA76"></uni-icon>
+						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35"
+						 color="#FFDA76"></uni-icon>
 					</view>
 				</view>
 				<view class="score-block score-middle">
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+	import fixButton from '@/components/fix-button.vue'
 	import uniPopup from '@/components/uni-popup.vue'
 	export default {
 		data() {
@@ -71,6 +72,7 @@
 		onReady: function(res) {},
 		computed: {},
 		components: {
+			fixButton,
 			uniPopup
 		},
 		methods: {

@@ -11,20 +11,18 @@
 		<view class="article-content">
 			<rich-text :nodes="htmlString"></rich-text>
 		</view>
-		<view class="fix-button">
-			<view class="fbtn-main">
-				<view class="fbtns fbtn-big btn-goback" @click="$store.dispatch('goback')">返回</view>
-				<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(1)">
-					<view>
-						<uni-icon :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icon>
-						<view>收藏</view>
-					</view>
+		<fix-button btnType="fbtn-big">
+			<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(1)">
+				<view>
+					<uni-icon :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icon>
+					<view>收藏</view>
 				</view>
 			</view>
-		</view>
+		</fix-button>
 	</view>
 </template>
 <script>
+	import fixButton from '@/components/fix-button.vue'
 	export default {
 		data() {
 			return {
@@ -44,6 +42,9 @@
 			uni.setNavigationBarTitle({
 				title: "如何写出一份优秀的个人简历"
 			});
+		},
+		components: {
+			fixButton
 		},
 		methods: {
 			getDetail() {

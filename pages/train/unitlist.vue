@@ -26,17 +26,15 @@
 			</view>
 		</view>
 
-		<view class="fix-button">
-			<view class="fbtn-main">
-				<view class="fbtns btn-goback" @click="$store.dispatch('goback')">返回</view>
-				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':''" v-show="current === 0" @click="joinlearning(1)">{{isJoinTxt}}</view>
-				<view class="fbtns fbtns-clr-full btn-totest" v-show="current === 1" @click="to_test(1)">开始测试</view>
-			</view>
-		</view>
+		<fix-button>
+			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':''" v-show="current === 0" @click="joinlearning(1)">{{isJoinTxt}}</view>
+			<view class="fbtns fbtns-clr-full btn-totest" v-show="current === 1" @click="to_test(1)">开始测试</view>
+		</fix-button>
 	</view>
 </template>
 
 <script>
+	import fixButton from '@/components/fix-button.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control.vue';
 	export default {
 		data() {
@@ -65,6 +63,7 @@
 		},
 		onReady: function(res) {},
 		components: {
+			fixButton,
 			uniSegmentedControl
 		},
 		computed: {

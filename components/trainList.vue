@@ -9,9 +9,9 @@
 					<view class="train-infos">
 						<view class="train-title">
 							<text class="media-title">{{data.title}}</text>
-							<text>{{data.overview}}</text>
+							<text v-if="data.overview">{{data.overview}}</text>
 						</view>
-						<view class="train-count">共{{data.count}}门课程</view>
+						<view class="train-count" v-if="data.count">共{{data.count}}门课程</view>
 					</view>
 				</view>
 			</view>

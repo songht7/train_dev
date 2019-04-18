@@ -95,6 +95,11 @@
 				}
 			}
 		}, {
+			"path": "pages/user/collect",
+			"style": {
+				"navigationBarTitleText": "我的收藏"
+			}
+		}, {
 			"path": "pages/company/pass",
 			"style": {
 				"navigationBarTitleText": "考试合格率",

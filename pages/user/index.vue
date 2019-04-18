@@ -8,8 +8,8 @@
 				</view>
 				<view class="user-infos">
 					<view class="user-name txt-sross">{{UserId?$store.state.user.UserName:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
-					<view class="user-more my-collection"><text>我的收藏</text></view>
-					<view class="user-more my-resume"><text>我的简历</text></view>
+					<navigator url="/pages/user/collect?id=1" class="user-more my-collect"><text>我的收藏</text></navigator>
+					<navigator url="/pages/user/resume?id=1" class="user-more my-resume"><text>我的简历</text></navigator>
 				</view>
 				<view class="user-edit">
 					<uni-icon type="shezhi" :size="30" color="#D8D8D8"></uni-icon>
@@ -54,7 +54,7 @@
 									<view class="class-progress">
 										<view class="progress-box">
 											<view class="percent">{{k==2?"开始学习":"已学60%"}}</view>
-											<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0"/>
+											<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 										</view>
 									</view>
 								</view>
@@ -96,5 +96,5 @@
 </script>
 
 <style>
-	@import "../../common/center.css";
+	@import "./center.css";
 </style>

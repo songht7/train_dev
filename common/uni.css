@@ -241,6 +241,9 @@
 .fbtn-big {
 	width: 80%;
 }
+.fbtn-full {
+	width: 100%;
+}
 
 .collect {
 	width: 15%;
