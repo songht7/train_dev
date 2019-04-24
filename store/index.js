@@ -9,7 +9,7 @@ const store = new Vuex.Store({
 		loading: "0",
 		phoneNumber: "4008200000",
 		user: {},
-		list: {},
+		data: {},
 		interface: common.Interface
 	},
 	mutations: {
@@ -29,8 +29,8 @@ const store = new Vuex.Store({
 			console.log(data)
 			state.user = data
 		},
-		update_list(state, data) {
-			state.list = data
+		update_data(state, data) {
+			state.data = data
 		},
 		update_detail(state, data) {
 			state.detail = data
@@ -43,19 +43,31 @@ const store = new Vuex.Store({
 			let _url = ctx.state.interface.apiurl + ctx.state.interface.addr[parm.inter] + _parm
 			console.log(_url)
 			console.log(parm)
+			var result = [];
 			uni.request({
 				url: _url,
 				data: parm.data || {},
 				method: parm.method || "GET",
 				success(res) {
-					console.log(res)
-					ctx.commit("update_list", res.data.data)
+					//console.log(res)
+					if (res.success) {
+						ctx.commit("update_data", res.data.data)
+					}
+					result = res.data
 				},
-				fail(e) {
-					console.log(e)
+				fail(err) {
+					console.log(err)
+					result = {
+						"success": false,
+						"Msg": "接口请求失败",
+						"err": err
+					}
 				},
 				complete() {
 					ctx.commit("switch_loading", "0")
+					if (parm.fun) {
+						new parm.fun(result)
+					}
 				}
 			})
 		},

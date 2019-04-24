@@ -8,9 +8,9 @@ export default {
 		"apiurl": " http://api_test.wsshanghai.com",
 		"domain": "http://wsshanghai.com",
 		"addr": {
-			"login": "/v4/ApiAuth-login.htm", //登录--A
+			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
 			"sign": "/v4/ApiAuth-sign.htm", //登录--B
-			"register": "/v4/ApiAuth-register.htm", //注册 A
+			"register": "/v4/ApiAuth-register.htm", //注册[POST] A
 			"checkPhone": "/v4/ApiAuth-checkPhone.htm", //手机验证 测试：1111
 			"logout": "/v4/ApiAuth-logout.htm", //用户退出
 			"info": "/v4/ApiAccount-info.htm", //用户信息

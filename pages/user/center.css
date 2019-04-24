@@ -1,7 +1,23 @@
 .train-input {
 	background: #F4F4F4;
 	border-radius: 5upx;
-	border:1px solid #E0E0E0;
+	border: 1px solid #E0E0E0;
+}
+
+.get-code-left {
+	width: 60%;
+}
+
+.get-code {
+	align-content: center;
+	align-items: center;
+	background: #008CEE;
+	border-radius: 5upx;
+	color: #fff;
+	display: flex;
+	font-size: 32upx;
+	justify-content: center;
+	width: 38%;
 }
 
 .user-login-more {

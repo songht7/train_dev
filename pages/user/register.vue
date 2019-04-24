@@ -6,8 +6,11 @@
 					<view class="uni-form-item uni-column">
 						<input class="uni-input train-input" name="phone" data-key="phone" @input="setData" placeholder="请输入手机号" />
 					</view>
-					<view class="uni-form-item uni-column">
-						<input class="uni-input train-input" name="code" data-key="code" @input="setData" placeholder="验证码" />
+					<view class="uni-form-item flex-between uni-row">
+						<view class="input-block get-code-left">
+							<input class="uni-input train-input" name="code" data-key="code" @input="setData" placeholder="验证码" />
+						</view>
+						<view class="get-code" :class="btnLoading" @click="getCode">{{getCodeTxt}}</view>
 					</view>
 					<view class="uni-form-item uni-column">
 						<input class="uni-input train-input" name="name" data-key="name" @input="setData" placeholder="请输入真实姓名" />
@@ -26,7 +29,7 @@
 					</view>
 					<view class="uni-btn-block">
 						<view class="btns btn-back" @click="regNext(0)">返回</view>
-						<view class="btns btns-full" @click="formSubmit">注册</view>
+						<view class="btns btns-full" @click="formSubmit">确认提交</view>
 					</view>
 				</view>
 			</form>
@@ -43,6 +46,9 @@
 				UserType: "",
 				loading: false,
 				current: 0,
+				getCodeTxt: "获取验证码",
+				seconds: 60,
+				btnLoading: "",
 				formData: {
 					"phone": "",
 					"code": "",
@@ -57,7 +63,7 @@
 			let _type = e.type;
 			that.UserType = _type;
 			uni.setNavigationBarTitle({
-				title: _type == "company" ? "企业登录" : "个人登录"
+				title: _type == "company" ? "企业注册" : "个人注册"
 			})
 			//this.$loading()
 			// 			uni.showLoading({
@@ -77,7 +83,7 @@
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				let _formData = that.formData;
 				//let _formData = e.detail.value;
-				//that.loading = true
+				that.loading = true
 				console.log(_formData);
 				var rule = [{
 						name: "password",
@@ -95,19 +101,27 @@
 				//进行表单检查
 				var checkRes = graceChecker.check(_formData, rule);
 				if (checkRes) {
-					_formData["UserId"] = "1";
-					_formData["Portrait"] = "/static/logo.png";
-					_formData["UserType"] = that.UserType;
-					uni.setStorage({
-						key: "user",
-						data: _formData
-					});
-					setTimeout(function() {
-						that.$store.commit("change_page", 0)
-						uni.redirectTo({
-							url: "/"
-						})
-					}, 2000)
+					let data = {
+						"inter": "register",
+						"data": _formData,
+						"method": "POST"
+					}
+					data["fun"] = function(res) {
+						console.log(res)
+						that.loading = false
+						if (res.success) {
+							that.$store.commit("change_page", 0)
+							uni.redirectTo({
+								url: "/"
+							})
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							});
+						}
+					}
+					that.$store.dispatch("getData", data)
 				} else {
 					uni.showToast({
 						title: graceChecker.error,
@@ -168,6 +182,44 @@
 					});
 					that.loading = false
 				}
+			},
+			getCode() {
+				var that = this;
+				if (that.btnLoading) {
+					return
+				}
+				var rule = [{
+					name: "phone",
+					checkType: "phoneno",
+					checkRule: "",
+					errorMsg: "请填写正确的手机号"
+				}];
+				let _formData = that.formData;
+				var checkRes = graceChecker.check(_formData, rule);
+				if (checkRes) {
+					uni.showToast({
+						title: "验证码已发送",
+						icon: "none"
+					});
+					that.btnLoading = "btn-loading";
+					var countdown = setInterval(() => {
+						that.seconds--
+						if (that.seconds < 0) {
+							that.getCodeTxt = "获取验证码";
+							that.seconds = 60;
+							that.btnLoading = "";
+							clearInterval(countdown)
+							return
+						}
+						that.getCodeTxt = `${that.seconds} 秒后重试`;
+					}, 1000)
+				} else {
+					uni.showToast({
+						title: graceChecker.error,
+						icon: "none"
+					});
+				}
+
 			},
 			setData(e) {
 				//console.log(e);

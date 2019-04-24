@@ -63,7 +63,7 @@
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				let _formData = that.formData;
 				//let _formData = e.detail.value;
-				//that.loading = true
+				that.loading = true
 				console.log(_formData);
 				var rule = [{
 						name: "UserName",
@@ -81,19 +81,32 @@
 				//进行表单检查
 				var checkRes = graceChecker.check(_formData, rule);
 				if (checkRes) {
-					_formData["UserId"] = "1";
-					_formData["Portrait"] = "/static/logo.png";
-					_formData["UserType"] = that.UserType;
-					uni.setStorage({
-						key: "user",
-						data: _formData
-					});
-					setTimeout(function() {
-						that.$store.commit("change_page", 0)
-						uni.redirectTo({
-							url: "/"
-						})
-					}, 2000)
+					//_formData["Portrait"] = "/static/logo.png";
+					let data = {
+						"inter": "login",
+						"data": _formData,
+						"method": "POST"
+					}
+					data["fun"] = function(res) {
+						console.log(res)
+						that.loading = false
+						if (res.success) {
+							uni.setStorage({
+								key: "user",
+								data: res.data
+							});
+							that.$store.commit("change_page", 0)
+							// uni.redirectTo({
+							// 	url: "/"
+							// })
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							});
+						}
+					}
+					that.$store.dispatch("getData", data)
 				} else {
 					uni.showToast({
 						title: graceChecker.error,

@@ -241,6 +241,7 @@
 .fbtn-big {
 	width: 80%;
 }
+
 .fbtn-full {
 	width: 100%;
 }
@@ -266,6 +267,7 @@
 	justify-content: space-between;
 	padding: 20upx 0;
 }
+
 .btns {
 	width: 48%;
 	text-align: center;
@@ -282,9 +284,11 @@
 	padding: 0;
 	margin: 0;
 }
+
 .btns-big {
 	width: 100%;
 }
+
 .btns-full {
 	background: #008CEE;
 	color: #ffffff;
@@ -315,6 +319,20 @@ checkbox-group {
 
 form {
 	width: 100%;
+}
+
+.width-half {
+	width: 48%;
+}
+
+.flex-between {
+	justify-content: space-between;
+}
+
+.btn-loading {
+	background: #DCDCDC !important;
+	color: #666 !important;
+	border: 1px solid #D1D1D1 !important;
 }
 
 .uni-flex {
