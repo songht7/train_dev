@@ -73,6 +73,11 @@
 				"navigationBarTitleText": "登录"
 			}
 		}, {
+			"path": "pages/user/register",
+			"style": {
+				"navigationBarTitleText": "个人注册"
+			}
+		}, {
 			"path": "pages/user/message",
 			"style": {
 				"navigationBarTitleText": "消息",

@@ -2,24 +2,34 @@
 	<view class="login-box pages">
 		<view class="page-main">
 			<form @submit="formSubmit">
-				<view class="uni-form-item uni-column">
-					<input class="uni-input train-input" name="UserName" data-key="UserName" @input="setData" :placeholder="UserType=='company'?'用户名':'用户名/邮箱/手机号'" />
-				</view>
-				<view class="uni-form-item uni-column">
-					<view class="with-fun">
-						<input class="uni-input train-input" password name="Password" data-key="Password" @input="setData" placeholder="登录密码" />
+				<view v-show="current === 0">
+					<view class="uni-form-item uni-column">
+						<input class="uni-input train-input" name="phone" data-key="phone" @input="setData" placeholder="请输入手机号" />
+					</view>
+					<view class="uni-form-item uni-column">
+						<input class="uni-input train-input" name="code" data-key="code" @input="setData" placeholder="验证码" />
+					</view>
+					<view class="uni-form-item uni-column">
+						<input class="uni-input train-input" name="name" data-key="name" @input="setData" placeholder="请输入真实姓名" />
+					</view>
+					<view class="uni-btn-block">
+						<view class="btns btns-full btns-big" @click="regNext(1)">下一步</view>
 					</view>
 				</view>
-				<view class="uni-btn-block">
-					<view class="btns btns-full" @click="formSubmit">登录</view>
-					<!-- <button formType="submit" :loading="loading" class="log-btn btn-submit">登录</button> -->
-					<view class="btns btn-back" @click="$store.dispatch('goback','/pages/index/index')">返回</view>
+				<view v-show="current === 1">
+					<view class="uni-form-item uni-column">
+						<input class="uni-input train-input" password name="password" data-key="password" @input="setData" placeholder="输入密码" />
+					</view>
+					<view class="uni-form-item uni-column">
+						<input class="uni-input train-input" password name="cfn_password" data-key="cfn_password" @input="setData"
+						 placeholder="再次确认" />
+					</view>
+					<view class="uni-btn-block">
+						<view class="btns btn-back" @click="regNext(0)">返回</view>
+						<view class="btns btns-full" @click="formSubmit">注册</view>
+					</view>
 				</view>
 			</form>
-			<view class="user-login-more">
-				<view class="more-btn" @click="toRegister">{{UserType=='company'?'企业注册':'手机快速注册'}}</view>
-				<view class="more-btn">忘记密码</view>
-			</view>
 		</view>
 		<loading></loading>
 	</view>
@@ -32,9 +42,13 @@
 			return {
 				UserType: "",
 				loading: false,
+				current: 0,
 				formData: {
-					"UserName": "",
-					"Password": ""
+					"phone": "",
+					"code": "",
+					"name": "",
+					"password": "",
+					"cfn_password": ""
 				}
 			};
 		},
@@ -66,16 +80,16 @@
 				//that.loading = true
 				console.log(_formData);
 				var rule = [{
-						name: "UserName",
-						checkType: "notnull",
-						checkRule: "",
-						errorMsg: "用户名不能为空"
-					},
-					{
-						name: "Password",
+						name: "password",
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "密码不能为空"
+					},
+					{
+						name: "cfn_password",
+						checkType: "same",
+						checkRule: _formData.password,
+						errorMsg: "密码不一致，请确认"
 					}
 				];
 				//进行表单检查
@@ -120,6 +134,39 @@
 					uni.navigateTo({
 						url: "/pages/user/register"
 					})
+				}
+			},
+			regNext(val) {
+				var that = this;
+				var rule = [{
+						name: "phone",
+						checkType: "phoneno",
+						checkRule: "",
+						errorMsg: "请填写正确的手机号"
+					},
+					{
+						name: "code",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "验证码不能为空"
+					},
+					{
+						name: "name",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请输入真实姓名"
+					}
+				];
+				let _formData = that.formData;
+				var checkRes = graceChecker.check(_formData, rule);
+				if (checkRes) {
+					that.current = val
+				} else {
+					uni.showToast({
+						title: graceChecker.error,
+						icon: "none"
+					});
+					that.loading = false
 				}
 			},
 			setData(e) {

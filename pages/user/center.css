@@ -1,3 +1,18 @@
+.train-input {
+	background: #F4F4F4;
+	border-radius: 5upx;
+	border:1px solid #E0E0E0;
+}
+
+.user-login-more {
+	display: flex;
+	align-content: center;
+	align-items: center;
+	justify-content: space-between;
+	color: #008CEE;
+	font-size: 32upx;
+}
+
 .user-center {
 	width: 93%;
 	padding: 30upx 3%;

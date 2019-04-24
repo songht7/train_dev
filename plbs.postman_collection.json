@@ -1,0 +1,282 @@
+{
+	"id": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+	"name": "plbs",
+	"description": "培训项目",
+	"order": [],
+	"folders": [
+		{
+			"name": "account",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"order": [
+				"1e53f2e9-fd08-83af-ea98-125b51946362"
+			],
+			"owner": "1054562",
+			"folders_order": [],
+			"id": "7f335a37-67c4-1f34-81e7-fe077ccfadef"
+		},
+		{
+			"name": "article",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"order": [],
+			"owner": "1054562",
+			"folders_order": [],
+			"id": "b2937ed6-02bf-a434-c5a8-02e3a2681d3b"
+		},
+		{
+			"name": "auth",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"order": [
+				"8ad56260-399a-cfc6-ca38-121fb2ed349d",
+				"b9bcac74-ceb3-186f-b1e0-441064909b3b",
+				"008cc4de-4c7d-fa1f-b91a-7876e13e7328",
+				"4f72b152-955d-de5b-d673-4da76734b4ac",
+				"c68c9b9d-57d2-b7b0-b30c-bc0b6352df6a",
+				"00c8a0bc-ac92-3fd6-d6b6-009ad950caa6"
+			],
+			"owner": "1054562",
+			"folders_order": [],
+			"id": "81666d3a-5cc8-cf94-573a-dff8e0928953"
+		},
+		{
+			"name": "course",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"order": [],
+			"owner": "1054562",
+			"folders_order": [],
+			"id": "9b1b474c-e096-2bd9-2a31-ec06471477f9"
+		}
+	],
+	"folders_order": [
+		"81666d3a-5cc8-cf94-573a-dff8e0928953",
+		"7f335a37-67c4-1f34-81e7-fe077ccfadef",
+		"9b1b474c-e096-2bd9-2a31-ec06471477f9",
+		"b2937ed6-02bf-a434-c5a8-02e3a2681d3b"
+	],
+	"timestamp": 1555495105198,
+	"owner": "1054562",
+	"public": false,
+	"requests": [
+		{
+			"id": "008cc4de-4c7d-fa1f-b91a-7876e13e7328",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAuth-login.htm",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080610510,
+			"name": "/v4/ApiAuth-login.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"rawModeData": "{\"phone\":\"13564138771\",\"password\":\"111111\"}"
+		},
+		{
+			"id": "00c8a0bc-ac92-3fd6-d6b6-009ad950caa6",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAuth-sign.htm",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080084159,
+			"name": "/v4/ApiAuth-sign.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"rawModeData": "{\"phone\":\"13564138770\",\"password\":\"111111\"}"
+		},
+		{
+			"id": "1e53f2e9-fd08-83af-ea98-125b51946362",
+			"headers": "token: 5fdef89ab66ed205795b82ad70c8a0819e2f8471\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "5fdef89ab66ed205795b82ad70c8a0819e2f8471",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAccount-info.htm",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080083159,
+			"name": "/v4/ApiAccount-info.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": []
+		},
+		{
+			"id": "4f72b152-955d-de5b-d673-4da76734b4ac",
+			"headers": "Content-Type: application/json\ntoken: fb5444fa707c2a758459e66846bb6d264ed3e697\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "fb5444fa707c2a758459e66846bb6d264ed3e697",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAuth-logout.htm",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080607030,
+			"name": "/v4/ApiAuth-logout.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"rawModeData": ""
+		},
+		{
+			"id": "8ad56260-399a-cfc6-ca38-121fb2ed349d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAuth-checkPhone.htm",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080618606,
+			"name": "/v4/ApiAuth-checkPhone.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\"}"
+		},
+		{
+			"id": "b9bcac74-ceb3-186f-b1e0-441064909b3b",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAuth-register.htm",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080615502,
+			"name": "/v4/ApiAuth-register.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\",\"password\":\"111111\",\"cfn_password\":\"111111\",\"name\":\"space\"}"
+		},
+		{
+			"id": "c68c9b9d-57d2-b7b0-b30c-bc0b6352df6a",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "api_test.wsshanghai.com/v4/ApiAuth-reset.htm",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1556080603326,
+			"name": "/v4/ApiAuth-reset.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\",\"password\":\"111111\",\"cfn_password\":\"111111\"}"
+		}
+	]
+}

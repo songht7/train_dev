@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import tab_bar from "./modules/tab_bar.js"
+import common from "../common.js"
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		sourceUrl: "http://api_test.meetji.com",
 		loading: "0",
-		base_url: "",
 		phoneNumber: "4008200000",
 		user: {},
-		data: ""
+		list: {},
+		interface: common.Interface
 	},
 	mutations: {
 		switch_loading(state, status) {
@@ -37,19 +37,22 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
-		get_data(ctx) {
-			console.log(ctx)
+		getData(ctx, parm) {
 			ctx.commit("switch_loading", "1")
+			let _parm = parm.parm || '';
+			let _url = ctx.state.interface.apiurl + ctx.state.interface.addr[parm.inter] + _parm
+			console.log(_url)
+			console.log(parm)
 			uni.request({
-				url: ctx.state.base_url + "/topics",
-				data: {
-					page: 1,
-					tab: "share",
-					limit: 10,
-					mdrender: false
-				},
+				url: _url,
+				data: parm.data || {},
+				method: parm.method || "GET",
 				success(res) {
+					console.log(res)
 					ctx.commit("update_list", res.data.data)
+				},
+				fail(e) {
+					console.log(e)
 				},
 				complete() {
 					ctx.commit("switch_loading", "0")
