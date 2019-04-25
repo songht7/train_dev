@@ -163,15 +163,6 @@
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$store.commit("change_page", 0)
-			let data = {
-				"inter": "login",
-				"data": {
-					"phone": "13918781109",
-					"password": "111111"
-				},
-				"method":"POST"
-			}
-			that.$store.dispatch("getData", data)
 		},
 		methods: {
 

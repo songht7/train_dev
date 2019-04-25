@@ -17,8 +17,8 @@
 				</view>
 			</form>
 			<view class="user-login-more">
-				<view class="more-btn" @click="toRegister">{{UserType=='company'?'企业注册':'手机快速注册'}}</view>
-				<view class="more-btn">忘记密码</view>
+				<view class="more-btn" @click="toRegister('')">{{UserType=='company'?'企业注册':'手机快速注册'}}</view>
+				<view class="more-btn" @click="toRegister('forgetpw')">忘记密码</view>
 			</view>
 		</view>
 		<loading></loading>
@@ -91,6 +91,7 @@
 						console.log(res)
 						that.loading = false
 						if (res.success) {
+							res["data"]["UserType"] = that.UserType;
 							uni.setStorage({
 								key: "user",
 								data: res.data
@@ -115,7 +116,7 @@
 					that.loading = false
 				}
 			},
-			toRegister() {
+			toRegister(type) {
 				var that = this;
 				if (that.UserType == "company") {
 					uni.showModal({
@@ -130,8 +131,9 @@
 						}
 					});
 				} else {
+					let _type = type ? "?type=" + type : '';
 					uni.navigateTo({
-						url: "/pages/user/register"
+						url: `/pages/user/register${_type}`
 					})
 				}
 			},

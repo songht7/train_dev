@@ -12,7 +12,7 @@
 						</view>
 						<view class="get-code" :class="btnLoading" @click="getCode">{{getCodeTxt}}</view>
 					</view>
-					<view class="uni-form-item uni-column">
+					<view class="uni-form-item uni-column" v-if="regType==='register'">
 						<input class="uni-input train-input" name="name" data-key="name" @input="setData" placeholder="请输入真实姓名" />
 					</view>
 					<view class="uni-btn-block">
@@ -43,7 +43,7 @@
 	export default {
 		data() {
 			return {
-				UserType: "",
+				regType: "",
 				loading: false,
 				current: 0,
 				getCodeTxt: "获取验证码",
@@ -61,9 +61,9 @@
 		onLoad(e) {
 			var that = this;
 			let _type = e.type;
-			that.UserType = _type;
+			that.regType = _type ? _type : 'register';
 			uni.setNavigationBarTitle({
-				title: _type == "company" ? "企业注册" : "个人注册"
+				title: _type == "register" ? "个人注册" : "寻回密码"
 			})
 			//this.$loading()
 			// 			uni.showLoading({
@@ -74,6 +74,7 @@
 
 		},
 		computed: {},
+		components: {},
 		methods: {
 			formSubmit: function(e) {
 				var that = this;
@@ -121,6 +122,9 @@
 							});
 						}
 					}
+					if (that.regType === 'forgetpw') {
+						data["inter"] = "reset"
+					}
 					that.$store.dispatch("getData", data)
 				} else {
 					uni.showToast({
@@ -163,14 +167,17 @@
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "验证码不能为空"
-					},
-					{
+					}
+				];
+				if (that.regType === 'register') {
+					let n = {
 						name: "name",
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "请输入真实姓名"
-					}
-				];
+					};
+					rule.push(n)
+				}
 				let _formData = that.formData;
 				var checkRes = graceChecker.check(_formData, rule);
 				if (checkRes) {
