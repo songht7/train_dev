@@ -3,11 +3,11 @@
 		<view class="page-main">
 			<form @submit="formSubmit">
 				<view class="uni-form-item uni-column">
-					<input class="uni-input train-input" name="UserName" data-key="UserName" @input="setData" :placeholder="UserType=='company'?'用户名':'用户名/邮箱/手机号'" />
+					<input class="uni-input train-input" name="phone" data-key="phone" @input="setData" :placeholder="UserType=='company'?'用户名':'用户名/邮箱/手机号'" />
 				</view>
 				<view class="uni-form-item uni-column">
 					<view class="with-fun">
-						<input class="uni-input train-input" password name="Password" data-key="Password" @input="setData" placeholder="登录密码" />
+						<input class="uni-input train-input" password name="password" data-key="password" @input="setData" placeholder="登录密码" />
 					</view>
 				</view>
 				<view class="uni-btn-block">
@@ -45,8 +45,8 @@
 				poptype: "",
 				popTxtType: "company-reg",
 				formData: {
-					"UserName": "",
-					"Password": ""
+					"phone": "",
+					"password": ""
 				}
 			};
 		},
@@ -79,15 +79,15 @@
 				let _formData = that.formData;
 				//let _formData = e.detail.value;
 				that.loading = true
-				console.log(_formData);
+				//console.log(_formData);
 				var rule = [{
-						name: "UserName",
+						name: "phone",
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "用户名不能为空"
 					},
 					{
-						name: "Password",
+						name: "password",
 						checkType: "notnull",
 						checkRule: "",
 						errorMsg: "密码不能为空"
@@ -103,19 +103,38 @@
 						"method": "POST"
 					}
 					data["fun"] = function(res) {
-						console.log(res)
-						that.loading = false
 						if (res.success) {
-							res["data"]["UserType"] = that.UserType;
-							uni.setStorage({
-								key: "user",
-								data: res.data
-							});
-							that.$store.commit("change_page", 0)
-							// uni.redirectTo({
-							// 	url: "/"
-							// })
+							let _data = {
+								"inter": "info",
+								"header": {
+									"token": res.data.token
+								}
+							}
+							_data["fun"] = function(ress) {
+								console.log(ress)
+								that.loading = false
+								if (ress.success) {
+									ress["data"]["tabBarType"] = that.UserType;
+									uni.setStorage({
+										key: "user",
+										data: ress.data
+									});
+									uni.showToast({
+										title: "登录成功",
+										icon: "none",
+										duration: 1500
+									})
+									setTimeout(() => {
+										that.$store.commit("change_page", 0)
+										uni.redirectTo({
+											url: "/"
+										})
+									}, 1500)
+								}
+							}
+							that.$store.dispatch("getData", _data)
 						} else {
+							that.loading = false
 							uni.showToast({
 								title: res.msg,
 								icon: "none"

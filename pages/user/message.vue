@@ -11,16 +11,17 @@
 	export default {
 		data() {
 			return {
-				UserId:this.$store.state.user.UserId || ''
+				UserId: ""
 			}
 		},
 		onLoad() {
-
+			var that = this;
 		},
 		onShow() {
-			var that=this;
+			var that = this;
 			that.$store.dispatch('cheack_user');
-			that.$store.dispatch("cheack_page",1)
+			that.$store.dispatch("cheack_page", 1)
+			that.UserId = that.$store.state.user.userInfo.id || ''
 		},
 		methods: {
 

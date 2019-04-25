@@ -48,6 +48,7 @@ const store = new Vuex.Store({
 				url: _url,
 				data: parm.data || {},
 				method: parm.method || "GET",
+				header: parm.header || {},
 				success(res) {
 					//console.log(res)
 					if (res.success) {
@@ -77,15 +78,18 @@ const store = new Vuex.Store({
 				key: "user",
 				success: function(res) {
 					user = res.data;
-					if (user.UserId) {
-						ctx.dispatch("menu_" + user.UserType);
+					if (user.userInfo.id) {
+						ctx.dispatch("menu_" + user.tabBarType);
 					}
 					ctx.commit("get_user", user)
+				},
+				fail() {
+					ctx.commit("get_user", {})
 				}
 			})
 		},
 		cheack_page(ctx, index) {
-			if (ctx.state.user.UserId) {
+			if (ctx.state.user.userInfo && ctx.state.user.userInfo.id) {
 				ctx.commit("change_page", index)
 			} else {
 				uni.navigateTo({

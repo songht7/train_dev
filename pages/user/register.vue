@@ -111,10 +111,18 @@
 						console.log(res)
 						that.loading = false
 						if (res.success) {
-							that.$store.commit("change_page", 0)
-							uni.redirectTo({
-								url: "/"
-							})
+							//that.$store.commit("change_page", 0)
+							let tip = that.regType === 'forgetpw' ? "修改成功，请登录" : "注册成功";
+							uni.showToast({
+								title: tip,
+								icon: "none",
+								duration: 1500
+							});
+							setTimeout(() => {
+								uni.redirectTo({
+									url: "/pages/user/login?type=user"
+								})
+							}, 1500)
 						} else {
 							uni.showToast({
 								title: res.msg,
@@ -138,17 +146,7 @@
 			toRegister() {
 				var that = this;
 				if (that.UserType == "company") {
-					uni.showModal({
-						title: '提示',
-						content: '这是一个模态弹窗',
-						success: function(res) {
-							if (res.confirm) {
-								console.log('用户点击确定');
-							} else if (res.cancel) {
-								console.log('用户点击取消');
-							}
-						}
-					});
+
 				} else {
 					uni.navigateTo({
 						url: "/pages/user/register"

@@ -3,11 +3,11 @@
 		<view class="user-block">
 			<view class="user-head">
 				<view class="portrait">
-					<uni-icon v-show="!$store.state.user.Portrait" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
-					<image class="user-portrait" v-show="$store.state.user.Portrait" :src="$store.state.user.Portrait" mode="aspectFill"></image>
+					<uni-icon v-show="!$store.state.user.userInfo.portrait" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
+					<image class="user-portrait" v-show="$store.state.user.userInfo.portrait" :src="$store.state.user.userInfo.portrait" mode="aspectFill"></image>
 				</view>
 				<view class="user-infos">
-					<view class="user-name txt-sross">{{UserId?$store.state.user.UserName:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
+					<view class="user-name txt-sross">{{UserId?$store.state.user.userInfo.name:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
 					<navigator url="/pages/user/collect?id=1" class="user-more my-collect"><text>我的收藏</text></navigator>
 					<navigator url="/pages/user/resume?id=1" class="user-more my-resume"><text>我的简历</text></navigator>
 				</view>
@@ -87,7 +87,7 @@
 			var that = this;
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 2)
-			that.UserId = that.$store.state.user.UserId || '';
+			that.UserId = that.$store.state.user.userInfo.id || '';
 		},
 		methods: {
 

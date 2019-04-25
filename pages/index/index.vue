@@ -162,7 +162,7 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
-			that.$store.commit("change_page", 0)
+			that.$store.dispatch("cheack_page", 0)
 		},
 		methods: {
 
