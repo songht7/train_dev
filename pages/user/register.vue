@@ -63,7 +63,7 @@
 			let _type = e.type;
 			that.regType = _type ? _type : 'register';
 			uni.setNavigationBarTitle({
-				title: _type == "register" ? "个人注册" : "寻回密码"
+				title: that.regType === "register" ? "个人注册" : "寻回密码"
 			})
 			//this.$loading()
 			// 			uni.showLoading({

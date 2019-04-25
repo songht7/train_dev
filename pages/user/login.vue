@@ -21,17 +21,29 @@
 				<view class="more-btn" @click="toRegister('forgetpw')">忘记密码</view>
 			</view>
 		</view>
+		<uni-popup :show="poptype === 'company-reg'" position="middle" mode="fixed" width="70" @hidePopup="togglePopup('')">
+			<view class="company-reg-box">
+				<view class="comp-reg-info">
+					<view class="comp-reg-row">请与我们联系</view>
+					<view class="comp-reg-row">{{popTxtType=='company-reg'?"开通企业专属账号":"寻回密码"}}</view>
+				</view>
+				<view class="btns btns-full btns-big" @click="$store.dispatch('makePhoneCall')">拨打电话</view>
+			</view>
+		</uni-popup>
 		<loading></loading>
 	</view>
 </template>
 
 <script>
 	var graceChecker = require("@/common/graceChecker.js");
+	import uniPopup from '@/components/uni-popup.vue'
 	export default {
 		data() {
 			return {
 				UserType: "",
 				loading: false,
+				poptype: "",
+				popTxtType: "company-reg",
 				formData: {
 					"UserName": "",
 					"Password": ""
@@ -54,6 +66,9 @@
 
 		},
 		computed: {},
+		components: {
+			uniPopup
+		},
 		methods: {
 			formSubmit: function(e) {
 				var that = this;
@@ -119,23 +134,17 @@
 			toRegister(type) {
 				var that = this;
 				if (that.UserType == "company") {
-					uni.showModal({
-						title: '提示',
-						content: '这是一个模态弹窗',
-						success: function(res) {
-							if (res.confirm) {
-								console.log('用户点击确定');
-							} else if (res.cancel) {
-								console.log('用户点击取消');
-							}
-						}
-					});
+					that.poptype = "company-reg";
+					that.popTxtType = type ? "" : "company-reg";
 				} else {
 					let _type = type ? "?type=" + type : '';
 					uni.navigateTo({
 						url: `/pages/user/register${_type}`
 					})
 				}
+			},
+			togglePopup(type) {
+				this.poptype = type;
 			},
 			setData(e) {
 				//console.log(e);
