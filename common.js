@@ -14,7 +14,7 @@ export default {
 			"checkPhone": "/v4/ApiAuth-checkPhone.htm", //手机验证 测试：1111
 			"logout": "/v4/ApiAuth-logout.htm", //用户退出
 			"info": "/v4/ApiAccount-info.htm", //用户信息
-			"reset": "/v4/ApiAuth-reset.htm", //重置密码（A）
+			"reset": "/v4/ApiAuth-reset.htm", //重置密码[PUT]（A）
 		}
 	}
 }

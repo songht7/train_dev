@@ -124,6 +124,7 @@
 					}
 					if (that.regType === 'forgetpw') {
 						data["inter"] = "reset"
+						data["method"] = "PUT"
 					}
 					that.$store.dispatch("getData", data)
 				} else {
