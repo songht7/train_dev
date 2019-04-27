@@ -104,17 +104,20 @@
 					}
 					data["fun"] = function(res) {
 						if (res.success) {
+							var _token = res.data.token;
+							var deathline = res.data.deathline;
 							let _data = {
 								"inter": "info",
 								"header": {
-									"token": res.data.token
+									"token": _token
 								}
 							}
 							_data["fun"] = function(ress) {
-								console.log(ress)
 								that.loading = false
 								if (ress.success) {
 									ress["data"]["tabBarType"] = that.UserType;
+									ress["data"]["token"] = _token;
+									ress["data"]["deathline"] = deathline;
 									uni.setStorage({
 										key: "user",
 										data: ress.data

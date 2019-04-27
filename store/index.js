@@ -4,6 +4,11 @@ import tab_bar from "./modules/tab_bar.js"
 import common from "../common.js"
 Vue.use(Vuex)
 
+
+/*
+ *	dispatch.actions
+ * 	commit.mutations
+ * */
 const store = new Vuex.Store({
 	state: {
 		loading: "0",
@@ -26,7 +31,7 @@ const store = new Vuex.Store({
 
 		},
 		get_user(state, data) {
-			console.log(data)
+			console.log("store-get_user：", data)
 			state.user = data
 		},
 		update_data(state, data) {
@@ -41,8 +46,8 @@ const store = new Vuex.Store({
 			ctx.commit("switch_loading", "1")
 			let _parm = parm.parm || '';
 			let _url = ctx.state.interface.apiurl + ctx.state.interface.addr[parm.inter] + _parm
-			console.log(_url)
-			console.log(parm)
+			console.log("getData-url-", parm.inter, "：", _url)
+			console.log("getData-parm-", parm.inter, "：", parm)
 			var result = [];
 			uni.request({
 				url: _url,
@@ -55,9 +60,10 @@ const store = new Vuex.Store({
 						ctx.commit("update_data", res.data.data)
 					}
 					result = res.data
+					console.log("getData-success-", parm.inter, "：", result)
 				},
 				fail(err) {
-					console.log(err)
+					console.log("getData-err-", parm.inter, "：", err)
 					result = {
 						"success": false,
 						"Msg": "接口请求失败",

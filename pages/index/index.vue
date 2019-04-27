@@ -9,12 +9,13 @@
 			</view>
 			<view class="block slidebox">
 				<view class="swiper-block" v-if="swiperList.length">
-					<swiper class="swiper-box swiper-slide" indicator-dots="indicatorDots" autoplay="autoplay" circular="circular"
-					 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
+					<swiper class="swiper-box swiper-slide" :indicator="swiperList.length>1?'indicator-dots':''" autoplay="autoplay"
+					 circular="circular" interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
 						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 							<view class="vli">
 								<view class="vli2">
-									<image class="slideImg" @click="linkTo(slide.link)" lazy-load="true" :src="sourceUrl+slide.original_src" mode="aspectFill"></image>
+									<image class="slideImg" @click="linkTo(slide.link,slide.id)" lazy-load="true" :src="sourceUrl+slide.original_src"
+									 mode="aspectFill"></image>
 								</view>
 							</view>
 						</swiper-item>
@@ -59,13 +60,7 @@
 	export default {
 		data() {
 			return {
-				swiperList: [{
-					"link": "",
-					"original_src": "/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg"
-				}, {
-					"link": "",
-					"original_src": "/data/image_doc/77b0cb2473b3d3f4b73c3090183b3c2b.jpg"
-				}],
+				swiperList: [],
 				category: [{
 						"id": 1,
 						"val": "培训",
@@ -157,12 +152,41 @@
 			}
 		},
 		onLoad() {
-
+			console.log("onLoad")
+			var that = this;
 		},
 		onShow() {
+			console.log("onShow")
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$store.dispatch("cheack_page", 0)
+		},
+		onReady() {
+			console.log("onReady")
+			var that = this;
+			/*轮播*/
+			let data = {
+				"inter": "slideShow"
+			}
+			data["fun"] = function(res) {
+				if (res.success) {
+					that.swiperList = res.data.list
+				}
+			}
+			that.$store.dispatch("getData", data)
+
+			/*分类*/
+			let data_ctg = {
+				"inter": "categorys",
+				"header": {
+					"token": that.$store.state.user.token
+				}
+			}
+			data_ctg["fun"] = function(res) {
+				if (res.success) {
+				}
+			}
+			that.$store.dispatch("getData", data_ctg)
 		},
 		methods: {
 
