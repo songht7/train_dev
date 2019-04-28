@@ -25,7 +25,7 @@
 			<view class="block category-box">
 				<view class="ctgs">
 					<block v-for="(ctg,c) in category" :key="c">
-						<navigator class="ctg-link" :url="ctg.link">
+						<navigator class="ctg-link" :url="`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`">
 							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
 								<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icon>
 							</view>
@@ -36,11 +36,12 @@
 				<view class="ctgs ctgs-sub">
 					<block v-for="(ctg,s) in categorySub" :key="s">
 						<view class="ctg-link ctg-link-sub">
-							<navigator class="link-btn link-btn-sub" :url="ctg.link">
-								<view class="ctg-icon-sub" :class="['ctg-'+ctg.icon]">
-									<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
+							<navigator class="link-btn link-btn-sub" :url="'/pages/train/index?c='+s+'&ctg_id='+ctg.id">
+								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
+									<uni-icon v-show="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
+									<image v-show="ctg.original_src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.original_src" mode="aspectFill"></image>
 								</view>
-								<text class="ctg-txt">{{ctg.val}}</text>
+								<text class="ctg-txt">{{ctg.name}}</text>
 							</navigator>
 						</view>
 					</block>
@@ -66,89 +67,95 @@
 						"val": "培训",
 						"link": "/pages/train/index",
 						"icon": "boshimao1",
-						"size": 50
+						"size": 50,
+						"ctg_id":""
 					},
 					{
 						"id": 2,
 						"icon": "icon_likegood_fill",
 						"val": "技术支持",
-						"link": "/pages/technical/index"
+						"link": "/pages/technical/index",
+						"ctg_id":""
 					},
 					{
 						"id": 3,
 						"icon": "ai-book",
 						"val": "文库",
-						"link": "/pages/library/index"
+						"link": "/pages/library/index",
+						"ctg_id":""
 					},
 					{
 						"id": 4,
 						"icon": "gongwenbao1",
 						"val": "工作机会",
 						"link": "",
-						"size": 40
+						"size": 40,
+						"ctg_id":""
 					},
 				],
-				categorySub: [{
-					"id": 1,
-					"icon": "zhiliang",
-					"val": "质量单元",
-					"link": "/pages/train/index?c=0"
-				}, {
-					"id": 2,
-					"icon": "deng",
-					"val": "工艺单元",
-					"link": "/pages/train/index?c=1"
-				}, {
-					"id": 3,
-					"icon": "wuliuqiache2",
-					"val": "物流单元",
-					"link": "/pages/train/index?c=2"
-				}, {
-					"id": 4,
-					"icon": "caigouon",
-					"val": "采购单元",
-					"link": ""
-				}, {
-					"id": 5,
-					"icon": "huaban",
-					"val": "人事单元",
-					"link": ""
-				}, {
-					"id": 6,
-					"icon": "wenjianjia1",
-					"val": "行政单元",
-					"link": ""
-				}, {
-					"id": 7,
-					"icon": "homenav6",
-					"val": "财务单元",
-					"link": ""
-				}, {
-					"id": 8,
-					"icon": "icon02",
-					"val": "生产单元",
-					"link": ""
-				}, {
-					"id": 9,
-					"icon": "laba-fill",
-					"val": "市场单元",
-					"link": ""
-				}, {
-					"id": 10,
-					"icon": "shebeiguanli",
-					"val": "设备单元",
-					"link": ""
-				}, {
-					"id": 11,
-					"icon": "chanpin",
-					"val": "产品单元",
-					"link": ""
-				}, {
-					"id": 12,
-					"icon": "lingdaitie3",
-					"val": "职场附加",
-					"link": ""
-				}]
+				categorySub: [
+					// 					{
+					// 					"id": 1,
+					// 					"icon": "zhiliang",
+					// 					"val": "质量单元",
+					// 					"link": "/pages/train/index?c=0"
+					// 				}, {
+					// 					"id": 2,
+					// 					"icon": "deng",
+					// 					"val": "工艺单元",
+					// 					"link": "/pages/train/index?c=1"
+					// 				}, {
+					// 					"id": 3,
+					// 					"icon": "wuliuqiache2",
+					// 					"val": "物流单元",
+					// 					"link": "/pages/train/index?c=2"
+					// 				}, {
+					// 					"id": 4,
+					// 					"icon": "caigouon",
+					// 					"val": "采购单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 5,
+					// 					"icon": "huaban",
+					// 					"val": "人事单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 6,
+					// 					"icon": "wenjianjia1",
+					// 					"val": "行政单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 7,
+					// 					"icon": "homenav6",
+					// 					"val": "财务单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 8,
+					// 					"icon": "icon02",
+					// 					"val": "生产单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 9,
+					// 					"icon": "laba-fill",
+					// 					"val": "市场单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 10,
+					// 					"icon": "shebeiguanli",
+					// 					"val": "设备单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 11,
+					// 					"icon": "chanpin",
+					// 					"val": "产品单元",
+					// 					"link": ""
+					// 				}, {
+					// 					"id": 12,
+					// 					"icon": "lingdaitie3",
+					// 					"val": "职场附加",
+					// 					"link": ""
+					// 				},
+				]
 			}
 		},
 		onLoad() {
@@ -178,12 +185,16 @@
 			/*分类*/
 			let data_ctg = {
 				"inter": "categorys",
+				"parm": "?cat_id=1",
 				"header": {
 					"token": that.$store.state.user.token
 				}
 			}
 			data_ctg["fun"] = function(res) {
 				if (res.success) {
+					let _ctg = res.data.list;
+					that.categorySub = _ctg.filter(element => element.parent_id == 1);
+					that.category[0]["ctg_id"] = that.categorySub[0]["id"];
 				}
 			}
 			that.$store.dispatch("getData", data_ctg)

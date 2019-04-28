@@ -1,17 +1,17 @@
 <template>
 	<view>
 		<view class="list-cell" hover-class="uni-list-cell-hover" @click="bindClick">
-			<view class="train-list" v-if="data.title">
+			<view class="train-list" v-if="data.id">
 				<view class="train-block">
 					<view v-if="showImg" class="image-section">
-						<image class="image-full" v-if="data.image_url" :src="data.image_url"></image>
+						<image class="image-full" :src="data.original_src?data.original_src:'/static/icon-1.png'"></image>
 					</view>
 					<view class="train-infos">
 						<view class="train-title">
-							<text class="media-title">{{data.title}}</text>
+							<text class="media-title">{{data.name}}{{data.id}}</text>
 							<text v-if="data.overview">{{data.overview}}</text>
 						</view>
-						<view class="train-count" v-if="data.count">共{{data.count}}门课程</view>
+						<view class="train-count" v-if="data.text_max">共{{data.text_max}}门课程</view>
 					</view>
 				</view>
 			</view>
@@ -31,7 +31,8 @@
 		},
 		computed: {
 			showImg() {
-				return this.data.image_url
+				return true
+				//return this.data.original_src
 			}
 		},
 		methods: {

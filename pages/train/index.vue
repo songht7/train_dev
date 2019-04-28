@@ -1,8 +1,8 @@
 <template>
 	<view class="uni-tab-bar">
 		<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="scrollLeft">
-			<view v-for="(tab,index) in tabBars" :key="tab.id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']" :id="tab.id"
-			 :data-current="index" @click="tapTab(index)">{{tab.name}}</view>
+			<view v-for="(tab,index) in tabBars" :key="'id_'+tab.id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']"
+			 :id="tab.id" :data-current="index" @click="tapTab(index,tab.id)">{{tab.name}}</view>
 		</scroll-view>
 		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab">
 			<swiper-item v-for="(tab,index1) in newsitems" :key="index1">
@@ -37,47 +37,57 @@
 				isClickChange: false,
 				tabIndex: 0,
 				newsitems: [],
+				ctgId: "",
 				list: {
-					"id": 1,
-					"title": "质量快速入门",
-					"overview": "来这里，一周入门质检",
-					"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
-					"count": "6"
+					// "id": 1,
+					// "title": "质量快速入门",
+					// "overview": "来这里，一周入门质检",
+					// "image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
+					// "count": "6"
 				},
-				tabBars: [{
-					name: '质量单元',
-					id: 'id_1'
-				}, {
-					name: '工艺单元',
-					id: 'id_2'
-				}, {
-					name: '物流单元',
-					id: 'id_3'
-				}, {
-					name: '热点',
-					id: 'id_4'
-				}, {
-					name: '财经',
-					id: 'id_5'
-				}, {
-					name: '娱乐',
-					id: 'id_6'
-				}, {
-					name: '军事',
-					id: 'id_7'
-				}, {
-					name: '历史',
-					id: 'id_8'
-				}, {
-					name: '本地',
-					id: 'id_9'
-				}]
+				tabBars: []
 			}
 		},
 		onLoad: function(e) {
-			this.newsitems = this.randomfn()
-			console.log(this.randomfn())
-			this.tabIndex = e.c;
+			var that = this;
+			that.tabIndex = e.c || 0;
+			that.ctgId = e.ctg_id;
+		},
+		onShow() {
+			var that = this;
+			that.$store.dispatch('cheack_user')
+		},
+		onReady() {
+			var that = this;
+			/*分类*/
+			let data_ctg = {
+				"inter": "categorys",
+				"header": {
+					"token": that.$store.state.user.token
+				}
+			}
+			data_ctg["fun"] = function(res) {
+				if (res.success) {
+					let _ctg = res.data.list;
+					_ctg = _ctg.filter(element => element.parent_id == 1);
+					that.tabBars = _ctg;
+					let ary = [];
+					for (let i = 0, length = _ctg.length; i < length; i++) {
+						let aryItem = {
+							loadingType: 0,
+							pageIndex: 1,
+							pageSize: 10,
+							data: []
+						};
+						ary.push(aryItem);
+					}
+					that.newsitems = ary;
+					console.log(ary)
+					/*分类下列表*/
+					that.getList()
+				}
+			}
+			that.$store.dispatch("getData", data_ctg)
 		},
 		methods: {
 			goDetail(e) {
@@ -139,30 +149,76 @@
 					}).exec();
 				});
 			},
-			async tapTab(index) { //点击tab-bar
-				if (this.tabIndex === index) {
+			async tapTab(index, ctg_id) { //点击tab-bar
+				var that = this;
+				if (that.tabIndex === index) {
 					return false;
 				} else {
-					let tabBar = await this.getElSize("tab-bar"),
+					let tabBar = await that.getElSize("tab-bar"),
 						tabBarScrollLeft = tabBar.scrollLeft; //点击的时候记录并设置scrollLeft
-					this.scrollLeft = tabBarScrollLeft;
-					this.isClickChange = true;
-					this.tabIndex = index;
+					that.scrollLeft = tabBarScrollLeft;
+					that.isClickChange = true;
+					that.tabIndex = index;
+					that.ctgId = ctg_id;
+					that.getList('tapTab');
 				}
 			},
-			randomfn() {
-				let ary = [];
-				for (let i = 0, length = this.tabBars.length; i < length; i++) {
-					let aryItem = {
-						loadingType: 0,
-						data: []
-					};
-					for (let j = 1; j <= 10; j++) {
-						aryItem.data.push(this['list']);
-					}
-					ary.push(aryItem);
+			getList(getType) {
+				var that = this;
+				var ary = [],
+					ni = that.newsitems,
+					ti = that.tabIndex, //当前tab index
+					cPI = ni[ti].pageIndex; //当前页码
+				var mPI = "";
+				switch (getType) {
+					case "getMore": //getType=="getMore" 获取更多
+						mPI = cPI + 1;
+						break;
+					case "tapTab": //getType=="tapTab" tab切换
+						mPI = ni[ti].data.length <= 0 ? cPI : "tapTab"; //切换tab当前列表为空获取，不为空retrun
+						break;
+					default:
+						mPI = cPI;
+						break;
 				}
-				return ary;
+				console.log(ni[ti].data);
+				console.log(mPI);
+				if (mPI === "tapTab") {
+					return
+				}
+				let data = {
+					"inter": "courses",
+					"parm": `?id=${that.ctgId}&pageIndex=${mPI}&pageSize=${ni[ti].pageSize}`,
+					"header": {
+						"token": that.$store.state.user.token
+					}
+				}
+				data["fun"] = function(res) {
+					if (res.success) {
+						console.log("getlist-tabIndex:", ti)
+						if (res.data.list) {
+							let a1 = ni[ti].data,
+								a2 = res.data.list;
+							Array.prototype.push.apply(a1, a2);
+							console.log("getlist-newsitems:", ni)
+						} else {
+							ni[ti].loadingType = 2;
+						}
+					}
+				}
+				that.$store.dispatch("getData", data)
+
+				// for (let i = 0, length = this.tabBars.length; i < length; i++) {
+				// 	let aryItem = {
+				// 		loadingType: 0,
+				// 		data: []
+				// 	};
+				// 	for (let j = 1; j <= 10; j++) {
+				// 		aryItem.data.push(this['list']);
+				// 	}
+				// 	ary.push(aryItem);
+				// }
+				// return ary;
 			}
 		}
 	}
