@@ -185,10 +185,7 @@
 			/*分类*/
 			let data_ctg = {
 				"inter": "categorys",
-				"parm": "?cat_id=1",
-				"header": {
-					"token": that.$store.state.user.token
-				}
+				"parm": "?cat_id=1"
 			}
 			data_ctg["fun"] = function(res) {
 				if (res.success) {

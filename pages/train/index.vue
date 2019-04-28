@@ -62,8 +62,9 @@
 			/*分类*/
 			let data_ctg = {
 				"inter": "categorys",
+				"parm": "?cat_id=1",
 				"header": {
-					"token": that.$store.state.user.token
+					"token": that.$store.state.user.token || ""
 				}
 			}
 			data_ctg["fun"] = function(res) {
@@ -88,6 +89,9 @@
 				}
 			}
 			that.$store.dispatch("getData", data_ctg)
+		},
+		onPullDownRefresh() {
+			this.getList();
 		},
 		methods: {
 			goDetail(e) {
@@ -188,7 +192,7 @@
 				}
 				let data = {
 					"inter": "courses",
-					"parm": `?id=${that.ctgId}&pageIndex=${mPI}&pageSize=${ni[ti].pageSize}`,
+					"parm": `?cat_id=${that.ctgId}&currentPage=${mPI}&pagesize=${ni[ti].pageSize}`,
 					"header": {
 						"token": that.$store.state.user.token
 					}
@@ -205,6 +209,7 @@
 							ni[ti].loadingType = 2;
 						}
 					}
+					uni.stopPullDownRefresh();
 				}
 				that.$store.dispatch("getData", data)
 
