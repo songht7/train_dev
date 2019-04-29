@@ -206,22 +206,3 @@
 .percent {
 	text-align: right;
 }
-
-/*公司注册、忘记密码弹出框 */
-.company-reg-box {
-	width: 100%;
-}
-
-.comp-reg-info {
-	padding: 0 10upx 40upx;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-.comp-reg-row{
-	color: #008CEE;
-	font-size: 36upx;
-	line-height: 1.8;
-}

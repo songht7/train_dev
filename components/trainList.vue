@@ -4,14 +4,14 @@
 			<view class="train-list" v-if="data.id">
 				<view class="train-block">
 					<view v-if="showImg" class="image-section">
-						<image class="image-full" :src="data.original_src?data.original_src:'/static/icon-1.png'"></image>
+						<image class="image-full" :src="data.original_src?sourceUrl+data.original_src:'/static/icon-1.png'"></image>
 					</view>
 					<view class="train-infos">
 						<view class="train-title">
-							<text class="media-title">{{data.name}}{{data.id}}</text>
+							<text class="media-title">{{data.name}}</text>
 							<text v-if="data.overview">{{data.overview}}</text>
 						</view>
-						<view class="train-count" v-if="data.text_max">共{{data.text_max}}门课程</view>
+						<view class="train-count" v-if="data.lessCount">共{{data.lessCount}}门课程</view>
 					</view>
 				</view>
 			</view>

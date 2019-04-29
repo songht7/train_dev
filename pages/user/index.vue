@@ -4,10 +4,11 @@
 			<view class="user-head">
 				<view class="portrait">
 					<uni-icon v-show="!$store.state.user.userInfo.portrait" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
-					<image class="user-portrait" v-show="$store.state.user.userInfo.portrait" :src="$store.state.user.userInfo.portrait" mode="aspectFill"></image>
+					<image class="user-portrait" v-show="$store.state.user.userInfo.portrait" :src="$store.state.user.userInfo.portrait"
+					 mode="aspectFill"></image>
 				</view>
 				<view class="user-infos">
-					<view class="user-name txt-sross">{{UserId?$store.state.user.userInfo.name:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
+					<view class="user-name txt-sross">{{UserId?$store.state.user.userInfo.name:"用户名"}}<text class="logout" @click="logout">[退出]</text></view>
 					<navigator url="/pages/user/collect?id=1" class="user-more my-collect"><text>我的收藏</text></navigator>
 					<navigator url="/pages/user/resume?id=1" class="user-more my-resume"><text>我的简历</text></navigator>
 				</view>
@@ -76,7 +77,8 @@
 	export default {
 		data() {
 			return {
-				UserId: ""
+				UserId: "",
+				__token: ""
 			}
 		},
 		components: {
@@ -88,9 +90,40 @@
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 2)
 			that.UserId = that.$store.state.user.userInfo.id || '';
+			that.__token = that.$store.state.user.token;
+			if (!that.__token) {
+				uni.redirectTo({
+					url: "/pages/index/index"
+				})
+			}
 		},
 		methods: {
-
+			logout() {
+				var that = this;
+				let data = {
+					"inter": "logout",
+					"header": {
+						"Content-Type": "application/json",
+						"token": that.__token
+					},
+					"method": "DELETE"
+				}
+				data["fun"] = function(res) {
+					if (res.success) {
+						uni.removeStorage({
+							key: 'user',
+							success: function(res) {
+								that.$store.commit("get_user", {})
+								that.$store.dispatch("menu_default")
+								uni.redirectTo({
+									url: '/pages/index/index'
+								});
+							}
+						});
+					}
+				}
+				that.$store.dispatch("getData", data)
+			}
 		}
 	}
 </script>

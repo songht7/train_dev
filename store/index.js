@@ -84,7 +84,14 @@ const store = new Vuex.Store({
 				key: "user",
 				success: function(res) {
 					user = res.data;
-					if (user.userInfo.id) {
+					let timestamp = Math.round(new Date().getTime()/1000);
+					if (!user.deathline || timestamp >= user.deathline) {
+						uni.removeStorage({
+							key: "user"
+						});
+						ctx.dispatch("menu_default");
+						user = {};
+					} else {
 						ctx.dispatch("menu_" + user.tabBarType);
 					}
 					ctx.commit("get_user", user)

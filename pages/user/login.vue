@@ -22,10 +22,10 @@
 			</view>
 		</view>
 		<uni-popup :show="poptype === 'company-reg'" position="middle" mode="fixed" width="70" @hidePopup="togglePopup('')">
-			<view class="company-reg-box">
-				<view class="comp-reg-info">
-					<view class="comp-reg-row">请与我们联系</view>
-					<view class="comp-reg-row">{{popTxtType=='company-reg'?"开通企业专属账号":"寻回密码"}}</view>
+			<view class="train-show-modal-box">
+				<view class="train-show-modal-info">
+					<view class="train-show-modal-row">请与我们联系</view>
+					<view class="train-show-modal-row">{{popTxtType=='company-reg'?"开通企业专属账号":"寻回密码"}}</view>
 				</view>
 				<view class="btns btns-full btns-big" @click="$store.dispatch('makePhoneCall')">拨打电话</view>
 			</view>

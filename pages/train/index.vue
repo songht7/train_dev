@@ -56,6 +56,11 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
+			if (!that.$store.state.user.userInfo) {
+				uni.redirectTo({
+					url: "/pages/index/index"
+				})
+			}
 		},
 		onReady() {
 			var that = this;
@@ -91,7 +96,7 @@
 			that.$store.dispatch("getData", data_ctg)
 		},
 		onPullDownRefresh() {
-			this.getList();
+			this.getList("refresh");
 		},
 		methods: {
 			goDetail(e) {
@@ -181,6 +186,9 @@
 					case "tapTab": //getType=="tapTab" tab切换
 						mPI = ni[ti].data.length <= 0 ? cPI : "tapTab"; //切换tab当前列表为空获取，不为空retrun
 						break;
+					case "refresh":
+						mPI = 1;
+						break;
 					default:
 						mPI = cPI;
 						break;
@@ -201,9 +209,13 @@
 					if (res.success) {
 						console.log("getlist-tabIndex:", ti)
 						if (res.data.list) {
-							let a1 = ni[ti].data,
-								a2 = res.data.list;
-							Array.prototype.push.apply(a1, a2);
+							if (getType == "refresh") {
+								ni[ti].data = res.data.list;
+							} else {
+								let a1 = ni[ti].data,
+									a2 = res.data.list;
+								Array.prototype.push.apply(a1, a2);
+							}
 							console.log("getlist-newsitems:", ni)
 						} else {
 							ni[ti].loadingType = 2;

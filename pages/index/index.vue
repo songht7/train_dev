@@ -25,24 +25,24 @@
 			<view class="block category-box">
 				<view class="ctgs">
 					<block v-for="(ctg,c) in category" :key="c">
-						<navigator class="ctg-link" :url="`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`">
+						<view class="ctg-link" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
 							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
 								<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icon>
 							</view>
 							<text class="ctg-txt">{{ctg.val}}</text>
-						</navigator>
+						</view>
 					</block>
 				</view>
 				<view class="ctgs ctgs-sub">
 					<block v-for="(ctg,s) in categorySub" :key="s">
 						<view class="ctg-link ctg-link-sub">
-							<navigator class="link-btn link-btn-sub" :url="'/pages/train/index?c='+s+'&ctg_id='+ctg.id">
+							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icon v-show="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
 									<image v-show="ctg.original_src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.original_src" mode="aspectFill"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
-							</navigator>
+							</view>
 						</view>
 					</block>
 				</view>
@@ -53,36 +53,46 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup :show="poptype === 'getNotUser'" position="middle" mode="fixed" width="70" @hidePopup="togglePopup('')">
+			<view class="train-show-modal-box">
+				<view class="train-show-modal-info">
+					<view class="train-show-modal-row">您还未登录</view>
+				</view>
+				<view class="btns btns-full btns-big" @click="togglePopup('')">前往登录</view>
+			</view>
+		</uni-popup>
 		<tab-bar></tab-bar>
 	</view>
 </template>
 
 <script>
+	import uniPopup from '@/components/uni-popup.vue'
 	export default {
 		data() {
 			return {
 				swiperList: [],
+				poptype: "",
 				category: [{
 						"id": 1,
 						"val": "培训",
 						"link": "/pages/train/index",
 						"icon": "boshimao1",
 						"size": 50,
-						"ctg_id":""
+						"ctg_id": ""
 					},
 					{
 						"id": 2,
 						"icon": "icon_likegood_fill",
 						"val": "技术支持",
 						"link": "/pages/technical/index",
-						"ctg_id":""
+						"ctg_id": ""
 					},
 					{
 						"id": 3,
 						"icon": "ai-book",
 						"val": "文库",
 						"link": "/pages/library/index",
-						"ctg_id":""
+						"ctg_id": ""
 					},
 					{
 						"id": 4,
@@ -90,7 +100,7 @@
 						"val": "工作机会",
 						"link": "",
 						"size": 40,
-						"ctg_id":""
+						"ctg_id": ""
 					},
 				],
 				categorySub: [
@@ -196,8 +206,23 @@
 			}
 			that.$store.dispatch("getData", data_ctg)
 		},
+		components: {
+			uniPopup
+		},
 		methods: {
-
+			navTo(url) {
+				var that = this;
+				if (that.$store.state.user.userInfo) {
+					uni.navigateTo({
+						url: url
+					})
+				} else {
+					that.poptype = "getNotUser";
+				}
+			},
+			togglePopup(type) {
+				this.poptype = type;
+			}
 		}
 	}
 </script>

@@ -6,7 +6,7 @@
 
 export default {
 	Interface: {
-		"apiurl": " http://api_test.wsshanghai.com",//space111111
+		"apiurl": "http://api_test.wsshanghai.com",//space111111
 		"domain": "http://wsshanghai.com",
 		"addr": {
 			"slideShow":"/v2/ApiHome-slideShow.htm",//首页列表

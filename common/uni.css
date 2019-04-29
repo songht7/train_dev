@@ -138,7 +138,24 @@
 	width: 90%;
 	left: 5%;
 }
+/*train show Modal */
+.train-show-modal-box {
+	width: 100%;
+}
 
+.train-show-modal-info {
+	padding: 0 10upx 40upx;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.train-show-modal-row{
+	color: #008CEE;
+	font-size: 36upx;
+	line-height: 1.8;
+}
 /*list*/
 
 .list-row {
