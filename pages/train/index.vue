@@ -37,6 +37,7 @@
 				isClickChange: false,
 				tabIndex: 0,
 				newsitems: [],
+				pageSize: 10,
 				ctgId: "",
 				list: {
 					// "id": 1,
@@ -77,18 +78,17 @@
 					let _ctg = res.data.list;
 					_ctg = _ctg.filter(element => element.parent_id == 1);
 					that.tabBars = _ctg;
-					let ary = [];
-					for (let i = 0, length = _ctg.length; i < length; i++) {
-						let aryItem = {
-							loadingType: 0,
-							pageIndex: 1,
-							pageSize: 10,
-							data: []
-						};
-						ary.push(aryItem);
-					}
-					that.newsitems = ary;
-					console.log(ary)
+					// let ary = [];
+					// for (let i = 0, length = _ctg.length; i < length; i++) {
+					// 	let aryItem = {
+					// 		loadingType: 0,
+					// 		pageIndex: 1,
+					// 		data: []
+					// 	};
+					// 	ary.push(aryItem);
+					// }
+					// that.newsitems = ary;
+					// console.log(ary)
 					/*分类下列表*/
 					that.getList()
 				}
@@ -175,16 +175,16 @@
 			getList(getType) {
 				var that = this;
 				var ary = [],
-					ni = that.newsitems,
 					ti = that.tabIndex, //当前tab index
-					cPI = ni[ti].pageIndex; //当前页码
+					ni = that.newsitems,
+					cPI = ni[ti] && ni[ti]["pageIndex"] ? ni[ti]["pageIndex"] : 1; //当前页码
 				var mPI = "";
 				switch (getType) {
 					case "getMore": //getType=="getMore" 获取更多
 						mPI = cPI + 1;
 						break;
 					case "tapTab": //getType=="tapTab" tab切换
-						mPI = ni[ti].data.length <= 0 ? cPI : "tapTab"; //切换tab当前列表为空获取，不为空retrun
+						mPI = ni[ti] == undefined || ni[ti].data.length <= 0 ? cPI : "tapTab"; //切换tab当前列表为空获取，不为空retrun
 						break;
 					case "refresh":
 						mPI = 1;
@@ -193,14 +193,14 @@
 						mPI = cPI;
 						break;
 				}
-				console.log(ni[ti].data);
 				console.log(mPI);
+				console.log(ni[ti]);
 				if (mPI === "tapTab") {
 					return
 				}
 				let data = {
 					"inter": "courses",
-					"parm": `?cat_id=${that.ctgId}&currentPage=${mPI}&pagesize=${ni[ti].pageSize}`,
+					"parm": `?cat_id=${that.ctgId}&currentPage=${mPI}&pagesize=${that.pageSize}`,
 					"header": {
 						"token": that.$store.state.user.token
 					}
@@ -208,17 +208,39 @@
 				data["fun"] = function(res) {
 					if (res.success) {
 						console.log("getlist-tabIndex:", ti)
+						var aryItem = {
+							"loadingType": 0,
+							"pageIndex": 1,
+							"data": []
+						};
 						if (res.data.list) {
+							var res_list = res.data.list;
 							if (getType == "refresh") {
-								ni[ti].data = res.data.list;
+								ni[ti]["data"] = res_list;
 							} else {
-								let a1 = ni[ti].data,
-									a2 = res.data.list;
-								Array.prototype.push.apply(a1, a2);
+								console.log(123123)
+								if (mPI > 1) {
+									ni[ti].push(res_list);
+								} else {
+									if (ni[ti] && ni[ti].data) {
+										let d1 = ni[ti].data;
+										Array.prototype.push.apply(d1, res_list);
+									} else {
+										aryItem["data"] = res_list;
+										ni.push(aryItem);
+									}
+								}
+								//that.newsitems.push(aryItem);
 							}
 							console.log("getlist-newsitems:", ni)
 						} else {
-							ni[ti].loadingType = 2;
+							if (ni[ti]) {
+								ni[ti]["loadingType"] = 2;
+							} else {
+								aryItem["loadingType"] = 2;
+								ni.push(aryItem);
+							}
+							//ni[ti]["loadingType"] = 2;
 						}
 					}
 					uni.stopPullDownRefresh();
