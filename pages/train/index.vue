@@ -1,8 +1,8 @@
 <template>
 	<view class="uni-tab-bar">
 		<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="scrollLeft">
-			<view v-for="(tab,index) in tabBars" :key="'id_'+tab.id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']"
-			 :id="tab.id" :data-current="index" @click="tapTab(index,tab.id)">{{tab.name}}</view>
+			<view v-for="(tab,index) in tabBars" :key="tab.tab_id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']"
+			 :id="tab.tab_id" :data-current="index" @click="tapTab(index,tab.id)">{{tab.name}}</view>
 		</scroll-view>
 		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab">
 			<swiper-item v-for="(tab,index1) in newsitems" :key="index1">
@@ -11,7 +11,7 @@
 						<train-list :data="newsitem" @click="goDetail(newsitem)"></train-list>
 					</block>
 					<view class="uni-tab-bar-loading">
-						<uni-load-more :loadingType="tab.loadingType" :contentText="loadingText"></uni-load-more>
+						{{tab.loadingText}}
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -28,17 +28,12 @@
 		},
 		data() {
 			return {
-				loadingText: {
-					contentdown: "上拉显示更多",
-					contentrefresh: "正在加载...",
-					contentnomore: "没有更多数据了"
-				},
 				scrollLeft: 0,
 				isClickChange: false,
 				tabIndex: 0,
 				newsitems: [],
-				pageSize: 10,
 				ctgId: "",
+				pageSize: 10,
 				list: {
 					// "id": 1,
 					// "title": "质量快速入门",
@@ -61,39 +56,33 @@
 				uni.redirectTo({
 					url: "/pages/index/index"
 				})
+			} else {
+				/*分类*/
+				let data_ctg = {
+					"inter": "categorys",
+					"parm": "?cat_id=1",
+					"header": {
+						"token": that.$store.state.user.token || ""
+					}
+				}
+				data_ctg["fun"] = function(res) {
+					if (res.success) {
+						let _ctg = res.data.list;
+						_ctg = _ctg.filter(element => element.parent_id == 1);
+						for (let i = 0, length = _ctg.length; i < length; i++) {
+							/*分类下列表*/
+							_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
+							that.getList("init", _ctg[i].id)
+						}
+						that.tabBars = _ctg;
+					}
+				}
+				that.$store.dispatch("getData", data_ctg)
 			}
 		},
 		onReady() {
 			var that = this;
-			/*分类*/
-			let data_ctg = {
-				"inter": "categorys",
-				"parm": "?cat_id=1",
-				"header": {
-					"token": that.$store.state.user.token || ""
-				}
-			}
-			data_ctg["fun"] = function(res) {
-				if (res.success) {
-					let _ctg = res.data.list;
-					_ctg = _ctg.filter(element => element.parent_id == 1);
-					that.tabBars = _ctg;
-					// let ary = [];
-					// for (let i = 0, length = _ctg.length; i < length; i++) {
-					// 	let aryItem = {
-					// 		loadingType: 0,
-					// 		pageIndex: 1,
-					// 		data: []
-					// 	};
-					// 	ary.push(aryItem);
-					// }
-					// that.newsitems = ary;
-					// console.log(ary)
-					/*分类下列表*/
-					that.getList()
-				}
-			}
-			that.$store.dispatch("getData", data_ctg)
+			console.log(that.newsitems)
 		},
 		onPullDownRefresh() {
 			this.getList("refresh");
@@ -122,7 +111,6 @@
 			},
 			async changeTab(e) {
 				let index = e.detail.current;
-				console.log(index)
 				if (this.isClickChange) {
 					this.tabIndex = index;
 					this.isClickChange = false;
@@ -133,11 +121,11 @@
 				let width = 0;
 
 				for (let i = 0; i < index; i++) {
-					let result = await this.getElSize(this.tabBars[i].id);
+					let result = await this.getElSize(this.tabBars[i].tab_id);
 					width += result.width;
 				}
 				let winWidth = uni.getSystemInfoSync().windowWidth,
-					nowElement = await this.getElSize(this.tabBars[index].id),
+					nowElement = await this.getElSize(this.tabBars[index].tab_id),
 					nowWidth = nowElement.width;
 				if (width + nowWidth - tabBarScrollLeft > winWidth) {
 					this.scrollLeft = width + nowWidth - winWidth;
@@ -172,19 +160,22 @@
 					that.getList('tapTab');
 				}
 			},
-			getList(getType) {
+			getList(getType, ctgId) {
 				var that = this;
 				var ary = [],
-					ti = that.tabIndex, //当前tab index
 					ni = that.newsitems,
-					cPI = ni[ti] && ni[ti]["pageIndex"] ? ni[ti]["pageIndex"] : 1; //当前页码
+					ti = that.tabIndex, //当前tab index
+					cPI = ni[ti] && ni[ti].pageIndex ? ni[ti].pageIndex : 1; //当前页码
+				if (ni[ti] && ni[ti].loadingText) {
+					ni[ti].loadingText = "正在加载...";
+				}
 				var mPI = "";
 				switch (getType) {
 					case "getMore": //getType=="getMore" 获取更多
 						mPI = cPI + 1;
 						break;
 					case "tapTab": //getType=="tapTab" tab切换
-						mPI = ni[ti] == undefined || ni[ti].data.length <= 0 ? cPI : "tapTab"; //切换tab当前列表为空获取，不为空retrun
+						mPI = ni[ti] && ni[ti].data.length <= 0 ? cPI : "tapTab"; //切换tab当前列表为空获取，不为空retrun
 						break;
 					case "refresh":
 						mPI = 1;
@@ -194,54 +185,59 @@
 						break;
 				}
 				console.log(mPI);
-				console.log(ni[ti]);
 				if (mPI === "tapTab") {
 					return
 				}
+				let __ctg_id = ctgId || that.ctgId;
 				let data = {
 					"inter": "courses",
-					"parm": `?cat_id=${that.ctgId}&currentPage=${mPI}&pagesize=${that.pageSize}`,
+					"parm": `?cat_id=${__ctg_id}&currentPage=${mPI}&pagesize=${that.pageSize}`,
 					"header": {
 						"token": that.$store.state.user.token
 					}
 				}
 				data["fun"] = function(res) {
+					var aryItem = {
+						loadingText: '上拉显示更多',
+						pageIndex: 1,
+						pageSize: 10,
+						data: []
+					};
 					if (res.success) {
 						console.log("getlist-tabIndex:", ti)
-						var aryItem = {
-							"loadingType": 0,
-							"pageIndex": 1,
-							"data": []
-						};
 						if (res.data.list) {
 							var res_list = res.data.list;
 							if (getType == "refresh") {
 								ni[ti]["data"] = res_list;
-							} else {
-								console.log(123123)
-								if (mPI > 1) {
-									ni[ti].push(res_list);
-								} else {
-									if (ni[ti] && ni[ti].data) {
-										let d1 = ni[ti].data;
-										Array.prototype.push.apply(d1, res_list);
-									} else {
-										aryItem["data"] = res_list;
-										ni.push(aryItem);
-									}
+								if (res.data.total <= ni[ti]["data"].length) {
+									ni[ti].loadingText = "没有更多数据了";
 								}
-								//that.newsitems.push(aryItem);
+							} else {
+								if (getType == "init") {
+									aryItem["data"] = res_list;
+									if (res.data.total <= res_list.length) {
+										aryItem["loadingText"] = "没有更多数据了";
+									}
+								} else {
+									ni[ti]["data"].push(res_list);
+									if (res.data.total <= ni[ti]["data"].length) {
+										ni[ti].loadingText = "没有更多数据了";
+									}
+									// let d1 = ni[ti].data;
+									// Array.prototype.push.apply(d1, res_list);
+								}
 							}
 							console.log("getlist-newsitems:", ni)
 						} else {
-							if (ni[ti]) {
-								ni[ti]["loadingType"] = 2;
+							if (getType == "init") {
+								aryItem["loadingText"] = "没有更多数据了";
 							} else {
-								aryItem["loadingType"] = 2;
-								ni.push(aryItem);
+								ni[ti].loadingText = "没有更多数据了";
 							}
-							//ni[ti]["loadingType"] = 2;
 						}
+					}
+					if (getType == "init") {
+						that.newsitems.push(aryItem)
 					}
 					uni.stopPullDownRefresh();
 				}
@@ -270,4 +266,10 @@
 	}
 
 	/* #endif */
+
+	.uni-tab-bar-loading {
+		text-align: center;
+		font-size: 28upx;
+		color: #999;
+	}
 </style>

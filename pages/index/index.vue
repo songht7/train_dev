@@ -38,8 +38,8 @@
 						<view class="ctg-link ctg-link-sub">
 							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
-									<uni-icon v-show="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
-									<image v-show="ctg.original_src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.original_src" mode="aspectFill"></image>
+									<uni-icon v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
+									<image v-if="ctg.original_src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.original_src" mode="aspectFill"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
 							</view>
@@ -103,69 +103,7 @@
 						"ctg_id": ""
 					},
 				],
-				categorySub: [
-					// 					{
-					// 					"id": 1,
-					// 					"icon": "zhiliang",
-					// 					"val": "质量单元",
-					// 					"link": "/pages/train/index?c=0"
-					// 				}, {
-					// 					"id": 2,
-					// 					"icon": "deng",
-					// 					"val": "工艺单元",
-					// 					"link": "/pages/train/index?c=1"
-					// 				}, {
-					// 					"id": 3,
-					// 					"icon": "wuliuqiache2",
-					// 					"val": "物流单元",
-					// 					"link": "/pages/train/index?c=2"
-					// 				}, {
-					// 					"id": 4,
-					// 					"icon": "caigouon",
-					// 					"val": "采购单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 5,
-					// 					"icon": "huaban",
-					// 					"val": "人事单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 6,
-					// 					"icon": "wenjianjia1",
-					// 					"val": "行政单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 7,
-					// 					"icon": "homenav6",
-					// 					"val": "财务单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 8,
-					// 					"icon": "icon02",
-					// 					"val": "生产单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 9,
-					// 					"icon": "laba-fill",
-					// 					"val": "市场单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 10,
-					// 					"icon": "shebeiguanli",
-					// 					"val": "设备单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 11,
-					// 					"icon": "chanpin",
-					// 					"val": "产品单元",
-					// 					"link": ""
-					// 				}, {
-					// 					"id": 12,
-					// 					"icon": "lingdaitie3",
-					// 					"val": "职场附加",
-					// 					"link": ""
-					// 				},
-				]
+				categorySub: []
 			}
 		},
 		onLoad() {
