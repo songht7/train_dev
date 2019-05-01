@@ -8,9 +8,9 @@
 				<input type="text" class="search-input" confirm-type="search" value="" placeholder="质检进阶课程" placeholder-style="color:#999" />
 			</view>
 			<view class="block slidebox">
-				<view class="swiper-block" v-if="swiperList.length">
-					<swiper class="swiper-box swiper-slide" :indicator="swiperList.length>1?'indicator-dots':''" autoplay="autoplay"
-					 circular="circular" interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
+				<view class="swiper-block" v-if="swiperleng">
+					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?'true':'false'" autoplay="autoplay" circular="circular"
+					 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
 						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 							<view class="vli">
 								<view class="vli2">
@@ -71,6 +71,7 @@
 		data() {
 			return {
 				swiperList: [],
+				swiperleng: 0,
 				poptype: "",
 				category: [{
 						"id": 1,
@@ -126,6 +127,7 @@
 			data["fun"] = function(res) {
 				if (res.success) {
 					that.swiperList = res.data.list
+					that.swiperleng = res.data.total
 				}
 			}
 			that.$store.dispatch("getData", data)
@@ -147,6 +149,7 @@
 		components: {
 			uniPopup
 		},
+		computed: {},
 		methods: {
 			navTo(url) {
 				var that = this;
