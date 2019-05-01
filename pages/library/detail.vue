@@ -32,7 +32,7 @@
 					"title": "如何写出一份优秀的个人简历",
 					"author_name": "职照小编",
 					"published_at": "2019-3-20",
-					"original_src": "/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg"
+					"original_src": "/data/image_doc/9c84faccb7f85cddfebd2ca072f879ba.jpg"
 				},
 				htmlString: "<p>详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情</p><p>详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情</p><p>详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情</p>"
 			}

@@ -34,8 +34,22 @@
 	padding: 30upx 3%;
 }
 
+.user-center-full {
+	width: 100%;
+	padding: 0;
+}
+
 .user-block {
 	padding-bottom: 40upx;
+}
+
+.border-block {
+	padding: 30upx 20upx;
+	border-bottom: 20upx solid #F4F4F4;
+}
+
+.border-block:last-child {
+	border-bottom: 0
 }
 
 .user-head {

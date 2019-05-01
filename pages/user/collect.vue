@@ -8,7 +8,7 @@
 							<view class="list-title collect-title">如何写出一份优秀的个人简历</view>
 						</view>
 						<view class="list-right">
-							<image class="image-full" :src="sourceUrl+'/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg'" mode="aspectFill"></image>
+							<image class="image-full" :src="sourceUrl+'/data/image_doc/9c84faccb7f85cddfebd2ca072f879ba.jpg'" mode="aspectFill"></image>
 						</view>
 					</view>
 				</view>
