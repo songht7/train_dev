@@ -99,7 +99,7 @@
 						"id": 4,
 						"icon": "gongwenbao1",
 						"val": "工作机会",
-						"link": "",
+						"link": "/pages/work/index",
 						"size": 40,
 						"ctg_id": ""
 					},

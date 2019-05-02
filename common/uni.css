@@ -5,6 +5,11 @@
 	src: url('https://img-cdn-qiniu.dcloud.net.cn/fonts/uni.ttf') format('truetype');
 }
 
+/*头部flex层 站位用*/
+.flex-station {
+	height: 44px;
+}
+
 /* https://www.giftofspeed.com/base64-encoder/ */
 .hide {
 	display: none;
@@ -138,6 +143,7 @@
 	width: 90%;
 	left: 5%;
 }
+
 /*train show Modal */
 .train-show-modal-box {
 	width: 100%;
@@ -151,11 +157,13 @@
 	align-items: center;
 	flex-direction: column;
 }
-.train-show-modal-row{
+
+.train-show-modal-row {
 	color: #008CEE;
 	font-size: 36upx;
 	line-height: 1.8;
 }
+
 /*list*/
 
 .list-row {
@@ -326,6 +334,7 @@ view {
 }
 
 .page-main {
+	position: relative;
 	padding-bottom: 120upx;
 }
 

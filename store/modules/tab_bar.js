@@ -17,7 +17,7 @@ const nav_default = [{
 export default {
 	state: {
 		footer_nav: nav_default,
-		now_page_index: 0,
+		now_page_index: '',
 	},
 	mutations: {
 		change_nav_list(state, data) {
