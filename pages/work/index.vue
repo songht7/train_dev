@@ -13,10 +13,26 @@
 			</view>
 			<view class="flex-station"></view>
 		</view>
-		<view class="pages">
-			<view class="page-main" style="height: 1000px;">
-				工作机会了吧
-			</view>
+		<view class="page-main">
+			<block v-for="(item, index) in 8">
+				<view class="work-list" @click="workDetail('id')">
+					<view class="work-block">
+						<view class="work-block-title">友爱数码 | 高级质检员</view>
+						<view class="work-salary">6-8K</view>
+					</view>
+					<view class="work-block">
+						<view class="work-require">上海 | 普陀区 | 1-2年 | 无学历要求</view>
+						<view class="work-time">2019/03/05</view>
+					</view>
+					<view class="work-block">
+						<view class="work-tag-list">
+							<view class="work-tag">五险一金</view>
+							<view class="work-tag">有住宿</view>
+							<view class="work-tag">公司提供一日两餐</view>
+						</view>
+					</view>
+				</view>
+			</block>
 			<tab-bar></tab-bar>
 		</view>
 		<mpvue-picker themeColor="#007AFF" ref="mpvuePicker" mode="selector" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
@@ -102,6 +118,11 @@
 		},
 		computed: {},
 		methods: {
+			workDetail(id) {
+				uni.navigateTo({
+					url: `/pages/work/detail?id=${id}`
+				})
+			},
 			showPicker(key) {
 				var that = this;
 				that.pickerKey = key || "address";
@@ -122,32 +143,5 @@
 </script>
 
 <style>
-	.flex-top-box {
-		position: relative;
-	}
-
-	.flex-filter {
-		background: #fff;
-		display: flex;
-		justify-content: space-between;
-		border-bottom: 1px solid #D1D1D1;
-		position: fixed;
-		z-index: 998;
-		width: 100%;
-		left: 0;
-		height: 44px;
-	}
-
-	.filter-block {
-		width: 50%;
-		border-right: 1px solid #D1D1D1;
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		align-items: center;
-	}
-
-	.filter-block:last-child {
-		border-right: 0
-	}
+	@import "./work.css";
 </style>

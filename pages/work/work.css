@@ -1,0 +1,98 @@
+.flex-top-box {
+	position: relative;
+}
+
+.flex-filter {
+	background: #fff;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #D1D1D1;
+	position: fixed;
+	z-index: 998;
+	width: 100%;
+	left: 0;
+	height: 44px;
+}
+
+.filter-block {
+	width: 50%;
+	border-right: 1px solid #D1D1D1;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.filter-block:last-child {
+	border-right: 0
+}
+
+.work-list {
+	padding: 20upx 30upx;
+	border-bottom: 15upx solid #F4F4F4;
+}
+
+.work-list:last-child {
+	border-bottom: none
+}
+
+.work-block {
+	display: flex;
+	justify-content: space-between;
+	color: #929292;
+	font-size: 26upx;
+	padding-bottom: 6upx;
+}
+
+.work-block-title {
+	font-size: 34upx;
+	color: #222222;
+}
+
+.title-block {
+	padding-bottom: 30upx;
+}
+
+.work-dtl-name {
+	font-size: 44upx;
+}
+
+.work-salary {
+	font-size: 34upx;
+	color: #008CEE;
+}
+
+.work-tag-list {
+	display: flex;
+}
+
+.work-tag {
+	background: #F2F2F3;
+	padding: 5upx 10upx;
+	margin: 0 10upx 8upx 0;
+	border-radius: 8upx;
+	font-size: 24upx;
+}
+
+.work-dtl-head {
+	border-radius: 10upx;
+	border: 1px solid #E0E0E0;
+	box-shadow: 0 0 10upx 3upx #E0E0E0;
+	margin-bottom: 40upx;
+}
+
+.work-head-main {
+	padding: 25upx;
+}
+
+.work-head-list {
+	border-bottom: 1px solid #D1D1D1;
+	padding-bottom: 20upx;
+	margin-bottom: 20upx;
+}
+
+.work-head-list:last-child {
+	border-bottom: 0;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}

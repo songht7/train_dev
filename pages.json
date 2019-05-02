@@ -72,6 +72,12 @@
 				"navigationBarTitleText": "工作机会",
 				"enablePullDownRefresh": true
 			}
+		}, {
+			"path": "pages/work/detail",
+			"style": {
+				"navigationBarTitleText": "工作详情",
+				"enablePullDownRefresh": true
+			}
 		},
 		{
 			"path": "pages/user/login",
