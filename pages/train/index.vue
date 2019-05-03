@@ -16,6 +16,7 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<loading></loading>
 	</view>
 </template>
 <script>
@@ -52,6 +53,7 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
+			that.$loading()
 			if (!that.$store.state.user.userInfo) {
 				uni.redirectTo({
 					url: "/pages/index/index"
@@ -66,6 +68,7 @@
 					}
 				}
 				data_ctg["fun"] = function(res) {
+					that.$loading(0)
 					if (res.success) {
 						let _ctg = res.data.list;
 						_ctg = _ctg.filter(element => element.parent_id == 1);
