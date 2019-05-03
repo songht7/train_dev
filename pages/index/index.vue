@@ -39,7 +39,7 @@
 							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icon v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
-									<image v-if="ctg.original_src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.original_src" mode="aspectFill"></image>
+									<image v-if="ctg.src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.src" mode="aspectFill"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
 							</view>
@@ -246,8 +246,13 @@
 
 	.ctg-icon-sub {
 		background: none;
+		display: flex;
+		justify-content: center;
 	}
-
+	.ctgImg{
+		width: 28px;
+		height: 28px;
+	}
 	.ad-img {
 		width: 100%;
 	}
