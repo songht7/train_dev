@@ -44,7 +44,7 @@
 						</view>
 						<view class="txt-sross">我参与的课程</view>
 					</view>
-					<view class="class-more">全部8个></view>
+					<navigator url="/pages/user/my-class" class="class-more">全部8个></navigator>
 				</view>
 				<view class="class-list">
 					<view class="list-row class-list-row" v-for="(r,k) in 3" :key="k">

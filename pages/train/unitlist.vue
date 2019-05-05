@@ -1,7 +1,7 @@
 <template>
 	<view class="unit-list">
 		<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular" interval="interval"
-		 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
+		 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent" @change="swiperChange">
 			<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 				<view class="vli">
 					<view class="vli2">
@@ -72,6 +72,7 @@
 					"original_src": "/static/img-1.png",
 					"default": true
 				}],
+				swiperCurrent: 0,
 				isJoined: false,
 				isJoinTxt: "加入学习",
 				current: 0,
@@ -84,9 +85,6 @@
 		onLoad(e) {
 			var that = this;
 			that.courseId = e.id;
-		},
-		onShow() {
-			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token;
 			/* course-detail */
@@ -128,6 +126,9 @@
 			}
 			that.$store.dispatch("getData", data_les)
 		},
+		onShow() {
+			var that = this;
+		},
 		onReady: function(res) {},
 		components: {
 			fixButton,
@@ -150,6 +151,7 @@
 					}
 				}
 				data_ldtl["fun"] = function(res) {
+					that.swiperCurrent = 0;
 					if (res.success) {
 						that.lessDtl = res.data;
 						if (res.data.images) {
@@ -166,17 +168,26 @@
 			},
 			previewImage() {
 				var that = this;
-				let _preImgs = that.swiperList;
-				const _urls = _preImgs.map(item => that.$store.state.interface.apiurl + item.original_src)
-				uni.previewImage({
-					urls: _urls
-				});
+				let _current = that.swiperCurrent,
+					_preImgs = that.swiperList,
+					_urls = _preImgs.map(item => that.$store.state.interface.apiurl + item.original_src);
+				let uniPreviewImg = {
+					urls: _urls,
+					indicator: "number",
+					current: _current.toString()
+				}
+				console.log(uniPreviewImg)
+				uni.previewImage(uniPreviewImg);
 			},
 			videoErrorCallback: function(e) {
 				uni.showModal({
 					content: e.target.errMsg,
 					showCancel: false
 				})
+			},
+			swiperChange(e) {
+				var that = this;
+				that.swiperCurrent = e.detail.current;
 			},
 			joinlearning(id) {
 				var that = this;
