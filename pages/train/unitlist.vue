@@ -32,7 +32,7 @@
 				<view class="course-lessions">
 					<view class="course-inner">
 						<block v-for="(less,i) in lessions" :key="i">
-							<view class="less-row" @click="getLessDtl(less.id)">{{i+1}}.{{less.name}}</view>
+							<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
 						</block>
 					</view>
 				</view>
@@ -41,7 +41,7 @@
 				<view class="course-lessions">
 					<view class="course-inner">
 						<block v-for="(less,i) in lessions" :key="i">
-							<view class="less-row" @click="getLessDtl(less.id)">{{i+1}}.{{less.name}}</view>
+							<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
 						</block>
 					</view>
 				</view>
@@ -73,6 +73,8 @@
 					"default": true
 				}],
 				swiperCurrent: 0,
+				lessActive: 0,
+				lessDefaultActive: 0,
 				isJoined: false,
 				isJoinTxt: "加入学习",
 				current: 0,
@@ -119,8 +121,9 @@
 				if (res.success) {
 					that.lessions = res.data.list;
 					that.lessTotal = res.data.total;
-					if (res.data.list[0] && res.data.list[0].id) {
-						that.getLessDtl(res.data.list[0].id);
+					let _defaultIndex = that.lessDefaultActive;
+					if (res.data.list[_defaultIndex] && res.data.list[_defaultIndex].id) {
+						that.getLessDtl(res.data.list[_defaultIndex].id, _defaultIndex);
 					}
 				}
 			}
@@ -140,8 +143,11 @@
 			}
 		},
 		methods: {
-			getLessDtl(lessid) {
+			getLessDtl(lessid, index) {
 				var that = this;
+				if (index == that.lessActive) {
+					return
+				}
 				/* lessons */
 				let data_ldtl = {
 					"inter": "lesson",
@@ -152,6 +158,7 @@
 				}
 				data_ldtl["fun"] = function(res) {
 					that.swiperCurrent = 0;
+					that.lessActive = index;
 					if (res.success) {
 						that.lessDtl = res.data;
 						if (res.data.images) {
@@ -228,5 +235,9 @@
 
 	.course-detail-box {
 		border-bottom: 20upx solid #F4F4F4;
+	}
+
+	.less-active {
+		color: #008CEE;
 	}
 </style>
