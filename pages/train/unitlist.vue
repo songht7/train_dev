@@ -5,7 +5,8 @@
 			<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 				<view class="vli">
 					<view class="vli2">
-						<image class="slideImg" v-if="" @click="previewImage" lazy-load="true" :src="sourceUrl+slide.original_src" mode="aspectFill"></image>
+						<image class="slideImg" v-if="" @click="previewImage" lazy-load="true" :src="slide.default?slide.original_src:sourceUrl+slide.original_src"
+						 mode="aspectFill"></image>
 						<!-- <video class="train-video" v-if="slide.media_type=='video'" src="https://dcloud-img.oss-cn-hangzhou.aliyuncs.com/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
 						 @error="videoErrorCallback" controls></video> -->
 					</view>
@@ -66,7 +67,11 @@
 				lessions: [],
 				lessTotal: "",
 				lessDtl: [],
-				swiperList: [],
+				cover: [],
+				swiperList: [{
+					"original_src": "/static/img-1.png",
+					"default": true
+				}],
 				isJoined: false,
 				isJoinTxt: "加入学习",
 				current: 0,
@@ -95,10 +100,12 @@
 			data_dtl["fun"] = function(res) {
 				if (res.success) {
 					that.data = res.data;
-					let cover = {
-						"original_src": res.data.original_src
+					if (res.data.original_src) {
+						let _cover = [{
+							"original_src": res.data.original_src
+						}]
+						that.swiperList = _cover;
 					}
-					that.swiperList.push(cover)
 				}
 			}
 			that.$store.dispatch("getData", data_dtl)
@@ -114,6 +121,9 @@
 				if (res.success) {
 					that.lessions = res.data.list;
 					that.lessTotal = res.data.total;
+					if (res.data.list[0] && res.data.list[0].id) {
+						that.getLessDtl(res.data.list[0].id);
+					}
 				}
 			}
 			that.$store.dispatch("getData", data_les)
@@ -142,6 +152,9 @@
 				data_ldtl["fun"] = function(res) {
 					if (res.success) {
 						that.lessDtl = res.data;
+						if (res.data.images) {
+							that.swiperList = res.data.images
+						}
 					}
 				}
 				that.$store.dispatch("getData", data_ldtl)
@@ -152,10 +165,11 @@
 				}
 			},
 			previewImage() {
+				var that = this;
+				let _preImgs = that.swiperList;
+				const _urls = _preImgs.map(item => that.$store.state.interface.apiurl + item.original_src)
 				uni.previewImage({
-					urls: [this.$store.state.sourceUrl + "/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg", this.$store.state.sourceUrl +
-						"/data/image_doc/77b0cb2473b3d3f4b73c3090183b3c2b.jpg"
-					]
+					urls: _urls
 				});
 			},
 			videoErrorCallback: function(e) {
