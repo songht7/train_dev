@@ -91,11 +91,6 @@
 			that.$store.dispatch("cheack_page", 2)
 			that.UserId = that.$store.state.user.userInfo.id || '';
 			that.__token = that.$store.state.user.token;
-			if (!that.__token) {
-				uni.redirectTo({
-					url: "/pages/index/index"
-				})
-			}
 		},
 		methods: {
 			logout() {

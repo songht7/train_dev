@@ -84,13 +84,16 @@ const store = new Vuex.Store({
 				key: "user",
 				success: function(res) {
 					user = res.data;
-					let timestamp = Math.round(new Date().getTime()/1000);
+					let timestamp = Math.round(new Date().getTime() / 1000);
 					if (!user.deathline || timestamp >= user.deathline) {
 						uni.removeStorage({
 							key: "user"
 						});
 						ctx.dispatch("menu_default");
 						user = {};
+						uni.redirectTo({
+							url: "/pages/index/index"
+						})
 					} else {
 						ctx.dispatch("menu_" + user.tabBarType);
 					}
@@ -98,6 +101,9 @@ const store = new Vuex.Store({
 				},
 				fail() {
 					ctx.commit("get_user", {})
+					uni.redirectTo({
+						url: "/pages/index/index"
+					})
 				}
 			})
 		},

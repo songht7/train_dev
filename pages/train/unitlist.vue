@@ -24,7 +24,7 @@
 						<view class="course-title">{{data.name}}</view>
 						<view class="course-more list-more">
 							<view>123人在学</view>
-							<view>共10门课程</view>
+							<view>共{{lessTotal}}门课程</view>
 						</view>
 						<rich-text class="course-detail" :nodes="data.detail"></rich-text>
 					</view>
@@ -49,8 +49,8 @@
 		</view>
 
 		<fix-button>
-			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':''" v-show="current === 0" @click="joinlearning(1)">{{isJoinTxt}}</view>
-			<view class="fbtns fbtns-clr-full btn-totest" v-show="current === 1" @click="to_test(1)">开始测试</view>
+			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':''" v-show="current === 0" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
+			<view class="fbtns fbtns-clr-full btn-totest" v-show="current === 1" @click="to_test(courseId)">开始测试</view>
 		</fix-button>
 	</view>
 </template>
@@ -203,7 +203,7 @@
 			},
 			to_test(id) {
 				uni.navigateTo({
-					url: "/pages/train/test"
+					url: `/pages/train/test?course_id=${id}`
 				})
 			}
 		}
