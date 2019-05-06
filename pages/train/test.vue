@@ -4,10 +4,10 @@
 			<view class="test-content">
 				<view class="test-head">
 					<view class="test-countdown">
-						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="3" :second="0" @timeup="formSubmit"></uni-countdown>
+						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="countdown" :second="0" @timeup="formSubmit"></uni-countdown>
 						后自动提交
 					</view>
-					<view class="test-total">共{{test_total}}题</view>
+					<view class="test-total">本章节测试，共{{test_total}}题</view>
 				</view>
 				<block v-for="(t,i) in tests" :key="i">
 					<view v-show="current === i+1">
@@ -55,6 +55,14 @@
 				</view>
 			</view>
 		</uni-popup>
+		<uni-popup :show="type === 'overtime'" position="middle" mode="fixed" width="70" @hidePopup="togglePopup('')">
+			<view class="train-show-modal-box">
+				<view class="train-show-modal-info">
+					<view class="train-show-modal-row">答题已超时</view>
+				</view>
+				<view class="btns btns-full btns-big" @click="answerAgain">重新答题</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -71,6 +79,7 @@
 				tests: [],
 				test_leng: 5,
 				test_total: 0,
+				countdown: 1, //分钟
 				loading: false,
 				formData: [],
 				type: '',
@@ -126,6 +135,10 @@
 			},
 			test_more(type) {
 				var that = this;
+				if (that.countdown <= 0) {
+					that.type = "overtime";
+					return
+				}
 				switch (type) {
 					case "prev":
 						that.current = that.current - 1 >= 1 ? that.current - 1 : 1;
@@ -134,6 +147,11 @@
 						that.current = that.current + 1 <= that.test_leng ? that.current + 1 : that.test_leng;
 						break;
 				}
+			},
+			answerAgain(){
+				uni.redirectTo({
+					url: `/pages/train/test?course_id=${this.courseId}`
+				})
 			},
 			goToList() {
 				this.togglePopup('');
@@ -174,6 +192,7 @@
 						that.togglePopup('score');
 						let _point = res.data.exam && res.data.exam.point ? res.data.exam.point : 0
 						that.score = _point;
+						that.countdown = 0;
 						if (_point >= 60) {
 							that.scoreDes = "成绩合格";
 							that.scoreState = "stateGreen";
@@ -307,6 +326,7 @@
 
 	.test-total {
 		font-size: 32upx;
+		padding: 20upx 0 0;
 	}
 
 	.test-block {
