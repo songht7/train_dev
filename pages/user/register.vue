@@ -49,6 +49,7 @@
 				getCodeTxt: "获取验证码",
 				seconds: 60,
 				btnLoading: "",
+				checkCode: "",
 				formData: {
 					"phone": "",
 					"code": "",
@@ -208,6 +209,7 @@
 						icon: "none"
 					});
 					that.btnLoading = "btn-loading";
+
 					var countdown = setInterval(() => {
 						that.seconds--
 						if (that.seconds < 0) {
@@ -219,6 +221,31 @@
 						}
 						that.getCodeTxt = `${that.seconds} 秒后重试`;
 					}, 1000)
+					/*获取验证码*/
+					let _inter = "sendRegistSms";
+					if (that.regType === 'forgetpw') {
+						_inter = "sendSms"
+					}
+					let data_les = {
+						"inter": _inter,
+						"parm": `?phone=${_formData.phone}`
+					}
+					data_les["fun"] = function(res) {
+						if (res.success) {
+							//that.checkCode
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							});
+							that.getCodeTxt = "获取验证码";
+							that.seconds = 60;
+							that.btnLoading = "";
+							clearInterval(countdown)
+						}
+					}
+					that.$store.dispatch("getData", data_les)
+
 				} else {
 					uni.showToast({
 						title: graceChecker.error,
