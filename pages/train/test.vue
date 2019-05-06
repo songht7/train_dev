@@ -3,7 +3,10 @@
 		<form @submit="formSubmit">
 			<view class="test-content">
 				<view class="test-head">
-					<!-- <view class="test-countdown">测试倒计时</view> -->
+					<view class="test-countdown">
+						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="3" :second="0" @timeup="formSubmit"></uni-countdown>
+						后自动提交
+					</view>
 					<view class="test-total">共{{test_total}}题</view>
 				</view>
 				<block v-for="(t,i) in tests" :key="i">
@@ -16,7 +19,7 @@
 							<view class="test-answer">
 								<view class="test-answer-info">答案：</view>
 								<view class="uni-list-cell">
-									<input class="uni-input tst-input" value="" :name="`${i+1}`" />
+									<input class="uni-input tst-input" value="" :name="t.id" :data-key="t.id" @input="setData" />
 								</view>
 							</view>
 						</view>
@@ -27,11 +30,11 @@
 				<view class="fbtns btn-goback" v-show="current===1" @click="$store.dispatch('goback')">退出测试</view>
 				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_total" @click="test_more('next')">下一题</view>
-				<!-- <view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" @click="formSubmit">提交</view> -->
-				<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" @click="formSubmit">提交</view>
+				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
-		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="goToList">
+		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
 			<view class="uni-center center-box score-box" :class="scoreState">
 				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
@@ -56,6 +59,7 @@
 </template>
 
 <script>
+	import uniCountdown from '@/components/uni-countdown.vue'
 	import fixButton from '@/components/fix-button.vue'
 	import uniPopup from '@/components/uni-popup.vue'
 	export default {
@@ -68,7 +72,7 @@
 				test_leng: 5,
 				test_total: 0,
 				loading: false,
-				submitData: [],
+				formData: [],
 				type: '',
 				scoreDes: "成绩不合格",
 				score: 0,
@@ -113,7 +117,8 @@
 		computed: {},
 		components: {
 			fixButton,
-			uniPopup
+			uniPopup,
+			uniCountdown
 		},
 		methods: {
 			togglePopup(type) {
@@ -136,10 +141,14 @@
 					url: `/pages/train/unitlist?id=${this.courseId}`
 				})
 			},
+			setData(e) {
+				var that = this;
+				that.formData[`${e.currentTarget.dataset.key}`] = e.detail.value;
+			},
 			formSubmit(e) {
 				var that = this;
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
-				let formData = e.detail.value;
+				let formData = that.formData; //e.detail.value;
 				if (that.loading == true) {
 					return
 				}
@@ -163,7 +172,7 @@
 					that.loading = false
 					if (res.success) {
 						that.togglePopup('score');
-						let _point = res.data.exam.point
+						let _point = res.data.exam && res.data.exam.point ? res.data.exam.point : 0
 						that.score = _point;
 						if (_point >= 60) {
 							that.scoreDes = "成绩合格";
@@ -285,10 +294,18 @@
 
 	.test-head {
 		display: flex;
-		justify-content: flex-end;
+		flex-direction: column;
+		justify-content: center;
 		align-content: center;
 		align-items: center;
 		padding: 20upx 30upx;
+	}
+
+	.test-countdown {
+		font-size: 34upx;
+	}
+
+	.test-total {
 		font-size: 32upx;
 	}
 
