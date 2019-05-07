@@ -50,7 +50,7 @@
 			that.tabIndex = e.c || 0;
 			that.ctgId = e.ctg_id;
 		},
-		onShow() {
+		onShow(e) {
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$loading()
@@ -75,7 +75,7 @@
 						for (let i = 0, length = _ctg.length; i < length; i++) {
 							/*分类下列表*/
 							_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
-							that.getList("init", _ctg[i].id)
+							that.getList("init", _ctg[i].id, i)
 						}
 						that.tabBars = _ctg;
 					}
@@ -169,9 +169,6 @@
 					ni = that.newsitems,
 					ti = that.tabIndex, //当前tab index
 					cPI = ni[ti] && ni[ti].pageIndex ? ni[ti].pageIndex : 1; //当前页码
-				if (ni[ti] && ni[ti].loadingText) {
-					ni[ti].loadingText = "正在加载...";
-				}
 				var mPI = "";
 				switch (getType) {
 					case "getMore": //getType=="getMore" 获取更多
@@ -190,6 +187,9 @@
 				console.log(mPI);
 				if (mPI === "tapTab") {
 					return
+				}
+				if (ni[ti] && ni[ti].loadingText) {
+					ni[ti].loadingText = "正在加载...";
 				}
 				let __ctg_id = ctgId || that.ctgId;
 				let data = {
