@@ -74,13 +74,6 @@
 						_ctg = _ctg.filter(element => element.parent_id == 1);
 						for (let i = 0, length = _ctg.length; i < length; i++) {
 							/*分类下列表*/
-							let aryItem = {
-								loadingText: '上拉显示更多',
-								pageIndex: 1,
-								pageSize: 10,
-								data: []
-							};
-							that.newsitems.push(aryItem)
 							_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
 							that.getList("init", _ctg[i].id, i)
 						}
@@ -170,7 +163,7 @@
 					that.getList('tapTab');
 				}
 			},
-			getList(getType, ctgId, index) {
+			getList(getType, ctgId) {
 				var that = this;
 				var ary = [],
 					ni = that.newsitems,
@@ -207,6 +200,12 @@
 					}
 				}
 				data["fun"] = function(res) {
+					var aryItem = {
+						loadingText: '上拉显示更多',
+						pageIndex: 1,
+						pageSize: 10,
+						data: []
+					};
 					if (res.success) {
 						console.log("getlist-tabIndex:", ti)
 						if (res.data.list) {
@@ -218,9 +217,9 @@
 								}
 							} else {
 								if (getType == "init") {
-									ni[index]["data"] = res_list;
+									aryItem["data"] = res_list;
 									if (res.data.total <= res_list.length) {
-										ni[index]["loadingText"] = "没有更多数据了";
+										aryItem["loadingText"] = "没有更多数据了";
 									}
 								} else {
 									ni[ti]["data"].push(res_list);
@@ -234,11 +233,14 @@
 							console.log("getlist-newsitems:", ni)
 						} else {
 							if (getType == "init") {
-								ni[index]["loadingText"] = "没有更多数据了";
+								aryItem["loadingText"] = "没有更多数据了";
 							} else {
 								ni[ti].loadingText = "没有更多数据了";
 							}
 						}
+					}
+					if (getType == "init") {
+						that.newsitems.push(aryItem)
 					}
 					uni.stopPullDownRefresh();
 				}
