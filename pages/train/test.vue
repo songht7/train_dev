@@ -13,15 +13,36 @@
 					<view v-show="current === i+1">
 						<view class="test-block">
 							<view class="test-title">
-								第{{current}}题:{{t.name}},{{t.overview}}
+								第{{current}}题:{{t.name}}
 							</view>
-							<rich-text :nodes="t.detail"></rich-text>
-							<view class="test-answer">
-								<view class="test-answer-info">答案：</view>
-								<view class="uni-list-cell">
-									<input class="uni-input tst-input" value="" :name="t.id" :data-key="t.id" @input="setData" />
+							<rich-text v-if="t.detail" :nodes="t.detail"></rich-text>
+							<block v-if="t.type==='select'">
+								<view class="choose-list radio-box">
+									<radio-group :name="t.id" @change="setData" :data-key="t.id">
+										<label class="train-choose-list" v-for="(val, key) in t.select" :key="val">
+											<view>
+												<radio :value="key" />
+											</view>
+											<view>{{key}}：{{val}}</view>
+										</label>
+									</radio-group>
 								</view>
-							</view>
+							</block>
+							<block v-else-if="t.type==='selects'">
+								<checkbox-group :name="t.id" @change="setData" :data-key="t.id" data-tyle="checkbox">
+									<label class="train-choose-list" v-for="(val, key) in t.select" :key="val">
+										<checkbox :value="key" />{{key}}：{{val}}
+									</label>
+								</checkbox-group>
+							</block>
+							<block v-else="t.type==='text'">
+								<view class="test-answer">
+									<view class="test-answer-info">答案：</view>
+									<view class="uni-list-cell">
+										<input class="uni-input tst-input" value="" :name="t.id" :data-key="t.id" @input="setData" />
+									</view>
+								</view>
+							</block>
 						</view>
 					</view>
 				</block>
@@ -79,7 +100,7 @@
 				tests: [],
 				test_leng: 5,
 				test_total: 0,
-				countdown: 1, //分钟
+				countdown: 2, //分钟
 				loading: false,
 				formData: [],
 				type: '',
@@ -148,7 +169,7 @@
 						break;
 				}
 			},
-			answerAgain(){
+			answerAgain() {
 				uni.redirectTo({
 					url: `/pages/train/test?course_id=${this.courseId}`
 				})
@@ -161,12 +182,22 @@
 			},
 			setData(e) {
 				var that = this;
-				that.formData[`${e.currentTarget.dataset.key}`] = e.detail.value;
+				var _val = e.detail.value;
+				if (e.currentTarget.dataset.tyle && e.currentTarget.dataset.tyle == 'checkbox') {
+					var _v = "";
+					_val.forEach((value, index, array) => {
+						_v += value;
+					})
+					_val = _v;
+				}
+				that.formData[`${e.currentTarget.dataset.key}`] = _val;
 			},
 			formSubmit(e) {
 				var that = this;
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				let formData = that.formData; //e.detail.value;
+				// console.log(formData)
+				// return
 				if (that.loading == true) {
 					return
 				}
@@ -364,5 +395,13 @@
 
 	.btn-button:after {
 		border: none
+	}
+
+	.train-choose-list {
+		display: flex;
+		justify-content: flex-start;
+		align-content: center;
+		align-items: center;
+		padding: 20upx;
 	}
 </style>
