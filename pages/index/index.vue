@@ -86,14 +86,14 @@
 						"icon": "icon_likegood_fill",
 						"val": "技术支持",
 						"link": "/pages/technical/index",
-						"ctg_id": ""
+						"ctg_id": "15"
 					},
 					{
 						"id": 3,
 						"icon": "ai-book",
 						"val": "文库",
 						"link": "/pages/library/index",
-						"ctg_id": ""
+						"ctg_id": "16"
 					},
 					{
 						"id": 4,
@@ -101,7 +101,7 @@
 						"val": "工作机会",
 						"link": "/pages/work/index",
 						"size": 40,
-						"ctg_id": ""
+						"ctg_id": "17"
 					},
 				],
 				categorySub: []

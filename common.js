@@ -26,6 +26,9 @@ export default {
 			"categorys":"/v4/ApiBase-categorys.htm",//培训分类
 			"tests":"/v4/ApiCourse-tests.htm",//获取随机试题
 			"test":"/v4/ApiAccount-test.htm",//提交测试[POST]
+			"supports":"/v4/ApiArticle-supports.htm",//?cat_id=17
+			"support":"/v4/ApiArticle-support.htm",//?article_id=1
+			"favorite":"/v4/ApiAccount-favorite.htm",//用户：收藏夹[POST]
 			
 		}
 	}
