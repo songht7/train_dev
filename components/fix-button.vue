@@ -1,5 +1,5 @@
 <template>
-	<view class="fix-button">
+	<view class="fix-button" :style="'position:'+isFixed">
 		<view class="fbtn-main">
 			<view class="fbtns btn-goback" v-if="gobackShow=='show'" :class="btnType" @click="$store.dispatch('goback')">返回</view>
 			<slot></slot>
@@ -16,9 +16,13 @@
 				//fbtn-big - fbtn-full - ''
 				default: ''
 			},
-			gobackShow:{
-				type:String,
-				default:"show"
+			gobackShow: {
+				type: String,
+				default: "show"
+			},
+			isFixed:{
+				type: String,
+				default: "fixed"
 			}
 		},
 		data() {

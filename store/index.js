@@ -15,7 +15,8 @@ const store = new Vuex.Store({
 		phoneNumber: "4008200000",
 		user: {},
 		data: {},
-		interface: common.Interface
+		interface: common.Interface,
+		systemInfo:{}
 	},
 	mutations: {
 		switch_loading(state, status) {
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
 		},
 		update_detail(state, data) {
 			state.detail = data
+		},
+		setSystemInfo(state, data) {
+			state.systemInfo = data
 		}
 	},
 	actions: {
@@ -146,6 +150,17 @@ const store = new Vuex.Store({
 		makePhoneCall(ctx) {
 			uni.makePhoneCall({
 				phoneNumber: ctx.state.phoneNumber
+			});
+		},
+		getSystemInfo(ctx) {
+			var systemInfo = {}
+			uni.getSystemInfo({
+				success(res) {
+					systemInfo = res
+				},
+				complete() {
+					ctx.commit("setSystemInfo", systemInfo)
+				}
 			});
 		}
 	},

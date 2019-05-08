@@ -11,7 +11,8 @@
 			"order": [
 				"1e53f2e9-fd08-83af-ea98-125b51946362",
 				"7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
-				"29780a16-739c-b014-5376-ef26acad78ac"
+				"29780a16-739c-b014-5376-ef26acad78ac",
+				"52dec206-ba49-f5cb-f80b-b6f9a09ef6d3"
 			],
 			"owner": "1054562",
 			"folders_order": [],
@@ -109,7 +110,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557053114065,
+			"time": 1557224325415,
 			"name": "/v4/ApiAuth-login.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -183,6 +184,7 @@
 				}
 			],
 			"url": "api_test.wsshanghai.com/v4/ApiAccount-info.htm",
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -211,6 +213,7 @@
 				}
 			],
 			"url": "plbs.lc/v4/ApiArticle-support.htm?article_id=1",
+			"folder": "b2937ed6-02bf-a434-c5a8-02e3a2681d3b",
 			"queryParams": [
 				{
 					"key": "article_id",
@@ -285,6 +288,7 @@
 				}
 			],
 			"url": "plbs.lc/v4/ApiCourse-courses.htm",
+			"folder": "9b1b474c-e096-2bd9-2a31-ec06471477f9",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -303,11 +307,11 @@
 		},
 		{
 			"id": "29780a16-739c-b014-5376-ef26acad78ac",
-			"headers": "token: f747e68c7a3a375621607a1e6b0756f1f6318347\nContent-Type: application/json\n",
+			"headers": "token: b44b3f49b4081e9ec68e4bf1254502d19d555107\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "f747e68c7a3a375621607a1e6b0756f1f6318347",
+					"value": "b44b3f49b4081e9ec68e4bf1254502d19d555107",
 					"description": "",
 					"enabled": true
 				},
@@ -319,6 +323,7 @@
 				}
 			],
 			"url": "plbs.lc/v4/ApiAccount-test.htm",
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -329,7 +334,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556432695954,
+			"time": 1557125567286,
 			"name": "/v4/ApiAccount-test.htm",
 			"description": "\t\t\t\t",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -343,14 +348,14 @@
 				{
 					"key": "Content-Type",
 					"value": "application/json",
-					"description": "",
-					"enabled": true
+					"enabled": true,
+					"description": ""
 				},
 				{
 					"key": "token",
 					"value": "fb5444fa707c2a758459e66846bb6d264ed3e697",
-					"description": "",
-					"enabled": true
+					"enabled": true,
+					"description": ""
 				}
 			],
 			"url": "api_test.wsshanghai.com/v4/ApiAuth-logout.htm",
@@ -365,13 +370,52 @@
 			"version": 2,
 			"tests": null,
 			"currentHelper": "normal",
-			"helperAttributes": {},
+			"helperAttributes": "{}",
 			"time": 1556080607030,
 			"name": "/v4/ApiAuth-logout.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],
+			"timestamp": null,
 			"rawModeData": ""
+		},
+		{
+			"id": "52dec206-ba49-f5cb-f80b-b6f9a09ef6d3",
+			"headers": "token: 708653f6ecd6ede3c0c9b14770fa6d893a390ad9\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "708653f6ecd6ede3c0c9b14770fa6d893a390ad9",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "plbs.lc/v4/ApiAccount-favorite.htm",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"data": [],
+			"dataMode": "raw",
+			"name": "/v4/ApiAccount-favorite.htm",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1557290753262,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
+			"rawModeData": "{\"article_id\":\"1\"}"
 		},
 		{
 			"id": "7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
@@ -423,6 +467,7 @@
 				}
 			],
 			"url": "plbs.lc/v4/ApiBase-categorys.htm",
+			"folder": "0a012657-b187-dd2d-5683-711a34f52011",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -472,27 +517,36 @@
 		},
 		{
 			"id": "8b59959e-0336-7dbd-8745-6878d9ec688f",
-			"headers": "token: bb0da469e60f552724f1c59ebbf14ac047ad93e3\n",
+			"headers": "token: 08939d8cd6de92654433a443cf4666a0aa0eaa78\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "bb0da469e60f552724f1c59ebbf14ac047ad93e3",
+					"value": "08939d8cd6de92654433a443cf4666a0aa0eaa78",
 					"description": "",
 					"enabled": true
 				}
 			],
-			"url": "plbs.lc/v4/ApiArticle-supports.htm",
-			"queryParams": [],
+			"url": "plbs.lc/v4/ApiArticle-supports.htm?cat_id=17",
+			"folder": "b2937ed6-02bf-a434-c5a8-02e3a2681d3b",
+			"queryParams": [
+				{
+					"key": "cat_id",
+					"value": "17",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
 			"method": "GET",
 			"data": null,
 			"dataMode": "params",
-			"tests": null,
+			"tests": "15\tsupport\t技术支持\t\r\n16\t文库    文章\r\n17\t机遇\t简历那块\t",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556504963119,
+			"time": 1557226281135,
 			"name": "/v4/ApiArticle-supports.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -503,6 +557,7 @@
 			"headers": "",
 			"headerData": [],
 			"url": "api_test.wsshanghai.com/v4/ApiSms-sendRegistSms.htm?phone=13564138770",
+			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
 			"queryParams": [
 				{
 					"key": "phone",
@@ -534,8 +589,8 @@
 				{
 					"key": "Content-Type",
 					"value": "application/json",
-					"description": "",
-					"enabled": true
+					"enabled": true,
+					"description": ""
 				}
 			],
 			"url": "api_test.wsshanghai.com/v4/ApiAuth-register.htm",
@@ -549,12 +604,13 @@
 			"dataMode": "raw",
 			"tests": null,
 			"currentHelper": "normal",
-			"helperAttributes": {},
+			"helperAttributes": "{}",
 			"time": 1556080615502,
 			"name": "/v4/ApiAuth-register.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],
+			"timestamp": null,
 			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\",\"password\":\"111111\",\"cfn_password\":\"111111\",\"name\":\"space\"}"
 		},
 		{
@@ -589,16 +645,17 @@
 		},
 		{
 			"id": "cda30e8f-d48d-a108-e7d2-2257c4419e5b",
-			"headers": "token: 994030f3fb448f43e67051b1b03f425317bcfe58\n",
+			"headers": "token: 08939d8cd6de92654433a443cf4666a0aa0eaa78\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "994030f3fb448f43e67051b1b03f425317bcfe58",
+					"value": "08939d8cd6de92654433a443cf4666a0aa0eaa78",
 					"description": "",
 					"enabled": true
 				}
 			],
 			"url": "plbs.lc/v4/ApiCourse-tests.htm?course_id=1",
+			"folder": "9b1b474c-e096-2bd9-2a31-ec06471477f9",
 			"queryParams": [
 				{
 					"key": "course_id",
@@ -617,7 +674,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556446879788,
+			"time": 1557226198119,
 			"name": "/v4/ApiCourse-tests.htm?id=1",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",

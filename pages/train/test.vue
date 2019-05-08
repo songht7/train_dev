@@ -12,8 +12,21 @@
 				<block v-for="(t,i) in tests" :key="i">
 					<view v-show="current === i+1">
 						<view class="test-block">
-							<view class="test-title">
-								第{{current}}题:{{t.name}}
+							<view class="test-title-box">
+								<view class="test-title">
+									第{{current}}题:{{t.name}}
+								</view>
+								<view class="test-tyle">
+									<block v-if="t.type==='select'">
+										单选题
+									</block>
+									<block v-else-if="t.type==='selects'">
+										多选题
+									</block>
+									<block v-else>
+										填空题
+									</block>
+								</view>
 							</view>
 							<rich-text v-if="t.detail" :nodes="t.detail"></rich-text>
 							<block v-if="t.type==='select'">
@@ -35,11 +48,11 @@
 									</label>
 								</checkbox-group>
 							</block>
-							<block v-else="t.type==='text'">
+							<block v-else>
 								<view class="test-answer">
 									<view class="test-answer-info">答案：</view>
 									<view class="uni-list-cell">
-										<input class="uni-input tst-input" value="" :name="t.id" :data-key="t.id" @input="setData" />
+										<input class="uni-input" :name="t.id" :data-key="t.id" @input="setData" @focus="setFixBtn('static')" @blur="setFixBtn('fixed')" />
 									</view>
 								</view>
 							</block>
@@ -47,7 +60,7 @@
 					</view>
 				</block>
 			</view>
-			<fix-button gobackShow="hide">
+			<fix-button gobackShow="hide" :isFixed="getFixBtn">
 				<view class="fbtns btn-goback" v-show="current===1" @click="$store.dispatch('goback')">退出测试</view>
 				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_total" @click="test_more('next')">下一题</view>
@@ -55,7 +68,7 @@
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
-		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
+		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="goToList">
 			<view class="uni-center center-box score-box" :class="scoreState">
 				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
@@ -100,13 +113,14 @@
 				tests: [],
 				test_leng: 5,
 				test_total: 0,
-				countdown: 2, //分钟
+				countdown: 3, //分钟
 				loading: false,
 				formData: [],
 				type: '',
 				scoreDes: "成绩不合格",
 				score: 0,
-				scoreState: "stateRed" //stateRed不合格 /stateGreen合格
+				scoreState: "stateRed", //stateRed不合格 /stateGreen合格
+				fixBtn: "fixed"
 			}
 		},
 		onLoad(e) {
@@ -136,6 +150,7 @@
 		},
 		onShow() {
 			this.$store.dispatch('cheack_user')
+			this.$store.dispatch('getSystemInfo');
 		},
 		onBackPress() {
 			if (this.type !== '') {
@@ -144,7 +159,17 @@
 			}
 		},
 		onReady: function(res) {},
-		computed: {},
+		computed: {
+			getFixBtn() {
+				var that = this;
+				var _fixBtn = "fixed";
+				var platform = that.$store.state.systemInfo.platform || "ALL";
+				if (platform.toUpperCase() == "IOS" || platform == "ALL") {
+					_fixBtn = "static";
+				}
+				return _fixBtn;
+			}
+		},
 		components: {
 			fixButton,
 			uniPopup,
@@ -191,6 +216,13 @@
 					_val = _v;
 				}
 				that.formData[`${e.currentTarget.dataset.key}`] = _val;
+			},
+			setFixBtn(type) {
+				var that = this;
+				// var platform = that.$store.state.systemInfo.platform || "ALL";
+				// if (platform.toUpperCase() == "IOS" || platform == "ALL") {
+				// 	that.fixBtn = type;
+				// }
 			},
 			formSubmit(e) {
 				var that = this;
@@ -366,15 +398,39 @@
 		padding: 30upx;
 	}
 
+	.test-title-box {
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+		align-items: flex-start;
+	}
+
 	.test-title {
 		font-size: 34upx;
 		padding-bottom: 20upx;
+		width: 84%;
+	}
+
+	.test-tyle {
+		width: 15%;
+		color: #008CEE;
+		border: 1px solid #008CEE;
+		border-radius: 10upx;
+		font-size: 24upx;
+		display: flex;
+		align-content: center;
+		align-items: center;
+		text-align: center;
+		justify-content: center;
+		position: relative;
+		top: 10upx;
 	}
 
 	.test-answer {
 		display: flex;
 		align-content: center;
 		align-items: center;
+		padding: 40upx 0;
 	}
 
 	.test-answer-info {
