@@ -90,9 +90,9 @@
 								that.datas = _data;
 							} else {
 								console.log(_data)
-								//that.data.push(_data);
+								//that.datas.push(_data);
 								_data.forEach(item => {
-									that.data.push(item);
+									that.datas.push(item);
 								});
 							}
 							that.data_total = res.data.total;
