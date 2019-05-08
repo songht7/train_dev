@@ -3,8 +3,9 @@
 		<block v-if="datas.id">
 			<view class="banner">
 				<image class="banner-img" :src="sourceUrl+datas.original_src"></image>
-				<view class="banner-title">{{datas.name}}</view>
+				<!-- <view class="banner-title">{{datas.name}}</view> -->
 			</view>
+			<view class="banner-title-block">{{datas.name}}</view>
 			<view class="article-meta">
 				<text class="article-time">{{datas.add_time}}</text>
 				<text class="article-author">{{datas.author_name?datas.author_name:"管理员"}}</text>
@@ -67,7 +68,29 @@
 				that.$store.dispatch("getData", data)
 			},
 			collect(id) {
-				this.isCollect = !this.isCollect
+				var that = this;
+				/*加入收藏*/
+				let data = {
+					"inter": "favorite",
+					"method": "POST",
+					"data": {
+						"article_id": that.article_id
+					},
+					"header": {
+						"Content-Type": "application/json",
+						"token": that.$store.state.user.token || ""
+					}
+				}
+				data["fun"] = function(res) {
+					if (res.success) {
+						uni.showToast({
+							title: "已加入收藏",
+							icon: "success"
+						});
+						that.isCollect = !this.isCollect
+					}
+				}
+				that.$store.dispatch("getData", data)
 			}
 		}
 	}
@@ -97,6 +120,13 @@
 		line-height: 42upx;
 		color: white;
 		z-index: 11;
+	}
+
+	.banner-title-block {
+		padding: 30upx 3% 10upx;
+		font-size: 44upx;
+		font-weight: 500;
+		color: #222222;
 	}
 
 	.article-meta {

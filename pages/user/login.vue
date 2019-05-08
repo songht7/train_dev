@@ -124,7 +124,7 @@
 									});
 									uni.showToast({
 										title: "登录成功",
-										icon: "none",
+										icon: "success",
 										duration: 1500
 									})
 									setTimeout(() => {
