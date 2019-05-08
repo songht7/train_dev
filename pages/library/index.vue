@@ -44,13 +44,13 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
-			that.getList()
+			that.getDatas()
 		},
 		onReady: function(res) {},
 		onPullDownRefresh() {
 			var that = this;
 			that.pageIndex = 1;
-			that.getList()
+			that.getDatas()
 		},
 		onReachBottom() {
 			var that = this;
@@ -62,14 +62,14 @@
 				return;
 			}
 			that.pageIndex = that.pageIndex + 1;
-			that.getList()
+			that.getDatas()
 		},
 		components: {
 			uniLoadMore
 		},
 		computed: {},
 		methods: {
-			getList() {
+			getDatas() {
 				var that = this;
 				that.status = "loading";
 				/*文库*/
