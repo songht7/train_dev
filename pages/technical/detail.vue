@@ -1,15 +1,17 @@
 <template>
 	<view class="article-detail">
-		<view class="banner">
-			<image class="banner-img" :src="sourceUrl+banner.original_src"></image>
-		</view>
-		<view class="banner-title">{{banner.title}}</view>
-		<view class="article-meta">
-			<text class="article-author">21人已办理</text>
-		</view>
-		<view class="article-content">
-			<rich-text :nodes="htmlString"></rich-text>
-		</view>
+		<block v-if="datas.id">
+			<view class="banner">
+				<image class="banner-img" :src="sourceUrl+datas.original_src"></image>
+			</view>
+			<view class="banner-title">{{datas.name}}</view>
+			<!-- <view class="article-meta">
+				<text class="article-author">21人已办理</text>
+			</view> -->
+			<view class="article-content">
+				<rich-text :nodes="datas.detail"></rich-text>
+			</view>
+		</block>
 
 		<fix-button>
 			<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
@@ -23,40 +25,43 @@
 	export default {
 		data() {
 			return {
-				isCollect: false,
-				title: 'IOS 9001 认证',
-				banner: {
-					"title": "IOS 9001 认证",
-					"author_name": "职照小编",
-					"published_at": "2019-3-20",
-					"original_src": "/data/image_doc/9c84faccb7f85cddfebd2ca072f879ba.jpg"
-				},
-				htmlString: "<p>详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情</p><p>详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情</p><p>详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情</p>"
+				article_id: "",
+				datas: []
 			}
 		},
-		onLoad(event) {
-			this.getDetail();
-			uni.setNavigationBarTitle({
-				title: "IOS 9001 认证"
-			});
+		onLoad(e) {
+			var that = this;
+			that.article_id = e.id;
+		},
+		onShow() {
+			var that = this;
+			that.$store.dispatch('cheack_user')
+			that.getDatas()
 		},
 		components: {
 			fixButton
 		},
 		methods: {
-			getDetail() {
-				// 				uni.request({
-				// 					url: 'https://unidemo.dcloud.net.cn/api/news/36kr/5188456',
-				// 					success: (data) => {
-				// 						if (data.statusCode == 200) {
-				// 							this.htmlString = data.data.content.replace(/\\/g, "").replace(/<img/g, "<img style=\"display:none;\"");
-				// 						}
-				// 					},
-				// 					fail: () => {
-				// 						console.log('fail');
-				// 					}
-				// 				})
-			}
+			getDatas() {
+				var that = this;
+				/*文库*/
+				let data = {
+					"inter": "support",
+					"parm": `?article_id=${that.article_id}`,
+					"header": {
+						"token": that.$store.state.user.token || ""
+					}
+				}
+				data["fun"] = function(res) {
+					if (res.success) {
+						that.datas = res.data;
+						uni.setNavigationBarTitle({
+							title: res.data.name
+						});
+					}
+				}
+				that.$store.dispatch("getData", data)
+			},
 		}
 	}
 </script>

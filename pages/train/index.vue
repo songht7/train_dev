@@ -2,7 +2,7 @@
 	<view class="uni-tab-bar">
 		<scroll-view id="tab-bar" class="uni-swiper-tab" scroll-x :scroll-left="scrollLeft">
 			<view v-for="(tab,index) in tabBars" :key="tab.tab_id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']"
-			 :id="tab.tab_id" :data-current="index" @click="tapTab(index,tab.id)">{{tab.name}}</view>
+			 :id="tab.tab_id" :data-current="index" @click="tapTab(index,tab.id)">{{tab.name}}{{tab.id}}</view>
 		</scroll-view>
 		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab">
 			<swiper-item v-for="(tab,index1) in newsitems" :key="index1">
@@ -34,7 +34,7 @@
 				tabIndex: 0,
 				newsitems: [],
 				ctgId: "",
-				pageSize: 10,
+				pageSize: 7,
 				list: {
 					// "id": 1,
 					// "title": "质量快速入门",
@@ -49,9 +49,6 @@
 			var that = this;
 			that.tabIndex = e.c || 0;
 			that.ctgId = e.ctg_id;
-		},
-		onShow(e) {
-			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$loading()
 			if (!that.$store.state.user.userInfo) {
@@ -77,7 +74,8 @@
 							let aryItem = {
 								loadingText: '上拉显示更多',
 								pageIndex: 1,
-								pageSize: 10,
+								ctgId: _ctg[i].id,
+								total: 0,
 								data: []
 							};
 							that.newsitems.push(aryItem)
@@ -89,6 +87,9 @@
 				}
 				that.$store.dispatch("getData", data_ctg)
 			}
+		},
+		onShow(e) {
+			var that = this;
 		},
 		onReady() {
 			var that = this;
@@ -104,20 +105,16 @@
 				})
 			},
 			loadMore(e) {
-				this.newsitems[e].loadingType = 1;
-				setTimeout(() => {
-					this.addData(e);
-				}, 1200);
-			},
-			addData(e) {
-				if (this.newsitems[e].data.length > 30) {
-					this.newsitems[e].loadingType = 2;
+				var that = this;
+				var data_obj = that.newsitems[e],
+					data_leng = data_obj.data.length,
+					data_total = data_obj.total;
+				if (parseInt(data_leng) >= parseInt(data_total)) {
+					data_obj.loadingText = "没有更多数据了";
 					return;
 				}
-				for (let i = 1; i <= 10; i++) {
-					this.newsitems[e].data.push(this['list']);
-				}
-				this.newsitems[e].loadingType = 1;
+				data_obj.loadingText = "正在加载...";
+				that.getList('getMore');
 			},
 			async changeTab(e) {
 				let index = e.detail.current;
@@ -207,23 +204,30 @@
 					}
 				}
 				data["fun"] = function(res) {
+					uni.stopPullDownRefresh();
+					ni[ti].loadingText = "上拉显示更多";
 					if (res.success) {
 						console.log("getlist-tabIndex:", ti)
+						ni[ti]["pageIndex"] = mPI;
 						if (res.data.list) {
 							var res_list = res.data.list;
 							if (getType == "refresh") {
 								ni[ti]["data"] = res_list;
-								if (res.data.total <= ni[ti]["data"].length) {
+								if (res.data.total <= ni[ti]["total"]) {
 									ni[ti].loadingText = "没有更多数据了";
 								}
 							} else {
 								if (getType == "init") {
 									ni[index]["data"] = res_list;
+									ni[index]["total"] = res.data.total;
 									if (res.data.total <= res_list.length) {
 										ni[index]["loadingText"] = "没有更多数据了";
 									}
 								} else {
-									ni[ti]["data"].push(res_list);
+									res_list.forEach(item => {
+										ni[ti]["data"].push(item);
+									});
+									//ni[ti]["data"].push(res_list);
 									if (res.data.total <= ni[ti]["data"].length) {
 										ni[ti].loadingText = "没有更多数据了";
 									}
@@ -234,13 +238,13 @@
 							console.log("getlist-newsitems:", ni)
 						} else {
 							if (getType == "init") {
+								ni[index]["total"] = res.data.total;
 								ni[index]["loadingText"] = "没有更多数据了";
 							} else {
 								ni[ti].loadingText = "没有更多数据了";
 							}
 						}
 					}
-					uni.stopPullDownRefresh();
 				}
 				that.$store.dispatch("getData", data)
 
