@@ -1,16 +1,18 @@
 <template>
 	<view class="article-detail">
-		<view class="banner">
-			<image class="banner-img" :src="sourceUrl+datas.original_src"></image>
-			<view class="banner-title">{{datas.name}}</view>
-		</view>
-		<view class="article-meta">
-			<text class="article-time">{{datas.add_time}}</text>
-			<text class="article-author">{{datas.author_name?datas.author_name:"管理员"}}</text>
-		</view>
-		<view class="article-content">
-			<rich-text :nodes="datas.detail"></rich-text>
-		</view>
+		<block v-if="datas.id">
+			<view class="banner">
+				<image class="banner-img" :src="sourceUrl+datas.original_src"></image>
+				<view class="banner-title">{{datas.name}}</view>
+			</view>
+			<view class="article-meta">
+				<text class="article-time">{{datas.add_time}}</text>
+				<text class="article-author">{{datas.author_name?datas.author_name:"管理员"}}</text>
+			</view>
+			<view class="article-content">
+				<rich-text :nodes="datas.detail"></rich-text>
+			</view>
+		</block>
 		<fix-button btnType="fbtn-big">
 			<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(datas.id)">
 				<view>
