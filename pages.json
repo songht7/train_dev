@@ -127,6 +127,11 @@
 				"navigationBarTitleText": "我的课程"
 			}
 		}, {
+			"path": "pages/user/edit",
+			"style": {
+				"navigationBarTitleText": "个人信息编辑"
+			}
+		}, {
 			"path": "pages/company/pass",
 			"style": {
 				"navigationBarTitleText": "考试合格率",

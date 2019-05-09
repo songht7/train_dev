@@ -96,7 +96,7 @@
 		flex-direction: row;
 		justify-content: center;
 		width: 75%;
-		font-size: 28upx;
+		font-size: 32upx;
 		border-radius: 10upx;
 		box-sizing: border-box;
 		margin: 0 auto;

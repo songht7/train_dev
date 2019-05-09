@@ -31,6 +31,7 @@ export default {
 			"support":"/v4/ApiArticle-support.htm",//?article_id=1
 			"favorites":"/v4/ApiAccount-favorites.htm",//收藏夹列表
 			"favorite":"/v4/ApiAccount-favorite.htm",//用户：收藏夹[POST]
+			"enterprise":"/v4/ApiAccount-enterprise.htm",//用户关联企业[POST]
 			
 		}
 	}

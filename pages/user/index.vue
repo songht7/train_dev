@@ -12,7 +12,7 @@
 					<navigator url="/pages/user/collect" class="user-more my-collect"><text>我的收藏</text></navigator>
 					<navigator url="/pages/user/resume" class="user-more my-resume"><text>我的简历</text></navigator>
 				</view>
-				<view class="user-edit">
+				<view class="user-edit" @click="navTo('edit')">
 					<uni-icon type="shezhi" :size="30" color="#D8D8D8"></uni-icon>
 				</view>
 			</view>
@@ -93,6 +93,11 @@
 			that.__token = that.$store.state.user.token;
 		},
 		methods: {
+			navTo(page) {
+				uni.navigateTo({
+					url: `/pages/user/${page}`
+				})
+			},
 			logout() {
 				var that = this;
 				let data = {
