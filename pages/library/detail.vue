@@ -59,9 +59,15 @@
 				}
 				data["fun"] = function(res) {
 					if (res.success) {
-						that.datas = res.data;
+						let _data = res.data;
+						that.datas = _data;
+						if (_data.favorites === 1) {
+							that.isCollect = true;
+						} else {
+							that.isCollect = false;
+						}
 						uni.setNavigationBarTitle({
-							title: res.data.name
+							title: _data.name
 						});
 					}
 				}
@@ -83,8 +89,9 @@
 				}
 				data["fun"] = function(res) {
 					if (res.success) {
+						var toast_title = !that.isCollect ? "已加入收藏" : "取消收藏";
 						uni.showToast({
-							title: "已加入收藏",
+							title: toast_title,
 							icon: "success"
 						});
 						that.isCollect = !this.isCollect

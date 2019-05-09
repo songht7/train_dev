@@ -9,8 +9,8 @@
 				</view>
 				<view class="user-infos">
 					<view class="user-name txt-sross">{{UserId?$store.state.user.userInfo.name:"用户名"}}<text class="logout" @click="logout">[退出]</text></view>
-					<navigator :url="`/pages/user/collect?id=${UserId}`" class="user-more my-collect"><text>我的收藏</text></navigator>
-					<navigator :url="`/pages/user/resume?id=${UserId}`" class="user-more my-resume"><text>我的简历</text></navigator>
+					<navigator url="/pages/user/collect" class="user-more my-collect"><text>我的收藏</text></navigator>
+					<navigator url="/pages/user/resume" class="user-more my-resume"><text>我的简历</text></navigator>
 				</view>
 				<view class="user-edit">
 					<uni-icon type="shezhi" :size="30" color="#D8D8D8"></uni-icon>
