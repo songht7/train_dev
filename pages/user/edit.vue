@@ -9,18 +9,18 @@
 				<view v-show="current === 0">
 					<view class="form-box">
 						<form @submit="bindCompany">
-							<view class="uni-form-item uni-row" v-if="companyStatu!='0'">
+							<view class="uni-form-item uni-row" v-if="companyStatu==''||companyStatu=='2'">
 								<view class="uni-title-edit">企业代码：</view>
 								<input class="uni-input train-input" name="companyCode" data-key="companyCode" @input="setData" placeholder="请输入企业代码"
 								 :value="formData.companyCode" />
 							</view>
 							<view class="uni-form-item uni-column" v-if="companyName">
 								<view class="uni-title-edit with-full " :class="companyStatu=='0'?'text-align-center':''">所属企业：{{companyName}}
-									<text class="txt-gray" v-if="companyStatu!='1'">[{{companyStatu=='0'?'审核中':'打回'}}]</text></view>
+									<text class="txt-gray" v-if="companyStatu!='1'">[{{companyStatu=='0'?'审核中':'审核未通过'}}]</text></view>
 							</view>
 							<view class="uni-btn-block">
-								<view class="btns" :class="companyStatu=='0'?'btns-big':''" @click="$store.dispatch('makePhoneCall')">联系我们</text></view>
-								<view class="btns btns-full" v-if="companyStatu!='0'" @click="bindCompany">绑定</view>
+								<view class="btns" v-if="companyName" :class="companyStatu=='0'?'btns-big':''" @click="$store.dispatch('makePhoneCall',companyPhone)">联系企业</text></view>
+								<view class="btns btns-full" :class="companyName==''?'btns-big':''" v-if="companyStatu!='0'" @click="bindCompany(companyStatu=='1'?'unbind':'')">{{companyStatu!="1"?"绑定":"解绑"}}</view>
 							</view>
 						</form>
 					</view>
@@ -63,14 +63,19 @@
 								</view>
 								<block v-if="editBlock==='password'">
 									<view class="uni-form-item uni-row">
-										<view class="uni-title-edit">新密码：</view>
+										<view class="uni-title-edit">原始密码：</view>
 										<input class="uni-input train-input" password name="password" data-key="password" @input="setData"
+										 placeholder="原始密码" />
+									</view>
+									<view class="uni-form-item uni-row">
+										<view class="uni-title-edit">新密码：</view>
+										<input class="uni-input train-input" password name="new_password" data-key="new_password" @input="setData"
 										 placeholder="新密码" />
 									</view>
 									<view class="uni-form-item uni-row">
 										<view class="uni-title-edit">确认密码：</view>
-										<input class="uni-input train-input" password name="cfn_password" data-key="cfn_password" @input="setData"
-										 placeholder="再次确认" />
+										<input class="uni-input train-input" password name="new_password_cfn" data-key="new_password_cfn" @input="setData"
+										 placeholder="确认新密码" />
 									</view>
 								</block>
 							</view>
@@ -104,6 +109,7 @@
 				],
 				editBlock: "basicInfo",
 				companyName: "",
+				companyPhone: "",
 				companyStatu: "", //estatus 3种: 0 待审 1 过了 2打回
 				oldPhone: "",
 				formData: {
@@ -111,7 +117,8 @@
 					"code": "",
 					"name": "",
 					"password": "",
-					"cfn_password": "",
+					"new_password": "",
+					"new_password_cfn": "",
 					"companyCode": ""
 				}
 			}
@@ -138,8 +145,13 @@
 			blockShow(type) {
 				this.editBlock = type;
 			},
-			bindCompany() {
+			bindCompany(type) {
+				console.log(type);
 				var that = this;
+				if (type === 'unbind') {
+					that.getDatas(type);
+					return
+				}
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				let _formData = that.formData;
 				//let _formData = e.detail.value;
@@ -201,14 +213,28 @@
 						rule.push(__rule1)
 						rule.push(__rule2)
 					}
-					if (_formData.password != "") {
-						let __rule = {
-							name: "cfn_password",
+					if (_formData.new_password != "" || _formData.password != "") {
+						let __rule1 = {
+							name: "password",
+							checkType: "notnull",
+							checkRule: "",
+							errorMsg: "原始密码不能为空"
+						};
+						let __rule2 = {
+							name: "new_password",
 							checkType: "same",
-							checkRule: _formData.password,
-							errorMsg: "密码不一致，请确认"
+							checkRule: _formData.new_password,
+							errorMsg: "新密码不能为空"
 						}
-						rule.push(__rule)
+						let __rule3 = {
+							name: "new_password_cfn",
+							checkType: "same",
+							checkRule: _formData.new_password,
+							errorMsg: "新密码不一致，请确认"
+						}
+						rule.push(__rule1)
+						rule.push(__rule2)
+						rule.push(__rule3)
 					}
 					var checkRes = graceChecker.check(_formData, rule);
 					if (!checkRes) {
@@ -222,8 +248,8 @@
 				}
 				that.loading = true
 				let data = {
-					"inter": type == 'bindCompany' ? 'enterprise' : '',
-					"method": "POST",
+					"inter": type == 'bindCompany' || type == 'unbind' ? 'enterprise' : 'editInfo',
+					"method": type == 'bindCompany' || type == 'unbind' ? 'POST' : 'PUT',
 					"header": {
 						"token": that.$store.state.user.token || ""
 					}
@@ -232,14 +258,20 @@
 					data["data"] = {
 						"code": that.formData.companyCode
 					}
-				} else {
+				} else if (type == 'basicInfo') {
 					data["data"] = {
+						"photo": "",
 						"name": _formData.name,
-						"phone": _formData.phone,
-						"code": _formData.code,
 						"password": _formData.password,
-						"cfn_password": _formData.cfn_password,
+						"new_password": _formData.new_password,
+						"new_password_cfn": _formData.new_password_cfn,
 					}
+					if (that.oldPhone != _formData.phone) {
+						data["data"]["phone"] = _formData.phone;
+						data["data"]["code"] = _formData.code;
+					}
+				} else {
+					/*unbind*/
 				}
 				console.log(data)
 				data["fun"] = function(res) {
@@ -252,12 +284,9 @@
 								key: "user",
 								success: function(ress) {
 									let ress_data = ress.data;
-									ress_data["userInfo"]["company"] = {
-										"eName": company_res.eName,
-										"ePhone": company_res.ePhone,
-										"eStatus": company_res.eStatus,
-
-									};
+									ress_data["userInfo"]["eName"] = company_res.eName;
+									ress_data["userInfo"]["ePhone"] = company_res.ePhone;
+									ress_data["userInfo"]["eStatus"] = company_res.eStatus;
 									that.setPageData(ress_data["userInfo"])
 									uni.setStorage({
 										key: "user",
@@ -272,12 +301,34 @@
 								showCancel: false,
 								confirmText: "确定"
 							})
-						} else {
+						} else if (type == 'basicInfo') {
+							var user_res = res.data;
+							console.log(user_res);
+							uni.getStorage({
+								key: "user",
+								success: function(ress) {
+									let ress_data = ress.data;
+									ress_data["userInfo"]["phone"] = _formData.phone || ress_data["userInfo"]["phone"];
+									ress_data["userInfo"]["name"] = _formData.name || ress_data["userInfo"]["name"];
+									//ress_data["userInfo"]["photo"] = _formData.photo || ress_data["userInfo"]["photo"];
+									that.setPageData(ress_data["userInfo"])
+									uni.setStorage({
+										key: "user",
+										data: ress_data
+									});
+								},
+								fail() {}
+							})
 							uni.showToast({
 								title: "信息修改成功",
 								icon: "success",
 								duration: 1500
-							})
+							});
+							setTimeout(() => {
+								uni.redirectTo({
+									url: "/pages/user/index"
+								});
+							}, 1500);
 						}
 					} else {
 						uni.showToast({
@@ -291,9 +342,10 @@
 			},
 			setPageData(_userInfo) {
 				var that = this;
-				that.companyName = _userInfo.company ? _userInfo.company.eName : "";
-				that.companyStatu = _userInfo.company ? _userInfo.company.eStatus : "";
-				that.formData.companyCode = _userInfo.company && _userInfo.company.code ? _userInfo.company.code : "";
+				that.companyName = _userInfo.eName ? _userInfo.eName : "";
+				that.companyStatu = _userInfo.eStatus ? _userInfo.eStatus : "";
+				that.companyPhone = _userInfo.ePhone ? _userInfo.ePhone : "";
+				that.formData.companyCode = _userInfo.code ? _userInfo.code : "";
 				that.formData.phone = _userInfo.phone;
 				that.oldPhone = _userInfo.phone;
 				that.formData.name = _userInfo.name;

@@ -148,9 +148,9 @@ const store = new Vuex.Store({
 				}
 			});
 		},
-		makePhoneCall(ctx) {
+		makePhoneCall(ctx, contactNumb) {
 			uni.makePhoneCall({
-				phoneNumber: ctx.state.phoneNumber
+				phoneNumber: contactNumb || ctx.state.phoneNumber
 			});
 		},
 		getSystemInfo(ctx) {
