@@ -14,11 +14,13 @@
 								<input class="uni-input train-input" name="companyCode" data-key="companyCode" @input="setData" placeholder="请输入企业代码"
 								 :value="formData.companyCode" />
 							</view>
-							<view class="uni-form-item uni-row" v-if="companyName">
-								<view class="uni-title-edit with-full text-align-center">所属企业：{{companyName}} <text class="txt-gray">[{{companyStatu!=1?'审核中':''}}]</text></view>
+							<view class="uni-form-item uni-column" v-if="companyName">
+								<view class="uni-title-edit with-full " :class="companyStatu=='0'?'text-align-center':''">所属企业：{{companyName}}
+									<text class="txt-gray" v-if="companyStatu!='1'">[{{companyStatu=='0'?'审核中':'打回'}}]</text></view>
 							</view>
-							<view class="uni-btn-block" v-if="companyStatu!='0'">
-								<view class="btns btns-full btns-big" @click="bindCompany">绑定</view>
+							<view class="uni-btn-block">
+								<view class="btns" :class="companyStatu=='0'?'btns-big':''" @click="$store.dispatch('makePhoneCall')">联系我们</text></view>
+								<view class="btns btns-full" v-if="companyStatu!='0'" @click="bindCompany">绑定</view>
 							</view>
 						</form>
 					</view>
@@ -97,7 +99,7 @@
 				seconds: 60,
 				getCodeTxt: "获取验证码",
 				segmented: [
-					'绑定公司',
+					'绑定企业',
 					'修改个人信息'
 				],
 				editBlock: "basicInfo",
@@ -152,8 +154,8 @@
 				var checkRes = graceChecker.check(_formData, rule);
 				if (checkRes) {
 					uni.showModal({
-						title: "确认绑定公司",
-						content: `公司代码: ${_formData.companyCode}`,
+						title: "确认绑定企业",
+						content: `企业代码: ${_formData.companyCode}`,
 						confirmText: "确定",
 						cancelText: "取消",
 						success: function(res) {
@@ -267,6 +269,7 @@
 							uni.showModal({
 								title: "申请成功",
 								content: "等待管理员审核",
+								showCancel: false,
 								confirmText: "确定"
 							})
 						} else {
