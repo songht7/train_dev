@@ -70,7 +70,7 @@ const store = new Vuex.Store({
 					console.log("getData-err-", parm.inter, "：", err)
 					result = {
 						"success": false,
-						"Msg": "接口请求失败",
+						"msg": "接口请求失败",
 						"err": err
 					}
 				},

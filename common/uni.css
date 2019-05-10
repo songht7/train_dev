@@ -319,6 +319,12 @@
 	color: #ffffff;
 }
 
+.btns-loading {
+	background: #D1D1D1;
+	color: #666;
+	border-color: #D1D1D1;
+}
+
 
 /*通用 */
 page {
