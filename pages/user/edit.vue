@@ -9,15 +9,15 @@
 				<view v-show="current === 0">
 					<view class="form-box">
 						<form @submit="bindCompany">
-							<view class="uni-form-item uni-row">
+							<view class="uni-form-item uni-row" v-if="companyStatu!='0'">
 								<view class="uni-title-edit">企业代码：</view>
 								<input class="uni-input train-input" name="companyCode" data-key="companyCode" @input="setData" placeholder="请输入企业代码"
 								 :value="formData.companyCode" />
 							</view>
-							<view class="uni-form-item uni-column" v-if="companyName">
-								<view class="uni-title-edit with-fun">已绑定企业：{{companyName}}</view>
+							<view class="uni-form-item uni-row" v-if="companyName">
+								<view class="uni-title-edit with-full text-align-center">所属企业：{{companyName}} <text class="txt-gray">[{{companyStatu!=1?'审核中':''}}]</text></view>
 							</view>
-							<view class="uni-btn-block">
+							<view class="uni-btn-block" v-if="companyStatu!='0'">
 								<view class="btns btns-full btns-big" @click="bindCompany">绑定</view>
 							</view>
 						</form>
@@ -102,6 +102,7 @@
 				],
 				editBlock: "basicInfo",
 				companyName: "",
+				companyStatu: "", //estatus 3种: 0 待审 1 过了 2打回
 				oldPhone: "",
 				formData: {
 					"phone": "",
@@ -119,11 +120,8 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
-			that.companyName = that.$store.state.user.company ? that.$store.state.user.company.name : "";
-			that.formData.companyCode = that.$store.state.user.company ? that.$store.state.user.company.code : "";
-			that.formData.phone = that.$store.state.user.userInfo.phone;
-			that.oldPhone = that.$store.state.user.userInfo.phone;
-			that.formData.name = that.$store.state.user.userInfo.name;
+			let _userInfo = that.$store.state.user.userInfo;
+			that.setPageData(_userInfo);
 		},
 		components: {
 			fixButton,
@@ -246,6 +244,26 @@
 					that.loading = false;
 					if (res.success) {
 						if (type == 'bindCompany') {
+							var company_res = res.data;
+							console.log(company_res);
+							uni.getStorage({
+								key: "user",
+								success: function(ress) {
+									let ress_data = ress.data;
+									ress_data["userInfo"]["company"] = {
+										"eName": company_res.eName,
+										"ePhone": company_res.ePhone,
+										"eStatus": company_res.eStatus,
+
+									};
+									that.setPageData(ress_data["userInfo"])
+									uni.setStorage({
+										key: "user",
+										data: ress_data
+									});
+								},
+								fail() {}
+							})
 							uni.showModal({
 								title: "申请成功",
 								content: "等待管理员审核",
@@ -267,6 +285,15 @@
 					}
 				}
 				that.$store.dispatch("getData", data)
+			},
+			setPageData(_userInfo) {
+				var that = this;
+				that.companyName = _userInfo.company ? _userInfo.company.eName : "";
+				that.companyStatu = _userInfo.company ? _userInfo.company.eStatus : "";
+				that.formData.companyCode = _userInfo.company && _userInfo.company.code ? _userInfo.company.code : "";
+				that.formData.phone = _userInfo.phone;
+				that.oldPhone = _userInfo.phone;
+				that.formData.name = _userInfo.name;
 			},
 			getCode() {
 				var that = this;
@@ -360,6 +387,14 @@
 	.uni-title-edit {
 		font-size: 32upx;
 		width: 25%;
+	}
+
+	.with-full {
+		width: 100%;
+	}
+
+	.text-align-center {
+		text-align: center;
 	}
 
 	.uni-form-item-edit {
