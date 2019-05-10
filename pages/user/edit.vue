@@ -32,6 +32,9 @@
 								<view class="edit-block-title">
 									<view class="block-title">基本信息修改</view>
 								</view>
+								<view class="uni-form-item uni-row" v-show="false">
+									<!-- https://ext.dcloud.net.cn/plugin?id=63#detail -->
+								</view>
 								<view class="uni-form-item uni-row">
 									<view class="uni-title-edit">手机号：</view>
 									<input class="uni-input train-input" name="phone" data-key="phone" @input="setData" placeholder="请输入手机号"
