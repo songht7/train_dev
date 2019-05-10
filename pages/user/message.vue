@@ -16,6 +16,7 @@
 		},
 		onLoad() {
 			var that = this;
+			that.$store.state.haveMsg = false;
 		},
 		onShow() {
 			var that = this;

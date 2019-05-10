@@ -10,16 +10,19 @@
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"order": [
 				"1e53f2e9-fd08-83af-ea98-125b51946362",
-				"7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
-				"29780a16-739c-b014-5376-ef26acad78ac",
+				"2eecdab0-98d7-aa1c-8132-d88b7cdea552",
 				"52dec206-ba49-f5cb-f80b-b6f9a09ef6d3",
-				"d61bd249-606b-8476-e2e2-df9537e13026",
-				"01ec936e-e7f9-9a62-774a-b4e4b4acb974",
+				"7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
 				"a6d0ee79-d698-d671-8236-7620d39015fc",
-				"2eecdab0-98d7-aa1c-8132-d88b7cdea552"
+				"29780a16-739c-b014-5376-ef26acad78ac",
+				"01ec936e-e7f9-9a62-774a-b4e4b4acb974",
+				"d61bd249-606b-8476-e2e2-df9537e13026",
+				"e4282418-2919-4590-7c56-c1215f96d20b"
 			],
 			"owner": "1054562",
-			"folders_order": [],
+			"folders_order": [
+				"03c48dfc-75e5-dc17-96e6-2ab6ec86bcb6"
+			],
 			"id": "7f335a37-67c4-1f34-81e7-fe077ccfadef"
 		},
 		{
@@ -77,6 +80,18 @@
 			"owner": "1054562",
 			"folders_order": [],
 			"id": "9b1b474c-e096-2bd9-2a31-ec06471477f9"
+		},
+		{
+			"name": "enterprise",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"order": [
+				"f598c717-2ec6-515e-9bee-0860efd8e5b1"
+			],
+			"owner": "1054562",
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
+			"folders_order": [],
+			"id": "03c48dfc-75e5-dc17-96e6-2ab6ec86bcb6"
 		}
 	],
 	"folders_order": [
@@ -114,7 +129,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557224325415,
+			"time": 1557456378002,
 			"name": "/v4/ApiAuth-login.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -132,7 +147,7 @@
 					"enabled": true
 				}
 			],
-			"url": "api_test.wsshanghai.com/v4/ApiAuth-sign.htm",
+			"url": "plbs.lc/v4/ApiAuth-sign.htm",
 			"folder": "81666d3a-5cc8-cf94-573a-dff8e0928953",
 			"queryParams": [],
 			"preRequestScript": null,
@@ -145,7 +160,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556080084159,
+			"time": 1557399707193,
 			"name": "/v4/ApiAuth-sign.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -206,11 +221,11 @@
 		},
 		{
 			"id": "1e53f2e9-fd08-83af-ea98-125b51946362",
-			"headers": "token: 1dc562f6d52ed50b0f34ca80c812667bd2676822\n",
+			"headers": "token: fe186ec4689c38fe2829145f1feee60c1ab2c0d4\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "1dc562f6d52ed50b0f34ca80c812667bd2676822",
+					"value": "fe186ec4689c38fe2829145f1feee60c1ab2c0d4",
 					"description": "",
 					"enabled": true
 				}
@@ -227,7 +242,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557390785734,
+			"time": 1557473060963,
 			"name": "/v4/ApiAccount-info.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -375,11 +390,11 @@
 		},
 		{
 			"id": "2eecdab0-98d7-aa1c-8132-d88b7cdea552",
-			"headers": "token: 1dc562f6d52ed50b0f34ca80c812667bd2676822\nContent-Type: application/json\n",
+			"headers": "token: fe186ec4689c38fe2829145f1feee60c1ab2c0d4\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "1dc562f6d52ed50b0f34ca80c812667bd2676822",
+					"value": "fe186ec4689c38fe2829145f1feee60c1ab2c0d4",
 					"description": "",
 					"enabled": true
 				},
@@ -391,24 +406,23 @@
 				}
 			],
 			"url": "plbs.lc/v4/ApiAccount-enterprise.htm",
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "POST",
-			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"data": [],
 			"dataMode": "raw",
-			"name": "/v4/ApiAccount-enterprise.htm",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1557390834638,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
+			"time": 1557470728396,
+			"name": "/v4/ApiAccount-enterprise.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
 			"rawModeData": "{\"code\":\"1234567890\"}"
 		},
 		{
@@ -488,7 +502,7 @@
 		},
 		{
 			"id": "7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
-			"headers": "Content-Type: application/json\ntoken: 1dc562f6d52ed50b0f34ca80c812667bd2676822\n",
+			"headers": "Content-Type: application/json\ntoken: fe186ec4689c38fe2829145f1feee60c1ab2c0d4\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -498,7 +512,7 @@
 				},
 				{
 					"key": "token",
-					"value": "1dc562f6d52ed50b0f34ca80c812667bd2676822",
+					"value": "fe186ec4689c38fe2829145f1feee60c1ab2c0d4",
 					"description": "",
 					"enabled": true
 				}
@@ -516,12 +530,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557384285410,
+			"time": 1557456455874,
 			"name": "/v4/ApiAccount-course.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],
-			"rawModeData": "{\"course_id\":\"2\"}"
+			"rawModeData": "{\"course_id\":\"7\"}"
 		},
 		{
 			"id": "7a0445a3-3bb0-19ee-69fc-6a56f39130de",
@@ -814,6 +828,37 @@
 			"responses": []
 		},
 		{
+			"id": "e4282418-2919-4590-7c56-c1215f96d20b",
+			"headers": "token: 1dc562f6d52ed50b0f34ca80c812667bd2676822\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "1dc562f6d52ed50b0f34ca80c812667bd2676822",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "plbs.lc/v4/ApiAccount-enterpriseCourses.htm",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"data": null,
+			"dataMode": "params",
+			"name": "/v4/ApiAccount-enterpriseCourses.htm",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1557392621255,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef"
+		},
+		{
 			"id": "ef6d0583-f683-5194-f50a-7b3b6b0d39e8",
 			"headers": "token: ad12d0d878f756881464ede594f29c8c391e8186\n",
 			"headerData": [
@@ -850,6 +895,39 @@
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": []
+		},
+		{
+			"id": "f598c717-2ec6-515e-9bee-0860efd8e5b1",
+			"headers": "token: 99f2008d75f7c170c914bfa964ee62539bb9b07f\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "99f2008d75f7c170c914bfa964ee62539bb9b07f",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "plbs.lc/v4/ApiAccount-personalProgresses.htm",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"data": null,
+			"dataMode": "params",
+			"name": "/v4/ApiAccount-personalProgresses.htm",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1557469341773,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "03c48dfc-75e5-dc17-96e6-2ab6ec86bcb6",
+			"isFromCollection": true,
+			"collectionRequestId": "f598c717-2ec6-515e-9bee-0860efd8e5b1"
 		},
 		{
 			"id": "f6716005-c9ed-5feb-c6a1-7fa32c8e49f5",

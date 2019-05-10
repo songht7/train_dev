@@ -32,6 +32,8 @@ export default {
 			"favorites":"/v4/ApiAccount-favorites.htm",//收藏夹列表
 			"favorite":"/v4/ApiAccount-favorite.htm",//用户：收藏夹[POST]
 			"enterprise":"/v4/ApiAccount-enterprise.htm",//用户关联企业[POST]
+			"enterpriseCourses":"/v4/ApiAccount-enterpriseCourses.htm",//员工：企业专用课程列表
+			"personalProgresses":"/v4/ApiAccount-personalProgresses.htm",// 企业主：员工学习进度
 			
 		}
 	}

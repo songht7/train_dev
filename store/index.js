@@ -15,8 +15,9 @@ const store = new Vuex.Store({
 		phoneNumber: "4008200000",
 		user: {},
 		data: {},
+		haveMsg: false,
 		interface: common.Interface,
-		systemInfo:{}
+		systemInfo: {}
 	},
 	mutations: {
 		switch_loading(state, status) {

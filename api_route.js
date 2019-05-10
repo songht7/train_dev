@@ -23,4 +23,9 @@
 'GET /v4/ApiCourse-lesson.htm' => 'v4-ApiCourse-lesson', //获取课时详情
 'GET /v4/ApiCourse-tests.htm' => 'v4-ApiCourse-tests', //获取随机试题
 'POST /v4/ApiAccount-test.htm' => 'v4-ApiAccount-testing', //提交测试
+
+'GET /v4/ApiAccount-personalProgresses.htm' => 'v4-ApiAccount-personalProgresses', //企业主：员工学习进度
+'GET /v4/ApiAccount-courseProgresses.htm' => 'v4-ApiAccount-courseProgresses', //企业主：课程参与度
+'GET /v4/ApiAccount-testProgresses.htm' => 'v4-ApiAccount-testProgresses', //企业主：考试合格率
+'GET /v4/ApiAccount-enterpriseCourses.htm' => 'v4-ApiAccount-enterpriseCourses', //员工：企业专用课程列表
 'GET /v4/ApiArtic
