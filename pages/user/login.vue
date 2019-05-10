@@ -98,7 +98,7 @@
 				if (checkRes) {
 					//_formData["Portrait"] = "/static/logo.png";
 					let data = {
-						"inter": "login",
+						"inter": that.UserType == 'company' ? "sign" : "login",
 						"data": _formData,
 						"method": "POST"
 					}
