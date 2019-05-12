@@ -1,35 +1,6 @@
 <template>
 	<view class="user-center">
-		<view class="user-block">
-			<view class="user-head">
-				<view class="portrait">
-					<uni-icon v-show="!$store.state.user.Portrait" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
-					<image class="user-portrait" v-show="$store.state.user.Portrait" :src="$store.state.user.Portrait" mode="aspectFill"></image>
-				</view>
-				<view class="user-infos">
-					<view class="user-name txt-sross">{{UserId?$store.state.user.UserName:"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
-					<view class="user-more job"><text>教学管理员</text></view>
-				</view>
-			</view>
-		</view>
-		<view class="user-block">
-			<view class="user-class-info">
-				<view class="user-my-class">
-					<view class="my-class-block">
-						<view class="class-count">15</view>
-						<view class="class-overview">参加课程</view>
-					</view>
-					<view class="my-class-block">
-						<view class="class-count class-state-green">8</view>
-						<view class="class-overview">通过考试</view>
-					</view>
-					<view class="my-class-block">
-						<view class="class-count class-state-red">2</view>
-						<view class="class-overview">未通过考试</view>
-					</view>
-				</view>
-			</view>
-		</view>
+		<user-center-top :personal="personal"></user-center-top>
 		<view class="user-block">
 			<view class="user-class-list">
 				<view class="my-class-head">
@@ -50,7 +21,7 @@
 									<view class="class-progress">
 										<view class="progress-box">
 											<view class="percent">{{k==2?"开始学习":"已学60%"}}</view>
-											<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0"/>
+											<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 										</view>
 									</view>
 								</view>
@@ -68,25 +39,58 @@
 </template>
 
 <script>
+	import userCenterTop from '@/components/user-center-top.vue'
 	import uniGrid from '@/components/uni-grid.vue'
 	export default {
 		data() {
 			return {
-				UserId: ""
+				UserId: "",
+				statisType: "",
+				userCenterDatas: {},
+				personal: "0",//员工总数
 			}
 		},
 		components: {
+			userCenterTop,
 			uniGrid
 		},
-		onLoad() {},
+		onLoad(e) {
+			var that = this;
+			let p = e.t || 0
+			that.statisType = p;
+			that.$store.dispatch("cheack_page", p)
+		},
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
-			that.$store.dispatch("cheack_page", 2)
 			that.UserId = that.$store.state.user.UserId || '';
+			var interType = "personalProgresses";
+			switch (that.statisType) {
+				case 0:
+					interType = "personalProgresses";
+					break;
+				default:
+					break;
+			}
+			that.getDatas(interType)
 		},
 		methods: {
-
+			getDatas(type) {
+				var that = this;
+				let data = {
+					"inter": type,
+					"header": {
+						"token": that.$store.state.user.token || ""
+					}
+				}
+				data["fun"] = function(res) {
+					if (res.success) {
+						that.personal = res.data.total;
+						console.log(that.userCenterDatas)
+					}
+				}
+				that.$store.dispatch("getData", data)
+			}
 		}
 	}
 </script>

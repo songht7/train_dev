@@ -116,6 +116,11 @@
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$store.dispatch("cheack_page", 0)
+			if (that.$store.state.user.token && that.$store.state.user.userType != "3") {
+				uni.redirectTo({
+					url: "/pages/company/statis"
+				})
+			}
 		},
 		onReady() {
 			console.log("onReady")
@@ -249,10 +254,12 @@
 		display: flex;
 		justify-content: center;
 	}
-	.ctgImg{
+
+	.ctgImg {
 		width: 28px;
 		height: 28px;
 	}
+
 	.ad-img {
 		width: 100%;
 	}

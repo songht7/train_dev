@@ -51,7 +51,7 @@
 .border-block:last-child {
 	border-bottom: 0
 }
-
+/* 
 .user-head {
 	display: flex;
 	justify-content: flex-start;
@@ -160,7 +160,7 @@
 .class-state-red {
 	color: #EE6858;
 }
-
+ */
 .my-class-head {
 	display: flex;
 	flex-direction: row;

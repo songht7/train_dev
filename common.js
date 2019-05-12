@@ -35,6 +35,8 @@ export default {
 			"enterprise": "/v4/ApiAccount-enterprise.htm", //用户关联企业[POST]
 			"enterpriseCourses": "/v4/ApiAccount-enterpriseCourses.htm", //员工：企业专用课程列表
 			"personalProgresses": "/v4/ApiAccount-personalProgresses.htm", // 企业主：员工学习进度
+			"courseProgresses": "/v4/ApiAccount-courseProgresses.htm", // 课程进度
+			"testProgresses": "/v4/ApiAccount-testProgresses.htm", //员工：测试进度
 
 		}
 	}

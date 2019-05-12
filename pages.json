@@ -132,7 +132,7 @@
 				"navigationBarTitleText": "个人信息编辑"
 			}
 		}, {
-			"path": "pages/company/pass",
+			"path": "pages/company/statis",
 			"style": {
 				"navigationBarTitleText": "考试合格率",
 				"navigationStyle": "custom",
