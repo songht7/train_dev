@@ -1,7 +1,7 @@
 <template>
 	<view class="user-center">
 		<user-center-top :enterpriseUserCount="enterpriseUserCount" :joinCourseUserCount="joinCourseUserCount" :courseCount="courseCount"></user-center-top>
-		<view class="user-block">
+		<view class="user-block" v-show="statisType===0">
 			<view class="user-class-list">
 				<view class="my-class-head">
 					<view class="class-tip">
@@ -43,6 +43,43 @@
 				</view>
 			</view>
 		</view>
+		<view class="user-block" v-show="statisType==1||statisType==2">
+			<view class="user-class-list">
+				<view class="my-class-head">
+					<view class="class-tip">
+						<view class="class-icon">
+							<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+						</view>
+						<view class="txt-sross">课程参与情况</view>
+					</view>
+					<view class="class-more">全部{{data_total}}个></view>
+				</view>
+				<view class="class-list">
+					<view class="class-list">
+						<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
+							<view class="list-block" @click="navToTrain(obj.id)">
+								<view class="list-more">
+									<view class="list-left class-list-left">
+										<view class="list-title">{{obj.name}}</view>
+										<view class="class-progress">
+											<view class="progress-box">
+												<view class="percent">{{statisType==1?`参与度${obj.joinPerson}%`:`合格率${obj.passExam}%`}}</view>
+												<progress :percent="obj.joinPerson||obj.passExam" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+											</view>
+										</view>
+									</view>
+									<view class="list-right">
+										<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+										 mode="aspectFill"></image>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<uni-load-more :status="status"></uni-load-more>
+				</view>
+			</view>
+		</view>
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -55,7 +92,7 @@
 		data() {
 			return {
 				UserId: "",
-				statisType: "",
+				statisType: 0,
 				userCenterDatas: {},
 				enterpriseUserCount: "0", //员工总数
 				joinCourseUserCount: "0", //参与学习
@@ -85,8 +122,9 @@
 		onLoad(e) {
 			var that = this;
 			let p = e.t || 0
-			that.statisType = p;
+			that.statisType = parseInt(p);
 			that.$store.dispatch("cheack_page", p)
+			console.log(that.statisType)
 		},
 		onShow() {
 			var that = this;
@@ -152,6 +190,11 @@
 					}
 				}
 				that.$store.dispatch("getData", data)
+			},
+			navToTrain(id) {
+				uni.navigateTo({
+					url: `/pages/train/unitlist?id=${id}`
+				})
 			}
 		}
 	}
@@ -160,7 +203,7 @@
 <style>
 	@import "../../common/center.css";
 
-	.fRowCenter{
+	.fRowCenter {
 		display: flex;
 		flex-direction: row;
 		align-content: center;
