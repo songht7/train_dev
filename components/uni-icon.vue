@@ -74,6 +74,6 @@
 	}
 
 	.uni-icon-dashaxiaoqudizhi01 {
-		background-image: -webkit-linear-gradient(#74D0F3, #5699E8);
+		/* background-image: -webkit-linear-gradient(#74D0F3, #5699E8); */
 	}
 </style>

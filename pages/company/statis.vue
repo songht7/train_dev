@@ -1,6 +1,6 @@
 <template>
 	<view class="user-center">
-		<user-center-top :personal="personal"></user-center-top>
+		<user-center-top :enterpriseUserCount="enterpriseUserCount" :joinCourseUserCount="joinCourseUserCount" :courseCount="courseCount"></user-center-top>
 		<view class="user-block">
 			<view class="user-class-list">
 				<view class="my-class-head">
@@ -8,29 +8,38 @@
 						<view class="class-icon">
 							<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
 						</view>
-						<view class="txt-sross">我参与的课程</view>
+						<view class="txt-sross">员工学习进度</view>
 					</view>
-					<view class="class-more">全部8个></view>
+					<view class="class-more">全部{{data_total}}个></view>
 				</view>
 				<view class="class-list">
-					<view class="list-row class-list-row" v-for="(r,k) in 3" :key="k">
+					<view class="list-statis fRowCenter">
+						<view class="row-block fRowCenter">排名</view>
+						<view class="row-block fRowCenter">学员</view>
+						<view class="row-block fRowCenter">参与课程</view>
+						<view class="row-block fRowCenter">通过考试</view>
+						<view class="row-block fRowCenter row-progress">学习总进度</view>
+					</view>
+					<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
 						<view class="list-block">
-							<view class="list-more">
-								<view class="list-left class-list-left">
-									<view class="list-title">质检员基础知识培训课程{{k}}</view>
-									<view class="class-progress">
-										<view class="progress-box">
-											<view class="percent">{{k==2?"开始学习":"已学60%"}}</view>
-											<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
-										</view>
+							<view class="list-statis fRowCenter">
+								<view class="row-block fRowCenter">{{k}}</view>
+								<view class="row-block fRowCenter">
+									<view class="photo" v-show="obj.photo">
+										<image :src="obj.photo"></image>
 									</view>
+									{{obj.NAME}}
 								</view>
-								<view class="list-right">
-									<image class="image-full" :src="sourceUrl+'/data/image_doc/6aa5e95da760264b14d7e73618693e74.jpg'" mode="aspectFill"></image>
+								<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
+								<view class="row-block fRowCenter">{{obj.passExamCount}}</view>
+								<view class="row-block fRowCenter row-progress">
+									<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+									{{obj.courseTotal}}
 								</view>
 							</view>
 						</view>
 					</view>
+					<uni-load-more :status="status"></uni-load-more>
 				</view>
 			</view>
 		</view>
@@ -41,18 +50,37 @@
 <script>
 	import userCenterTop from '@/components/user-center-top.vue'
 	import uniGrid from '@/components/uni-grid.vue'
+	import uniLoadMore from '@/components/uni-load-more.vue'
 	export default {
 		data() {
 			return {
 				UserId: "",
 				statisType: "",
 				userCenterDatas: {},
-				personal: "0",//员工总数
+				enterpriseUserCount: "0", //员工总数
+				joinCourseUserCount: "0", //参与学习
+				courseCount: "0", //总课程数
+				datas: [],
+				data_total: 0,
+				pageIndex: 1,
+				pageSize: 5,
+				status: "more",
+				interList: [{
+					"inter": "personalProgresses",
+					"dataFor": "personal"
+				}, {
+					"inter": "courseProgresses",
+					"dataFor": "course"
+				}, {
+					"inter": "testProgresses",
+					"dataFor": "test"
+				}]
 			}
 		},
 		components: {
 			userCenterTop,
-			uniGrid
+			uniGrid,
+			uniLoadMore
 		},
 		onLoad(e) {
 			var that = this;
@@ -63,30 +91,64 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
-			that.UserId = that.$store.state.user.UserId || '';
-			var interType = "personalProgresses";
-			switch (that.statisType) {
-				case 0:
-					interType = "personalProgresses";
-					break;
-				default:
-					break;
+			let _user = that.$store.state.user.userInfo;
+			that.UserId = _user.id || '';
+			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
+			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
+			that.courseCount = _user.subInfo.courseCount || '0';
+			that.getDatas()
+			// interList.forEach((obj, key) => {
+			// 	that.getDatas(obj.inter, obj.dataFor)
+			// })
+		},
+		onPullDownRefresh() {
+			var that = this;
+			that.pageIndex = 1;
+			that.getDatas()
+		},
+		onReachBottom() {
+			var that = this;
+			if (that.status === "noMore") {
+				return;
 			}
-			that.getDatas(interType)
+			if (that.datas.length >= that.data_total || that.data_total <= 0) {
+				that.status = "noMore";
+				return;
+			}
+			that.pageIndex = that.pageIndex + 1;
+			that.getDatas()
 		},
 		methods: {
-			getDatas(type) {
+			getDatas() {
 				var that = this;
 				let data = {
-					"inter": type,
+					"inter": that.interList[that.statisType].inter,
+					"parm": `?currentPage=${that.pageIndex}&pagesize=${that.pageSize}`,
 					"header": {
 						"token": that.$store.state.user.token || ""
 					}
 				}
 				data["fun"] = function(res) {
+					that.status = "more";
+					uni.stopPullDownRefresh()
 					if (res.success) {
-						that.personal = res.data.total;
-						console.log(that.userCenterDatas)
+						var _data = res.data.list;
+						if (_data) {
+							if (that.pageIndex == 1) {
+								that.datas = _data;
+							} else {
+								console.log(_data)
+								//that.datas.push(_data);
+								_data.forEach(item => {
+									that.datas.push(item);
+								});
+							}
+							that.data_total = res.data.total;
+						}
+						if (that.datas.length >= res.data.total || res.data.total <= 0) {
+							that.status = "noMore";
+							return;
+						}
 					}
 				}
 				that.$store.dispatch("getData", data)
@@ -97,4 +159,21 @@
 
 <style>
 	@import "../../common/center.css";
+
+	.fRowCenter{
+		display: flex;
+		flex-direction: row;
+		align-content: center;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+
+	.row-block {
+		width: 18%;
+	}
+
+	.row-progress {
+		width: 28%;
+	}
 </style>

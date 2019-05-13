@@ -28,21 +28,21 @@
 				<view class="user-my-class">
 					<view class="my-class-block">
 						<view class="class-overview" v-if="userType!='3'">员工总数</view>
-						<view class="class-count">{{userType!='3'?personal:"18"}}
+						<view class="class-count">{{userType!='3'?enterpriseUserCount:"18"}}
 							<uni-icon v-if="userType!='3'" type="wo" :size="18" color="#008CEE"></uni-icon>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">参加课程</view>
 					</view>
 					<view class="my-class-block">
 						<view class="class-overview" v-if="userType!='3'">参与学习</view>
-						<view class="class-count class-state-green">8
+						<view class="class-count class-state-green">{{userType!='3'?joinCourseUserCount:"18"}}
 							<uni-icon v-if="userType!='3'" type="wo" :size="18" color="#3BC1B0"></uni-icon>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">通过考试</view>
 					</view>
 					<view class="my-class-block">
 						<view class="class-overview" v-if="userType!='3'">总课程数</view>
-						<view class="class-count class-state-red">2
+						<view class="class-count class-state-red">{{userType!='3'?courseCount:"18"}}
 							<uni-icon v-if="userType!='3'" type="shuji" :size="18" color="#EE6858"></uni-icon>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">未通过考试</view>
@@ -64,15 +64,15 @@
 					return this.$store.state.user ? this.$store.state.user.userInfo : {}
 				}
 			},
-			personal: {
+			enterpriseUserCount: {//员工总数
 				type: String,
 				default: "0"
 			},
-			join: {
+			joinCourseUserCount: {//参与学习
 				type: String,
 				default: "0"
 			},
-			courseTotal: {
+			courseCount: {//总课程数
 				type: String,
 				default: "0"
 			}
