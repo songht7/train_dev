@@ -5,17 +5,18 @@
 				<view class="my-class-head">
 					<view class="class-tip">
 						<view class="class-icon">
-							<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+							<uni-icon v-show="!pageType" type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+							<uni-icon v-show="pageType" type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
 						</view>
-						<view class="txt-sross">我参与的课程</view>
+						<view class="txt-sross">{{pageOverview}}</view>
 					</view>
 				</view>
 				<view class="class-list">
-					<view class="list-row class-list-row" v-for="(r,k) in 3" :key="k">
+					<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
 						<view class="list-block">
 							<view class="list-more">
 								<view class="list-left class-list-left">
-									<view class="list-title">质检员基础知识培训课程{{k}}</view>
+									<view class="list-title">{{obj.name}}</view>
 									<view class="class-progress">
 										<view class="progress-box">
 											<view class="percent">{{k==2?"开始学习":"已学60%"}}</view>
@@ -24,11 +25,13 @@
 									</view>
 								</view>
 								<view class="list-right">
-									<image class="image-full" :src="sourceUrl+'/data/image_doc/9c84faccb7f85cddfebd2ca072f879ba.jpg'" mode="aspectFill"></image>
+									<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+									 mode="aspectFill"></image>
 								</view>
 							</view>
 						</view>
 					</view>
+					<uni-load-more :status="status"></uni-load-more>
 				</view>
 			</view>
 		</view>
@@ -38,23 +41,87 @@
 
 <script>
 	import fixButton from '@/components/fix-button.vue'
+	import uniLoadMore from '@/components/uni-load-more.vue'
 	export default {
 		data() {
 			return {
 				UserId: "",
-				__token: ""
+				__token: "",
+				datas: [],
+				pageOverview: "我参与的课程",
+				pageType: "",
+				pageIndex: 1,
+				pageSize: 7,
+				status: "more"
 			}
 		},
 		components: {
+			uniLoadMore,
 			fixButton
 		},
-		onLoad() {},
+		onLoad(e) {
+			var that = this;
+			that.pageType = e.t || "";
+			that.pageOverview = e.t ? "企业必须课程" : "我参与的课程";
+		},
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
+			that.UserId = that.$store.state.user.userInfo.id || '';
+			that.__token = that.$store.state.user.token;
+			that.getDatas(that.pageType);
+		},
+		onReachBottom() {
+			var that = this;
+			if (that.status === "noMore") {
+				return;
+			}
+			if (that.datas.length >= that.data_total || that.data_total <= 0) {
+				that.status = "noMore";
+				return;
+			}
+			that.pageIndex = that.pageIndex + 1;
+			that.getDatas()
 		},
 		methods: {
-			
+			getDatas(type) {
+				var that = this;
+				var inter = "";
+				if (type) {
+					inter = "enterpriseCourses"
+				}
+				that.status = "loading";
+				let data = {
+					"inter": inter,
+					"parm": `?currentPage=${that.pageIndex}&pagesize=${that.pageSize}`,
+					"header": {
+						"token": that.__token
+					}
+				}
+				data["fun"] = function(res) {
+					that.status = "more";
+					if (res.success) {
+						var _data = res.data.list;
+						if (_data) {
+							if (that.pageIndex == 1) {
+								that.datas = _data;
+							} else {
+								console.log(_data)
+								//that.datas.push(_data);
+								_data.forEach(item => {
+									that.datas.push(item);
+								});
+							}
+							that.data_total = res.data.total;
+						}
+						if (that.datas.length >= res.data.total || res.data.total <= 0) {
+							that.status = "noMore";
+							return;
+						}
+					}
+				}
+				that.$store.dispatch("getData", data)
+			}
 		}
 	}
 </script>

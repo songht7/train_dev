@@ -24,7 +24,8 @@ export default {
 			"course": "/v4/ApiCourse-course.htm", //培训详细?id=培训id
 			"lessons": "/v4/ApiCourse-lessons.htm", //课程列表{培训详细内}-headers token--?id=1
 			"lesson": "/v4/ApiCourse-lesson.htm", //课程详细-headers token--?id=1
-			"accountLesson": "/v4/ApiAccount-lesson.htm", //课程学习进度 lesson_id
+			"accountCourse": "/v4/ApiAccount-course.htm",//参与课时[POST] course_id
+			"accountLesson": "/v4/ApiAccount-lesson.htm", //课程学习进度[POST] lesson_id
 			"categorys": "/v4/ApiBase-categorys.htm", //培训分类
 			"tests": "/v4/ApiCourse-tests.htm", //获取随机试题
 			"test": "/v4/ApiAccount-test.htm", //提交测试[POST]
@@ -35,8 +36,8 @@ export default {
 			"enterprise": "/v4/ApiAccount-enterprise.htm", //用户关联企业[POST]
 			"enterpriseCourses": "/v4/ApiAccount-enterpriseCourses.htm", //员工：企业专用课程列表
 			"personalProgresses": "/v4/ApiAccount-personalProgresses.htm", // 企业主：员工学习进度
-			"courseProgresses": "/v4/ApiAccount-courseProgresses.htm", // 课程进度
-			"testProgresses": "/v4/ApiAccount-testProgresses.htm", //员工：测试进度
+			"courseProgresses": "/v4/ApiAccount-courseProgresses.htm", //企业主：课程参与度
+			"testProgresses": "/v4/ApiAccount-testProgresses.htm",  //企业主：考试合格率
 
 		}
 	}

@@ -262,7 +262,11 @@
 	background: #008CEE;
 	color: #FFFFFF;
 }
-
+.fbtn-disable{
+	background: #d1d1d1;
+	color: #666;
+	border-color: #999;
+}
 .fbtn-big {
 	width: 80%;
 }

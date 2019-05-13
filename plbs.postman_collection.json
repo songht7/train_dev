@@ -12,6 +12,7 @@
 				"1e53f2e9-fd08-83af-ea98-125b51946362",
 				"6be642ca-8193-5be1-e9e4-a0750bf3dd96",
 				"2eecdab0-98d7-aa1c-8132-d88b7cdea552",
+				"5accd5bf-9413-8721-9617-ebdeecf7c103",
 				"52dec206-ba49-f5cb-f80b-b6f9a09ef6d3",
 				"7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
 				"a6d0ee79-d698-d671-8236-7620d39015fc",
@@ -290,11 +291,11 @@
 		},
 		{
 			"id": "286afb10-278e-5de8-2655-e6b867cac3ea",
-			"headers": "token: 1e1ce0be88f45b01d4fcf0adca403d867834c505\n",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "1e1ce0be88f45b01d4fcf0adca403d867834c505",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
 					"description": "",
 					"enabled": true
 				}
@@ -320,7 +321,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556446861395,
+			"time": 1557714801877,
 			"name": "/v4/ApiCourse-course.htm?id=1",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -328,11 +329,11 @@
 		},
 		{
 			"id": "29540a1c-fd17-d6b5-3911-532847ba54e2",
-			"headers": "token: 1e1ce0be88f45b01d4fcf0adca403d867834c505\n",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "1e1ce0be88f45b01d4fcf0adca403d867834c505",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
 					"description": "",
 					"enabled": true
 				}
@@ -349,7 +350,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556260481508,
+			"time": 1557714784628,
 			"name": "/v4/ApiCourse-courses.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -393,11 +394,11 @@
 		},
 		{
 			"id": "2eecdab0-98d7-aa1c-8132-d88b7cdea552",
-			"headers": "token: fe186ec4689c38fe2829145f1feee60c1ab2c0d4\nContent-Type: application/json\n",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "fe186ec4689c38fe2829145f1feee60c1ab2c0d4",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
 					"description": "",
 					"enabled": true
 				},
@@ -421,7 +422,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557470728396,
+			"time": 1557716515012,
 			"name": "/v4/ApiAccount-enterprise.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -502,6 +503,44 @@
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],
 			"rawModeData": "{\"article_id\":\"1\"}"
+		},
+		{
+			"id": "5accd5bf-9413-8721-9617-ebdeecf7c103",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "plbs.lc/v4/ApiAccount-enterprise.htm",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"data": [],
+			"dataMode": "raw",
+			"name": "/v4/ApiAccount-enterprise.htm",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1557716486047,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
+			"rawModeData": "{\"enterprise_id\":\"1\"}"
 		},
 		{
 			"id": "6be642ca-8193-5be1-e9e4-a0750bf3dd96",
@@ -1025,11 +1064,11 @@
 		},
 		{
 			"id": "f6716005-c9ed-5feb-c6a1-7fa32c8e49f5",
-			"headers": "token: 1e1ce0be88f45b01d4fcf0adca403d867834c505\n",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "1e1ce0be88f45b01d4fcf0adca403d867834c505",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
 					"description": "",
 					"enabled": true
 				}
@@ -1055,7 +1094,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1556446820969,
+			"time": 1557715007580,
 			"name": "/v4/ApiCourse-lessons.htm?id=1",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",

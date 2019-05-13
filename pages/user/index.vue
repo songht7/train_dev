@@ -43,18 +43,18 @@
 						<view class="my-class-head">
 							<view class="class-tip">
 								<view class="class-icon">
-									<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+									<uni-icon type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
 								</view>
 								<view class="txt-sross">企业必须课程</view>
 							</view>
-							<navigator url="/pages/user/my-class" class="class-more">全部8个></navigator>
+							<navigator url="/pages/user/my-class?t=ECourses" class="class-more">全部{{ECoursesTotal}}个></navigator>
 						</view>
 						<view class="class-list">
-							<view class="list-row class-list-row" v-for="(r,k) in 3" :key="k">
-								<view class="list-block">
+							<view class="list-row class-list-row" v-for="(obj,k) in ECourses" :key="k">
+								<view class="list-block" @click="navToTrain(obj.id)">
 									<view class="list-more">
 										<view class="list-left class-list-left">
-											<view class="list-title">质检员基础知识培训课程{{k}}</view>
+											<view class="list-title">{{obj.name}}</view>
 											<view class="class-progress">
 												<view class="progress-box">
 													<view class="percent">{{k==2?"开始学习":"已学60%"}}</view>
@@ -63,7 +63,8 @@
 											</view>
 										</view>
 										<view class="list-right">
-											<image class="image-full" :src="sourceUrl+'/data/image_doc/9c84faccb7f85cddfebd2ca072f879ba.jpg'" mode="aspectFill"></image>
+											<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+											 mode="aspectFill"></image>
 										</view>
 									</view>
 								</view>
@@ -123,6 +124,7 @@
 				UserId: "",
 				__token: "",
 				ECourses: [], //企业必须课
+				ECoursesTotal: 0,
 				eStatus: ""
 			}
 		},
@@ -149,17 +151,24 @@
 					url: `/pages/user/${page}`
 				})
 			},
+			navToTrain(id) {
+				uni.navigateTo({
+					url: `/pages/train/unitlist?id=${id}`
+				})
+			},
 			getECourses() {
 				var that = this;
 				let data = {
 					"inter": "enterpriseCourses",
+					"parm": "?currentPage=1&pagesize=1",
 					"header": {
 						"token": that.__token
 					}
 				}
 				data["fun"] = function(res) {
 					if (res.success) {
-
+						that.ECourses = res.data.list;
+						that.ECoursesTotal = res.data.total;
 					}
 				}
 				that.$store.dispatch("getData", data)

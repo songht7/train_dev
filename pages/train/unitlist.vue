@@ -49,8 +49,8 @@
 		</view>
 
 		<fix-button>
-			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':''" v-show="current === 0" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
-			<view class="fbtns fbtns-clr-full btn-totest" v-show="current === 1" @click="to_test(courseId)">开始测试</view>
+			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
+			<view class="fbtns fbtns-clr-full btn-totest" :class="canTest?'':'fbtn-disable'" v-if="canTest" @click="to_test(courseId)">开始测试</view>
 		</fix-button>
 	</view>
 </template>
@@ -76,12 +76,13 @@
 				lessActive: 0,
 				lessDefaultActive: 0,
 				isJoined: false,
-				isJoinTxt: "加入学习",
+				isJoinTxt: "加入学习", //"学习完成后开启测试" : "加入学习"
 				current: 0,
 				segmented: [
 					'介绍',
 					'课程目录'
-				]
+				],
+				canTest: false
 			}
 		},
 		onLoad(e) {
@@ -99,7 +100,15 @@
 			}
 			data_dtl["fun"] = function(res) {
 				if (res.success) {
-					that.data = res.data;
+					let _data = res.data;
+					that.data = _data;
+					/*ucStatus:0 未确认 1学习中 2考试通过
+					 * */
+					that.isJoined = _data.ucStatus == "1" || _data.ucStatus == "2" ? true : false;
+					that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
+					if (_data.lessonCount == _data.lessonStartCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
+						that.canTest = true;
+					}
 					if (res.data.original_src) {
 						let _cover = [{
 							"original_src": res.data.original_src
@@ -159,6 +168,23 @@
 				data_ldtl["fun"] = function(res) {
 					that.swiperCurrent = 0;
 					that.lessActive = index;
+					/* 记录已读 */
+					let data_lean = {
+						"inter": "accountLesson",
+						"data": {
+							"lesson_id": lessid
+						},
+						"method": "POST",
+						"header": {
+							"Content-Type": "application/json",
+							"token": that.__token
+						}
+					}
+					data_lean["fun"] = function(res) {
+						if (res.success) {}
+					}
+					that.$store.dispatch("getData", data_lean)
+
 					if (res.success) {
 						that.lessDtl = res.data;
 						if (res.data.images) {
@@ -198,13 +224,41 @@
 			},
 			joinlearning(id) {
 				var that = this;
-				that.isJoined = !that.isJoined;
-				that.isJoinTxt = that.isJoined ? "学习完成后开启测试" : "加入学习";
+				if (that.isJoined) {
+					return
+				}
+				/* 加入学习 */
+				let data_ldtl = {
+					"inter": "accountCourse",
+					"data": {
+						"course_id": id
+					},
+					"method": "POST",
+					"header": {
+						"Content-Type": "application/json",
+						"token": that.__token
+					}
+				}
+				data_ldtl["fun"] = function(res) {
+					if (res.success) {
+						that.isJoined = true;
+						that.isJoinTxt = "学习完成后开启测试";
+					}
+				}
+				that.$store.dispatch("getData", data_ldtl)
 			},
 			to_test(id) {
-				uni.navigateTo({
-					url: `/pages/train/test?course_id=${id}`
-				})
+				var that = this;
+				if (that.canTest) {
+					uni.navigateTo({
+						url: `/pages/train/test?course_id=${id}`
+					})
+				} else {
+					uni.showModal({
+						content: "学习完成当前课程方可测试！",
+						showCancel: false
+					})
+				}
 			}
 		}
 	}
