@@ -33,8 +33,9 @@
 								<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
 								<view class="row-block fRowCenter">{{obj.passExamCount}}</view>
 								<view class="row-block fRowCenter row-progress">
-									<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
-									{{obj.courseTotal}}
+									<progress :percent="obj.courseTotal/obj.userCourseCount*100" stroke-width="4" activeColor="#008CEE"
+									 backgroundColor="#E0E0E0" />
+									{{obj.courseTotal/obj.userCourseCount*100}}%
 								</view>
 							</view>
 						</view>
@@ -50,7 +51,7 @@
 						<view class="class-icon">
 							<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
 						</view>
-						<view class="txt-sross">课程参与情况</view>
+						<view class="txt-sross">{{statisType==1?'课程参与情况':'课程合格情况'}}</view>
 					</view>
 					<view class="class-more">全部{{data_total}}个></view>
 				</view>
@@ -63,8 +64,8 @@
 										<view class="list-title">{{obj.name}}</view>
 										<view class="class-progress">
 											<view class="progress-box">
-												<view class="percent">{{statisType==1?`参与度${obj.joinPerson}%`:`合格率${obj.passExam}%`}}</view>
-												<progress :percent="obj.joinPerson||obj.passExam" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+												<view class="percent">{{statisType==1?`参与度${obj.joinPerson*100}%`:`合格率${obj.passExam*100}%`}}</view>
+												<progress :percent="obj.joinPerson || obj.passExam" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 											</view>
 										</view>
 									</view>
@@ -119,6 +120,7 @@
 			uniGrid,
 			uniLoadMore
 		},
+		computed: {},
 		onLoad(e) {
 			var that = this;
 			let p = e.t || 0
@@ -129,6 +131,9 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
+			if (that.$store.state.user.userInfo == undefined) {
+				return
+			}
 			let _user = that.$store.state.user.userInfo;
 			that.UserId = _user.id || '';
 			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';

@@ -262,11 +262,13 @@
 	background: #008CEE;
 	color: #FFFFFF;
 }
-.fbtn-disable{
+
+.fbtn-disable {
 	background: #d1d1d1;
 	color: #666;
 	border-color: #999;
 }
+
 .fbtn-big {
 	width: 80%;
 }
@@ -329,6 +331,14 @@
 	border-color: #D1D1D1;
 }
 
+.btns-more {
+	align-content: center;
+	align-items: center;
+	color: #929292;
+	display: flex;
+	font-size: 26upx;
+	justify-content: center;
+}
 
 /*通用 */
 page {

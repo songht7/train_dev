@@ -51,6 +51,7 @@
 .border-block:last-child {
 	border-bottom: 0
 }
+
 /* 
 .user-head {
 	display: flex;
@@ -188,6 +189,10 @@
 	border-radius: 50%;
 	overflow: hidden;
 	margin-right: 10upx;
+}
+
+.class-icon-qy {
+	background: linear-gradient(#66D3F4, #4697E9);
 }
 
 .class-more {

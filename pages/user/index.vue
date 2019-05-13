@@ -42,7 +42,7 @@
 					<view class="user-class-list">
 						<view class="my-class-head">
 							<view class="class-tip">
-								<view class="class-icon">
+								<view class="class-icon class-icon-qy">
 									<uni-icon type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
 								</view>
 								<view class="txt-sross">企业必须课程</view>
@@ -69,6 +69,9 @@
 									</view>
 								</view>
 							</view>
+							<navigator url="/pages/user/my-class?t=ECourses" class="btns-more">
+								查看更多<uni-icon type="gengduo2" size="16" color="#919191"></uni-icon>
+							</navigator>
 						</view>
 					</view>
 				</view>
@@ -106,6 +109,9 @@
 									</view>
 								</view>
 							</view>
+							<navigator url="/pages/user/my-class" class="btns-more">
+								查看更多<uni-icon type="gengduo2" size="16" color="#919191"></uni-icon>
+							</navigator>
 						</view>
 					</view>
 				</view>

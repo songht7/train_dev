@@ -4,7 +4,7 @@
 			<view class="user-class-list">
 				<view class="my-class-head">
 					<view class="class-tip">
-						<view class="class-icon">
+						<view class="class-icon" :class="{'class-icon-qy':pageType}">
 							<uni-icon v-show="!pageType" type="shuji" :size="20" color="#FFFFFF"></uni-icon>
 							<uni-icon v-show="pageType" type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
 						</view>
