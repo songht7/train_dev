@@ -19,7 +19,8 @@
 				"29780a16-739c-b014-5376-ef26acad78ac",
 				"01ec936e-e7f9-9a62-774a-b4e4b4acb974",
 				"d61bd249-606b-8476-e2e2-df9537e13026",
-				"e4282418-2919-4590-7c56-c1215f96d20b"
+				"e4282418-2919-4590-7c56-c1215f96d20b",
+				"bde10fa4-c9ce-ea8e-1678-be062ec00290"
 			],
 			"owner": "1054562",
 			"folders_order": [
@@ -133,12 +134,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557456378002,
+			"time": 1557797763539,
 			"name": "/v4/ApiAuth-login.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],
-			"rawModeData": "{\"phone\":\"13564138771\",\"password\":\"111111\"}"
+			"rawModeData": "{\"phone\":\"13564138770\",\"password\":\"111111\"}"
 		},
 		{
 			"id": "00c8a0bc-ac92-3fd6-d6b6-009ad950caa6",
@@ -544,11 +545,11 @@
 		},
 		{
 			"id": "6be642ca-8193-5be1-e9e4-a0750bf3dd96",
-			"headers": "token: fe186ec4689c38fe2829145f1feee60c1ab2c0d4\nContent-Type: application/json\n",
+			"headers": "token: 7cd88d3882047bb5ceaea174e2adfe6030698483\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "fe186ec4689c38fe2829145f1feee60c1ab2c0d4",
+					"value": "7cd88d3882047bb5ceaea174e2adfe6030698483",
 					"description": "",
 					"enabled": true
 				},
@@ -570,12 +571,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557485438314,
+			"time": 1557801691932,
 			"name": "/v4/ApiAccount-info.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],
-			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\",\"photo\":\"http://www.spacehu.com/data/image_doc/201712011512120618540820.jpeg\"\"name\":\"spacehu\",\"password\":\"111111\",\"new_password\":\"111111\",\"new_password_cfn\":\"111111\"}"
+			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\",\"photo\":\"/data/user_doc/c81e728d9d4c2f636f067f89cc14862c/20190514104117.jpg\",\"name\":\"spacehu\",\"password\":\"111111\",\"new_password\":\"111111\",\"new_password_cfn\":\"111111\"}"
 		},
 		{
 			"id": "7963c6d8-213d-f3f1-9b9b-8500fe4e55f1",
@@ -741,11 +742,11 @@
 		},
 		{
 			"id": "a6d0ee79-d698-d671-8236-7620d39015fc",
-			"headers": "token: 1dc562f6d52ed50b0f34ca80c812667bd2676822\nContent-Type: application/json\n",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "1dc562f6d52ed50b0f34ca80c812667bd2676822",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
 					"description": "",
 					"enabled": true
 				},
@@ -767,7 +768,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557390786613,
+			"time": 1557728293031,
 			"name": "/v4/ApiAccount-lesson.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -836,6 +837,42 @@
 			"rawModeData": "{\"phone\":\"13564138771\",\"code\":\"1111\",\"password\":\"111111\",\"cfn_password\":\"111111\",\"name\":\"space\"}"
 		},
 		{
+			"id": "bde10fa4-c9ce-ea8e-1678-be062ec00290",
+			"headers": "token: 7cd88d3882047bb5ceaea174e2adfe6030698483\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "7cd88d3882047bb5ceaea174e2adfe6030698483",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "plbs.lc/v4/ApiAccount-photo.htm",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "photo",
+					"value": "self.jpg",
+					"description": "",
+					"type": "file",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1557801685174,
+			"name": "/v4/ApiAccount-photo.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": []
+		},
+		{
 			"id": "c68c9b9d-57d2-b7b0-b30c-bc0b6352df6a",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -867,11 +904,11 @@
 		},
 		{
 			"id": "cda30e8f-d48d-a108-e7d2-2257c4419e5b",
-			"headers": "token: 08939d8cd6de92654433a443cf4666a0aa0eaa78\n",
+			"headers": "token: 4be21b94838342c87965d03497ea341d9dabf104\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "08939d8cd6de92654433a443cf4666a0aa0eaa78",
+					"value": "4be21b94838342c87965d03497ea341d9dabf104",
 					"description": "",
 					"enabled": true
 				}
@@ -896,7 +933,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557226198119,
+			"time": 1557728306571,
 			"name": "/v4/ApiCourse-tests.htm?id=1",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",

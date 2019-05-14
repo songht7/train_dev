@@ -32,8 +32,22 @@
 								<view class="edit-block-title">
 									<view class="block-title">基本信息修改</view>
 								</view>
-								<view class="uni-form-item uni-row" v-show="false">
+								<view class="uni-form-item uni-row">
 									<!-- https://ext.dcloud.net.cn/plugin?id=63#detail -->
+									<view class="uni-title-edit">头像：</view>
+									<view class="uni-uploader">
+										<view class="uni-uploader__files">
+											<block v-for="(image,index) in imageList" :key="index">
+												<view class="uni-uploader__file">
+													<image class="uni-uploader__img" :src="image.tempFilePaths?image.tempFilePaths:sourceUrl+image" :data-src="image" @tap="chooseImage"></image>
+													<progress v-show="progress!=100&&image.tempFilePaths" :percent="progress" active stroke-width="2"></progress>
+												</view>
+											</block>
+											<view class="uni-uploader__input-box" v-show="imageList.length<=0">
+												<view class="uni-uploader__input" @tap="chooseImage"></view>
+											</view>
+										</view>
+									</view>
 								</view>
 								<view class="uni-form-item uni-row">
 									<view class="uni-title-edit">手机号：</view>
@@ -114,8 +128,11 @@
 				companyName: "",
 				companyPhone: "",
 				companyStatu: "", //estatus 3种: 0 待审 1 过了 2打回
+				imageList: [],
+				progress: "0",
 				oldPhone: "",
 				formData: {
+					"photo": "",
 					"phone": "",
 					"code": "",
 					"name": "",
@@ -133,6 +150,7 @@
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			let _userInfo = that.$store.state.user.userInfo;
+			that.imageList = _userInfo.photo ? [`${_userInfo.photo}`] : [];
 			that.setPageData(_userInfo);
 		},
 		components: {
@@ -263,15 +281,17 @@
 					}
 				} else if (type == 'basicInfo') {
 					data["data"] = {
-						"photo": "",
+						"photo": _formData.photo,
 						"name": _formData.name,
-						"password": _formData.password,
-						"new_password": _formData.new_password,
-						"new_password_cfn": _formData.new_password_cfn,
 					}
 					if (that.oldPhone != _formData.phone) {
 						data["data"]["phone"] = _formData.phone;
 						data["data"]["code"] = _formData.code;
+					}
+					if (_formData.new_password) {
+						data["data"]["password"] = _formData.password;
+						data["data"]["new_password"] = _formData.new_password;
+						data["data"]["new_password_cfn"] = _formData.new_password_cfn;
 					}
 				} else {
 					/*unbind*/
@@ -352,6 +372,81 @@
 				that.formData.phone = _userInfo.phone;
 				that.oldPhone = _userInfo.phone;
 				that.formData.name = _userInfo.name;
+				that.formData.photo = _userInfo.photo;
+			},
+			chooseImage: async function() {
+				var that = this;
+				uni.chooseImage({
+					count: 1,
+					success: (res) => {
+						console.log(res)
+						that.imageList = [{"tempFilePaths":res.tempFilePaths[0]}];
+						var _res = res.tempFiles;
+						that.uploadFile(res.tempFiles[0])
+					}
+				})
+			},
+			uploadFile(file) {
+				var that = this;
+				var _interface = that.$store.state.interface;
+				var _url = _interface.apiurl + _interface.addr.photo;
+				console.log(_url);
+				const upload_task = uni.uploadFile({
+					url: _interface.apiurl + _interface.addr.photo,
+					filePath: file['path'],
+					name: 'photo',
+					"header": {
+						"token": that.$store.state.user.token || ""
+					},
+					formData: {},
+					async success(res) {
+						//console.log(res);
+						if (res.statusCode == 200) {
+							let _data = JSON.parse(res.data);
+							console.log(_data)
+							if (_data.success) {
+								that.formData.photo = _data.data;
+								uni.getStorage({
+									key: "user",
+									success: function(ress) {
+										let ress_data = ress.data;
+										ress_data["userInfo"]["photo"] = _data.data;
+										that.setPageData(ress_data["userInfo"])
+										uni.setStorage({
+											key: "user",
+											data: ress_data
+										});
+									},
+									fail() {}
+								})
+							} else {
+								uni.showLoading({
+									title: `上传失败!`
+								});
+								that.imageList = [];
+								setTimeout(() => {
+									uni.hideLoading();
+								}, 2000)
+							}
+							uni.hideLoading();
+						}
+					},
+					async fail(err) {
+						uni.showLoading({
+							title: `上传失败!`
+						});
+						that.imageList = [];
+						setTimeout(() => {
+							uni.hideLoading();
+						}, 2000)
+					}
+				});
+				upload_task.onProgressUpdate(async (res) => {
+					//console.log(res);
+					for (let i = 0, len = that.imageList.length; i < len; i++) {
+						this.progress = res.progress;
+					}
+				});
 			},
 			getCode() {
 				var that = this;

@@ -18,6 +18,7 @@ export default {
 			"sendSms": "/v4/ApiSms-sendSms.htm", //发送验证码(无阻拦）
 			"logout": "/v4/ApiAuth-logout.htm", //用户退出[DELETE]
 			"info": "/v4/ApiAccount-info.htm", //用户信息
+			"photo": "/v4/ApiAccount-photo.htm", //图片上传[POST]
 			"editInfo": "/v4/ApiAccount-info.htm", //用户信息编辑[PUT]
 			"reset": "/v4/ApiAuth-reset.htm", //重置密码[PUT]（A）
 			"courses": "/v4/ApiCourse-courses.htm", //培训列表?id=分类id course_id
