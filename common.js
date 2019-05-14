@@ -25,6 +25,7 @@ export default {
 			"course": "/v4/ApiCourse-course.htm", //培训详细?id=培训id
 			"lessons": "/v4/ApiCourse-lessons.htm", //课程列表{培训详细内}-headers token--?id=1
 			"lesson": "/v4/ApiCourse-lesson.htm", //课程详细-headers token--?id=1
+			"joinCourses": "/v4/ApiAccount-courses.htm",//参与的课程
 			"accountCourse": "/v4/ApiAccount-course.htm",//参与课时[POST] course_id
 			"accountLesson": "/v4/ApiAccount-lesson.htm", //课程学习进度[POST] lesson_id
 			"categorys": "/v4/ApiBase-categorys.htm", //培训分类

@@ -25,17 +25,14 @@
 							<view class="list-statis fRowCenter">
 								<view class="row-block fRowCenter">{{k}}</view>
 								<view class="row-block fRowCenter">
-									<view class="photo" v-show="obj.photo">
-										<image :src="obj.photo"></image>
-									</view>
+									<img :src="sourceUrl+obj.photo" class="photo"/>
 									{{obj.NAME}}
 								</view>
 								<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
 								<view class="row-block fRowCenter">{{obj.passExamCount}}</view>
 								<view class="row-block fRowCenter row-progress">
-									<progress :percent="obj.courseTotal/obj.userCourseCount*100" stroke-width="4" activeColor="#008CEE"
-									 backgroundColor="#E0E0E0" />
-									{{obj.courseTotal/obj.userCourseCount*100}}%
+									<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+									{{parseInt(obj.progress)}}%
 								</view>
 							</view>
 						</view>
@@ -64,8 +61,8 @@
 										<view class="list-title">{{obj.name}}</view>
 										<view class="class-progress">
 											<view class="progress-box">
-												<view class="percent">{{statisType==1?`参与度${obj.joinPerson*100}%`:`合格率${obj.passExam*100}%`}}</view>
-												<progress :percent="obj.joinPerson || obj.passExam" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+												<view class="percent">{{statisType==1?`参与度${obj.progress}%`:`合格率${obj.progress}%`}}</view>
+												<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 											</view>
 										</view>
 									</view>
@@ -223,5 +220,13 @@
 
 	.row-progress {
 		width: 28%;
+	}
+
+	.photo {
+		width: 60upx;
+		height: 60upx;
+		border-radius: 50%;
+		display: block;
+		margin-right: 4upx;
 	}
 </style>

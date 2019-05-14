@@ -19,8 +19,8 @@
 									<view class="list-title">{{obj.name}}</view>
 									<view class="class-progress">
 										<view class="progress-box">
-											<view class="percent">{{k==2?"开始学习":"已学60%"}}</view>
-											<progress :percent="k==2?'0':'60'" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+											<view class="percent">{{parseInt(obj.progress)<=0?"开始学习":`已学${parseInt(obj.progress)}%`}}</view>
+											<progress :percent="parseInt(obj.progress)" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 										</view>
 									</view>
 								</view>
@@ -86,7 +86,7 @@
 		methods: {
 			getDatas(type) {
 				var that = this;
-				var inter = "";
+				var inter = "joinCourses";
 				if (type) {
 					inter = "enterpriseCourses"
 				}

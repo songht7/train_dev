@@ -125,37 +125,42 @@
 		onReady() {
 			console.log("onReady")
 			var that = this;
-			/*轮播*/
-			let data = {
-				"inter": "slideShow"
-			}
-			data["fun"] = function(res) {
-				if (res.success) {
-					that.swiperList = res.data.list
-					that.swiperleng = res.data.total
-				}
-			}
-			that.$store.dispatch("getData", data)
-
-			/*分类*/
-			let data_ctg = {
-				"inter": "categorys",
-				"parm": "?cat_id=1"
-			}
-			data_ctg["fun"] = function(res) {
-				if (res.success) {
-					let _ctg = res.data.list;
-					that.categorySub = _ctg.filter(element => element.parent_id == 1);
-					that.category[0]["ctg_id"] = that.categorySub[0]["id"];
-				}
-			}
-			that.$store.dispatch("getData", data_ctg)
+			that.getDatas('slideShow');
+			that.getDatas('categorys');
+		},
+		onPullDownRefresh() {
+			var that = this;
+			that.getDatas('slideShow');
+			that.getDatas('categorys');
 		},
 		components: {
 			uniPopup
 		},
 		computed: {},
 		methods: {
+			getDatas(inter) {
+				var that = this;
+				let data = {
+					"inter": inter
+				}
+				if (inter == "categorys") {
+					data["parm"] = "?cat_id=1";
+				}
+				data["fun"] = function(res) {
+					uni.stopPullDownRefresh()
+					if (res.success) {
+						if (inter == "categorys") {
+							let _ctg = res.data.list;
+							that.categorySub = _ctg.filter(element => element.parent_id == 1);
+							that.category[0]["ctg_id"] = that.categorySub[0]["id"];
+						} else if (inter == "slideShow") {
+							that.swiperList = res.data.list
+							that.swiperleng = res.data.total
+						}
+					}
+				}
+				that.$store.dispatch("getData", data)
+			},
 			navTo(url) {
 				var that = this;
 				if (that.$store.state.user.userInfo) {
