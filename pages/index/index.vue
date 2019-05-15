@@ -210,7 +210,7 @@
 		align-content: center;
 		align-items: center;
 		width: 25%;
-		padding-bottom: 10upx;
+		padding-bottom: 30upx;
 	}
 
 	.link-btn {
