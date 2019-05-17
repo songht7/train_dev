@@ -5,8 +5,7 @@
 			<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 				<view class="vli">
 					<view class="vli2">
-						<image class="slideImg" v-if="" @click="previewImage" lazy-load="true" :src="slide.default?slide.original_src:sourceUrl+slide.original_src"
-						 mode="aspectFill"></image>
+						<image class="slideImg" v-if="" @click="previewImage" lazy-load="true" :src="sourceUrl+slide.original_src" mode="aspectFill"></image>
 						<!-- <video class="train-video" v-if="slide.media_type=='video'" src="https://dcloud-img.oss-cn-hangzhou.aliyuncs.com/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
 						 @error="videoErrorCallback" controls></video> -->
 					</view>
@@ -19,18 +18,9 @@
 		</view>
 		<view class="unit-content">
 			<view v-show="current === 0">
-				<view class="course-detail-box">
-					<view class="course-inner">
-						<view class="course-title">{{data.name}}</view>
-						<view class="course-more list-more">
-							<view>123人在学</view>
-							<view>共{{lessTotal}}门课程</view>
-						</view>
-						<rich-text class="course-detail" :nodes="data.detail"></rich-text>
-					</view>
-				</view>
 				<view class="course-lessions">
 					<view class="course-inner">
+						<view class="less-row" :class='[lessActive==-1?"less-active":""]' @click="getLessDtl('content',-1)">章节介绍</view>
 						<block v-for="(less,i) in lessions" :key="i">
 							<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
 						</block>
@@ -38,10 +28,18 @@
 				</view>
 			</view>
 			<view v-show="current === 1">
-				<view class="course-lessions">
+				<view class="course-detail-box">
 					<view class="course-inner">
-						<block v-for="(less,i) in lessions" :key="i">
-							<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
+						<block v-if="detailType==='content'">
+							<view class="course-title">{{data.name}}</view>
+							<view class="course-more list-more">
+								<view>123人在学</view>
+								<view>共{{lessTotal}}门课程</view>
+							</view>
+							<rich-text class="course-detail" :nodes="data.detail"></rich-text>
+						</block>
+						<block v-else="">
+							<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 						</block>
 					</view>
 				</view>
@@ -68,19 +66,17 @@
 				lessTotal: "",
 				lessDtl: [],
 				cover: [],
-				swiperList: [{
-					"original_src": "/static/img-1.png",
-					"default": true
-				}],
+				detailType: "content",
+				swiperList: [],
 				swiperCurrent: 0,
-				lessActive: 0,
+				lessActive: -1,
 				lessDefaultActive: 0,
 				isJoined: false,
 				isJoinTxt: "加入学习", //"学习完成后开启测试" : "加入学习"
 				current: 0,
 				segmented: [
-					'介绍',
-					'课程目录'
+					'课程目录',
+					'介绍'
 				],
 				canTest: false
 			}
@@ -109,12 +105,10 @@
 					if (_data.lessonCount == _data.lessonStartCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
 						that.canTest = true;
 					}
-					if (res.data.original_src) {
-						let _cover = [{
-							"original_src": res.data.original_src
-						}]
-						that.swiperList = _cover;
-					}
+					let _cover = [{
+						"original_src": res.data.original_src || '/img/logo.png'
+					}]
+					that.swiperList = _cover;
 				}
 			}
 			that.$store.dispatch("getData", data_dtl)
@@ -131,9 +125,9 @@
 					that.lessions = res.data.list;
 					that.lessTotal = res.data.total;
 					let _defaultIndex = that.lessDefaultActive;
-					if (res.data.list[_defaultIndex] && res.data.list[_defaultIndex].id) {
-						that.getLessDtl(res.data.list[_defaultIndex].id, _defaultIndex);
-					}
+					// if (res.data.list[_defaultIndex] && res.data.list[_defaultIndex].id) {
+					// 	that.getLessDtl(res.data.list[_defaultIndex].id, _defaultIndex);
+					// }
 				}
 			}
 			that.$store.dispatch("getData", data_les)
@@ -154,7 +148,17 @@
 		methods: {
 			getLessDtl(lessid, index) {
 				var that = this;
+				console.log(lessid, index)
+				that.detailType = lessid;
+				that.current = 1;
 				if (index == that.lessActive) {
+					return
+				}
+				if (lessid == 'content' && index == -1) {
+					that.lessActive = index;
+					that.swiperList = [{
+						"original_src": that.data.original_src || '/img/logo.png'
+					}]
 					return
 				}
 				/* lessons */
@@ -168,6 +172,7 @@
 				data_ldtl["fun"] = function(res) {
 					that.swiperCurrent = 0;
 					that.lessActive = index;
+					that.current = 1;
 					/* 记录已读 */
 					let data_lean = {
 						"inter": "accountLesson",
