@@ -89,6 +89,7 @@
 		justify-content: space-between;
 		align-content: space-between;
 		height: 100%;
+		width: 64%;
 	}
 
 	.image-section {
@@ -96,7 +97,7 @@
 		justify-content: space-between;
 		margin-top: 0upx;
 		margin-right: 10upx;
-		width: 284upx;
+		width: 35%;
 		height: 180upx;
 		border-radius: 15upx;
 		overflow: hidden;

@@ -4,10 +4,13 @@
 		 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent" @change="swiperChange">
 			<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 				<view class="vli">
-					<view class="vli2">
-						<image class="slideImg" v-if="" @click="previewImage" lazy-load="true" :src="sourceUrl+slide.original_src" mode="aspectFill"></image>
-						<!-- <video class="train-video" v-if="slide.media_type=='video'" src="https://dcloud-img.oss-cn-hangzhou.aliyuncs.com/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
-						 @error="videoErrorCallback" controls></video> -->
+					<view class="vli2 train-swiper-main">
+						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="sourceUrl+slide.original_src"
+						 mode="aspectFill"></image>
+						<video class="train-video" v-if="slide.media_type=='video'" :src="sourceUrl+slide.media_src" @error="videoErrorCallback"
+						 controls></video>
+						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="sourceUrl+slide.media_src" :name="slide.name"
+						 author="职照培训" action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
 					</view>
 				</view>
 			</swiper-item>
@@ -33,7 +36,7 @@
 						<block v-if="detailType==='content'">
 							<view class="course-title">{{data.name}}</view>
 							<view class="course-more list-more">
-								<view>123人在学</view>
+								<!-- <view>123人在学</view> -->
 								<view>共{{lessTotal}}门课程</view>
 							</view>
 							<rich-text class="course-detail" :nodes="data.detail"></rich-text>
@@ -191,9 +194,19 @@
 					that.$store.dispatch("getData", data_lean)
 
 					if (res.success) {
-						that.lessDtl = res.data;
-						if (res.data.images) {
-							that.swiperList = res.data.images
+						var res_data = res.data;
+						that.lessDtl = res_data;
+						var _img = res_data.images ? res_data.images : [];
+						if (res_data.src && res_data.type) {
+							let media = {
+								"name": res_data.name,
+								"media_type": res_data.type,
+								"media_src": res_data.src
+							}
+							_img.push(media)
+						}
+						if (_img) {
+							that.swiperList = _img;
 						}
 					}
 				}
@@ -298,5 +311,12 @@
 
 	.less-active {
 		color: #008CEE;
+	}
+
+	.train-swiper-main {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
 	}
 </style>
