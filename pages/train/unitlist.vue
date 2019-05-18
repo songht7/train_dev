@@ -225,7 +225,7 @@
 				let uniPreviewImg = {
 					urls: _urls,
 					indicator: "number",
-					current: _current.toString()
+					current: _current //.toString()
 				}
 				console.log(uniPreviewImg)
 				uni.previewImage(uniPreviewImg);

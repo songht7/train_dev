@@ -36,7 +36,12 @@
 											<view>
 												<radio :value="key" />
 											</view>
-											<view>{{key}}：{{val}}</view>
+											<view>
+												<!-- <text class="TorF true">✔</text><text class="TorF false">✘</text> -->
+												<text v-if="val=='对'" class="TorF true">✔</text>
+												<text v-else-if="val=='错'" class="TorF false">✘</text>
+												<text v-else>{{key}}：{{val}}</text>
+											</view>
 										</label>
 									</radio-group>
 								</view>
@@ -168,6 +173,21 @@
 					_fixBtn = "static";
 				}
 				return _fixBtn;
+			},
+			selectType(val) {
+				var _val = val;
+				switch (val) {
+					case '对':
+						_val = '<text class="TorF true">✔</text>'
+						break;
+					case '错':
+						_val = '<text class="TorF false">✘</text>'
+						break;
+					default:
+						_val = val
+						break;
+				}
+				return _val
 			}
 		},
 		components: {
@@ -459,5 +479,15 @@
 		align-content: center;
 		align-items: center;
 		padding: 20upx;
+	}
+
+	.TorF {
+		font-size: 38upx;
+		color: #007AFF;
+		padding: 0 25upx;
+	}
+
+	.false {
+		color: #3A3A3A;
 	}
 </style>
