@@ -23,6 +23,7 @@
 								<view class="btns btns-full" :class="companyName==''?'btns-big':''" v-if="companyStatu!='0'" @click="bindCompany(companyStatu=='1'?'unbind':'')">{{companyStatu!="1"?"绑定":"解绑"}}</view>
 							</view>
 						</form>
+						<sunui-upimg-tencent :upImgConfig="upImgCos" @onUpImg="upCosData" @onImgDel="delImgInfo" ref="uImage"></sunui-upimg-tencent>
 					</view>
 				</view>
 				<view v-show="current === 1">
@@ -39,7 +40,8 @@
 										<view class="uni-uploader__files">
 											<block v-for="(image,index) in imageList" :key="index">
 												<view class="uni-uploader__file">
-													<image class="uni-uploader__img" :src="image.tempFilePaths?image.tempFilePaths:sourceUrl+image" :data-src="image" @tap="chooseImage"></image>
+													<image class="uni-uploader__img" :src="image.tempFilePaths?image.tempFilePaths:sourceUrl+image" :data-src="image"
+													 @tap="chooseImage"></image>
 													<progress v-show="progress!=100&&image.tempFilePaths" :percent="progress" active stroke-width="2"></progress>
 												</view>
 											</block>
@@ -109,6 +111,7 @@
 </template>
 
 <script>
+	import sunuiUpimgTencent from '@/components/sunui-upimg/sunui-upimg-tencent.vue'
 	import fixButton from '@/components/fix-button.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control.vue';
 	var graceChecker = require("@/common/graceChecker.js");
@@ -140,6 +143,26 @@
 					"new_password": "",
 					"new_password_cfn": "",
 					"companyCode": ""
+				},
+				cosFlag: true,
+				cosArr: [],
+				upImgCos: {
+					cosConfig: {
+						Bucket: 'plbs-test-1257286922', //replace with yours
+						Region: 'ap-shanghai', //replace with yours
+						SecretId: 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh', //replace with yours
+						SecretKey: 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF' //replace with yours
+					},
+					// 是否开启notli(开启的话就是选择完直接上传，关闭的话当count满足数量时才上传)
+					notli: false,
+					// 图片数量
+					count: 1,
+					// 上传图片背景修改 
+					upBgColor: '#E8A400',
+					// 上传icon图标颜色修改(仅限于iconfont)
+					upIconColor: '#eee',
+					// 上传svg图标名称
+					upSvgIconName: 'icon-certificate'
 				}
 			}
 		},
@@ -155,9 +178,47 @@
 		},
 		components: {
 			fixButton,
-			uniSegmentedControl
+			uniSegmentedControl,
+			sunuiUpimgTencent
 		},
 		methods: {
+			// 手动上传图片(适用于表单等上传) -2019/05/10增加
+			uImageTap() {
+				this.$refs.uImage.uploadimage(this.upImgCos);
+			},
+			// 删除图片 -2019/05/12(本地图片进行删除)
+			async delImgInfo(e) {
+				console.log('你删除的图片地址为:', e);
+			},
+			// 腾讯云
+			async upCosData(e) {
+				if(this.cosFlag){
+					this.cosArr = await e;
+					// 可以根据长度来判断图片是否上传成功. 2019/4/11新增
+					if (this.cosArr.length == this.upImgCos.cosConfig.count) {
+						uni.showToast({
+							title: `上传成功`,
+							icon: 'none'
+						});
+					}
+				}
+				this.cosFlag = false;
+				
+			},
+			// 获取上传图片腾讯云
+			async getUpImgInfoCos() {
+				let arrImg = [];
+				for (let i = 0, len = this.cosArr.length; i < len; i++) {
+					try {
+						if (this.cosArr[i].path_server != "") {
+							await arrImg.push(this.cosArr[i].path_server.split(','));
+						}
+					} catch (err) {
+						console.log('上传失败...');
+					}
+				}
+				console.log('腾讯云转成一维数组:', arrImg.join().split(','));
+			},
 			onClicksegmented(index) {
 				if (this.current !== index) {
 					this.current = index;
@@ -380,7 +441,9 @@
 					count: 1,
 					success: (res) => {
 						console.log(res)
-						that.imageList = [{"tempFilePaths":res.tempFilePaths[0]}];
+						that.imageList = [{
+							"tempFilePaths": res.tempFilePaths[0]
+						}];
 						var _res = res.tempFiles;
 						that.uploadFile(res.tempFiles[0])
 					}
