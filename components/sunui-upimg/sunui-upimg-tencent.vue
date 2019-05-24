@@ -36,16 +36,28 @@
 		data() {
 			return {
 				upload_after_list: [],
-				upload_picture_list: [
-
-				]
+				upload_picture_list: this.$store.state.portrait ? [{
+					"path_server": this.$store.state.portrait,
+					"upload_percent": 100
+				}] : []
 			};
 		},
 		name: 'sunui-upimg',
 		props: {
 			upImgConfig: {
 				type: Object
-			}
+			},
+			// upload_picture_list: {
+			// 	type: Object,
+			// 	default: function(e) {
+			// 		if (this.$store.state.portrait) {
+			// 			return [{
+			// 				"path_server": this.$store.state.portrait,
+			// 				"upload_percent": 100
+			// 			}]
+			// 		}
+			// 	}
+			// }
 		},
 		methods: {
 			chooseImage(count) {
@@ -69,6 +81,7 @@
 
 	// 上传文件
 	const upload_file_server = async (_this, configs, upload_picture_list, j) => {
+		console.log("upload_picture_list:", upload_picture_list)
 		// 腾讯云配置
 		let cosConfig = {
 			Bucket: configs.cosConfig.Bucket,
@@ -79,6 +92,7 @@
 
 		let cos = new COS({
 			getAuthorization: (params, callback) => { //获取签名 必填参数
+				console.log("params:", params)
 				// 推荐(服务器计算签名接口)
 				// 				 uni.request({
 				// 				    url: 'SIGN_SERVER_URL',
@@ -105,16 +119,23 @@
 		let filePath = upload_picture_list[j]['path'];
 		let Key = filePath.substr(filePath.lastIndexOf('/') + 1); // 这里指定上传的文件名
 
-		cos.postObject({
+		let opt = {
 			Bucket: cosConfig.Bucket,
 			Region: cosConfig.Region,
-			Key: Key,
-			FilePath: filePath
-		}, (err, data) => {
+			Key: configs.path + Key + ".jpg",
+			FilePath: filePath,
+		};
+		console.log("opt:", opt)
+		cos.postObject(opt, (err, data) => {
+			console.log("err:", err)
+			console.log("data:", data)
 			if (err == null) {
-				console.log(`%c 腾讯云上传(成功返回地址):${data.headers.Location}`, 'color:#1AAD19');
-				upload_picture_list[j]['path_server'] = data.headers.Location;
+				// console.log(`%c 腾讯云上传(成功返回地址):${data.headers.Location}`, 'color:#1AAD19');
+				// upload_picture_list[j]['path_server'] = data.headers.Location;
+				let path_server = `https://${opt.Bucket}.cos.${opt.Region}.myqcloud.com/${opt.Key}`;
 				upload_picture_list[j]['upload_percent'] = 100;
+				upload_picture_list[j]['path_server'] = path_server;
+				_this.$store.state.portrait = path_server;
 			} else {
 				console.log(`%c 腾讯云上传失败:${JSON.stringify(err)}`, 'color:#f00');
 				return;
@@ -127,6 +148,8 @@
 
 	// 上传图片(通用)
 	const uImage = async (_this, config) => {
+		console.log("uImage:")
+		console.log(_this.upload_picture_list)
 		for (let j = 0, len = _this.upload_picture_list.length; j < len; j++) {
 			if (_this.upload_picture_list[j]['upload_percent'] == 0) {
 				await upload_file_server(_this, config, _this.upload_picture_list, j)
@@ -147,6 +170,7 @@
 
 	// 选择图片(通用)
 	const cImage = (_this, count, configs) => {
+		console.log("cImage:", configs);
 		let config = {
 			cosConfig: {
 				Bucket: configs.cosConfig.Bucket, //replace with yours
@@ -158,9 +182,11 @@
 			notli: configs.notli,
 			sourceType: configs.sourceType,
 			sizeType: configs.sizeType,
-			tips: configs.tips || false
+			tips: configs.tips || false,
+			path: configs.path
 		}
 
+		console.log("config:", config);
 
 		uni.chooseImage({
 			count: config.notli ? config.count = 9 : _this.upload_after_list.length == 0 ? config.count : config.count -
@@ -171,9 +197,9 @@
 			sourceType: config.sourceType == "" || config.sourceType == undefined ? ['album', 'camera'] : config.sourceType ==
 				'camera' ? ['camera'] : config.sourceType == 'album' ? ['album'] : ['album', 'camera'],
 			success: async (res) => {
+				console.log("chooseImage:", res);
 				for (let i = 0, len = res.tempFiles.length; i < len; i++) {
 					res.tempFiles[i]['upload_percent'] = 0;
-					res.tempFiles[i]['path_server'] = '';
 					_this.upload_picture_list.push(res.tempFiles[i]);
 					_this.upload_picture_list.length > config.count ? _this.upload_picture_list = _this.upload_picture_list.slice(
 						0,
@@ -208,9 +234,18 @@
 
 	// 上传后预览(通用)
 	const puImage = async (e, _this) => {
+		var list = [];
+		if (list.length <= 0 && _this.upload_picture_list.length) {
+			let l = _this.upload_picture_list;
+			l.forEach((obj) => {
+				list.push(obj.path_server);
+			})
+		} else {
+			list = _this.upload_after_list;
+		}
 		uni.previewImage({
-			current: _this.upload_after_list[e.currentTarget.dataset.idx],
-			urls: _this.upload_after_list
+			current: list[e.currentTarget.dataset.idx],
+			urls: list
 		});
 	}
 </script>

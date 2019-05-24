@@ -23,7 +23,6 @@
 								<view class="btns btns-full" :class="companyName==''?'btns-big':''" v-if="companyStatu!='0'" @click="bindCompany(companyStatu=='1'?'unbind':'')">{{companyStatu!="1"?"绑定":"解绑"}}</view>
 							</view>
 						</form>
-						<sunui-upimg-tencent :upImgConfig="upImgCos" @onUpImg="upCosData" @onImgDel="delImgInfo" ref="uImage"></sunui-upimg-tencent>
 					</view>
 				</view>
 				<view v-show="current === 1">
@@ -37,6 +36,9 @@
 									<!-- https://ext.dcloud.net.cn/plugin?id=63#detail -->
 									<view class="uni-title-edit">头像：</view>
 									<view class="uni-uploader">
+										<sunui-upimg-tencent :upImgConfig="upImgCos" @onUpImg="upCosData" @onImgDel="delImgInfo" ref="uImage"></sunui-upimg-tencent>
+										<!-- <button type="primary" @tap="getUpImgInfoCos">获取上传Cos图片信息</button>
+										<button type="primary" @tap="uImageTap">手动上传图片</button>
 										<view class="uni-uploader__files">
 											<block v-for="(image,index) in imageList" :key="index">
 												<view class="uni-uploader__file">
@@ -48,7 +50,7 @@
 											<view class="uni-uploader__input-box" v-show="imageList.length<=0">
 												<view class="uni-uploader__input" @tap="chooseImage"></view>
 											</view>
-										</view>
+										</view> -->
 									</view>
 								</view>
 								<view class="uni-form-item uni-row">
@@ -144,14 +146,15 @@
 					"new_password_cfn": "",
 					"companyCode": ""
 				},
+				picture_list: [],
 				cosFlag: true,
 				cosArr: [],
 				upImgCos: {
 					cosConfig: {
-						Bucket: 'plbs-test-1257286922', //replace with yours
-						Region: 'ap-shanghai', //replace with yours
-						SecretId: 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh', //replace with yours
-						SecretKey: 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF' //replace with yours
+						Bucket: 'plbs-test-1257286922',
+						Region: 'ap-shanghai',
+						SecretId: 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
+						SecretKey: 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF'
 					},
 					// 是否开启notli(开启的话就是选择完直接上传，关闭的话当count满足数量时才上传)
 					notli: false,
@@ -162,7 +165,12 @@
 					// 上传icon图标颜色修改(仅限于iconfont)
 					upIconColor: '#eee',
 					// 上传svg图标名称
-					upSvgIconName: 'icon-certificate'
+					upSvgIconName: 'icon-certificate',
+					//是否压缩上传照片(仅小程序生效)
+					sizeType: true,
+					//相机来源(相机->camera,相册->album,两者都有->all,默认all)
+					sourceType: "all",
+					path: "train/"
 				}
 			}
 		},
@@ -174,6 +182,7 @@
 			that.$store.dispatch('cheack_user')
 			let _userInfo = that.$store.state.user.userInfo;
 			that.imageList = _userInfo.photo ? [`${_userInfo.photo}`] : [];
+			that.$store.state.portrait = _userInfo.photo;
 			that.setPageData(_userInfo);
 		},
 		components: {
@@ -192,7 +201,7 @@
 			},
 			// 腾讯云
 			async upCosData(e) {
-				if(this.cosFlag){
+				if (this.cosFlag) {
 					this.cosArr = await e;
 					// 可以根据长度来判断图片是否上传成功. 2019/4/11新增
 					if (this.cosArr.length == this.upImgCos.cosConfig.count) {
@@ -203,7 +212,7 @@
 					}
 				}
 				this.cosFlag = false;
-				
+
 			},
 			// 获取上传图片腾讯云
 			async getUpImgInfoCos() {
@@ -342,7 +351,7 @@
 					}
 				} else if (type == 'basicInfo') {
 					data["data"] = {
-						"photo": _formData.photo,
+						"photo": that.$store.state.portrait || _formData.photo,
 						"name": _formData.name,
 					}
 					if (that.oldPhone != _formData.phone) {
@@ -392,6 +401,7 @@
 								key: "user",
 								success: function(ress) {
 									let ress_data = ress.data;
+									ress_data["userInfo"]["photo"] = that.$store.state.portrait || ress_data["userInfo"]["photo"];
 									ress_data["userInfo"]["phone"] = _formData.phone || ress_data["userInfo"]["phone"];
 									ress_data["userInfo"]["name"] = _formData.name || ress_data["userInfo"]["name"];
 									//ress_data["userInfo"]["photo"] = _formData.photo || ress_data["userInfo"]["photo"];

@@ -17,7 +17,8 @@ const store = new Vuex.Store({
 		data: {},
 		haveMsg: false,
 		interface: common.Interface,
-		systemInfo: {}
+		systemInfo: {},
+		portrait:""
 	},
 	mutations: {
 		switch_loading(state, status) {
