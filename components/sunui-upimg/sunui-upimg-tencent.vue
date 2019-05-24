@@ -122,7 +122,7 @@
 		let opt = {
 			Bucket: cosConfig.Bucket,
 			Region: cosConfig.Region,
-			Key: configs.path + Key + ".jpg",
+			Key: configs.path + configs.photoType + Key + ".jpg",
 			FilePath: filePath,
 		};
 		console.log("opt:", opt)
@@ -183,7 +183,8 @@
 			sourceType: configs.sourceType,
 			sizeType: configs.sizeType,
 			tips: configs.tips || false,
-			path: configs.path
+			path: configs.path,
+			photoType: configs.photoType,
 		}
 
 		console.log("config:", config);

@@ -170,7 +170,8 @@
 					sizeType: true,
 					//相机来源(相机->camera,相册->album,两者都有->all,默认all)
 					sourceType: "all",
-					path: "train/"
+					path: `user_path/user_${this.$store.state.user.userInfo.id}/`,
+					photoType:"portrait-"
 				}
 			}
 		},
