@@ -61,7 +61,7 @@
 										<view class="list-title">{{obj.name}}</view>
 										<view class="class-progress">
 											<view class="progress-box">
-												<view class="percent">{{statisType==1?`参与度${obj.progress}%`:`合格率${obj.progress}%`}}</view>
+												<view class="percent">{{statisType==1?"参与度"+parseInt(obj.progress)+"%":"合格率"+parseInt(obj.progress)+"%"}}</view>
 												<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 											</view>
 										</view>

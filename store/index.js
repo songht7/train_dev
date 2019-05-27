@@ -18,7 +18,13 @@ const store = new Vuex.Store({
 		haveMsg: false,
 		interface: common.Interface,
 		systemInfo: {},
-		portrait:""
+		portrait: "",
+		cosConfig: {//`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
+			Bucket: 'plbs-test-1257286922',
+			Region: 'ap-shanghai',
+			SecretId: 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
+			SecretKey: 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF'
+		}
 	},
 	mutations: {
 		switch_loading(state, status) {
@@ -107,9 +113,9 @@ const store = new Vuex.Store({
 				},
 				fail() {
 					ctx.commit("get_user", {})
-					uni.redirectTo({
-						url: "/pages/index/index"
-					})
+					// uni.redirectTo({
+					// 	url: "/pages/index/index"
+					// })
 				}
 			})
 		},
@@ -117,9 +123,10 @@ const store = new Vuex.Store({
 			if (ctx.state.user.userInfo && ctx.state.user.userInfo.id) {
 				ctx.commit("change_page", index)
 			} else {
-				uni.navigateTo({
-					url: "/pages/index/index"
-				})
+				ctx.commit("change_page", 0)
+				// uni.navigateTo({
+				// 	url: "/pages/index/index"
+				// })
 			}
 		},
 		goback(ctx, url) {

@@ -150,12 +150,7 @@
 				cosFlag: true,
 				cosArr: [],
 				upImgCos: {
-					cosConfig: {
-						Bucket: 'plbs-test-1257286922',
-						Region: 'ap-shanghai',
-						SecretId: 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
-						SecretKey: 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF'
-					},
+					cosConfig: this.$store.state.cosConfig,
 					// 是否开启notli(开启的话就是选择完直接上传，关闭的话当count满足数量时才上传)
 					notli: false,
 					// 图片数量

@@ -19,13 +19,13 @@
 									<view class="list-title">{{obj.name}}</view>
 									<view class="class-progress">
 										<view class="progress-box">
-											<view class="percent">{{parseInt(obj.progress)<=0?"开始学习":`已学${parseInt(obj.progress)}%`}}</view>
+											<view class="percent">{{parseInt(obj.progress)<=0?"开始学习":"已学"+parseInt(obj.progress)+"%"}}</view>
 											<progress :percent="parseInt(obj.progress)" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 										</view>
 									</view>
 								</view>
 								<view class="list-right">
-									<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+									<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/img/logo.png'"
 									 mode="aspectFill"></image>
 								</view>
 							</view>

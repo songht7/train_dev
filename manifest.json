@@ -54,13 +54,13 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "",
+        "appid" : "wxeaf6d3cdbb53e013",
         "setting" : {
             "urlCheck" : true
         }
     },
     "h5" : {
-        "title" : "职照培训平台",
+        "title" : "培训星",
         "template" : "template.h5.html",
         "router" : {
             "mode" : "hash",
