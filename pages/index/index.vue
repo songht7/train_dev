@@ -14,7 +14,7 @@
 						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 							<view class="vli">
 								<view class="vli2">
-									<image class="slideImg" @click="linkTo(slide.link,slide.id)" lazy-load="true" :src="sourceUrl+slide.original_src"
+									<image class="slideImg" @click="linkTo(slide.link,slide.id)" lazy-load="true" :src="slide.original_src"
 									 mode="aspectFill"></image>
 								</view>
 							</view>
@@ -39,7 +39,7 @@
 							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icon v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
-									<image v-if="ctg.src" class="ctgImg" lazy-load="true" :src="sourceUrl+ctg.src" mode="aspectFill"></image>
+									<image v-if="ctg.src" class="ctgImg" lazy-load="true" :src="ctg.src" mode="aspectFill"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
 							</view>
