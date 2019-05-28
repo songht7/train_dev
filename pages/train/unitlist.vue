@@ -7,9 +7,9 @@
 					<view class="vli2 train-swiper-main">
 						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 						 mode="aspectFill"></image>
-						<video class="train-video" v-if="slide.media_type=='video'" :src="sourceUrl+slide.media_src" @error="videoErrorCallback"
+						<video class="train-video" v-if="slide.media_type=='video'" :src="slide.media_src" @error="videoErrorCallback"
 						 controls></video>
-						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="sourceUrl+slide.media_src" :name="slide.name"
+						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name"
 						 author="职照培训" action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
 					</view>
 				</view>
