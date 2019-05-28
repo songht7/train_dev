@@ -60,7 +60,7 @@
         }
     },
     "h5" : {
-        "title" : "培训星",
+        "title" : "职照培训平台",
         "template" : "template.h5.html",
         "router" : {
             "mode" : "hash",

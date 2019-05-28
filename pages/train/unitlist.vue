@@ -5,7 +5,7 @@
 			<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 				<view class="vli">
 					<view class="vli2 train-swiper-main">
-						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="sourceUrl+slide.original_src"
+						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 						 mode="aspectFill"></image>
 						<video class="train-video" v-if="slide.media_type=='video'" :src="sourceUrl+slide.media_src" @error="videoErrorCallback"
 						 controls></video>
