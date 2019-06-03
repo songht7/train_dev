@@ -129,8 +129,9 @@
 									})
 									setTimeout(() => {
 										that.$store.commit("change_page", 0)
+										var _url=that.UserType == 'company' ? "/pages/company/statis?t=0" : "/pages/index/index";
 										uni.redirectTo({
-											url: "/"
+											url: _url
 										})
 									}, 1500)
 								}
