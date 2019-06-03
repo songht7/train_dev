@@ -2,7 +2,7 @@
 	<view>
 		<view class="uni-mask" v-show="show" :style="{ top: offsetTop + 'px' }" @click="hide" @touchmove.stop.prevent="moveHandle"></view>
 		<view class="uni-popup" :class="'uni-popup-' + position + ' ' + 'uni-popup-' + mode + ' ' + 'uni-popup-' + width"
-		 v-show="show" :style="'width:'+setWidth(width)">
+		 v-show="show" :style="width?'width:'+width+'%':''">
 			{{ msg }}
 			<slot></slot>
 			<view v-if="position === 'middle' && mode === 'insert'" class=" uni-icon uni-icon-close" :class="{

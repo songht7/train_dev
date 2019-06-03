@@ -6,7 +6,7 @@ const Interface = {
 	//"SendMail": "http://www.spacehu.com/space/mail/mail.php?leo=407794660@qq.com",
 	"SendMail": "http://www.spacehu.com/space/mail/mail.php?leo=stk@meetji.com",
 	// 	,"getData":"http://api_test.meetji.com/v1/ApiEnum-getRegion.htm?id=110000"
-	"apiurl": "http://api_test.meetji.com",
+	"apiurl": "https://api-test.meetji.com",
 	"domain": "http://main.meetji.com",
 	"addr": {
 		"slideShow": "/v2/ApiHome-slideShow.htm",

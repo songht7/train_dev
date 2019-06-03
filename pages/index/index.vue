@@ -10,7 +10,7 @@
 			<view class="block slidebox">
 				<view class="swiper-block" v-if="swiperleng">
 					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?'true':'false'" autoplay="autoplay" circular="circular"
-					 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
+					 interval="3000" duration="500" indicator-color="#E0E0E0" indicator-active-color="#008CEE" >
 						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
 							<view class="vli">
 								<view class="vli2">
@@ -49,7 +49,7 @@
 			</view>
 			<view class="block">
 				<view @click="$store.dispatch('makePhoneCall')">
-					<img class="ad-img" src="@/static/img-1.png" />
+					<img class="ad-img" src="/static/img-1.png" />
 				</view>
 			</view>
 		</view>
