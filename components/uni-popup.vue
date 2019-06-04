@@ -146,9 +146,14 @@
 		box-shadow: none;
 	}
 
-	.uni-popup-middle.uni-popup-fixed {
+	.uni-popup-middle.uni-popup-fixed,
+	.uni-popup-middle.uni-popup-posfixed {
 		border-radius: 10upx;
 		padding: 30upx;
+	}
+
+	.uni-popup-middle.uni-popup-posfixed {
+		position: fixed;
 	}
 
 	.uni-close-bottom,

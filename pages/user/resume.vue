@@ -4,7 +4,7 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">基本信息</view>
-					<view class="block-edit">
+					<view class="block-edit" @click="edit('basic')">
 						<view class="edit-name">编辑</view>
 						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
 					</view>
@@ -53,7 +53,7 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">工作经历</view>
-					<view class="block-edit">
+					<view class="block-edit" @click="edit('work')">
 						<view class="edit-name">添加</view>
 						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
 					</view>
@@ -68,7 +68,7 @@
 								<view class="work-ov-li">3.负责平台商家在线、热线质检工作负责平台商家在线、热线质检工作负责平台商家在线、</view>
 								<view class="work-ov-li">4.负责平台商家在线、热线质检工作负责平台商家在线</view>
 							</view>
-							<view class="block-edit work-edit">
+							<view class="block-edit work-edit" @click="edit('work',index)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -79,7 +79,7 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">教育经历</view>
-					<view class="block-edit">
+					<view class="block-edit" @click="edit('edu')">
 						<view class="edit-name">添加</view>
 						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
 					</view>
@@ -89,7 +89,7 @@
 						<view class="work-row">
 							<view class="work-title">2012.10 - 2015.10</view>
 							<view class="work-val">上海大学 本科 商务英语</view>
-							<view class="block-edit work-edit">
+							<view class="block-edit work-edit" @click="edit('edu',index)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -100,7 +100,7 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">项目经历</view>
-					<view class="block-edit">
+					<view class="block-edit" @click="edit('item')">
 						<view class="edit-name">添加</view>
 						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
 					</view>
@@ -113,7 +113,7 @@
 								<view class="work-ov-li">1.负责平台商家在线、热线质检工作</view>
 								<view class="work-ov-li">2.负责平台商家在线、热线质检工作负责平台商家在线、热线质检工作</view>
 							</view>
-							<view class="block-edit work-edit">
+							<view class="block-edit work-edit" @click="edit('item',index)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -124,7 +124,7 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">自我描述</view>
-					<view class="block-edit">
+					<view class="block-edit" @click="edit('selfdes')">
 						<view class="edit-name">编辑</view>
 						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
 					</view>
@@ -136,21 +136,134 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup :show="poptype === 'editBox'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
+			<view class="train-show-modal-box">
+				<block v-if="editBlock=='basic'">
+					<view class="edit-block edit-basic">
+						<view class="resume-head">
+							<view class="block-title">修改信息</view>
+							<view class="block-edit" @click="toEdit('basic')">
+								<view class="edit-name">完成</view>
+							</view>
+						</view>
+						<view class="resume-basic">
+							<view class="basic-row">
+								<view class="basic-block">
+									<view class="basic-title">名字</view>
+									<view class="basic-val">
+										<input name="UserName" placeholder="请输入" />
+									</view>
+								</view>
+							</view>
+							<view class="basic-row">
+								<view class="basic-block">
+									<view class="basic-title">生日</view>
+									<view class="basic-val">
+										<picker mode="date" @change="pickerDate" name="Birthday" :value="date" :start="startDate" :end="endDate">
+											<view>{{date}}</view>
+										</picker>
+									</view>
+								</view>
+								<view class="basic-block">
+									<view class="basic-title">性别</view>
+									<view class="basic-val">
+										<picker name="Gender" @change="pickerGender" :value="genderIndex" :range="gender">
+											<view>{{gender[genderIndex]}}</view>
+										</picker>
+									</view>
+								</view>
+							</view>
+							<view class="basic-row">
+								<view class="basic-block">
+									<view class="basic-title">学历</view>
+									<view class="basic-val">
+										<picker name="Education" @change="pickerEdu" :value="eduIndex" :range="education">
+											<view>{{education[eduIndex]}}</view>
+										</picker>
+									</view>
+								</view>
+								<view class="basic-block">
+									<view class="basic-title">工作年限</view>
+									<view class="basic-val">
+										<picker name="WorkAge" @change="pickerWork" :value="workIndex" :range="workAge">
+											<view>{{workAge[workIndex]}}</view>
+										</picker>
+									</view>
+								</view>
+							</view>
+							<view class="basic-row">
+								<view class="basic-block">
+									<view class="basic-title">手机</view>
+									<view class="basic-val">
+										<input name="UserPhone" type="number" placeholder="请输入" value="" />
+									</view>
+								</view>
+							</view>
+							<view class="basic-row">
+								<view class="basic-block">
+									<view class="basic-title">电子邮箱</view>
+									<view class="basic-val">
+										<input name="UserEMail" placeholder="请输入" value="" />
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+				</block>
+				<block v-if="editBlock=='work'">
+					<view class="edit-block edit-work">
+						工作经历
+					</view>
+				</block>
+				<block v-if="editBlock=='edu'">
+					<view class="edit-block edit-edu">
+						教育经历
+					</view>
+				</block>
+				<block v-if="editBlock=='item'">
+					<view class="edit-block edit-item">
+						项目经历
+					</view>
+				</block>
+				<block v-if="editBlock=='selfdes'">
+					<view class="edit-block edit-selfdes">
+						自我评价
+					</view>
+				</block>
+			</view>
+		</uni-popup>
 		<fix-button btnType="fbtn-full"></fix-button>
 	</view>
 </template>
 
 <script>
+	var graceChecker = require("../../common/graceChecker.js");
 	import fixButton from '@/components/fix-button.vue'
+	import uniPopup from '@/components/uni-popup.vue'
 	export default {
 		data() {
 			return {
 				UserId: "",
-				__token: ""
+				__token: "",
+				poptype: "",
+				editBlock: "",
+				gender: ['男', '女'],
+				genderIndex: 0,
+				education: ['初中', '高中', '大专', '本科', '本科以上'],
+				eduIndex: 3,
+				workAge: ['3年以下', '4年', '5年', '6年', '7年', '8年以上'],
+				workIndex: 2,
+				date: this.getDate({
+					format: true
+				}),
+				basicInfo:{
+					
+				}
 			}
 		},
 		components: {
-			fixButton
+			fixButton,
+			uniPopup
 		},
 		onLoad() {},
 		onShow() {
@@ -165,8 +278,53 @@
 				})
 			}
 		},
+		computed: {
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
+		},
 		methods: {
+			edit(type, id) {
+				var that = this;
+				that.poptype = "editBox";
+				that.editBlock = type;
+				console.log(that.editBlock)
+			},
+			togglePopup(type) {
+				this.poptype = type;
+			},
+			pickerGender(e) {
+				this.genderIndex = e.target.value
+			},
+			pickerEdu(e) {
+				this.eduIndex = e.target.value
+			},
+			pickerWork(e) {
+				this.workIndex = e.target.value
+			},
+			pickerDate(e) {
+				this.date = e.target.value
+			},
+			getDate(type) {
+				const date = new Date();
 
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+
+				if (type === 'start') {
+					year = year - 60;
+				} else if (type === 'end') {
+					year = year + 2;
+				}
+				month = month > 9 ? month : '0' + month;;
+				day = day > 9 ? day : '0' + day;
+
+				return `${year}-${month}-${day}`;
+			}
 		}
 	}
 </script>
