@@ -9,43 +9,43 @@
 						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
-				<view class="resume-basic">
+				<view class="resume-basic" v-if="basicInfo.name">
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">名字</view>
-							<view class="basic-val">某某某</view>
+							<view class="basic-val">{{basicInfo.name}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">生日</view>
-							<view class="basic-val">1988.01.01</view>
+							<view class="basic-val">{{basicInfo.brithday}}</view>
 						</view>
 						<view class="basic-block">
 							<view class="basic-title">性别</view>
-							<view class="basic-val">男</view>
+							<view class="basic-val">{{basicInfo.sex}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">学历</view>
-							<view class="basic-val">本科</view>
+							<view class="basic-val">{{basicInfo.education}}</view>
 						</view>
 						<view class="basic-block">
 							<view class="basic-title">工作年限</view>
-							<view class="basic-val">5年</view>
+							<view class="basic-val">{{basicInfo.age_work}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">手机</view>
-							<view class="basic-val">13988888888</view>
+							<view class="basic-val">{{basicInfo.phone}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">电子邮箱</view>
-							<view class="basic-val">asd@163.com</view>
+							<view class="basic-val">{{basicInfo.email}}</view>
 						</view>
 					</view>
 				</view>
@@ -142,7 +142,7 @@
 					<view class="edit-block edit-basic">
 						<view class="resume-head">
 							<view class="block-title">修改信息</view>
-							<view class="block-edit" @click="toEdit('basic')">
+							<view class="block-edit" @click="getData('PUT')">
 								<view class="edit-name">完成</view>
 							</view>
 						</view>
@@ -151,7 +151,7 @@
 								<view class="basic-block">
 									<view class="basic-title">名字</view>
 									<view class="basic-val">
-										<input name="UserName" placeholder="请输入" />
+										<input name="name" data-key="name" @input="setData" placeholder="请输入" />
 									</view>
 								</view>
 							</view>
@@ -195,7 +195,7 @@
 								<view class="basic-block">
 									<view class="basic-title">手机</view>
 									<view class="basic-val">
-										<input name="UserPhone" type="number" placeholder="请输入" value="" />
+										<input name="phone" type="number" data-key="phone" @input="setData" placeholder="请输入" value="" />
 									</view>
 								</view>
 							</view>
@@ -203,7 +203,7 @@
 								<view class="basic-block">
 									<view class="basic-title">电子邮箱</view>
 									<view class="basic-val">
-										<input name="UserEMail" placeholder="请输入" value="" />
+										<input name="email" data-key="email" @input="setData" placeholder="请输入" value="" />
 									</view>
 								</view>
 							</view>
@@ -256,9 +256,19 @@
 				date: this.getDate({
 					format: true
 				}),
-				basicInfo:{
-					
-				}
+				basicInfo: {
+					"name": "",
+					"brithday": "",
+					"sex": "",
+					"education": "",
+					"age_work": "",
+					"phone": "",
+					"email": ""
+				},
+				school: [],
+				company: [],
+				project: [],
+				about_self: ""
 			}
 		},
 		components: {
@@ -277,6 +287,7 @@
 					url: "/pages/index/index"
 				})
 			}
+			that.getData("GET")
 		},
 		computed: {
 			startDate() {
@@ -287,26 +298,93 @@
 			}
 		},
 		methods: {
-			edit(type, id) {
+			getData(methodType) {
+				var that = this;
+				let _data = {
+					"inter": "resume",
+					"method": methodType,
+					"header": {
+						"token": that.__token
+					}
+				}
+				if (methodType == "PUT") {
+					_data["header"]["Content-Type"] = "application/json";
+					_data["data"] = {
+						"name": that.basicInfo.name,
+						"brithday": that.basicInfo.brithday,
+						"sex": that.basicInfo.sex,
+						"education": that.basicInfo.education,
+						"age_work": that.basicInfo.age_work,
+						"phone": that.basicInfo.phone,
+						"email": that.basicInfo.email,
+						"about_self": that.about_self,
+						"school": that.school,
+						"company": that.company,
+						"project": that.project
+					};
+				}
+				_data["fun"] = function(res) {
+					uni.stopPullDownRefresh()
+					if (res.success) {
+						if (methodType == "GET") {
+							var _info = res.data.info;
+							if (_info) {
+								that.basicInfo = {
+									"name": _info.name,
+									"brithday": _info.brithday,
+									"sex": _info.sex,
+									"education": _info.education,
+									"age_work": _info.age_work,
+									"phone": _info.phone,
+									"email": _info.email
+								};
+								that.school = _info.school;
+								that.company = _info.company;
+								that.project = _info.project;
+								that.about_self = _info.about_self;
+							}
+						} else {
+
+						}
+					}
+				}
+				that.$store.dispatch("getData", _data)
+			},
+			edit(type) {
 				var that = this;
 				that.poptype = "editBox";
 				that.editBlock = type;
 				console.log(that.editBlock)
 			},
+			setData(e) {
+				var that = this;
+				that.basicInfo[`${e.currentTarget.dataset.key}`] = e.detail.value;
+			},
 			togglePopup(type) {
 				this.poptype = type;
 			},
 			pickerGender(e) {
-				this.genderIndex = e.target.value
+				var that = this;
+				var key = e.target.value;
+				that.genderIndex = key;
+				that.basicInfo.sex = that.gender[key]
 			},
 			pickerEdu(e) {
-				this.eduIndex = e.target.value
+				var that = this;
+				var key = e.target.value;
+				that.eduIndex = key;
+				that.basicInfo.education = that.education[key]
 			},
 			pickerWork(e) {
-				this.workIndex = e.target.value
+				var that = this;
+				var key = e.target.value;
+				that.workIndex = key;
+				that.basicInfo.age_work = that.workAge[key]
 			},
 			pickerDate(e) {
-				this.date = e.target.value
+				var that = this;
+				that.date = e.target.value
+				that.basicInfo.brithday = e.target.value
 			},
 			getDate(type) {
 				const date = new Date();
