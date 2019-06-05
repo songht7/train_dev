@@ -225,3 +225,106 @@
 .percent {
 	text-align: right;
 }
+
+/*resume*/
+.resume-head {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	align-items: center;
+	padding-bottom: 15upx;
+}
+
+.block-title {
+	font-weight: 600;
+	font-size: 34upx;
+}
+
+.block-edit {
+	display: flex;
+	font-size: 26upx;
+	color: #929292;
+	align-content: center;
+	align-items: center;
+}
+
+.edit-name {
+	padding-right: 10upx;
+}
+
+.basic-row {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10upx;
+}
+
+.basic-block {
+	width: 50%;
+}
+
+.basic-title {
+	font-size: 26upx;
+	color: #929292;
+}
+
+.basic-val {
+	font-size: 32upx;
+	color: #222222;
+}
+
+.work-row {
+	padding-bottom: 15upx;
+	border-bottom: 2upx solid #E0E0E0;
+	margin-bottom: 15upx;
+}
+
+.work-row:last-child {
+	border-bottom: none;
+	margin-bottom: 0
+}
+
+.work-title {
+	color: #008CEE;
+	font-size: 32upx;
+	padding-bottom: 10upx;
+	padding-left: 40upx;
+	position: relative;
+}
+
+.work-title::before {
+	content: "";
+	width: 18upx;
+	height: 18upx;
+	border: 1px solid #E0E0E0;
+	border-radius: 50%;
+	position: absolute;
+	top: 25%;
+	left: 0;
+}
+
+.work-val {
+	color: #008CEE;
+	font-size: 32upx;
+	padding-left: 40upx;
+}
+
+.work-overview {
+	padding-left: 40upx;
+}
+
+.work-ov-li {
+	font-size: 26upx;
+	color: #22222;
+	line-height: 1.4;
+	padding-bottom: 5upx;
+}
+
+.work-edit {
+	padding: 20upx 0 0 40upx;
+}
+
+.self-des {
+	line-height: 1.4;
+	color: #222;
+	font-size: 26upx;
+}

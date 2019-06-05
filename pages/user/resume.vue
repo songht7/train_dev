@@ -59,16 +59,15 @@
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-for="(item, index) in 2">
+					<block v-if="company&&obj.company" v-for="(obj, index) in company">
 						<view class="work-row">
-							<view class="work-title">2012.10 - 2015.10 每日优鲜 质检员</view>
+							<view class="work-title">{{obj.start_time}} - {{obj.end_time}} {{obj.company}} {{obj.job}}</view>
 							<view class="work-overview">
-								<view class="work-ov-li">1.负责平台商家在线、热线质检工作</view>
-								<view class="work-ov-li">2.负责平台商家在线、热线质检工作负责平台商家在线、热线质检工作</view>
-								<view class="work-ov-li">3.负责平台商家在线、热线质检工作负责平台商家在线、热线质检工作负责平台商家在线、</view>
-								<view class="work-ov-li">4.负责平台商家在线、热线质检工作负责平台商家在线</view>
+								<view class="work-ov-li">
+									<rich-text class="course-detail" :nodes="obj.infomation"></rich-text>
+								</view>
 							</view>
-							<view class="block-edit work-edit" @click="edit('work',index)">
+							<view class="block-edit work-edit" @click="edit('work',index+1)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -89,7 +88,7 @@
 						<view class="work-row">
 							<view class="work-title">2012.10 - 2015.10</view>
 							<view class="work-val">上海大学 本科 商务英语</view>
-							<view class="block-edit work-edit" @click="edit('edu',index)">
+							<view class="block-edit work-edit" @click="edit('edu',index+1)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -138,98 +137,8 @@
 		</view>
 		<uni-popup :show="poptype === 'editBox'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
 			<view class="train-show-modal-box">
-				<block v-if="editBlock=='basic'">
-					<view class="edit-block edit-basic">
-						<view class="resume-head">
-							<view class="block-title">修改信息</view>
-							<view class="block-edit" @click="getData('PUT')">
-								<view class="edit-name">完成</view>
-							</view>
-						</view>
-						<view class="resume-basic">
-							<view class="basic-row">
-								<view class="basic-block">
-									<view class="basic-title">名字</view>
-									<view class="basic-val">
-										<input name="name" data-key="name" @input="setData" placeholder="请输入" />
-									</view>
-								</view>
-							</view>
-							<view class="basic-row">
-								<view class="basic-block">
-									<view class="basic-title">生日</view>
-									<view class="basic-val">
-										<picker mode="date" @change="pickerDate" name="Birthday" :value="date" :start="startDate" :end="endDate">
-											<view>{{date}}</view>
-										</picker>
-									</view>
-								</view>
-								<view class="basic-block">
-									<view class="basic-title">性别</view>
-									<view class="basic-val">
-										<picker name="Gender" @change="pickerGender" :value="genderIndex" :range="gender">
-											<view>{{gender[genderIndex]}}</view>
-										</picker>
-									</view>
-								</view>
-							</view>
-							<view class="basic-row">
-								<view class="basic-block">
-									<view class="basic-title">学历</view>
-									<view class="basic-val">
-										<picker name="Education" @change="pickerEdu" :value="eduIndex" :range="education">
-											<view>{{education[eduIndex]}}</view>
-										</picker>
-									</view>
-								</view>
-								<view class="basic-block">
-									<view class="basic-title">工作年限</view>
-									<view class="basic-val">
-										<picker name="WorkAge" @change="pickerWork" :value="workIndex" :range="workAge">
-											<view>{{workAge[workIndex]}}</view>
-										</picker>
-									</view>
-								</view>
-							</view>
-							<view class="basic-row">
-								<view class="basic-block">
-									<view class="basic-title">手机</view>
-									<view class="basic-val">
-										<input name="phone" type="number" data-key="phone" @input="setData" placeholder="请输入" value="" />
-									</view>
-								</view>
-							</view>
-							<view class="basic-row">
-								<view class="basic-block">
-									<view class="basic-title">电子邮箱</view>
-									<view class="basic-val">
-										<input name="email" data-key="email" @input="setData" placeholder="请输入" value="" />
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</block>
-				<block v-if="editBlock=='work'">
-					<view class="edit-block edit-work">
-						工作经历
-					</view>
-				</block>
-				<block v-if="editBlock=='edu'">
-					<view class="edit-block edit-edu">
-						教育经历
-					</view>
-				</block>
-				<block v-if="editBlock=='item'">
-					<view class="edit-block edit-item">
-						项目经历
-					</view>
-				</block>
-				<block v-if="editBlock=='selfdes'">
-					<view class="edit-block edit-selfdes">
-						自我评价
-					</view>
-				</block>
+				<user-resume :editBlock="editBlock" :editKey="editKey" :basicInfo="basicInfo" :school="school" :company="company"
+				 :tempCompany="tempCompany" :project="project" :about_self="about_self" @saveResume="saveResume('PUT')" @dltResume="dltResume('PUT')"></user-resume>
 			</view>
 		</uni-popup>
 		<fix-button btnType="fbtn-full"></fix-button>
@@ -240,6 +149,7 @@
 	var graceChecker = require("../../common/graceChecker.js");
 	import fixButton from '@/components/fix-button.vue'
 	import uniPopup from '@/components/uni-popup.vue'
+	import userResume from '@/components/user-resume.vue'
 	export default {
 		data() {
 			return {
@@ -247,15 +157,8 @@
 				__token: "",
 				poptype: "",
 				editBlock: "",
-				gender: ['男', '女'],
-				genderIndex: 0,
-				education: ['初中', '高中', '大专', '本科', '本科以上'],
-				eduIndex: 3,
-				workAge: ['3年以下', '4年', '5年', '6年', '7年', '8年以上'],
-				workIndex: 2,
-				date: this.getDate({
-					format: true
-				}),
+				editKey: -1,
+				isDelete: false,
 				basicInfo: {
 					"name": "",
 					"brithday": "",
@@ -268,12 +171,21 @@
 				school: [],
 				company: [],
 				project: [],
-				about_self: ""
+				about_self: "",
+				tempCompany: {
+					"id": "",
+					"company": "",
+					"job": "",
+					"start_time": "",
+					"end_time": "",
+					"infomation": ""
+				}
 			}
 		},
 		components: {
 			fixButton,
-			uniPopup
+			uniPopup,
+			userResume
 		},
 		onLoad() {},
 		onShow() {
@@ -289,15 +201,43 @@
 			}
 			that.getData("GET")
 		},
-		computed: {
-			startDate() {
-				return this.getDate('start');
-			},
-			endDate() {
-				return this.getDate('end');
-			}
-		},
+		computed: {},
 		methods: {
+			saveResume(methodType) {
+				var that = this;
+				var type = "add";
+				if (that.editKey > -1) {
+					type = "edit";
+				}
+				switch (type) {
+					case "add":
+						switch (that.editBlock) {
+							case 'work':
+								that.company.push(that.tempCompany);
+								break;
+							default:
+								break;
+						}
+						break;
+					case "edit":
+						switch (that.editBlock) {
+							case 'work':
+								that.company[that.editKey - 1] = that.tempCompany;
+								break;
+							default:
+								break;
+						}
+						break;
+					default:
+						break;
+				}
+				that.getData(methodType);
+			},
+			dltResume(methodType) {
+				var that = this;
+				that.isDelete = true;
+				that.getData(methodType);
+			},
 			getData(methodType) {
 				var that = this;
 				let _data = {
@@ -308,6 +248,15 @@
 					}
 				}
 				if (methodType == "PUT") {
+					if (that.isDelete) {
+						switch (that.editBlock) {
+							case 'work':
+								that.company[that.editKey - 1]["delete"] = 1;
+								break;
+							default:
+								break;
+						}
+					}
 					_data["header"]["Content-Type"] = "application/json";
 					_data["data"] = {
 						"name": that.basicInfo.name,
@@ -322,11 +271,12 @@
 						"company": that.company,
 						"project": that.project
 					};
+					console.log(_data)
+					//return
 				}
 				_data["fun"] = function(res) {
-					uni.stopPullDownRefresh()
-					if (res.success) {
-						if (methodType == "GET") {
+					if (methodType == "GET") {
+						if (res.success) {
 							var _info = res.data.info;
 							if (_info) {
 								that.basicInfo = {
@@ -338,70 +288,84 @@
 									"phone": _info.phone,
 									"email": _info.email
 								};
-								that.school = _info.school;
-								that.company = _info.company;
-								that.project = _info.project;
+								that.school = _info.school ? _info.school : [];
+								if (_info.company) {
+									_info.company.map((val, i, arr) => {
+										val['start_time'] = val['start_time'].split(" ")[0]
+										val['end_time'] = val['end_time'].split(" ")[0]
+									})
+								}
+								that.company = _info.company || [];
+								that.project = _info.project ? _info.project : [];
 								that.about_self = _info.about_self;
 							}
 						} else {
-
+							uni.showToast({
+								title: "获取简历失败",
+								icon: "none",
+								complete() {
+									setTimeout(() => {
+										that.poptype = "";
+									}, 1500)
+								}
+							})
 						}
+					} else if (methodType == "PUT") {
+						var title = res.success ? "编辑成功" : "编辑失败，请重试",
+							icon = res.success ? "success" : "none";
+						if (that.isDelete) {
+							title = "删除成功";
+							that.company.splice(that.editKey - 1, 1);
+						}
+						uni.showToast({
+							title: title,
+							icon: icon,
+							complete() {
+								setTimeout(() => {
+									that.poptype = "";
+								}, 1500)
+							}
+						})
 					}
+					uni.stopPullDownRefresh()
+					that.isDelete = false;
 				}
 				that.$store.dispatch("getData", _data)
 			},
-			edit(type) {
+			edit(type, key) {
 				var that = this;
 				that.poptype = "editBox";
 				that.editBlock = type;
-				console.log(that.editBlock)
-			},
-			setData(e) {
-				var that = this;
-				that.basicInfo[`${e.currentTarget.dataset.key}`] = e.detail.value;
+				that.editKey = key ? key : -1;
+				if (key) {
+					switch (that.editBlock) {
+						case 'work':
+							that.tempCompany = that.company[key - 1]
+							break;
+						default:
+							break;
+					}
+				}
+				console.log(that.editBlock, key)
 			},
 			togglePopup(type) {
-				this.poptype = type;
-			},
-			pickerGender(e) {
 				var that = this;
-				var key = e.target.value;
-				that.genderIndex = key;
-				that.basicInfo.sex = that.gender[key]
-			},
-			pickerEdu(e) {
-				var that = this;
-				var key = e.target.value;
-				that.eduIndex = key;
-				that.basicInfo.education = that.education[key]
-			},
-			pickerWork(e) {
-				var that = this;
-				var key = e.target.value;
-				that.workIndex = key;
-				that.basicInfo.age_work = that.workAge[key]
-			},
-			pickerDate(e) {
-				var that = this;
-				that.date = e.target.value
-				that.basicInfo.brithday = e.target.value
-			},
-			getDate(type) {
-				const date = new Date();
-
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let day = date.getDate();
-
-				if (type === 'start') {
-					year = year - 60;
-				} else if (type === 'end') {
-					year = year + 2;
+				that.poptype = type;
+				that.editKey = -1;
+				switch (that.editBlock) {
+					case 'work':
+						that.tempCompany = {
+							"id": "",
+							"company": "",
+							"job": "",
+							"start_time": "",
+							"end_time": "",
+							"infomation": ""
+						}
+						break;
+					default:
+						break;
 				}
-				month = month > 9 ? month : '0' + month;;
-				day = day > 9 ? day : '0' + day;
-
-				return `${year}-${month}-${day}`;
 			}
 		}
 	}
@@ -409,106 +373,4 @@
 
 <style>
 	@import "./center.css";
-
-	.resume-head {
-		display: flex;
-		justify-content: space-between;
-		align-content: center;
-		align-items: center;
-		padding-bottom: 15upx;
-	}
-
-	.block-title {
-		font-weight: 600;
-		font-size: 34upx;
-	}
-
-	.block-edit {
-		display: flex;
-		font-size: 26upx;
-		color: #929292;
-		align-content: center;
-		align-items: center;
-	}
-
-	.edit-name {
-		padding-right: 10upx;
-	}
-
-	.basic-row {
-		display: flex;
-		justify-content: space-between;
-		padding-bottom: 10upx;
-	}
-
-	.basic-block {
-		width: 50%;
-	}
-
-	.basic-title {
-		font-size: 26upx;
-		color: #929292;
-	}
-
-	.basic-val {
-		font-size: 32upx;
-		color: #222222;
-	}
-
-	.work-row {
-		padding-bottom: 15upx;
-		border-bottom: 2upx solid #E0E0E0;
-		margin-bottom: 15upx;
-	}
-
-	.work-row:last-child {
-		border-bottom: none;
-		margin-bottom: 0
-	}
-
-	.work-title {
-		color: #008CEE;
-		font-size: 32upx;
-		padding-bottom: 10upx;
-		padding-left: 40upx;
-		position: relative;
-	}
-
-	.work-title::before {
-		content: "";
-		width: 18upx;
-		height: 18upx;
-		border: 1px solid #E0E0E0;
-		border-radius: 50%;
-		position: absolute;
-		top: 25%;
-		left: 0;
-	}
-
-	.work-val {
-		color: #008CEE;
-		font-size: 32upx;
-		padding-left: 40upx;
-	}
-
-	.work-overview {
-		padding-left: 40upx;
-	}
-
-	.work-ov-li {
-		font-size: 26upx;
-		color: #22222;
-		line-height: 1.4;
-		padding-bottom: 5upx;
-	}
-
-	.work-edit {
-		padding: 20upx 0 0 40upx;
-	}
-
-	.self-des {
-		line-height: 1.4;
-		color: #222;
-		font-size: 26upx;
-	}
 </style>
