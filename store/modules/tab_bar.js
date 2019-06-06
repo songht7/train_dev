@@ -65,13 +65,13 @@ export default {
 					icon: 'home-full',
 					flex_dir: "flex-column"
 				},
-				{
-					name: '消息',
-					name_code: 'user-msg',
-					link: "/pages/user/message",
-					icon: 'xiaoxi',
-					flex_dir: "flex-column"
-				},
+				// {
+				// 	name: '消息',
+				// 	name_code: 'user-msg',
+				// 	link: "/pages/user/message",
+				// 	icon: 'xiaoxi',
+				// 	flex_dir: "flex-column"
+				// },
 				{
 					name: '我的',
 					name_code: 'user-my',
