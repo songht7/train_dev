@@ -13,7 +13,7 @@
 						<view class="basic-block">
 							<view class="basic-title">名字</view>
 							<view class="basic-val">
-								<input name="name" data-key="name" @input="setData" placeholder="请输入" :value="basicInfo.name" />
+								<input name="name" data-key="name" @input="setData" placeholder="请输入" :value="temp.name" />
 							</view>
 						</view>
 					</view>
@@ -22,7 +22,7 @@
 							<view class="basic-title">生日</view>
 							<view class="basic-val">
 								<picker mode="date" @change="pickerDate" name="Birthday" :value="date" :start="startDate" :end="endDate">
-									<view>{{basicInfo.brithday||date}}</view>
+									<view>{{temp.brithday||date}}</view>
 								</picker>
 							</view>
 						</view>
@@ -30,7 +30,7 @@
 							<view class="basic-title">性别</view>
 							<view class="basic-val">
 								<picker name="Gender" @change="pickerGender" :value="genderIndex" :range="gender">
-									<view>{{basicInfo.sex||gender[genderIndex]}}</view>
+									<view>{{temp.sex||gender[genderIndex]}}</view>
 								</picker>
 							</view>
 						</view>
@@ -40,7 +40,7 @@
 							<view class="basic-title">学历</view>
 							<view class="basic-val">
 								<picker name="Education" @change="pickerEdu" :value="eduIndex" :range="education">
-									<view>{{basicInfo.education||education[eduIndex]}}</view>
+									<view>{{temp.education||education[eduIndex]}}</view>
 								</picker>
 							</view>
 						</view>
@@ -48,7 +48,7 @@
 							<view class="basic-title">工作年限</view>
 							<view class="basic-val">
 								<picker name="WorkAge" @change="pickerWork" :value="workIndex" :range="workAge">
-									<view>{{basicInfo.age_work||workAge[workIndex]}}</view>
+									<view>{{temp.age_work||workAge[workIndex]}}</view>
 								</picker>
 							</view>
 						</view>
@@ -57,7 +57,7 @@
 						<view class="basic-block">
 							<view class="basic-title">手机</view>
 							<view class="basic-val">
-								<input name="phone" type="number" data-key="phone" @input="setData" placeholder="请输入" :value="basicInfo.phone" />
+								<input name="phone" type="number" data-key="phone" @input="setData" placeholder="请输入" :value="temp.phone" />
 							</view>
 						</view>
 					</view>
@@ -65,22 +65,22 @@
 						<view class="basic-block">
 							<view class="basic-title">电子邮箱</view>
 							<view class="basic-val">
-								<input name="email" data-key="email" @input="setData" placeholder="请输入" :value="basicInfo.email" />
+								<input name="email" data-key="email" @input="setData" placeholder="请输入" :value="temp.email" />
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</block>
-		<block v-if="editBlock=='work'">
+		<block v-if="editBlock=='company'">
 			<view class="edit-block edit-work">
 				<view class="resume-head">
 					<view class="block-title">工作经历</view>
 					<view class="edits">
-						<view class="block-edit" v-if="editKey>=1" @click="saveResume('dlt')">
+						<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
 							<view class="edit-name">删除</view>
 						</view>
-						<view class="block-edit" @click="saveResume('save')">
+						<view class="block-edit" @click="saveResume">
 							<view class="edit-name save-btn">完成</view>
 						</view>
 					</view>
@@ -91,13 +91,13 @@
 							<view class="basic-val date-box">
 								<view class="date-block">
 									<picker mode="date" @change="workStartDate" name="workStartDate" :start="startDate" :end="endDate">
-										<view class="time-val">{{wkSDate?wkSDate:(editKey>0?company[editKey-1].start_time:'开始')}}</view>
+										<view class="time-val">{{start_date?start_date:(temp.start_time||'开始')}}</view>
 									</picker>
 								</view>
 								<view class="date-cut">至</view>
 								<view class="date-block">
 									<picker mode="date" @change="workEndDate" name="workEndDate" :start="startDate" :end="endDate">
-										<view class="time-val">{{wkEDate?wkEDate:(editKey>0?company[editKey-1].end_time:'结束')}}</view>
+										<view class="time-val">{{end_date?end_date:(temp.end_time||'结束')}}</view>
 									</picker>
 								</view>
 							</view>
@@ -107,7 +107,7 @@
 						<view class="basic-block block-full">
 							<view class="basic-title">公司名</view>
 							<view class="basic-val ipt-block">
-								<input name="company" data-key="company" @input="setCompanyData" placeholder="请输入" :value="editKey>0?company[editKey-1]['company']:''" />
+								<input name="company" data-key="company" @input="setData" placeholder="请输入" :value="temp['company']||''" />
 							</view>
 						</view>
 					</view>
@@ -115,7 +115,7 @@
 						<view class="basic-block block-full">
 							<view class="basic-title">职位</view>
 							<view class="basic-val ipt-block">
-								<input name="job" data-key="job" @input="setCompanyData" placeholder="请输入" :value="editKey>0?company[editKey-1]['job']:''" />
+								<input name="job" data-key="job" @input="setData" placeholder="请输入" :value="temp['job']||''" />
 							</view>
 						</view>
 					</view>
@@ -123,27 +123,134 @@
 						<view class="basic-block block-full">
 							<view class="basic-title">描述</view>
 							<view class="basic-val ipt-block">
-								<textarea :value="editKey>0?company[editKey-1]['infomation']:''" name="infomation" data-key="infomation" @input="setCompanyData"
-								 auto-height class="txtArea" />
-								</view>
+								<textarea :value="temp['infomation']||''" name="infomation" data-key="infomation" @input="setData" auto-height
+								 class="txtArea" />
+							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</block>
-		<block v-if="editBlock=='edu'">
+		<block v-if="editBlock=='school'">
 			<view class="edit-block edit-edu">
-				教育经历
+				<view class="resume-head">
+					<view class="block-title">教育经历</view>
+					<view class="edits">
+						<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
+							<view class="edit-name">删除</view>
+						</view>
+						<view class="block-edit" @click="saveResume">
+							<view class="edit-name save-btn">完成</view>
+						</view>
+					</view>
+				</view>
+				<view class="resume-basic">
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-val date-box">
+								<view class="date-block">
+									<picker mode="date" @change="workStartDate" name="workStartDate" :start="startDate" :end="endDate">
+										<view class="time-val">{{start_date?start_date:(temp.start_time||'开始')}}</view>
+									</picker>
+								</view>
+								<view class="date-cut">至</view>
+								<view class="date-block">
+									<picker mode="date" @change="workEndDate" name="workEndDate" :start="startDate" :end="endDate">
+										<view class="time-val">{{end_date?end_date:(temp.end_time||'结束')}}</view>
+									</picker>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-title">学校名称</view>
+							<view class="basic-val ipt-block">
+								<input name="school" data-key="school" @input="setData" placeholder="请输入" :value="temp['school']||''" />
+							</view>
+						</view>
+					</view>
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-title">专业</view>
+							<view class="basic-val ipt-block">
+								<input name="profession" data-key="profession" @input="setData" placeholder="请输入" :value="temp['profession']||''" />
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
 		</block>
-		<block v-if="editBlock=='item'">
+		<block v-if="editBlock=='project'">
 			<view class="edit-block edit-item">
-				项目经历
+				<view class="resume-head">
+					<view class="block-title">项目经历</view>
+					<view class="edits">
+						<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
+							<view class="edit-name">删除</view>
+						</view>
+						<view class="block-edit" @click="saveResume">
+							<view class="edit-name save-btn">完成</view>
+						</view>
+					</view>
+				</view>
+				<view class="resume-basic">
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-val date-box">
+								<view class="date-block">
+									<picker mode="date" @change="workStartDate" name="workStartDate" :start="startDate" :end="endDate">
+										<view class="time-val">{{start_date?start_date:(temp.start_time||'开始')}}</view>
+									</picker>
+								</view>
+								<view class="date-cut">至</view>
+								<view class="date-block">
+									<picker mode="date" @change="workEndDate" name="workEndDate" :start="startDate" :end="endDate">
+										<view class="time-val">{{end_date?end_date:(temp.end_time||'结束')}}</view>
+									</picker>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-title">项目名称</view>
+							<view class="basic-val ipt-block">
+								<input name="name" data-key="name" @input="setData" placeholder="请输入" :value="temp['name']||''" />
+							</view>
+						</view>
+					</view>
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-title">描述</view>
+							<view class="basic-val ipt-block">
+								<input name="overview" data-key="overview" @input="setData" placeholder="请输入" :value="temp['overview']||''" />
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
 		</block>
-		<block v-if="editBlock=='selfdes'">
+		<block v-if="editBlock=='about_self'">
 			<view class="edit-block edit-selfdes">
-				自我评价
+				<view class="resume-head">
+					<view class="block-title">自我描述</view>
+					<view class="edits">
+						<view class="block-edit" @click="saveResume">
+							<view class="edit-name save-btn">完成</view>
+						</view>
+					</view>
+				</view>
+				<view class="resume-basic">
+					<view class="basic-row">
+						<view class="basic-block block-full">
+							<view class="basic-val ipt-block">
+								<textarea :value="temp['about_self']||''" name="about_self" data-key="about_self" @input="setData"
+								 auto-height class="txtArea txtArea-big" />
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
 		</block>
 	</view>
@@ -161,59 +268,30 @@
 				type: Number,
 				default: -1
 			},
-			basicInfo: {
+			temp: {
 				type: Object,
 				default: function(e) {
 					return {}
 				}
-			},
-			tempCompany: {
-				type: Object,
-				default: function(e) {
-					return {}
-				}
-			},
-			company: {
-				type: Array,
-				default () {
-					return [];
-				}
-			},
-			school: {
-				type: Array,
-				default () {
-					return [];
-				}
-			},
-			project: {
-				type: Array,
-				default () {
-					return [];
-				}
-			},
-			about_self: {
-				type: String,
-				default: ''
 			}
 		},
 		data() {
 			return {
 				gender: ['男', '女'],
 				genderIndex: 0,
-				education: ['初中', '高中', '大专', '本科', '本科以上'],
-				eduIndex: 3,
-				workAge: ['3年以下', '4年', '5年', '6年', '7年', '8年以上'],
-				workIndex: 2,
+				education: ['请选择', '初中', '高中', '大专', '本科', '本科以上'],
+				eduIndex: 0,
+				workAge: ['请选择', '3年以下', '4年', '5年', '6年', '7年', '8年以上'],
+				workIndex: 0,
 				date: this.getDate({
 					format: true
 				}),
-				wkSDate: "",
-				wkEDate: ""
+				start_date: "",
+				end_date: ""
 			};
 		},
 		watch: {},
-		components: {
-		},
+		components: {},
 		computed: {
 			startDate() {
 				return this.getDate('start');
@@ -224,52 +302,49 @@
 		},
 		methods: {
 			saveResume(type) {
-				if(type=='dlt'){
+				if (type == 'dlt') {
 					this.$emit('dltResume');
-				}else{
+				} else {
 					this.$emit('saveResume');
 				}
 			},
 			setData(e) {
 				var that = this;
-				that.basicInfo[`${e.currentTarget.dataset.key}`] = e.detail.value;
-			},
-			setCompanyData(e) {
-				var that = this;
-				that.tempCompany[`${e.currentTarget.dataset.key}`] = e.detail.value;
+				that.temp[e.currentTarget.dataset.key] = e.detail.value;
+				//console.log(that.temp)
 			},
 			pickerGender(e) {
 				var that = this;
 				var key = e.target.value;
 				that.genderIndex = key;
-				that.basicInfo.sex = that.gender[key]
+				that.temp['sex'] = that.gender[key]
 			},
 			pickerEdu(e) {
 				var that = this;
 				var key = e.target.value;
 				that.eduIndex = key;
-				that.basicInfo.education = that.education[key]
+				that.temp['education'] = that.education[key]
 			},
 			pickerWork(e) {
 				var that = this;
 				var key = e.target.value;
 				that.workIndex = key;
-				that.basicInfo.age_work = that.workAge[key]
+				that.temp['age_work'] = that.workAge[key]
 			},
 			pickerDate(e) {
 				var that = this;
 				that.date = e.target.value
-				that.basicInfo.brithday = e.target.value
+				that.temp['brithday'] = e.target.value
 			},
 			workStartDate(e) {
 				var that = this;
-				that.wkSDate = e.target.value
-				that.tempCompany.start_time = e.target.value
+				that.start_date = e.target.value
+				that.temp['start_time'] = e.target.value
 			},
 			workEndDate(e) {
 				var that = this;
-				that.wkEDate = e.target.value
-				that.tempCompany.end_time = e.target.value
+				that.end_date = e.target.value
+				that.temp['end_time'] = e.target.value
 			},
 			getDate(type) {
 				const date = new Date();
@@ -328,7 +403,17 @@
 	.txtArea {
 		min-height: 150upx;
 	}
-	.edits{display: flex;}
-	.save-btn{color: #007AFF;}
-	.block-edit{margin-left: 40upx;}
+	.txtArea-big{min-height: 300upx;}
+
+	.edits {
+		display: flex;
+	}
+
+	.save-btn {
+		color: #007AFF;
+	}
+
+	.block-edit {
+		margin-left: 40upx;
+	}
 </style>

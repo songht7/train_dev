@@ -9,43 +9,43 @@
 						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
-				<view class="resume-basic" v-if="basicInfo.name">
+				<view class="resume-basic" v-if="data.name">
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">名字</view>
-							<view class="basic-val">{{basicInfo.name}}</view>
+							<view class="basic-val">{{data.name}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">生日</view>
-							<view class="basic-val">{{basicInfo.brithday}}</view>
+							<view class="basic-val">{{data.brithday}}</view>
 						</view>
 						<view class="basic-block">
 							<view class="basic-title">性别</view>
-							<view class="basic-val">{{basicInfo.sex}}</view>
+							<view class="basic-val">{{data.sex}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">学历</view>
-							<view class="basic-val">{{basicInfo.education}}</view>
+							<view class="basic-val">{{data.education}}</view>
 						</view>
 						<view class="basic-block">
 							<view class="basic-title">工作年限</view>
-							<view class="basic-val">{{basicInfo.age_work}}</view>
+							<view class="basic-val">{{data.age_work}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">手机</view>
-							<view class="basic-val">{{basicInfo.phone}}</view>
+							<view class="basic-val">{{data.phone}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">电子邮箱</view>
-							<view class="basic-val">{{basicInfo.email}}</view>
+							<view class="basic-val">{{data.email}}</view>
 						</view>
 					</view>
 				</view>
@@ -53,13 +53,13 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">工作经历</view>
-					<view class="block-edit" @click="edit('work')">
+					<view class="block-edit" @click="edit('company')">
 						<view class="edit-name">添加</view>
 						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-if="company&&obj.company" v-for="(obj, index) in company">
+					<block v-if="data.company&&obj.id" v-for="(obj, index) in data.company">
 						<view class="work-row">
 							<view class="work-title">{{obj.start_time}} - {{obj.end_time}} {{obj.company}} {{obj.job}}</view>
 							<view class="work-overview">
@@ -67,7 +67,7 @@
 									<rich-text class="course-detail" :nodes="obj.infomation"></rich-text>
 								</view>
 							</view>
-							<view class="block-edit work-edit" @click="edit('work',index+1)">
+							<view class="block-edit work-edit" @click="edit('company',index)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -78,17 +78,17 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">教育经历</view>
-					<view class="block-edit" @click="edit('edu')">
+					<view class="block-edit" @click="edit('school')">
 						<view class="edit-name">添加</view>
 						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-for="(item, index) in 2">
+					<block v-if="data.school&&obj.id" v-for="(obj, index) in data.school">
 						<view class="work-row">
-							<view class="work-title">2012.10 - 2015.10</view>
-							<view class="work-val">上海大学 本科 商务英语</view>
-							<view class="block-edit work-edit" @click="edit('edu',index+1)">
+							<view class="work-title">{{obj.start_time}} - {{obj.end_time}}</view>
+							<view class="work-val">{{obj.school}} {{obj.profession}}</view>
+							<view class="block-edit work-edit" @click="edit('school',index)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -99,20 +99,21 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">项目经历</view>
-					<view class="block-edit" @click="edit('item')">
+					<view class="block-edit" @click="edit('project')">
 						<view class="edit-name">添加</view>
 						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-for="(item, index) in 2">
+					<block v-if="data.project&&obj.id" v-for="(obj, index) in data.project">
 						<view class="work-row">
-							<view class="work-title">2012.10 - 2015.10 每日优鲜 质检员</view>
+							<view class="work-title">{{obj.start_time}} - {{obj.end_time}} {{obj.name}}</view>
 							<view class="work-overview">
-								<view class="work-ov-li">1.负责平台商家在线、热线质检工作</view>
-								<view class="work-ov-li">2.负责平台商家在线、热线质检工作负责平台商家在线、热线质检工作</view>
+								<view class="work-ov-li">
+									<rich-text class="course-detail" :nodes="obj.overview"></rich-text>
+								</view>
 							</view>
-							<view class="block-edit work-edit" @click="edit('item',index)">
+							<view class="block-edit work-edit" @click="edit('project',index)">
 								<view class="edit-name">编辑</view>
 								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
 							</view>
@@ -123,22 +124,21 @@
 			<view class="border-block">
 				<view class="resume-head">
 					<view class="block-title">自我描述</view>
-					<view class="block-edit" @click="edit('selfdes')">
+					<view class="block-edit" @click="edit('about_self')">
 						<view class="edit-name">编辑</view>
 						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
 					<view class="self-des">
-						本人性格开朗、稳住、有活力，具有较强的无私奉献精神。本人性格开朗、稳住、有活力，具有较强的无私奉献精神。本人性格开朗、稳住、有活力，具有较强的无私奉献精神。本人性格开朗、稳住、有活力，具有较强的无私奉献精神。
-					</view>
+						<textarea :value="data.about_self||''" disabled />
+						</view>
 				</view>
 			</view>
 		</view>
 		<uni-popup :show="poptype === 'editBox'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
 			<view class="train-show-modal-box">
-				<user-resume :editBlock="editBlock" :editKey="editKey" :basicInfo="basicInfo" :school="school" :company="company"
-				 :tempCompany="tempCompany" :project="project" :about_self="about_self" @saveResume="saveResume('PUT')" @dltResume="dltResume('PUT')"></user-resume>
+				<user-resume :editBlock="editBlock" :editKey="editKey" :temp="temp" @saveResume="saveResume" @dltResume="dltResume"></user-resume>
 			</view>
 		</uni-popup>
 		<fix-button btnType="fbtn-full"></fix-button>
@@ -159,27 +159,10 @@
 				editBlock: "",
 				editKey: -1,
 				isDelete: false,
-				basicInfo: {
-					"name": "",
-					"brithday": "",
-					"sex": "",
-					"education": "",
-					"age_work": "",
-					"phone": "",
-					"email": ""
-				},
-				school: [],
-				company: [],
-				project: [],
-				about_self: "",
-				tempCompany: {
-					"id": "",
-					"company": "",
-					"job": "",
-					"start_time": "",
-					"end_time": "",
-					"infomation": ""
-				}
+				data: [],
+				basic: {},
+				temp: {},
+				saveData: []
 			}
 		},
 		components: {
@@ -199,127 +182,104 @@
 					url: "/pages/index/index"
 				})
 			}
-			that.getData("GET")
+			that.getData()
 		},
 		computed: {},
+		onPullDownRefresh() {
+			var that = this;
+			that.getData();
+		},
 		methods: {
-			saveResume(methodType) {
+			saveResume() {
 				var that = this;
-				var type = "add";
-				if (that.editKey > -1) {
-					type = "edit";
-				}
-				switch (type) {
-					case "add":
-						switch (that.editBlock) {
-							case 'work':
-								that.company.push(that.tempCompany);
-								break;
-							default:
-								break;
-						}
+				switch (that.editBlock) {
+					case 'basic':
+						that.saveData = that.temp;
 						break;
-					case "edit":
-						switch (that.editBlock) {
-							case 'work':
-								that.company[that.editKey - 1] = that.tempCompany;
-								break;
-							default:
-								break;
+					case 'about_self':
+						that.saveData = that.temp;
+						break;
+					case 'company':
+						var _basic = that.basic;
+						if (that.isDelete) {
+							that.temp["delete"] = 1;
 						}
+						_basic["company"] = [that.temp];
+						that.saveData = _basic;
+						break;
+					case 'school':
+						var _basic = that.basic;
+						if (that.isDelete) {
+							that.temp["delete"] = 1;
+						}
+						_basic["school"] = [that.temp];
+						that.saveData = _basic;
+						break;
+					case 'project':
+						var _basic = that.basic;
+						if (that.isDelete) {
+							that.temp["delete"] = 1;
+						}
+						_basic["project"] = [that.temp];
+						that.saveData = _basic;
 						break;
 					default:
 						break;
 				}
-				that.getData(methodType);
+				console.log("saveData:", that.saveData)
+				that.saveDatas();
 			},
-			dltResume(methodType) {
+			dltResume() {
 				var that = this;
 				that.isDelete = true;
-				that.getData(methodType);
+				that.saveResume();
 			},
-			getData(methodType) {
+			getData() {
 				var that = this;
 				let _data = {
 					"inter": "resume",
-					"method": methodType,
 					"header": {
 						"token": that.__token
 					}
 				}
-				if (methodType == "PUT") {
-					if (that.isDelete) {
-						switch (that.editBlock) {
-							case 'work':
-								that.company[that.editKey - 1]["delete"] = 1;
-								break;
-							default:
-								break;
-						}
-					}
-					_data["header"]["Content-Type"] = "application/json";
-					_data["data"] = {
-						"name": that.basicInfo.name,
-						"brithday": that.basicInfo.brithday,
-						"sex": that.basicInfo.sex,
-						"education": that.basicInfo.education,
-						"age_work": that.basicInfo.age_work,
-						"phone": that.basicInfo.phone,
-						"email": that.basicInfo.email,
-						"about_self": that.about_self,
-						"school": that.school,
-						"company": that.company,
-						"project": that.project
-					};
-					console.log(_data)
-					//return
-				}
 				_data["fun"] = function(res) {
-					if (methodType == "GET") {
-						if (res.success) {
-							var _info = res.data.info;
-							if (_info) {
-								that.basicInfo = {
-									"name": _info.name,
-									"brithday": _info.brithday,
-									"sex": _info.sex,
-									"education": _info.education,
-									"age_work": _info.age_work,
-									"phone": _info.phone,
-									"email": _info.email
-								};
-								that.school = _info.school ? _info.school : [];
-								if (_info.company) {
-									_info.company.map((val, i, arr) => {
-										val['start_time'] = val['start_time'].split(" ")[0]
-										val['end_time'] = val['end_time'].split(" ")[0]
-									})
-								}
-								that.company = _info.company || [];
-								that.project = _info.project ? _info.project : [];
-								that.about_self = _info.about_self;
+					if (res.success) {
+						var _info = res.data.info;
+						if (_info) {
+							if (_info.company) {
+								_info.company.map((val, i, arr) => {
+									val['start_time'] = val['start_time'].split(" ")[0]
+									val['end_time'] = val['end_time'].split(" ")[0]
+								})
 							}
-						} else {
-							uni.showToast({
-								title: "获取简历失败",
-								icon: "none",
-								complete() {
-									setTimeout(() => {
-										that.poptype = "";
-									}, 1500)
-								}
-							})
+							if (_info.school) {
+								_info.school.map((val, i, arr) => {
+									val['start_time'] = val['start_time'].split(" ")[0]
+									val['end_time'] = val['end_time'].split(" ")[0]
+								})
+							}
+							if (_info.project) {
+								_info.project.map((val, i, arr) => {
+									val['start_time'] = val['start_time'].split(" ")[0]
+									val['end_time'] = val['end_time'].split(" ")[0]
+								})
+							}
+							that.basic = {
+								"name": _info.name,
+								"brithday": _info.brithday,
+								"sex": _info.sex,
+								"education": _info.education,
+								"age_work": _info.age_work,
+								"phone": _info.phone,
+								"email": _info.email,
+								"about_self": _info.about_self
+							}
+							that.data = _info;
 						}
-					} else if (methodType == "PUT") {
-						var title = res.success ? "编辑成功" : "编辑失败，请重试",
-							icon = res.success ? "success" : "none";
-						if (that.isDelete) {
-							title = "删除成功";
-							that.company.splice(that.editKey - 1, 1);
-						}
+					} else {
 						uni.showToast({
-							title: title,
-							icon: icon,
+							title: "获取简历失败",
+							icon: "none",
 							complete() {
 								setTimeout(() => {
 									that.poptype = "";
@@ -328,7 +288,41 @@
 						})
 					}
 					uni.stopPullDownRefresh()
-					that.isDelete = false;
+				}
+				that.$store.dispatch("getData", _data)
+			},
+			saveDatas() {
+				var that = this;
+				let _data = {
+					"inter": "resume",
+					"method": "PUT",
+					"header": {
+						"token": that.__token
+					}
+				}
+				_data["header"]["Content-Type"] = "application/json";
+				_data["data"] = that.saveData;
+				console.log(_data)
+				//return
+				_data["fun"] = function(res) {
+					var title = res.success ? "编辑成功" : "编辑失败，请重试",
+						icon = res.success ? "success" : "none";
+					if (that.isDelete) {
+						title = "删除成功";
+					}
+					uni.showToast({
+						title: title,
+						icon: icon,
+						complete() {
+							setTimeout(() => {
+								that.isDelete = false;
+								that.saveData = [];
+								that.temp = {}
+								that.poptype = "";
+							}, 1500)
+						}
+					})
+					that.getData();
 				}
 				that.$store.dispatch("getData", _data)
 			},
@@ -337,14 +331,24 @@
 				that.poptype = "editBox";
 				that.editBlock = type;
 				that.editKey = key ? key : -1;
-				if (key) {
-					switch (that.editBlock) {
-						case 'work':
-							that.tempCompany = that.company[key - 1]
-							break;
-						default:
-							break;
-					}
+				switch (that.editBlock) {
+					case 'basic':
+						that.temp = that.basic;
+						break;
+					case 'about_self':
+						that.temp = that.basic;
+						break;
+					case 'company':
+						that.temp = key != undefined && key >= 0 ? that.data.company[key] : {}
+						break;
+					case 'school':
+						that.temp = key != undefined && key >= 0 ? that.data.school[key] : {}
+						break;
+					case 'project':
+						that.temp = key != undefined && key >= 0 ? that.data.project[key] : {}
+						break;
+					default:
+						break;
 				}
 				console.log(that.editBlock, key)
 			},
@@ -352,20 +356,7 @@
 				var that = this;
 				that.poptype = type;
 				that.editKey = -1;
-				switch (that.editBlock) {
-					case 'work':
-						that.tempCompany = {
-							"id": "",
-							"company": "",
-							"job": "",
-							"start_time": "",
-							"end_time": "",
-							"infomation": ""
-						}
-						break;
-					default:
-						break;
-				}
+				that.temp = {}
 			}
 		}
 	}
