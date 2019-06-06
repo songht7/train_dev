@@ -4,9 +4,17 @@
 			<view class="edit-block edit-basic">
 				<view class="resume-head">
 					<view class="block-title">修改信息</view>
-					<view class="block-edit" @click="saveResume">
-						<view class="edit-name save-btn">完成</view>
-					</view>
+
+					<block v-if="isSendResume=='false'">
+						<view class="block-edit" @click="saveResume">
+							<view class="edit-name save-btn">完成</view>
+						</view>
+					</block>
+					<block v-if="isSendResume=='true'">
+						<view class="send-step" @click="sendResume('next')">
+							下一步
+						</view>
+					</block>
 				</view>
 				<view class="resume-basic">
 					<view class="basic-row">
@@ -77,12 +85,22 @@
 				<view class="resume-head">
 					<view class="block-title">工作经历</view>
 					<view class="edits">
-						<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
-							<view class="edit-name">删除</view>
-						</view>
-						<view class="block-edit" @click="saveResume">
-							<view class="edit-name save-btn">完成</view>
-						</view>
+						<block v-if="isSendResume=='false'">
+							<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
+								<view class="edit-name">删除</view>
+							</view>
+							<view class="block-edit" @click="saveResume">
+								<view class="edit-name save-btn">完成</view>
+							</view>
+						</block>
+						<block v-if="isSendResume=='true'">
+							<view class="send-step" @click="sendResume('prev')">
+								上一步
+							</view>
+							<view class="send-step" @click="sendResume('next')">
+								下一步
+							</view>
+						</block>
 					</view>
 				</view>
 				<view class="resume-basic">
@@ -105,7 +123,7 @@
 					</view>
 					<view class="basic-row">
 						<view class="basic-block block-full">
-							<view class="basic-title">公司名</view>
+							<view class="basic-title">公司名称</view>
 							<view class="basic-val ipt-block">
 								<input name="company" data-key="company" @input="setData" placeholder="请输入" :value="temp['company']||''" />
 							</view>
@@ -113,7 +131,7 @@
 					</view>
 					<view class="basic-row">
 						<view class="basic-block block-full">
-							<view class="basic-title">职位</view>
+							<view class="basic-title">职位名称</view>
 							<view class="basic-val ipt-block">
 								<input name="job" data-key="job" @input="setData" placeholder="请输入" :value="temp['job']||''" />
 							</view>
@@ -121,11 +139,11 @@
 					</view>
 					<view class="basic-row">
 						<view class="basic-block block-full">
-							<view class="basic-title">描述</view>
+							<view class="basic-title">工作内容</view>
 							<view class="basic-val ipt-block">
 								<textarea :value="temp['infomation']||''" name="infomation" data-key="infomation" @input="setData" auto-height
 								 class="txtArea" />
-							</view>
+								</view>
 						</view>
 					</view>
 				</view>
@@ -273,6 +291,16 @@
 				default: function(e) {
 					return {}
 				}
+			},
+			datas:{
+				type: Object,
+				default: function(e) {
+					return {}
+				}
+			},
+			isSendResume:{
+				type: String,
+				default:"false"
 			}
 		},
 		data() {
@@ -306,6 +334,24 @@
 					this.$emit('dltResume');
 				} else {
 					this.$emit('saveResume');
+				}
+			},
+			sendResume(type){
+				var that = this;
+				if(type=="next"){
+					if(that.editBlock=="basic"){
+						that.editBlock="company";
+						that.temp=that.datas.company[0]
+					}
+				}else if(type=="prev"){
+					switch (that.editBlock){
+						case "company":
+							that.editBlock="basic";
+							that.temp=that.datas
+							break;
+						default:
+							break;
+					}
 				}
 			},
 			setData(e) {

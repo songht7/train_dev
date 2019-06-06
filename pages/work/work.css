@@ -44,13 +44,17 @@
 	padding-bottom: 6upx;
 }
 
+.work-detail-overview {
+	padding-bottom: 40upx;
+}
+
 .work-block-title {
 	font-size: 34upx;
 	color: #222222;
 }
 
 .title-block {
-	padding-bottom: 30upx;
+	padding-bottom: 20upx;
 }
 
 .work-dtl-name {
@@ -95,4 +99,10 @@
 	border-bottom: 0;
 	padding-bottom: 0;
 	margin-bottom: 0;
+}
+
+.work-content {
+	color: #666666;
+	font-size: 28upx;
+	line-height: 1.4;
 }

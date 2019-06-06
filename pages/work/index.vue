@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="flex-top-box">
+		<!-- <view class="flex-top-box">
 			<view class="flex-filter">
 				<view class="filter-block" @click="showPicker('address')">
 					<view class="filter-val">{{pickerVal['address']['txt']}}</view>
@@ -12,27 +12,29 @@
 				</view>
 			</view>
 			<view class="flex-station"></view>
-		</view>
+		</view> -->
 		<view class="page-main">
-			<block v-for="(item, index) in 8">
-				<view class="work-list" @click="workDetail('id')">
+			<block v-for="(obj,index) in datas" :key="index">
+				<view class="work-list" @click="goDetail(obj.id)">
 					<view class="work-block">
-						<view class="work-block-title">友爱数码 | 高级质检员</view>
-						<view class="work-salary">6-8K</view>
+						<view class="work-block-title">{{obj.name}} | {{obj.type}}</view>
+						<view class="work-salary">{{obj.salary}}</view>
 					</view>
 					<view class="work-block">
-						<view class="work-require">上海 | 普陀区 | 1-2年 | 无学历要求</view>
-						<view class="work-time">2019/03/05</view>
+						<view class="work-require">{{obj.province?obj.province+' | ':''}}{{obj.city?obj.city+' | ':''}}{{obj.age_min}}-{{obj.age_max}}年
+							| {{obj.education?obj.education:'无学历要求'}}</view>
+						<view class="work-time">{{obj.add_time.split(" ")[0]}}</view>
 					</view>
 					<view class="work-block">
 						<view class="work-tag-list">
-							<view class="work-tag">五险一金</view>
-							<view class="work-tag">有住宿</view>
-							<view class="work-tag">公司提供一日两餐</view>
+							<block v-for="(t,i) in obj.tags" :key="i">
+								<view class="work-tag">{{t}}</view>
+							</block>
 						</view>
 					</view>
 				</view>
 			</block>
+			<uni-load-more :status="status"></uni-load-more>
 			<tab-bar></tab-bar>
 		</view>
 		<mpvue-picker themeColor="#007AFF" ref="mpvuePicker" mode="selector" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
@@ -43,9 +45,16 @@
 <script>
 	// https://github.com/zhetengbiji/mpvue-picker
 	import mpvuePicker from '@/components/mpvuePicker.vue';
+	import uniLoadMore from '@/components/uni-load-more.vue'
 	export default {
 		data() {
 			return {
+				ctgId: "",
+				datas: [],
+				data_total: 0,
+				pageIndex: 1,
+				pageSize: 5,
+				status: "more",
 				pickerValueArray: {
 					"address": [{
 							label: '全部地址',
@@ -103,22 +112,81 @@
 				}
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			var that = this;
+			that.ctgId = e.ctg_id || 17;
+		},
+		onReady() {
 			var that = this;
 		},
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
-		},
-		onReady() {
-			var that = this;
+			that.getDatas()
 		},
 		components: {
-			mpvuePicker
+			mpvuePicker,
+			uniLoadMore
 		},
 		computed: {},
+		onPullDownRefresh() {
+			var that = this;
+			that.pageIndex = 1;
+			that.getDatas()
+		},
+		onReachBottom() {
+			var that = this;
+			if (that.status === "noMore") {
+				return;
+			}
+			if (that.datas.length >= that.data_total || that.data_total <= 0) {
+				that.status = "noMore";
+				return;
+			}
+			that.pageIndex = that.pageIndex + 1;
+			that.getDatas()
+		},
 		methods: {
-			workDetail(id) {
+			getDatas() {
+				var that = this;
+				that.status = "loading";
+				let data = {
+					"inter": "supports",
+					"parm": `?cat_id=${that.ctgId}&currentPage=${that.pageIndex}&pagesize=${that.pageSize}`,
+					"header": {
+						"token": that.$store.state.user.token || ""
+					}
+				}
+				console.log(data)
+				data["fun"] = function(res) {
+					that.status = "more";
+					uni.stopPullDownRefresh()
+					if (res.success) {
+						var _data = res.data.list;
+						if (_data) {
+							_data.map((val, i, arr) => {
+								val['tags'] = val["tag"].split("，")
+							})
+							if (that.pageIndex == 1) {
+								that.datas = _data;
+							} else {
+								console.log(_data)
+								//that.datas.push(_data);
+								_data.forEach(item => {
+									that.datas.push(item);
+								});
+							}
+							that.data_total = res.data.total;
+						}
+						if (that.datas.length >= res.data.total || res.data.total <= 0) {
+							that.status = "noMore";
+							return;
+						}
+					}
+				}
+				that.$store.dispatch("getData", data)
+			},
+			goDetail(id) {
 				uni.navigateTo({
 					url: `/pages/work/detail?id=${id}`
 				})
@@ -137,7 +205,7 @@
 			},
 			onCancel(e) {
 				console.log(e)
-			},
+			}
 		}
 	}
 </script>

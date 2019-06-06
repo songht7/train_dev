@@ -10,7 +10,7 @@
 								<view class="lib-ov">{{obj.overview}}</view>
 							</view>
 							<view class="lib-m-right">
-								<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+								<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
 								 mode="aspectFill"></image>
 							</view>
 						</view>
