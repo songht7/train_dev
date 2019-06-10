@@ -74,7 +74,8 @@
 				<view class="fbtns btn-goback" :class="test_total<=0?'fbtn-full':''" v-show="current===1" @click="$store.dispatch('goback')">退出测试</view>
 				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_total" @click="test_more('next')">下一题</view>
-				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" @click="formSubmit">提交</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-if="!submitted" @click="formSubmit">提交</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">继续学习</view>
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
