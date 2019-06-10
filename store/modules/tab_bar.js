@@ -66,6 +66,13 @@ export default {
 					flex_dir: "flex-column"
 				},
 				// {
+				// 	name: '在线考试',
+				// 	name_code: 'user-test',
+				// 	link: "/pages/tests/index",
+				// 	icon: 'kaoshi',
+				// 	flex_dir: "flex-column"
+				// },
+				// {
 				// 	name: '消息',
 				// 	name_code: 'user-msg',
 				// 	link: "/pages/user/message",

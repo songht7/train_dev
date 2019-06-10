@@ -4,7 +4,7 @@
 			<view class="test-content">
 				<view class="test-head">
 					<view class="test-countdown">
-						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="countdown" :second="0" @timeup="formSubmit"></uni-countdown>
+						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="countdown" :second="0" @timeup="toSubmit"></uni-countdown>
 						后自动提交
 					</view>
 					<view class="test-total">本章节测试，共{{test_total}}题</view>
@@ -12,6 +12,11 @@
 				<block v-for="(t,i) in tests" :key="i">
 					<view v-show="current === i+1">
 						<view class="test-block">
+							<block v-if="submitted==true">
+								<view class="test-marking">
+									<uni-icon :type="t.serialization==formData[t.id]?'buoumaotubiao49':'kulian'" size="80" :color="t.serialization==formData[t.id]?'#5FC1B7':'#DE544C'"></uni-icon>
+								</view>
+							</block>
 							<view class="test-title-box">
 								<view class="test-title">
 									第{{current}}题:{{t.name}}
@@ -38,8 +43,8 @@
 											</view>
 											<view>
 												<!-- <text class="TorF true">✔</text><text class="TorF false">✘</text> -->
-												<text v-if="val=='对'" class="TorF true">✔</text>
-												<text v-else-if="val=='错'" class="TorF false">✘</text>
+												<text v-if="val=='对'||val=='正确'" class="TorF true">✔</text>
+												<text v-else-if="val=='错'||val=='错误'" class="TorF false">✘</text>
 												<text v-else>{{key}}：{{val}}</text>
 											</view>
 										</label>
@@ -73,7 +78,7 @@
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
-		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="goToList">
+		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
 			<view class="uni-center center-box score-box" :class="scoreState">
 				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
@@ -120,6 +125,7 @@
 				test_total: 0,
 				countdown: 3, //分钟
 				loading: false,
+				submitted: false,
 				formData: [],
 				type: '',
 				scoreDes: "成绩不合格",
@@ -202,8 +208,8 @@
 			test_more(type) {
 				var that = this;
 				if (that.countdown <= 0) {
-					that.type = "overtime";
-					return
+					//that.type = "overtime";
+					//return
 				}
 				switch (type) {
 					case "prev":
@@ -244,6 +250,13 @@
 				// 	that.fixBtn = type;
 				// }
 			},
+			toSubmit() {
+				var that = this;
+				if (that.submitted == true) {
+					return
+				}
+				that.formSubmit();
+			},
 			formSubmit(e) {
 				var that = this;
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
@@ -251,6 +264,13 @@
 				// console.log(formData)
 				// return
 				if (that.loading == true) {
+					return
+				}
+				if (that.submitted == true) {
+					uni.showToast({
+						title: "您已交卷！不可重复提交",
+						icon: "none"
+					})
 					return
 				}
 				that.loading = true
@@ -276,6 +296,7 @@
 						let _point = res.data.exam && res.data.exam.point ? res.data.exam.point : 0
 						that.score = _point;
 						that.countdown = 0;
+						that.submitted = true;
 						if (_point >= 60) {
 							that.scoreDes = "成绩合格";
 							that.scoreState = "stateGreen";
@@ -416,6 +437,19 @@
 		font-size: 32upx;
 		color: #222222;
 		padding: 30upx;
+		position: relative;
+	}
+	.test-marking{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
 	}
 
 	.test-title-box {
