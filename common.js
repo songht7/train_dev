@@ -4,10 +4,21 @@
  *	B：企业管理员
  * */
 
+var api = {
+	"formal": {
+		"interface": "https://api-test-ws.wsshanghai.com", //接口
+		"domain": "http://wsshanghai.com"
+	},
+	"dev": {
+		"interface": "https://api-test.wsshanghai.com", //接口
+		"domain": "http://wsshanghai.com"
+	}
+}
+var lks = "dev";
 export default {
 	Interface: {
-		"apiurl": "https://api-test.wsshanghai.com", //space111111
-		"domain": "http://wsshanghai.com",
+		"apiurl": api[lks]["interface"], //space111111
+		"domain": api[lks]["domain"],
 		"addr": {
 			"slideShow": "/v2/ApiHome-slideShow.htm", //首页列表
 			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
@@ -25,8 +36,8 @@ export default {
 			"course": "/v4/ApiCourse-course.htm", //培训详细?id=培训id
 			"lessons": "/v4/ApiCourse-lessons.htm", //课程列表{培训详细内}-headers token--?id=1
 			"lesson": "/v4/ApiCourse-lesson.htm", //课程详细-headers token--?id=1
-			"joinCourses": "/v4/ApiAccount-courses.htm",//参与的课程
-			"accountCourse": "/v4/ApiAccount-course.htm",//参与课时[POST] course_id
+			"joinCourses": "/v4/ApiAccount-courses.htm", //参与的课程
+			"accountCourse": "/v4/ApiAccount-course.htm", //参与课时[POST] course_id
 			"accountLesson": "/v4/ApiAccount-lesson.htm", //课程学习进度[POST] lesson_id
 			"categorys": "/v4/ApiBase-categorys.htm", //培训分类
 			"tests": "/v4/ApiCourse-tests.htm", //获取随机试题
@@ -39,8 +50,8 @@ export default {
 			"enterpriseCourses": "/v4/ApiAccount-enterpriseCourses.htm", //员工：企业专用课程列表
 			"personalProgresses": "/v4/ApiAccount-personalProgresses.htm", // 企业主：员工学习进度
 			"courseProgresses": "/v4/ApiAccount-courseProgresses.htm", //企业主：课程参与度
-			"testProgresses": "/v4/ApiAccount-testProgresses.htm",  //企业主：考试合格率
-			"resume":"/v4/ApiAccount-resume.htm",//获取简历[GET], 编辑简历[PUT], 投递简历[POST]?article_id
+			"testProgresses": "/v4/ApiAccount-testProgresses.htm", //企业主：考试合格率
+			"resume": "/v4/ApiAccount-resume.htm", //获取简历[GET], 编辑简历[PUT], 投递简历[POST]?article_id
 
 		}
 	}
