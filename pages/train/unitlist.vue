@@ -1,20 +1,26 @@
 <template>
 	<view class="unit-list">
-		<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular" interval="interval"
-		 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent" @change="swiperChange">
-			<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
-				<view class="vli">
-					<view class="vli2 train-swiper-main">
-						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
-						 mode="aspectFill"></image>
-						<video class="train-video" v-if="slide.media_type=='video'" :src="slide.media_src" @error="videoErrorCallback"
-						 controls></video>
-						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
-						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
+		<view class="swiper-main">
+			<view class="photo-album" @click="previewImage">
+				<uni-icon type="xiangce1" size="30" color="#F77C5F"></uni-icon>
+			</view>
+			<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular"
+			 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent"
+			 @change="swiperChange">
+				<swiper-item class="swiper-item" v-for="(slide,index) in showList" :key="index">
+					<view class="vli">
+						<view class="vli2 train-swiper-main">
+							<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
+							 mode="aspectFill"></image>
+							<video class="train-video" v-if="slide.media_type=='video'" :src="slide.media_src" @error="videoErrorCallback"
+							 controls></video>
+							<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name"
+							 author="职照培训" action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
+						</view>
 					</view>
-				</view>
-			</swiper-item>
-		</swiper>
+				</swiper-item>
+			</swiper>
+		</view>
 		<view class="uni-padding-wrap uni-common-mt segmented-box">
 			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented" styleType="text"
 			 activeColor="#008CEE"></uni-segmented-control>
@@ -70,6 +76,7 @@
 				lessDtl: [],
 				cover: [],
 				detailType: "content",
+				showList: [],
 				swiperList: [],
 				swiperCurrent: 0,
 				lessActive: -1,
@@ -111,6 +118,7 @@
 					let _cover = [{
 						"original_src": res.data.original_src || '/img/logo.png'
 					}]
+					that.showList = _cover;
 					that.swiperList = _cover;
 				}
 			}
@@ -161,6 +169,9 @@
 					that.lessActive = index;
 					that.swiperList = [{
 						"original_src": that.data.original_src || '/img/logo.png'
+					}];
+					that.showList = [{
+						"original_src": that.data.original_src || '/img/logo.png'
 					}]
 					return
 				}
@@ -206,6 +217,16 @@
 							_img.push(media)
 						}
 						if (_img) {
+							let filter_img = _img.filter((obj, index) => !obj.media_type && index < 3);
+							let filter_media = _img.filter((obj, index) => obj.media_type);
+							console.log("filter_media:", filter_media)
+							if (filter_img && filter_media) {
+								that.showList = [...filter_img, ...filter_media];
+							} else if (filter_img && !filter_media) {
+								that.showList = [...filter_img];
+							} else if (!filter_img && filter_media) {
+								that.showList = [...filter_media];
+							}
 							that.swiperList = _img;
 						}
 					}
@@ -221,7 +242,8 @@
 				var that = this;
 				let _current = that.swiperCurrent,
 					_preImgs = that.swiperList,
-					_urls = _preImgs.map(item => item.original_src);
+					_filter = _preImgs.filter(obj => !obj.media_type),
+					_urls = _filter.map(item => item.original_src);
 				let uniPreviewImg = {
 					urls: _urls,
 					indicator: "number",
@@ -283,6 +305,18 @@
 </script>
 
 <style>
+	.swiper-main {
+		position: relative;
+	}
+
+	.photo-album {
+		position: absolute;
+		right: 20upx;
+		top: 80upx;
+		z-index: 3;
+		padding: 20upx;
+	}
+
 	.swiper-slide-unit {
 		height: 422upx;
 	}
