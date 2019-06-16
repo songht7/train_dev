@@ -9,8 +9,8 @@
 						 mode="aspectFill"></image>
 						<video class="train-video" v-if="slide.media_type=='video'" :src="slide.media_src" @error="videoErrorCallback"
 						 controls></video>
-						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name"
-						 author="职照培训" action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
+						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
+						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
 					</view>
 				</view>
 			</swiper-item>
@@ -221,7 +221,7 @@
 				var that = this;
 				let _current = that.swiperCurrent,
 					_preImgs = that.swiperList,
-					_urls = _preImgs.map(item => that.$store.state.interface.apiurl + item.original_src);
+					_urls = _preImgs.map(item => item.original_src);
 				let uniPreviewImg = {
 					urls: _urls,
 					indicator: "number",

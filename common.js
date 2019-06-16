@@ -6,15 +6,19 @@
 
 var api = {
 	"formal": {
-		"interface": "https://api-test-ws.wsshanghai.com", //接口
-		"domain": "http://wsshanghai.com"
+		"interface": "https://api.bdmartech.com", //接口
+		"domain": "http://m.bdmartech.com"
 	},
 	"dev": {
 		"interface": "https://api-test.wsshanghai.com", //接口
-		"domain": "http://wsshanghai.com"
+		"domain": "http://train.wsshanghai.com"
+	},
+	"wuxi": {
+		"interface": "https://api.jobpgroup.com", //接口
+		"domain": "http://jobpgroup.com"
 	}
 }
-var lks = "dev";
+var lks = "wuxi";
 export default {
 	Interface: {
 		"apiurl": api[lks]["interface"], //space111111
