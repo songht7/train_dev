@@ -19,12 +19,7 @@ const store = new Vuex.Store({
 		interface: common.Interface,
 		systemInfo: {},
 		portrait: "",
-		cosConfig: {//`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
-			Bucket: 'plbs-test-1257286922',
-			Region: 'ap-shanghai',
-			SecretId: 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
-			SecretKey: 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF'
-		}
+		cosConfig: common.cosConfig
 	},
 	mutations: {
 		switch_loading(state, status) {
