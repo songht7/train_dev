@@ -13,7 +13,7 @@
 				</view>
 				<view class="class-list">
 					<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
-						<view class="list-block">
+						<view class="list-block" @click="navToTrain(obj.id)">
 							<view class="list-more">
 								<view class="list-left class-list-left">
 									<view class="list-title">{{obj.name}}</view>
@@ -84,6 +84,11 @@
 			that.getDatas()
 		},
 		methods: {
+			navToTrain(id) {
+				uni.navigateTo({
+					url: `/pages/train/unitlist?id=${id}`
+				})
+			},
 			getDatas(type) {
 				var that = this;
 				var inter = "joinCourses";

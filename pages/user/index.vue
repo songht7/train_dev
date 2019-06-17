@@ -2,7 +2,7 @@
 	<view class="user-center-main">
 		<view class="list-row">
 			<view class="list-block">
-				<user-center-top></user-center-top>
+				<user-center-top :joinCourse="joinCourse" :passCourse="passCourse" :failCourse="failCourse"></user-center-top>
 				<view class="user-block" v-if="eStatus==='1'">
 					<view class="user-class-list">
 						<view class="my-class-head">
@@ -52,11 +52,11 @@
 								</view>
 								<view class="txt-sross">我参与的课程</view>
 							</view>
-							<navigator url="/pages/user/my-class" class="class-more">全部{{joinCTotal}}个></navigator>
+							<navigator url="/pages/user/my-class" class="class-more">全部{{joinCourse}}个></navigator>
 						</view>
 						<view class="class-list">
 							<view class="list-row class-list-row" v-for="(obj,k) in joinCourses" :key="k">
-								<view class="list-block">
+								<view class="list-block" @click="navToTrain(obj.id)">
 									<view class="list-more">
 										<view class="list-left class-list-left">
 											<view class="list-title">{{obj.name}}</view>
@@ -94,7 +94,9 @@
 				UserId: "",
 				__token: "",
 				joinCourses: [], //参与的课
-				joinCTotal: 0,
+				joinCourse: "0",
+				passCourse:"0",//通过考试数
+				failCourse:"0",//未通过考试数
 				ECourses: [], //企业必须课
 				ECoursesTotal: 0,
 				eStatus: ""
@@ -111,6 +113,10 @@
 			that.$store.dispatch("cheack_page", 2)
 			let _user = that.$store.state.user;
 			that.__token = _user.token;
+			let _subInfo=_user.userInfo.subInfo
+			that.joinCourse=_subInfo.joinCourse;
+			that.passCourse=_subInfo.passCourse;
+			that.failCourse=_subInfo.failCourse;
 			that.setPageData(_user.userInfo)
 		},
 		onPullDownRefresh() {
@@ -182,7 +188,7 @@
 				data["fun"] = function(res) {
 					if (res.success) {
 						that.joinCourses = res.data.list;
-						that.joinCTotal = res.data.total;
+						that.joinCourse = res.data.total;
 					}
 				}
 				that.$store.dispatch("getData", data)
