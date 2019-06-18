@@ -33,8 +33,8 @@
 								</view>
 							</view>
 							<view class="filter-btns">
-								<view class="fbtns f-cancel" @click="showDrawer(false)">取消</view>
-								<view class="fbtns f-confirm" @click="getDatas">搜索</view>
+								<view class="frbtns f-cancel" @click="showDrawer(false)">取消</view>
+								<view class="frbtns f-confirm" @click="getDatas">搜索</view>
 							</view>
 						</view>
 					</uni-drawer>

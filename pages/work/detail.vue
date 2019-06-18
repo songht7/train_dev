@@ -46,8 +46,8 @@
 					<rich-text :nodes="datas.qualifications"></rich-text>
 				</view>
 			</view>
-			<fix-button btnType="fbtn-full">
-				<!-- <view class="fbtns fbtns-clr-full btn-totest" @click="showResume">发送简历</view> -->
+			<fix-button>
+				<view class="fbtns fbtns-clr-full btn-totest" @click="showResume">发送简历</view>
 			</fix-button>
 		</view>
 		<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
