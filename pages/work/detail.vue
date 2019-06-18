@@ -47,12 +47,14 @@
 				</view>
 			</view>
 			<fix-button>
+				<!-- btnType="fbtn-full" -->
 				<view class="fbtns fbtns-clr-full btn-totest" @click="showResume">发送简历</view>
 			</fix-button>
 		</view>
 		<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
 			<view class="train-show-modal-box">
-				<user-resume editBlock="basic" isSendResume="true" :temp="resume" :datas="resume" @sendResume="sendResume"></user-resume>
+				<user-resume :editBlock="editBlock" isSendResume="true" :temp="resume" :datas="resume" @switchResume="switchResume"
+				 @sendResume="sendResume"></user-resume>
 			</view>
 		</uni-popup>
 	</view>
@@ -69,7 +71,9 @@
 				__token: "",
 				datas: [],
 				resume: {},
-				poptype: ""
+				resume_temp: {},
+				poptype: "",
+				editBlock: "basic"
 			}
 		},
 		onLoad(e) {
@@ -146,6 +150,7 @@
 								})
 							}
 							that.resume = _info;
+							that.resume_temp = _info;
 						}
 					}
 				}
@@ -155,12 +160,60 @@
 				var that = this;
 				that.poptype = "showReume";
 			},
-			sendResume() {
+			switchResume(type) {
+				var that = this;
+				if (type == "next") {
+					switch (that.editBlock) {
+						case "basic":
+							that.editBlock = "company";
+							that.resume = that.resume_temp.company[0]
+							break;
+						case "company":
+							that.editBlock = "school";
+							that.resume = that.resume_temp.school[0]
+							break;
+						case "school":
+							that.editBlock = "project";
+							that.resume = that.resume_temp.project[0]
+							break;
+						case "project":
+							that.editBlock = "about_self";
+							that.resume = {
+								'about_self': that.resume_temp.about_self
+							}
+							break;
+						default:
+							break;
+					}
+				} else if (type == "prev") {
+					switch (that.editBlock) {
+						case "about_self":
+							that.editBlock = "project";
+							that.resume = that.resume_temp.project[0]
+							break;
+						case "project":
+							that.editBlock = "school";
+							that.resume = that.resume_temp.school[0]
+							break;
+						case "school":
+							that.editBlock = "company";
+							that.resume = that.resume_temp.company[0]
+							break;
+						case "company":
+							that.editBlock = "basic";
+							that.resume = that.datas
+							break;
+						default:
+							break;
+					}
+				}
+			},
+			sendResume(type) {
 				var that = this;
 				/*发送简历*/
 				let data = {
 					"inter": "resume",
-					"method": "POST",
+					"method": type || "POST",
 					"data": {
 						"article_id": that.article_id
 					},
@@ -169,9 +222,19 @@
 					}
 				}
 				data["fun"] = function(res) {
-					if (res.success) {}
+					if (res.success) {
+						that.poptype = "";
+						uni.showToast({
+							title: "简历已投递",
+							icon: "success"
+						})
+					} else {
+						uni.showToast({
+							title: "简历发送失败！请重试"
+						})
+					}
 				}
-				//that.$store.dispatch("getData", data)
+				that.$store.dispatch("getData", data)
 			},
 			togglePopup(type) {
 				var that = this;

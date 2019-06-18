@@ -11,7 +11,7 @@
 						</view>
 					</block>
 					<block v-if="isSendResume=='true'">
-						<view class="send-step" @click="sendResume('next')">
+						<view class="send-step" @click="switchResume('next')">
 							下一步
 						</view>
 					</block>
@@ -94,10 +94,10 @@
 							</view>
 						</block>
 						<block v-if="isSendResume=='true'">
-							<view class="send-step" @click="sendResume('prev')">
+							<view class="send-step" @click="switchResume('prev')">
 								上一步
 							</view>
-							<view class="send-step" @click="sendResume('next')">
+							<view class="send-step" @click="switchResume('next')">
 								下一步
 							</view>
 						</block>
@@ -154,12 +154,22 @@
 				<view class="resume-head">
 					<view class="block-title">教育经历</view>
 					<view class="edits">
-						<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
-							<view class="edit-name">删除</view>
-						</view>
-						<view class="block-edit" @click="saveResume">
-							<view class="edit-name save-btn">完成</view>
-						</view>
+						<block v-if="isSendResume=='false'">
+							<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
+								<view class="edit-name">删除</view>
+							</view>
+							<view class="block-edit" @click="saveResume">
+								<view class="edit-name save-btn">完成</view>
+							</view>
+						</block>
+						<block v-if="isSendResume=='true'">
+							<view class="send-step" @click="switchResume('prev')">
+								上一步
+							</view>
+							<view class="send-step" @click="switchResume('next')">
+								下一步
+							</view>
+						</block>
 					</view>
 				</view>
 				<view class="resume-basic">
@@ -204,12 +214,22 @@
 				<view class="resume-head">
 					<view class="block-title">项目经历</view>
 					<view class="edits">
-						<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
-							<view class="edit-name">删除</view>
-						</view>
-						<view class="block-edit" @click="saveResume">
-							<view class="edit-name save-btn">完成</view>
-						</view>
+						<block v-if="isSendResume=='false'">
+							<view class="block-edit" v-if="temp.id" @click="saveResume('dlt')">
+								<view class="edit-name">删除</view>
+							</view>
+							<view class="block-edit" @click="saveResume">
+								<view class="edit-name save-btn">完成</view>
+							</view>
+						</block>
+						<block v-if="isSendResume=='true'">
+							<view class="send-step" @click="switchResume('prev')">
+								上一步
+							</view>
+							<view class="send-step" @click="switchResume('next')">
+								下一步
+							</view>
+						</block>
 					</view>
 				</view>
 				<view class="resume-basic">
@@ -254,9 +274,19 @@
 				<view class="resume-head">
 					<view class="block-title">自我描述</view>
 					<view class="edits">
-						<view class="block-edit" @click="saveResume">
-							<view class="edit-name save-btn">完成</view>
-						</view>
+						<block v-if="isSendResume=='false'">
+							<view class="block-edit" @click="saveResume">
+								<view class="edit-name save-btn">完成</view>
+							</view>
+						</block>
+						<block v-if="isSendResume=='true'">
+							<view class="send-step" @click="sendResume('prev')">
+								上一步
+							</view>
+							<view class="send-step" @click="sendResume">
+								完成
+							</view>
+						</block>
 					</view>
 				</view>
 				<view class="resume-basic">
@@ -336,23 +366,11 @@
 					this.$emit('saveResume');
 				}
 			},
-			sendResume(type){
-				var that = this;
-				if(type=="next"){
-					if(that.editBlock=="basic"){
-						that.editBlock="company";
-						that.temp=that.datas.company[0]
-					}
-				}else if(type=="prev"){
-					switch (that.editBlock){
-						case "company":
-							that.editBlock="basic";
-							that.temp=that.datas
-							break;
-						default:
-							break;
-					}
-				}
+			switchResume(type){
+				this.$emit('switchResume',type);
+			},
+			sendResume(){
+				this.$emit('sendResume');
 			},
 			setData(e) {
 				var that = this;
