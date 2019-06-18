@@ -36,7 +36,7 @@ var api = {
 		}
 	}
 }
-var lks = "formal";
+var lks = "dev";
 export default {
 	Interface: {
 		"apiurl": api[lks]["interface"], //space111111

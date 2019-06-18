@@ -96,57 +96,16 @@
 			that.courseId = e.id;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token;
-			/* course-detail */
-			let data_dtl = {
-				"inter": "course",
-				"parm": `?course_id=${that.courseId}`,
-				"header": {
-					"token": that.__token
-				}
-			}
-			data_dtl["fun"] = function(res) {
-				if (res.success) {
-					let _data = res.data;
-					that.data = _data;
-					/*ucStatus:0 未确认 1学习中 2考试通过
-					 * */
-					that.isJoined = _data.ucStatus == "1" || _data.ucStatus == "2" ? true : false;
-					that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
-					if (_data.lessonCount == _data.lessonStartCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
-						that.canTest = true;
-					}
-					let _cover = [{
-						"original_src": res.data.original_src || '/img/logo.png'
-					}]
-					that.showList = _cover;
-					that.swiperList = _cover;
-				}
-			}
-			that.$store.dispatch("getData", data_dtl)
-			/* lessons */
-			let data_les = {
-				"inter": "lessons",
-				"parm": `?course_id=${that.courseId}`,
-				"header": {
-					"token": that.__token
-				}
-			}
-			data_les["fun"] = function(res) {
-				if (res.success) {
-					that.lessions = res.data.list;
-					that.lessTotal = res.data.total;
-					let _defaultIndex = that.lessDefaultActive;
-					// if (res.data.list[_defaultIndex] && res.data.list[_defaultIndex].id) {
-					// 	that.getLessDtl(res.data.list[_defaultIndex].id, _defaultIndex);
-					// }
-				}
-			}
-			that.$store.dispatch("getData", data_les)
+			that.pageInit();
 		},
 		onShow() {
 			var that = this;
 		},
 		onReady: function(res) {},
+		onPullDownRefresh() {
+			var that = this;
+			that.pageInit();
+		},
 		components: {
 			fixButton,
 			uniSegmentedControl
@@ -157,6 +116,58 @@
 			}
 		},
 		methods: {
+			pageInit() {
+				var that = this;
+				/* course-detail */
+				let data_dtl = {
+					"inter": "course",
+					"parm": `?course_id=${that.courseId}`,
+					"header": {
+						"token": that.__token
+					}
+				}
+				data_dtl["fun"] = function(res) {
+					uni.stopPullDownRefresh()
+					if (res.success) {
+						let _data = res.data;
+						_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						that.data = _data;
+						/*ucStatus:0 未确认 1学习中 2考试通过
+						 * */
+						that.isJoined = _data.ucStatus == "1" || _data.ucStatus == "2" ? true : false;
+						that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
+						if (_data.lessonCount == _data.lessonStartCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
+							that.canTest = true;
+						}
+						let _cover = [{
+							"original_src": res.data.original_src || '/img/logo.png'
+						}]
+						that.showList = _cover;
+						that.swiperList = _cover;
+					}
+				}
+				that.$store.dispatch("getData", data_dtl)
+				/* lessons */
+				let data_les = {
+					"inter": "lessons",
+					"parm": `?course_id=${that.courseId}`,
+					"header": {
+						"token": that.__token
+					}
+				}
+				data_les["fun"] = function(res) {
+					uni.stopPullDownRefresh()
+					if (res.success) {
+						that.lessions = res.data.list;
+						that.lessTotal = res.data.total;
+						let _defaultIndex = that.lessDefaultActive;
+						// if (res.data.list[_defaultIndex] && res.data.list[_defaultIndex].id) {
+						// 	that.getLessDtl(res.data.list[_defaultIndex].id, _defaultIndex);
+						// }
+					}
+				}
+				that.$store.dispatch("getData", data_les)
+			},
 			getLessDtl(lessid, index) {
 				var that = this;
 				console.log(lessid, index)
@@ -206,6 +217,7 @@
 
 					if (res.success) {
 						var res_data = res.data;
+						res_data["detail"] = res_data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						that.lessDtl = res_data;
 						var _img = res_data.images ? res_data.images : [];
 						if (res_data.src && res_data.type) {

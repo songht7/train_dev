@@ -15,16 +15,65 @@
 }
 
 .filter-block {
-	width: 50%;
-	border-right: 1px solid #D1D1D1;
 	display: flex;
+	flex: 1;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
 }
 
-.filter-block:last-child {
-	border-right: 0
+.filter-block:first-child {
+	border-right: 1px solid #D1D1D1;
+}
+
+.filter-more-btn {
+	flex: 0;
+	width: 10%;
+}
+
+.filter-more-box {
+	padding: 40upx 20upx;
+}
+
+.filter-more {
+	padding-bottom: 15upx;
+	margin-bottom: 15upx;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.filter-more:last-child {
+	border-bottom: 0;
+}
+
+.filter-title {
+	font-size: 32upx;
+	padding-bottom: 10upx;
+	color: #333;
+}
+
+.filter-vals {
+	color: #666;
+}
+
+.filter-btns {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-content: center;
+	align-items: center;
+}
+
+.fbtns {
+	width: 45%;
+	border: 2upx solid #D1D1D1;
+	font-size: 24upx;
+	color: #333;
+}
+
+.f-confirm {
+	background: #008CEE;
+	color: #FFFFFF;
+	border-color: #007AFF;
 }
 
 .work-list {

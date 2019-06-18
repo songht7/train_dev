@@ -230,7 +230,7 @@
 	}
 
 	.spacing-big {
-		padding-bottom: 80upx;
+		padding-bottom: 70upx;
 	}
 
 	.link-btn {

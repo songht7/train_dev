@@ -1,18 +1,47 @@
 <template>
 	<view class="content">
-		<!-- <view class="flex-top-box">
+		<view class="flex-top-box" v-if="filterShow">
 			<view class="flex-filter">
-				<view class="filter-block" @click="showPicker('address')">
-					<view class="filter-val">{{pickerVal['address']['txt']}}</view>
+				<view class="filter-block" @click="showPicker(0)">
+					<view class="filter-val">
+						<text>{{filterPram["company"]||"公司"}}</text>
+					</view>
 					<uni-icon type="sanjiao" size="18" color="#929292"></uni-icon>
 				</view>
-				<view class="filter-block" @click="showPicker('type')">
-					<view class="filter-val">{{pickerVal['type']['txt']}}</view>
+				<view class="filter-block" @click="showPicker(1)">
+					<view class="filter-val">
+						<text>{{filterPram["trade"]||"行业"}}</text>
+					</view>
 					<uni-icon type="sanjiao" size="18" color="#929292"></uni-icon>
+				</view>
+				<view class="filter-block filter-more-btn">
+					<uni-icon type="gengduo3" size="32" color="#929292" @click="showDrawer(true)"></uni-icon>
+					<uni-drawer :visible="drawerBox" mode="right" @close="showDrawer(false)">
+						<view class="filter-more-box">
+							<view class="filter-list">
+								<view class="filter-more">
+									<view class="filter-title">职能</view>
+								</view>
+								<view class="filter-more">
+									<view class="filter-title">区域</view>
+									<view class="filter-vals" @click="areaPicker">
+										{{filterPram["area"]||"选择"}}
+									</view>
+								</view>
+								<view class="filter-more">
+									<view class="filter-title">薪水</view>
+								</view>
+							</view>
+							<view class="filter-btns">
+								<view class="fbtns f-cancel" @click="showDrawer(false)">取消</view>
+								<view class="fbtns f-confirm" @click="getDatas">搜索</view>
+							</view>
+						</view>
+					</uni-drawer>
 				</view>
 			</view>
 			<view class="flex-station"></view>
-		</view> -->
+		</view>
 		<view class="page-main">
 			<block v-for="(obj,index) in datas" :key="index">
 				<view class="work-list" @click="goDetail(obj.id)">
@@ -37,15 +66,45 @@
 			<uni-load-more :status="status"></uni-load-more>
 			<tab-bar></tab-bar>
 		</view>
-		<mpvue-picker themeColor="#007AFF" ref="mpvuePicker" mode="selector" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
-		 @onConfirm="onConfirm" @onCancel="onCancel" :pickerValueArray="pickerValueArray[pickerKey]"></mpvue-picker>
+		<mpvue-picker themeColor="#007AFF" ref="mpvuePicker" :mode="mode" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault"
+		 @onConfirm="onConfirm" @onCancel="onCancel" :pickerValueArray="pickerValueArray"></mpvue-picker>
+		<mpvue-city-picker themeColor="#007AFF" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault" @onCancel="onCancel"
+		 @onConfirm="onConfirmArea"></mpvue-city-picker>
 	</view>
 </template>
 
 <script>
-	// https://github.com/zhetengbiji/mpvue-picker
-	import mpvuePicker from '@/components/mpvuePicker.vue';
+	import mpvuePicker from '@/components/mpvue-picker/mpvuePicker.vue';
+	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
+	import uniDrawer from '@/components/uni-drawer/uni-drawer.vue'
+	import cityData from '@/common/city.data.js';
 	import uniLoadMore from '@/components/uni-load-more.vue'
+	const company = [{
+			label: '公司1'
+		},
+		{
+			label: '公司2'
+		},
+		{
+			label: '公司3'
+		},
+		{
+			label: '公司4'
+		}
+	];
+	const trade = [{
+			label: '行业1'
+		},
+		{
+			label: '行业2'
+		},
+		{
+			label: '行业3'
+		},
+		{
+			label: '行业4'
+		}
+	]
 	export default {
 		data() {
 			return {
@@ -55,60 +114,26 @@
 				pageIndex: 1,
 				pageSize: 5,
 				status: "more",
-				pickerValueArray: {
-					"address": [{
-							label: '全部地址',
-							value: 0
-						}, {
-							label: '上海',
-							value: 1
-						},
-						{
-							label: '北京',
-							value: 2
-						},
-						{
-							label: '南京',
-							value: 3
-						},
-						{
-							label: '江苏',
-							value: 4
-						}
-					],
-					"type": [{
-							label: '全部类型',
-							value: 0
-						}, {
-							label: '类型1',
-							value: 1
-						},
-						{
-							label: '类型2',
-							value: 2
-						},
-						{
-							label: '类型3',
-							value: 3
-						},
-						{
-							label: '类型4',
-							value: 4
-						}
-					]
-				},
-				pickerKey: "address",
+				filterShow: false,
+				pickerValueArray: company,
 				pickerValueDefault: [0],
+				pickerType: {
+					"company": company,
+					"trade": trade
+				},
 				deepLength: 1,
-				pickerVal: {
-					"address": {
-						"txt": "选择工作地点",
-						"id": ""
-					},
-					"type": {
-						"txt": "选择工作类型",
-						"id": ""
-					}
+				filterIndex: 0,
+				cityPickerValueDefault: [0, 0, 1],
+				mode: 'selector', //单级selector 二级multiLinkageSelector
+				drawerBox: false,
+				filterPram: {
+					"company": "",
+					"trade": "",
+					"province": "",
+					"city": "",
+					"district": "",
+					"area": "",
+					"salary": ""
 				}
 			}
 		},
@@ -126,6 +151,8 @@
 		},
 		components: {
 			mpvuePicker,
+			mpvueCityPicker,
+			uniDrawer,
 			uniLoadMore
 		},
 		computed: {},
@@ -149,10 +176,14 @@
 		methods: {
 			getDatas() {
 				var that = this;
+				that.drawerBox = false;
 				that.status = "loading";
+				let filterPram = that.filterPram;
+				var _pram =
+					`company=${filterPram.company}&trade=${filterPram.trade}&province=${filterPram.province}&city=${filterPram.city}&district=${filterPram.district}&salary=${filterPram.salary}`;
 				let data = {
 					"inter": "supports",
-					"parm": `?cat_id=${that.ctgId}&currentPage=${that.pageIndex}&pagesize=${that.pageSize}`,
+					"parm": `?cat_id=${that.ctgId}&currentPage=${that.pageIndex}&pagesize=${that.pageSize}&${_pram}`,
 					"header": {
 						"token": that.$store.state.user.token || ""
 					}
@@ -193,18 +224,53 @@
 			},
 			showPicker(key) {
 				var that = this;
-				that.pickerKey = key || "address";
+				that.filterIndex = key;
+				switch (key) {
+					case 0:
+						that.pickerValueArray = that.pickerType.company;
+						break;
+					case 1:
+						that.pickerValueArray = that.pickerType.trade;
+						break;
+					default:
+						break;
+				}
 				that.$refs.mpvuePicker.show()
 			},
 			onConfirm(e) {
 				var that = this;
-				console.log(e)
-				that.pickerVal[that.pickerKey]['txt'] = e.label
-				that.pickerVal[that.pickerKey]['id'] = e.value[0]
-				console.log(that.pickerVal)
+				switch (that.filterIndex) {
+					case 0:
+						that.filterPram['company'] = e.label
+						break;
+					case 1:
+						that.filterPram['trade'] = e.label
+						break;
+					default:
+						break;
+				}
+				that.pageIndex = 1;
+				that.getDatas();
+				console.log(that.filterPram)
+			},
+			areaPicker() {
+				this.$refs.mpvueCityPicker.show()
+			},
+			onConfirmArea(e) {
+				var that = this;
+				var _label = e.label;
+				var _split = _label.split("-");
+				that.filterPram.area = _label;
+				that.filterPram.province = _split[0];
+				that.filterPram.city = _split[1];
+				that.filterPram.district = _split[2];
+				that.pageIndex = 1;
 			},
 			onCancel(e) {
 				console.log(e)
+			},
+			showDrawer(type) {
+				this.drawerBox = type;
 			}
 		}
 	}
