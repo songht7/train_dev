@@ -79,7 +79,8 @@
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
-		<uni-popup :show="type === 'score'" position="middle" mode="insert" width="70" @hidePopup="togglePopup('')">
+		<uni-popup :show="type === 'score'" position="middle" mode="insert" :closeBtnShow="closeBtnShow" width="70"
+		 @hidePopup="togglePopup('')">
 			<view class="uni-center center-box score-box" :class="scoreState">
 				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
@@ -96,6 +97,7 @@
 					<view class="score">{{score}}</view>
 				</view>
 				<view class="score-block score-bottom">
+					<view class="score-btn score-back-btn" @click="togglePopup('')">查看结果</view>
 					<view class="score-btn" :class="scoreState" @click="goToList">继续学习</view>
 				</view>
 			</view>
@@ -105,7 +107,7 @@
 				<view class="train-show-modal-info">
 					<view class="train-show-modal-row">答题已超时</view>
 				</view>
-				<view class="btns btns-full btns-big" @click="answerAgain">重新答题</view>
+				<view class="btns btns-full" @click="answerAgain">重新答题</view>
 			</view>
 		</uni-popup>
 	</view>
@@ -132,7 +134,8 @@
 				scoreDes: "成绩不合格",
 				score: 0,
 				scoreState: "stateRed", //stateRed不合格 /stateGreen合格
-				fixBtn: "fixed"
+				fixBtn: "fixed",
+				closeBtnShow: false
 			}
 		},
 		onLoad(e) {
@@ -403,17 +406,29 @@
 		padding: 10upx 0 50upx;
 	}
 
+	.score-bottom {
+		display: flex;
+		justify-content: space-around;
+		flex-direction: row;
+	}
+
 	.score-btn {
 		color: #fff;
 		background: #F04B3F;
 		line-height: 2.4;
-		width: 80%;
+		width: 45%;
 		border-radius: 10upx;
 		font-size: 32upx;
 	}
 
 	.score-btn.stateGreen {
 		background: #56CEBE;
+	}
+
+	.score-back-btn {
+		background: #FFFFFF;
+		border: 1px solid #BBBBBB;
+		color: #666;
 	}
 
 	.test-head {
@@ -440,7 +455,8 @@
 		padding: 30upx;
 		position: relative;
 	}
-	.test-marking{
+
+	.test-marking {
 		position: absolute;
 		left: 0;
 		top: 0;

@@ -5,7 +5,7 @@
 		 v-show="show" :style="width?'width:'+width+'%':''">
 			{{ msg }}
 			<slot></slot>
-			<view v-if="position === 'middle' && mode === 'insert'" class=" uni-icon uni-icon-close" :class="{
+			<view v-if="position === 'middle' && mode === 'insert'&&closeBtnShow" class=" uni-icon uni-icon-close" :class="{
 					'uni-close-bottom': buttonMode === 'bottom',
 					'uni-close-right': buttonMode === 'right'
 				}"
@@ -24,6 +24,10 @@
 			show: {
 				type: Boolean,
 				default: false
+			},
+			closeBtnShow:{
+				type: Boolean,
+				default: true
 			},
 			/**
 			 * 对齐方式
