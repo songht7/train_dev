@@ -53,7 +53,7 @@
 		</view>
 		<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
 			<view class="train-show-modal-box">
-				<user-resume :editBlock="editBlock" isSendResume="true" :temp="resume" :datas="resume" @switchResume="switchResume"
+				<user-resume :editBlock="editBlock" isSendResume="true" :temp="temp" :datas="resume_temp" @switchResume="switchResume"
 				 @sendResume="sendResume"></user-resume>
 			</view>
 		</uni-popup>
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+	var graceChecker = require("../../common/graceChecker.js");
 	import fixButton from '@/components/fix-button.vue'
 	import uniPopup from '@/components/uni-popup.vue'
 	import userResume from '@/components/user-resume.vue'
@@ -70,10 +71,12 @@
 				article_id: "",
 				__token: "",
 				datas: [],
-				resume: {},
+				basic: {},
+				temp: {},
 				resume_temp: {},
 				poptype: "",
-				editBlock: "basic"
+				editBlock: "basic",
+				hasResume: false
 			}
 		},
 		onLoad(e) {
@@ -95,6 +98,10 @@
 			uniPopup,
 			userResume
 		},
+		onPullDownRefresh() {
+			var that = this;
+			that.getDatas()
+		},
 		computed: {},
 		methods: {
 			getDatas() {
@@ -108,6 +115,7 @@
 					}
 				}
 				data["fun"] = function(res) {
+					uni.stopPullDownRefresh()
 					if (res.success) {
 						var _data = res.data
 						_data['tags'] = _data["tag"].split("，")
@@ -149,9 +157,12 @@
 									val['end_time'] = val['end_time'].split(" ")[0]
 								})
 							}
-							that.resume = _info;
+							that.temp = _info;
 							that.resume_temp = _info;
+							that.hasResume = true;
 						}
+					} else {
+						that.hasResume = false;
 					}
 				}
 				that.$store.dispatch("getData", _data)
@@ -165,21 +176,66 @@
 				if (type == "next") {
 					switch (that.editBlock) {
 						case "basic":
+							let rule = [{
+									name: "name",
+									checkType: "notnull",
+									checkRule: "",
+									errorMsg: "姓名不能为空"
+								},
+								{
+									name: "education",
+									checkType: "notnull",
+									checkRule: "",
+									errorMsg: "请选择学历"
+								},
+								{
+									name: "age_work",
+									checkType: "notnull",
+									checkRule: "",
+									errorMsg: "请选择工作年限"
+								},
+								{
+									name: "phone",
+									checkType: "phoneno",
+									checkRule: "",
+									errorMsg: "请填写正确的手机号"
+								}
+							];
+							//进行表单检查
+							var checkRes = graceChecker.check(that.temp, rule);
+							if (checkRes) {
+								that.basic = that.temp;
+								that.basic["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : '';
+								that.saveDatas(that.basic);
+							} else {
+								uni.showToast({
+									title: graceChecker.error,
+									icon: "none"
+								});
+								return
+							}
 							that.editBlock = "company";
-							that.resume = that.resume_temp.company[0]
+							that.temp = that.resume_temp && that.resume_temp.company ? that.resume_temp.company[0] : {};
 							break;
 						case "company":
+							that.basic["company"] = [that.temp];
+							that.saveDatas(that.basic);
 							that.editBlock = "school";
-							that.resume = that.resume_temp.school[0]
+							that.temp = that.resume_temp && that.resume_temp.school ? that.resume_temp.school[0] : {};
 							break;
 						case "school":
+							that.basic["school"] = [that.temp];
+							that.saveDatas(that.basic);
 							that.editBlock = "project";
-							that.resume = that.resume_temp.project[0]
+							that.temp = that.resume_temp && that.resume_temp.project ? that.resume_temp.project[0] : {};
 							break;
 						case "project":
+							that.basic["project"] = [that.temp];
+							that.saveDatas(that.basic);
 							that.editBlock = "about_self";
-							that.resume = {
-								'about_self': that.resume_temp.about_self
+							let _as = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : ''
+							that.temp = {
+								'about_self': _as
 							}
 							break;
 						default:
@@ -189,31 +245,40 @@
 					switch (that.editBlock) {
 						case "about_self":
 							that.editBlock = "project";
-							that.resume = that.resume_temp.project[0]
+							that.temp = that.resume_temp && that.resume_temp.project ? that.resume_temp.project[0] : {};
 							break;
 						case "project":
 							that.editBlock = "school";
-							that.resume = that.resume_temp.school[0]
+							that.temp = that.resume_temp && that.resume_temp.school ? that.resume_temp.school[0] : {};
 							break;
 						case "school":
 							that.editBlock = "company";
-							that.resume = that.resume_temp.company[0]
+							that.temp = that.resume_temp && that.resume_temp.company ? that.resume_temp.company[0] : {};
 							break;
 						case "company":
 							that.editBlock = "basic";
-							that.resume = that.datas
+							that.temp = that.resume_temp
 							break;
 						default:
 							break;
 					}
 				}
 			},
-			sendResume(type) {
+			sendResume() {
 				var that = this;
+				if (!that.hasResume) {
+					uni.showToast({
+						title: "请完善简历信息",
+						icon: "none"
+					})
+					return
+				}
+				that.basic["about_self"] = that.temp.about_self;
+				that.saveDatas(that.basic);
 				/*发送简历*/
 				let data = {
 					"inter": "resume",
-					"method": type || "POST",
+					"method": "POST",
 					"data": {
 						"article_id": that.article_id
 					},
@@ -230,11 +295,32 @@
 						})
 					} else {
 						uni.showToast({
-							title: "简历发送失败！请重试"
+							title: "简历发送失败！请重试",
+							icon: "none"
 						})
 					}
 				}
 				that.$store.dispatch("getData", data)
+			},
+			saveDatas(data) {
+				var that = this;
+				let _data = {
+					"inter": "resume",
+					"method": "PUT",
+					"data": data,
+					"header": {
+						"token": that.__token,
+						"Content-Type": "application/json"
+					}
+				}
+				console.log(_data)
+				//return
+				_data["fun"] = function(res) {
+					if (res.success) {
+						that.getResume();
+					}
+				}
+				that.$store.dispatch("getData", _data)
 			},
 			togglePopup(type) {
 				var that = this;

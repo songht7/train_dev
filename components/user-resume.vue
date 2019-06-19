@@ -280,10 +280,10 @@
 							</view>
 						</block>
 						<block v-if="isSendResume=='true'">
-							<view class="send-step" @click="sendResume('prev')">
+							<view class="send-step" @click="switchResume('prev')">
 								上一步
 							</view>
-							<view class="send-step" @click="sendResume">
+							<view class="send-step send-step-complete" @click="sendResume">
 								完成
 							</view>
 						</block>
@@ -471,12 +471,24 @@
 
 	.edits {
 		display: flex;
+		align-items: center;
 	}
 
 	.save-btn {
 		color: #007AFF;
 	}
-
+	.send-step{
+		margin-left: 10upx;
+		color: #666;
+		line-height: 1.6;
+	}
+	.send-step-complete{
+		background: #008CEE;
+		border: 1px solid #007AFF;
+		color: #fff;
+		padding: 2upx 20upx;
+		border-radius: 10upx;
+	}
 	.block-edit {
 		margin-left: 40upx;
 	}
