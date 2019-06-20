@@ -244,7 +244,7 @@
 
 	.ctgs {
 		display: flex;
-		justify-content: space-between;
+		justify-content:flex-start;
 		flex-wrap: wrap;
 		padding-bottom: 10upx;
 	}
