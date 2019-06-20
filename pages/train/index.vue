@@ -98,6 +98,12 @@
 		onPullDownRefresh() {
 			this.getList("refresh");
 		},
+		onBackPress(e) {
+			uni.redirectTo({
+				url: '/pages/index/index'
+			});
+			return false
+		},
 		methods: {
 			goDetail(e) {
 				uni.navigateTo({

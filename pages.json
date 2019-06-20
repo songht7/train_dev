@@ -19,6 +19,12 @@
 				"enablePullDownRefresh": true
 			}
 		}, {
+			"path": "pages/train/searchlist",
+			"style": {
+				"navigationBarTitleText": "培训搜索列表",
+				"enablePullDownRefresh": true
+			}
+		}, {
 			"path": "pages/train/unitlist",
 			"style": {
 				"navigationBarTitleText": "单元列表",
