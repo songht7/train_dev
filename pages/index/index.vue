@@ -5,8 +5,11 @@
 				<view class="flex-left">
 					<uni-icon type="shousuo" size="20" color="#919191"></uni-icon>
 				</view>
-				<input type="text" class="search-input" confirm-type="search" v-model="serchModel" :value="keywords" @confirm="searchConfirm"
-				 placeholder="质检进阶课程" placeholder-style="color:#999" />
+				<view class="search-block">
+					<input type="text" class="search-input" confirm-type="search" v-model="serchModel" :value="keywords" @confirm="searchConfirm"
+					 placeholder="质检进阶课程" placeholder-style="color:#999" @input="checkModel" />
+					<view class="search-home-btn" @click="searchConfirm" v-show="searchBtnShow">搜索</view>
+				</view>
 			</view>
 			<view class="block slidebox">
 				<view class="swiper-block" :class="`spacing-${spacing}`" v-if="swiperleng">
@@ -72,6 +75,7 @@
 			return {
 				serchModel: "",
 				keywords: "",
+				searchBtnShow: false,
 				swiperList: [],
 				swiperleng: 0,
 				poptype: "",
@@ -176,11 +180,14 @@
 				}
 				that.$store.dispatch("getData", data)
 			},
+			checkModel(e) {
+				this.searchBtnShow = e.detail.value != "" ? true : false;
+			},
 			searchConfirm(e) {
-				let __keywords = e.detail.value;
+				//let __keywords = e.detail.value;
 				let keywords = this.serchModel;
-				if (__keywords) {
-					let url = `/pages/train/searchlist?kw=${__keywords}&c=0`
+				if (keywords) {
+					let url = `/pages/train/searchlist?kw=${keywords}&c=0`
 					this.navTo(url)
 				}
 			},
@@ -215,8 +222,24 @@
 		padding-left: 10upx;
 	}
 
+	.search-block {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex: 1;
+	}
+
 	.search-input {
 		padding: 4upx 20upx 4upx 10upx;
+		flex: 1;
+	}
+
+	.search-home-btn {
+		background: #008CEE;
+		color: #FFFFFF;
+		padding: 0 30upx;
+		letter-spacing: 2upx;
+		border: 1px solid #007AFF;
 	}
 
 	.ctgs {
