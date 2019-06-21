@@ -10,13 +10,13 @@
 						<input class="uni-input train-input" password name="password" data-key="password" @input="setData" placeholder="登录密码" />
 					</view>
 				</view>
-				<view class="uni-btn-block">
+				<view class="uni-btn-block uni-row">
 					<view class="btns btns-full" @click="formSubmit">登录</view>
 					<!-- <button formType="submit" :loading="loading" class="log-btn btn-submit">登录</button> -->
 					<view class="btns btn-back" @click="$store.dispatch('goback','/pages/index/index')">返回</view>
 				</view>
 			</form>
-			<view class="user-login-more">
+			<view class="uni-row user-login-more">
 				<view class="more-btn" @click="toRegister('')">{{UserType=='company'?'企业注册':'手机快速注册'}}</view>
 				<view class="more-btn" @click="toRegister('forgetpw')">忘记密码</view>
 			</view>

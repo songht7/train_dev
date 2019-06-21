@@ -131,7 +131,7 @@
 				loading: false,
 				submitted: false,
 				formData: [],
-				type: '',
+				type: "",
 				scoreDes: "成绩不合格",
 				score: 0,
 				scoreState: "stateRed", //stateRed不合格 /stateGreen合格

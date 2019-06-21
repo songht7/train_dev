@@ -5,7 +5,6 @@
 			"style": {
 				"navigationBarTitleText": "职照培训平台",
 				"enablePullDownRefresh": true,
-				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": {
 						"type": "transparent"

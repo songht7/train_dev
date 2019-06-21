@@ -12,7 +12,7 @@
 				</view>
 			</view>
 			<view class="block slidebox">
-				<view class="swiper-block" :class="`spacing-${spacing}`" v-if="swiperleng">
+				<view class="swiper-block" :class="['spacing-'+spacing]" v-if="swiperleng">
 					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?'true':'false'" autoplay="autoplay" circular="circular"
 					 interval="3000" duration="500" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
 						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
@@ -28,7 +28,7 @@
 			<view class="block category-box">
 				<view class="ctgs">
 					<block v-for="(ctg,c) in category" :key="c">
-						<view class="ctg-link" :class="`spacing-${spacing}`" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
+						<view class="ctg-link" :class="['spacing-'+spacing]" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
 							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
 								<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icon>
 							</view>
@@ -38,7 +38,7 @@
 				</view>
 				<view class="ctgs ctgs-sub">
 					<block v-for="(ctg,s) in categorySub" :key="s">
-						<view class="ctg-link ctg-link-sub" :class="`spacing-${spacing}`">
+						<view class="ctg-link ctg-link-sub" :class="['spacing-'+spacing]">
 							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icon v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
@@ -213,6 +213,7 @@
 		background: #F0F0F0;
 		border-radius: 5upx;
 		display: flex;
+		flex-direction: row;
 		justify-content: flex-start;
 		align-items: center;
 		align-content: center;
@@ -225,7 +226,7 @@
 	.search-block {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		flex-direction: row;
 		flex: 1;
 	}
 
@@ -244,7 +245,8 @@
 
 	.ctgs {
 		display: flex;
-		justify-content:flex-start;
+		flex-direction: row;
+		justify-content: flex-start;
 		flex-wrap: wrap;
 		padding-bottom: 10upx;
 	}
