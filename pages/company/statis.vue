@@ -20,23 +20,25 @@
 						<view class="row-block fRowCenter">通过考试</view>
 						<view class="row-block fRowCenter row-progress">学习总进度</view>
 					</view>
-					<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
-						<view class="list-block">
-							<view class="list-statis fRowCenter">
-								<view class="row-block fRowCenter">{{k}}</view>
-								<view class="row-block fRowCenter">
-									<img :src="sourceUrl+obj.photo" class="photo"/>
-									{{obj.NAME}}
-								</view>
-								<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
-								<view class="row-block fRowCenter">{{obj.passExamCount}}</view>
-								<view class="row-block fRowCenter row-progress">
-									<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
-									{{parseInt(obj.progress)}}%
+					<block v-if="datas.length">
+						<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
+							<view class="list-block">
+								<view class="list-statis fRowCenter">
+									<view class="row-block fRowCenter">{{k}}</view>
+									<view class="row-block fRowCenter">
+										<img :src="sourceUrl+obj.photo" class="photo" />
+										{{obj.NAME}}
+									</view>
+									<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
+									<view class="row-block fRowCenter">{{obj.passExamCount}}</view>
+									<view class="row-block fRowCenter row-progress">
+										<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+										{{parseInt(obj.progress)}}%
+									</view>
 								</view>
 							</view>
 						</view>
-					</view>
+					</block>
 					<uni-load-more :status="status"></uni-load-more>
 				</view>
 			</view>
@@ -54,25 +56,27 @@
 				</view>
 				<view class="class-list">
 					<view class="class-list">
-						<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
-							<view class="list-block" @click="navToTrain(obj.id)">
-								<view class="list-more">
-									<view class="list-left class-list-left">
-										<view class="list-title">{{obj.name}}</view>
-										<view class="class-progress">
-											<view class="progress-box">
-												<view class="percent">{{statisType==1?"参与度"+parseInt(obj.progress)+"%":"合格率"+parseInt(obj.progress)+"%"}}</view>
-												<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+						<block v-if="datas">
+							<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
+								<view class="list-block" @click="navToTrain(obj.id)">
+									<view class="list-more">
+										<view class="list-left class-list-left">
+											<view class="list-title">{{obj.name}}</view>
+											<view class="class-progress">
+												<view class="progress-box">
+													<view class="percent">{{statisType==1?"参与度"+parseInt(obj.progress)+"%":"合格率"+parseInt(obj.progress)+"%"}}</view>
+													<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+												</view>
 											</view>
 										</view>
-									</view>
-									<view class="list-right">
-										<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
-										 mode="aspectFill"></image>
+										<view class="list-right">
+											<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+											 mode="aspectFill"></image>
+										</view>
 									</view>
 								</view>
 							</view>
-						</view>
+						</block>
 					</view>
 					<uni-load-more :status="status"></uni-load-more>
 				</view>
@@ -184,6 +188,8 @@
 								});
 							}
 							that.data_total = res.data.total;
+						} else {
+							that.datas = []
 						}
 						if (that.datas.length >= res.data.total || res.data.total <= 0) {
 							that.status = "noMore";

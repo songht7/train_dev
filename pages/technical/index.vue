@@ -1,6 +1,22 @@
 <template>
 	<view class="library">
 		<view class="page-main">
+			<view class="search-main">
+				<view class="serch-fex-btn" @click="searchMod" v-show="!searchShow">
+					<uni-icon type="shousuo" size="32" color="#919191"></uni-icon>
+				</view>
+				<view class="search-result" v-show="searchShow">
+					<view class="block search-box search-box-inn">
+						<view class="flex-left">
+							关键词：
+						</view>
+						<input type="text" class="search-input" confirm-type="search" v-model="serchModel" :value="keywords" @confirm="searchConfirm"
+						 placeholder="想要查找的技术" placeholder-style="color:#999" />
+						<view class="search-btn" @click="searchConfirm">搜索</view>
+					</view>
+					<view class="search-show-all" @click="searchAll">查看全部</view>
+				</view>
+			</view>
 			<block v-for="(obj,index) in datas" :key="index">
 				<view class="lib-row" @click="goDetail(obj.id)">
 					<view class="lib-block">
@@ -38,7 +54,10 @@
 				data_total: 0,
 				pageIndex: 1,
 				pageSize: 5,
-				status: "more"
+				status: "more",
+				keywords: "",
+				serchModel: "",
+				searchShow: false
 			}
 		},
 		onLoad: function(e) {
@@ -74,13 +93,32 @@
 		},
 		computed: {},
 		methods: {
+			searchMod() {
+				this.searchShow = !this.searchShow;
+			},
+			searchConfirm(e) {
+				var that = this;
+				if (that.serchModel) {
+					that.keywords = that.serchModel;
+					that.currentPage = 1;
+					that.pagesize = 1000;
+					that.getDatas();
+				}
+			},
+			searchAll() {
+				var that = this;
+				that.keywords = "";
+				that.currentPage = 1;
+				that.pagesize = 5;
+				that.getDatas();
+			},
 			getDatas() {
 				var that = this;
 				that.status = "loading";
 				/*技术支持*/
 				let data = {
 					"inter": "supports",
-					"parm": `?cat_id=${that.ctgId}&currentPage=${that.pageIndex}&pagesize=${that.pageSize}`,
+					"parm": `?cat_id=${that.ctgId}&keywords=${that.keywords}&currentPage=${that.pageIndex}&pagesize=${that.pageSize}`,
 					"header": {
 						"token": that.$store.state.user.token || ""
 					}
@@ -101,6 +139,8 @@
 								});
 							}
 							that.data_total = res.data.total;
+						} else {
+							that.datas = [];
 						}
 						if (that.datas.length >= res.data.total || res.data.total <= 0) {
 							that.status = "noMore";

@@ -1,9 +1,9 @@
 <template>
-	<view class="unit-list">
+	<view class="page-main unit-list">
 		<view class="swiper-main">
-			<view class="photo-album" @click="previewImage">
+			<!-- <view class="photo-album" @click="previewImage">
 				<uni-icon type="xiangce1" size="30" color="#F77C5F"></uni-icon>
-			</view>
+			</view> -->
 			<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular"
 			 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent"
 			 @change="swiperChange">
@@ -29,7 +29,7 @@
 			<view v-show="current === 0">
 				<view class="course-lessions">
 					<view class="course-inner">
-						<view class="less-row" :class='[lessActive==-1?"less-active":""]' @click="getLessDtl('content',-1)">章节介绍</view>
+						<!-- <view class="less-row" :class='[lessActive==-1?"less-active":""]' @click="getLessDtl('content',-1)">章节介绍</view> -->
 						<block v-for="(less,i) in lessions" :key="i">
 							<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
 						</block>
@@ -56,8 +56,9 @@
 		</view>
 
 		<fix-button>
-			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
-			<view class="fbtns fbtns-clr-full btn-totest" :class="canTest?'':'fbtn-disable'" v-if="canTest" @click="to_test(courseId)">开始测试</view>
+			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
+			<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
+			 @click="to_test(courseId)">开始测试</view>
 		</fix-button>
 	</view>
 </template>
@@ -75,20 +76,21 @@
 				lessTotal: "",
 				lessDtl: [],
 				cover: [],
-				detailType: "content",
+				detailType: "",
 				showList: [],
 				swiperList: [],
 				swiperCurrent: 0,
 				lessActive: -1,
 				lessDefaultActive: 0,
 				isJoined: false,
-				isJoinTxt: "加入学习", //"学习完成后开启测试" : "加入学习"
+				isJoinTxt: "加入学习", //"学习完成后开启测试" : "加入学习":"已加入学习"
 				current: 0,
 				segmented: [
 					'课程目录',
-					'介绍'
+					'内容'
 				],
-				canTest: false
+				canTest: false,
+				test_list: false
 			}
 		},
 		onLoad(e) {
@@ -96,6 +98,7 @@
 			that.courseId = e.id;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token;
+			that.cheackTestLng();
 			that.pageInit();
 		},
 		onShow() {
@@ -135,7 +138,11 @@
 						/*ucStatus:0 未确认 1学习中 2考试通过
 						 * */
 						that.isJoined = _data.ucStatus == "1" || _data.ucStatus == "2" ? true : false;
-						that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
+						if (!that.test_list) {
+							that.isJoinTxt = _data.ucStatus == "1" ? "已加入学习" : "加入学习"
+						} else {
+							that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
+						}
 						if (_data.lessonCount == _data.lessonStartCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
 							that.canTest = true;
 						}
@@ -229,7 +236,8 @@
 							_img.push(media)
 						}
 						if (_img) {
-							let filter_img = _img.filter((obj, index) => !obj.media_type && index < 3);
+							// let filter_img = _img.filter((obj, index) => !obj.media_type && index < 3);
+							let filter_img = _img.filter((obj, index) => !obj.media_type);
 							let filter_media = _img.filter((obj, index) => obj.media_type);
 							console.log("filter_media:", filter_media)
 							if (filter_img && filter_media) {
@@ -302,15 +310,39 @@
 			to_test(id) {
 				var that = this;
 				if (that.canTest) {
-					uni.navigateTo({
-						url: `/pages/train/test?course_id=${id}`
-					})
+					if (that.test_list) {
+						uni.navigateTo({
+							url: `/pages/train/test?course_id=${id}`
+						})
+					} else {
+						uni.showModal({
+							content: "该课程暂无试题库！",
+							showCancel: false
+						})
+					}
 				} else {
 					uni.showModal({
 						content: "学习完成当前课程方可测试！",
 						showCancel: false
 					})
 				}
+			},
+			cheackTestLng() {
+				var that = this;
+				/* tests */
+				let data_tests = {
+					"inter": "tests",
+					"parm": `?course_id=${that.courseId}`,
+					"header": {
+						"token": that.__token
+					}
+				}
+				data_tests["fun"] = function(res) {
+					if (res.success) {
+						that.test_list = res.data.list;
+					}
+				}
+				that.$store.dispatch("getData", data_tests)
 			}
 		}
 	}
@@ -353,6 +385,10 @@
 
 	.course-detail-box {
 		border-bottom: 20upx solid #F4F4F4;
+	}
+
+	.course-detail-box:last-child {
+		border-bottom: none;
 	}
 
 	.less-active {

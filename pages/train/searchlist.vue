@@ -9,7 +9,7 @@
 				 placeholder="质检进阶课程" placeholder-style="color:#999" />
 				<view class="search-btn" @click="searchConfirm">搜索</view>
 			</view>
-			<view class="train-all" @click="trainAll">查看全部</view>
+			<view class="search-show-all" @click="searchAll">查看全部</view>
 		</view>
 		<block v-for="(s,i) in searchList" :key="i">
 			<train-list :data="s" @click="goDetail(s)"></train-list>
@@ -82,7 +82,7 @@
 					url: '/pages/train/unitlist?id=' + e.id
 				})
 			},
-			trainAll() {
+			searchAll() {
 				var that = this;
 				uni.redirectTo({
 					url: "/pages/train/index"
@@ -125,45 +125,4 @@
 	}
 
 	/* #endif */
-
-	.uni-tab-bar-loading {
-		text-align: center;
-		font-size: 28upx;
-		color: #999;
-	}
-
-	.search-result {
-		padding: 20upx;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		align-content: center;
-	}
-
-	.search-input {
-		padding: 4upx 20upx 4upx 10upx;
-		background: #EEE;
-	}
-
-	.search-box-inn {
-		display: flex;
-		align-items: center;
-		margin-bottom: 0;
-	}
-
-	.search-btn {
-		background: #008CEE;
-		border: 1px solid #007AFF;
-		color: #fff;
-		margin-left: 10upx;
-		padding: 0 10upx;
-		border-radius: 10upx;
-	}
-
-	.train-all {
-		border: 1px solid #BBBBBB;
-		color: #666;
-		padding: 0 10upx;
-		border-radius: 10upx;
-	}
 </style>

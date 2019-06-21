@@ -3,7 +3,7 @@
 		<form @submit="formSubmit">
 			<view class="test-content">
 				<view class="test-head">
-					<view class="test-countdown">
+					<view class="test-countdown" v-if="countdownShow">
 						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="countdown" :second="0" @timeup="toSubmit"></uni-countdown>
 						后自动提交
 					</view>
@@ -126,7 +126,8 @@
 				tests: [],
 				test_leng: 5,
 				test_total: 0,
-				countdown: 3, //分钟
+				countdown: 5, //分钟
+				countdownShow: false,
 				loading: false,
 				submitted: false,
 				formData: [],
