@@ -70,6 +70,12 @@
 	color: #333;
 }
 
+.btn-disabled {
+	background: #929292;
+	border-color: #666666;
+	color: #FFFFFF;
+}
+
 .f-confirm {
 	background: #008CEE;
 	color: #FFFFFF;

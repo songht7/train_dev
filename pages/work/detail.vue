@@ -48,7 +48,7 @@
 			</view>
 			<fix-button>
 				<!-- btnType="fbtn-full" -->
-				<view class="fbtns fbtns-clr-full btn-totest" @click="showResume">发送简历</view>
+				<view class="fbtns fbtns-clr-full btn-totest" :class="!disabled?'':'btn-disabled'" @click="showResume">{{datas.resume_article==1?'简历已投递':'发送简历'}}</view>
 			</fix-button>
 		</view>
 		<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
@@ -71,12 +71,13 @@
 				article_id: "",
 				__token: "",
 				datas: [],
-				basic: {},
+				saveData: {},
 				temp: {},
 				resume_temp: {},
 				poptype: "",
 				editBlock: "basic",
-				hasResume: false
+				hasResume: false,
+				disabled: false
 			}
 		},
 		onLoad(e) {
@@ -120,6 +121,7 @@
 						var _data = res.data
 						_data['tags'] = _data["tag"].split("，")
 						that.datas = _data;
+						that.disabled = _data.resume_article ? true : false;
 						uni.setNavigationBarTitle({
 							title: res.data.name
 						});
@@ -169,6 +171,9 @@
 			},
 			showResume() {
 				var that = this;
+				if (that.disabled) {
+					return
+				}
 				that.poptype = "showReume";
 			},
 			switchResume(type) {
@@ -204,9 +209,9 @@
 							//进行表单检查
 							var checkRes = graceChecker.check(that.temp, rule);
 							if (checkRes) {
-								that.basic = that.temp;
-								that.basic["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : '';
-								that.saveDatas(that.basic);
+								that.saveData = that.temp;
+								that.saveData["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : '';
+								//that.saveDatas(that.saveData);
 							} else {
 								uni.showToast({
 									title: graceChecker.error,
@@ -218,29 +223,30 @@
 							that.temp = that.resume_temp && that.resume_temp.company ? that.resume_temp.company[0] : {};
 							break;
 						case "company":
-							that.basic["company"] = [that.temp];
-							that.saveDatas(that.basic);
-							that.editBlock = "school";
+							that.saveData["company"] = [that.temp];
+							//that.saveDatas(that.saveData);
 							that.temp = that.resume_temp && that.resume_temp.school ? that.resume_temp.school[0] : {};
+							that.editBlock = "school";
 							break;
 						case "school":
-							that.basic["school"] = [that.temp];
-							that.saveDatas(that.basic);
-							that.editBlock = "project";
+							that.saveData["school"] = [that.temp];
+							//that.saveDatas(that.saveData);
 							that.temp = that.resume_temp && that.resume_temp.project ? that.resume_temp.project[0] : {};
+							that.editBlock = "project";
 							break;
 						case "project":
-							that.basic["project"] = [that.temp];
-							that.saveDatas(that.basic);
-							that.editBlock = "about_self";
+							that.saveData["project"] = [that.temp];
+							//that.saveDatas(that.saveData);
 							let _as = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : ''
 							that.temp = {
 								'about_self': _as
 							}
+							that.editBlock = "about_self";
 							break;
 						default:
 							break;
 					}
+					console.log(that.temp)
 				} else if (type == "prev") {
 					switch (that.editBlock) {
 						case "about_self":
@@ -273,8 +279,8 @@
 					})
 					return
 				}
-				that.basic["about_self"] = that.temp.about_self;
-				that.saveDatas(that.basic);
+				that.saveData["about_self"] = that.temp.about_self;
+				that.saveDatas(that.saveData);
 				/*发送简历*/
 				let data = {
 					"inter": "resume",
@@ -289,6 +295,7 @@
 				data["fun"] = function(res) {
 					if (res.success) {
 						that.poptype = "";
+						that.disabled = true;
 						uni.showToast({
 							title: "简历已投递",
 							icon: "success"
