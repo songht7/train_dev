@@ -8,7 +8,7 @@ var api = {
 	"formal": {
 		"interface": "https://api.bdmartech.com", //接口
 		"domain": "http://m.bdmartech.com",
-		"cosConfig":{//`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
+		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
 			"SecretId": 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
@@ -18,7 +18,7 @@ var api = {
 	"dev": {
 		"interface": "https://api-test.wsshanghai.com", //接口
 		"domain": "http://train.wsshanghai.com",
-		"cosConfig":{//`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
+		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
 			"SecretId": 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
@@ -28,11 +28,15 @@ var api = {
 	"wuxi": {
 		"interface": "https://api.jobpgroup.com", //接口
 		"domain": "http://jobpgroup.com",
-		"cosConfig":{//`http://jobpassport-1259247972.cos.ap-shanghai.myqcloud.com/...`
+		"cosConfig": { //`http://jobpassport-1259247972.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'jobpassport-1259247972',
 			"Region": 'ap-shanghai',
 			"SecretId": 'AKIDRbLQM4DqRnKgpzR1NlEUWP9jD7pJt1K3',
 			"SecretKey": 'mNnzhBSUHtb6SWP4bulOmwwazA8RWTCV'
+		},
+		wx: {
+			"AppID": "wx69ecaa1a4fb809ff",
+			"AppSecret": "411e2c42798cb38bab46f47ddf779ccf"
 		}
 	}
 }
@@ -41,7 +45,7 @@ export default {
 	Interface: {
 		"apiurl": api[lks]["interface"], //space111111
 		"domain": api[lks]["domain"],
-		"cosConfig":api[lks]["cosConfig"],
+		"cosConfig": api[lks]["cosConfig"],
 		"addr": {
 			"slideShow": "/v2/ApiHome-slideShow.htm", //首页列表
 			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
