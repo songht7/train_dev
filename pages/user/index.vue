@@ -22,8 +22,8 @@
 											<view class="list-title">{{obj.name}}</view>
 											<view class="class-progress">
 												<view class="progress-box">
-													<view class="percent">{{parseInt(obj.progress)<=0?"开始学习":"已学"+parseInt(obj.progress)+"%"}}</view>
-													<progress :percent="parseInt(obj.progress)" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+													<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progres+"%"}}</view>
+													<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 												</view>
 											</view>
 										</view>
@@ -62,8 +62,8 @@
 											<view class="list-title">{{obj.name}}</view>
 											<view class="class-progress">
 												<view class="progress-box">
-													<view class="percent">{{parseInt(obj.progress)<=0?"开始学习":"已学"+parseInt(obj.progress)+"%"}}</view>
-													<progress :percent="parseInt(obj.progress)" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+													<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progress+"%"}}</view>
+													<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 												</view>
 											</view>
 										</view>
@@ -95,8 +95,8 @@
 				__token: "",
 				joinCourses: [], //参与的课
 				joinCourse: "0",
-				passCourse:"0",//通过考试数
-				failCourse:"0",//未通过考试数
+				passCourse: "0", //通过考试数
+				failCourse: "0", //未通过考试数
 				ECourses: [], //企业必须课
 				ECoursesTotal: 0,
 				eStatus: ""
@@ -113,10 +113,10 @@
 			that.$store.dispatch("cheack_page", 2)
 			let _user = that.$store.state.user;
 			that.__token = _user.token;
-			let _subInfo=_user.userInfo.subInfo
-			that.joinCourse=_subInfo.joinCourse;
-			that.passCourse=_subInfo.passCourse;
-			that.failCourse=_subInfo.failCourse;
+			let _subInfo = _user.userInfo.subInfo
+			that.joinCourse = _subInfo.joinCourse;
+			that.passCourse = _subInfo.passCourse;
+			that.failCourse = _subInfo.failCourse;
 			that.setPageData(_user.userInfo)
 		},
 		onPullDownRefresh() {
@@ -187,7 +187,15 @@
 				}
 				data["fun"] = function(res) {
 					if (res.success) {
-						that.joinCourses = res.data.list;
+						let _list = res.data.list;
+						if (_list) {
+							_list.map(item => item["progress"] = parseInt(item["progress"]));
+							// _info.company.map((val, i, arr) => {
+							// 	val['start_time'] = val['start_time'].split(" ")[0]
+							// 	val['end_time'] = val['end_time'].split(" ")[0]
+							// })
+						}
+						that.joinCourses = _list;
 						that.joinCourse = res.data.total;
 					}
 				}
@@ -204,7 +212,11 @@
 				}
 				data["fun"] = function(res) {
 					if (res.success) {
-						that.ECourses = res.data.list;
+						let _list = res.data.list;
+						if (_list) {
+							_list.map(item => item.progress = parseInt(item.progress));
+						}
+						that.ECourses = _list;
 						that.ECoursesTotal = res.data.total;
 					}
 				}

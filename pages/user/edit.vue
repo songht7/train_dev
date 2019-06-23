@@ -636,6 +636,7 @@
 
 	.edit-block-title {
 		display: flex;
+		flex-direction: row;
 		color: #333;
 		justify-content: space-between;
 		align-content: center;
@@ -651,6 +652,7 @@
 
 	.block-edit {
 		display: flex;
+		flex-direction: row;
 		font-size: 26upx;
 		color: #929292;
 		align-content: center;

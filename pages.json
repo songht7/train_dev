@@ -110,7 +110,6 @@
 			"style": {
 				"navigationBarTitleText": "用户中心",
 				"enablePullDownRefresh": true,
-				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": {
 						"type": "transparent"

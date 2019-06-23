@@ -52,7 +52,8 @@
 			</view>
 			<view class="block">
 				<view @click="$store.dispatch('makePhoneCall')">
-					<img class="ad-img" src="/static/img-1.png" />
+					<!-- <img class="ad-img" src="/static/img-1.png" /> -->
+					<image class="ad-img" src="/static/img-1.png" mode="widthFix"></image>
 				</view>
 			</view>
 		</view>
@@ -241,6 +242,9 @@
 		padding: 0 30upx;
 		letter-spacing: 2upx;
 		border: 1px solid #007AFF;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 	}
 
 	.ctgs {

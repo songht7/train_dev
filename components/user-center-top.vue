@@ -8,13 +8,15 @@
 				</view>
 				<view class="user-infos">
 					<view class="user-name txt-sross">{{userInfo.name||"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
-					<block v-if="userType!='3'">
-						<view class="user-more job"><text>{{userType=='1'?'管理员':'企业主'}}</text></view>
-					</block>
-					<block v-if="userType=='3'">
-						<navigator url="/pages/user/collect" class="user-more my-collect"><text>我的收藏</text></navigator>
-						<navigator url="/pages/user/resume" class="user-more my-resume"><text>我的简历</text></navigator>
-					</block>
+					<view class="user-type">
+						<block v-if="userType!='3'">
+							<view class="user-more job"><text>{{userType=='1'?'管理员':'企业主'}}</text></view>
+						</block>
+						<block v-if="userType=='3'">
+							<navigator url="/pages/user/collect" class="user-more my-collect"><text>我的收藏</text></navigator>
+							<navigator url="/pages/user/resume" class="user-more my-resume"><text>我的简历</text></navigator>
+						</block>
+					</view>
 				</view>
 				<block v-if="userType=='3'">
 					<view class="user-edit" @click="navTo('edit')">
@@ -64,27 +66,27 @@
 					return this.$store.state.user ? this.$store.state.user.userInfo : {}
 				}
 			},
-			enterpriseUserCount: {//员工总数
+			enterpriseUserCount: { //员工总数
 				type: String,
 				default: "0"
 			},
-			joinCourseUserCount: {//参与学习
+			joinCourseUserCount: { //参与学习
 				type: String,
 				default: "0"
 			},
-			courseCount: {//总课程数
+			courseCount: { //总课程数
 				type: String,
 				default: "0"
 			},
-			joinCourse: {//参加课程
+			joinCourse: { //参加课程
 				type: String,
 				default: "0"
 			},
-			passCourse: {//通过考试
+			passCourse: { //通过考试
 				type: String,
 				default: "0"
 			},
-			failCourse: {//未通过考试
+			failCourse: { //未通过考试
 				type: String,
 				default: "0"
 			}
@@ -135,11 +137,21 @@
 		padding: 0 20upx;
 		display: flex;
 		flex-wrap: wrap;
+		flex-direction: column;
+	}
+
+	.user-type {
+		display: flex;
+		flex-flow: row;
+		align-items: center;
 	}
 
 	.user-name {
 		line-height: 2;
 		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 	}
 
 	.logout {
@@ -181,6 +193,7 @@
 	.user-my-class {
 		padding: 20upx 0;
 		display: flex;
+		flex-direction: row;
 		align-content: center;
 		align-items: center;
 		justify-content: center;

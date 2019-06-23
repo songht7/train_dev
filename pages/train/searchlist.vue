@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-tab-bar">
+	<view class="search-train-main">
 		<view class="search-result">
 			<view class="block search-box search-box-inn">
 				<view class="flex-left">

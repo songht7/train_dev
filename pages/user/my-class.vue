@@ -19,14 +19,13 @@
 									<view class="list-title">{{obj.name}}</view>
 									<view class="class-progress">
 										<view class="progress-box">
-											<view class="percent">{{parseInt(obj.progress)<=0?"开始学习":"已学"+parseInt(obj.progress)+"%"}}</view>
-											<progress :percent="parseInt(obj.progress)" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+											<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progress+"%"}}</view>
+											<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 										</view>
 									</view>
 								</view>
 								<view class="list-right">
-									<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/img/logo.png'"
-									 mode="aspectFill"></image>
+									<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/img/logo.png'" mode="aspectFill"></image>
 								</view>
 							</view>
 						</view>
@@ -83,7 +82,11 @@
 			that.pageIndex = that.pageIndex + 1;
 			that.getDatas()
 		},
+		computed: {},
 		methods: {
+			getParseInt(val) {
+				return getParseInt(val)
+			},
 			navToTrain(id) {
 				uni.navigateTo({
 					url: `/pages/train/unitlist?id=${id}`
@@ -108,6 +111,7 @@
 					if (res.success) {
 						var _data = res.data.list;
 						if (_data) {
+							_data.map(item => item["progress"] = parseInt(item["progress"]));
 							if (that.pageIndex == 1) {
 								that.datas = _data;
 							} else {

@@ -86,11 +86,12 @@
 	justify-content: space-between;
 	align-items: center;
 	align-content: center;
+	flex: 1;
 }
 
 .serch-fex-btn {
 	position: fixed;
-	top: 90upx;
+	top: 10upx;
 	right: 20upx;
 }
 
@@ -353,6 +354,7 @@
 /*page btns*/
 .uni-btn-block {
 	display: flex;
+	flex-direction: row;
 	align-content: space-between;
 	align-items: center;
 	justify-content: space-between;
