@@ -55,7 +55,8 @@
 			</view>
 		</view>
 
-		<fix-button>
+		<fix-button gobackShow="hide">
+			<view class="fbtns btn-goback" @click="goback">返回</view>
 			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
 			<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
 			 @click="to_test(courseId)">开始测试</view>
@@ -256,6 +257,14 @@
 			onClicksegmented(index) {
 				if (this.current !== index) {
 					this.current = index;
+				}
+			},
+			goback() {
+				var that = this;
+				if (that.current === 1) {
+					that.current = 0;
+				}else{
+					that.$store.dispatch('goback')
 				}
 			},
 			previewImage() {
