@@ -229,6 +229,7 @@
 /*resume*/
 .resume-head {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	align-content: center;
 	align-items: center;
@@ -242,6 +243,7 @@
 
 .block-edit {
 	display: flex;
+	flex-direction: row;
 	font-size: 26upx;
 	color: #929292;
 	align-content: center;

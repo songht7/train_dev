@@ -4,12 +4,7 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "职照培训平台",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/train/index",
@@ -27,12 +22,7 @@
 			"path": "pages/train/unitlist",
 			"style": {
 				"navigationBarTitleText": "单元列表",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/train/test",
@@ -48,12 +38,7 @@
 		}, {
 			"path": "pages/technical/detail",
 			"style": {
-				"navigationBarTitleText": "技术详情",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"navigationBarTitleText": "技术详情"
 			}
 		}, {
 			"path": "pages/library/index",
@@ -64,12 +49,7 @@
 		}, {
 			"path": "pages/library/detail",
 			"style": {
-				"navigationBarTitleText": "文库详情",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"navigationBarTitleText": "文库详情"
 			}
 		}, {
 			"path": "pages/work/index",
@@ -97,24 +77,13 @@
 		}, {
 			"path": "pages/user/message",
 			"style": {
-				"navigationBarTitleText": "消息",
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"navigationBarTitleText": "消息"
 			}
 		}, {
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "用户中心",
-				"enablePullDownRefresh": true,
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/user/collect",
@@ -140,13 +109,7 @@
 		}, {
 			"path": "pages/company/statis",
 			"style": {
-				"navigationBarTitleText": "考试合格率",
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
+				"navigationBarTitleText": "考试合格率"
 			}
 		}
 	],
