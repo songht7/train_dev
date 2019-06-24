@@ -26,8 +26,14 @@
 					<view class="swiper-item train-swiper-main">
 						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 						 mode="aspectFill"></image>
-						<video v-if="slide.media_type=='video'" class="train-video" :src="slide.media_src" @error="videoErrorCallback"
-						 controls></video>
+						<view class="video-block" v-if="slide.media_type=='video'">
+							<image class="slideImg virtual" lazy-load="true" src="/static/default.png" mode="aspectFill"></image>
+							<view class="video-btn">
+								<uni-icon type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icon>
+							</view>
+							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
+							 @error="videoErrorCallback" controls @pause="videoPause" @fullscreenchange="videoOperation"></video>
+						</view>
 						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
 					</view>
@@ -116,7 +122,9 @@
 					color: '#fff',
 					selectedBackgroundColor: 'rgba(0, 0, 0, .9)',
 					selectedBorder: '1px rgba(0, 0, 0, .9) solid'
-				}
+				},
+				videoContext: "",
+				videoShow: false
 			}
 		},
 		onLoad(e) {
@@ -184,8 +192,8 @@
 
 						that.showList = _cover;
 						that.swiperList = _cover;
-						console.log(that.swiperCurrent)
-						console.log(that.showList[that.swiperCurrent]["name"])
+						// console.log(that.swiperCurrent)
+						// console.log(that.showList[that.swiperCurrent]["name"])
 					}
 				}
 				that.$store.dispatch("getData", data_dtl)
@@ -282,12 +290,43 @@
 							} else if (!filter_img && filter_media) {
 								that.showList = [...filter_media];
 							}
-							console.log(that.showList)
+							if (filter_media) {
+								that.setVideo();
+							}
+							//console.log(that.showList)
 							that.swiperList = _img;
 						}
 					}
 				}
 				that.$store.dispatch("getData", data_ldtl)
+			},
+			videoPlay(type) {
+				var that = this;
+				let vc = that.videoContext;
+				console.log(vc)
+				that.videoShow = true;
+				vc.play();
+				vc.requestFullScreen();
+			},
+			videoPause(e) {
+				console.log('---------videoPause--------')
+				console.log(e)
+			},
+			videoOperation(e) {
+				var that = this;
+				console.log(e)
+				if (!e.detail.fullScreen) {
+					console.log("fullscreenchange:", e.target.fullScreen)
+					var vd = that.videoContext;
+					console.log(vd)
+					//vd.pause();
+					//vd.exitFullScreen();
+					that.videoShow = false;
+				}
+			},
+			setVideo() {
+				var that = this;
+				that.videoContext = uni.createVideoContext('TrainVideo')
 			},
 			onClicksegmented(index) {
 				if (this.current !== index) {
@@ -446,5 +485,22 @@
 		align-items: center;
 	}
 
-	.media-block {}
+	.video-block {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+	}
+
+	.video-btn {
+		position: absolute;
+	}
+
+	.virtual {
+		opacity: 0.3;
+	}
 </style>
