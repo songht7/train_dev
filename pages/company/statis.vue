@@ -1,5 +1,5 @@
 <template>
-	<view class="user-center">
+	<view class="page-main user-center">
 		<user-center-top :enterpriseUserCount="enterpriseUserCount" :joinCourseUserCount="joinCourseUserCount" :courseCount="courseCount"></user-center-top>
 		<view class="user-block" v-show="statisType===0">
 			<view class="user-class-list">
@@ -10,7 +10,7 @@
 						</view>
 						<view class="txt-sross">员工学习进度</view>
 					</view>
-					<view class="class-more">全部{{data_total}}个></view>
+					<view class="class-more">共{{data_total}}个</view>
 				</view>
 				<view class="class-list">
 					<view class="list-statis fRowCenter">
@@ -26,14 +26,14 @@
 								<view class="list-statis fRowCenter">
 									<view class="row-block fRowCenter">{{k}}</view>
 									<view class="row-block fRowCenter">
-										<img :src="sourceUrl+obj.photo" class="photo" />
+										<img :src="obj.photo" class="photo" />
 										{{obj.NAME}}
 									</view>
 									<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
 									<view class="row-block fRowCenter">{{obj.passExamCount}}</view>
 									<view class="row-block fRowCenter row-progress">
 										<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
-										{{parseInt(obj.progress)}}%
+										{{obj.progress}}%
 									</view>
 								</view>
 							</view>
@@ -52,7 +52,7 @@
 						</view>
 						<view class="txt-sross">{{statisType==1?'课程参与情况':'课程合格情况'}}</view>
 					</view>
-					<view class="class-more">全部{{data_total}}个></view>
+					<view class="class-more">共{{data_total}}个</view>
 				</view>
 				<view class="class-list">
 					<view class="class-list">
@@ -64,14 +64,13 @@
 											<view class="list-title">{{obj.name}}</view>
 											<view class="class-progress">
 												<view class="progress-box">
-													<view class="percent">{{statisType==1?"参与度"+parseInt(obj.progress)+"%":"合格率"+parseInt(obj.progress)+"%"}}</view>
+													<view class="percent">{{statisType==1?"参与度"+obj.progress+"%":"合格率"+obj.progress+"%"}}</view>
 													<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 												</view>
 											</view>
 										</view>
 										<view class="list-right">
-											<image class="image-full" :src="obj.original_src?sourceUrl+obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
-											 mode="aspectFill"></image>
+											<image class="image-full" :src="obj.original_src?obj.original_src:'/static/default.png'" mode="aspectFill"></image>
 										</view>
 									</view>
 								</view>
@@ -178,10 +177,11 @@
 					if (res.success) {
 						var _data = res.data.list;
 						if (_data) {
+							_data.map(item => item.progress = parseInt(item.progress));
 							if (that.pageIndex == 1) {
 								that.datas = _data;
 							} else {
-								console.log(_data)
+								//console.log(_data)
 								//that.datas.push(_data);
 								_data.forEach(item => {
 									that.datas.push(item);

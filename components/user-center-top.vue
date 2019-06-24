@@ -3,8 +3,8 @@
 		<view class="user-block">
 			<view class="user-head">
 				<view class="portrait">
-					<uni-icon v-if="!userInfo.photo" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
-					<image class="user-portrait" v-if="userInfo.photo" :src="userInfo.photo" mode="aspectFill"></image>
+					<uni-icon v-if="!userInfo.photo||userInfo.photo==''" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
+					<image class="user-portrait" v-if="userInfo.photo&&userInfo.photo!=''" :src="userInfo.photo" mode="aspectFill"></image>
 				</view>
 				<view class="user-infos">
 					<view class="user-name txt-sross">{{userInfo.name||"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>

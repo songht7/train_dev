@@ -1,5 +1,5 @@
 <template>
-	<view class="user-center-main">
+	<view class="page-main user-center-main">
 		<view class="list-row">
 			<view class="list-block">
 				<user-center-top :joinCourse="joinCourse" :passCourse="passCourse" :failCourse="failCourse"></user-center-top>

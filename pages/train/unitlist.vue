@@ -32,7 +32,7 @@
 								<uni-icon type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icon>
 							</view>
 							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
-							 @error="videoErrorCallback" controls @pause="videoPause" @fullscreenchange="videoOperation"></video>
+							 @error="videoErrorCallback" controls :enable-progress-gesture="gesture" @pause="videoPause" @fullscreenchange="videoOperation"></video>
 						</view>
 						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
@@ -124,7 +124,8 @@
 					selectedBorder: '1px rgba(0, 0, 0, .9) solid'
 				},
 				videoContext: "",
-				videoShow: false
+				videoShow: false,
+				gesture:false//是否开启控制进度的手势
 			}
 		},
 		onLoad(e) {
