@@ -75,10 +75,11 @@
 }
 
 /*search box*/
-.search-main{
+.search-main {
 	display: flex;
 	flex-direction: row;
 }
+
 .search-result {
 	padding: 20upx;
 	display: flex;
@@ -124,8 +125,25 @@
 }
 
 /*swiper-slide*/
+.swiper-box {
+	height: 400upx;
+}
 .swiper-slide {
 	height: 270upx;
+}
+
+.swiper-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	background: #eee;
+	color: #fff;
+}
+
+.swiper-item image {
+	width: 100%;
+	height: 100%;
 }
 
 .vli {

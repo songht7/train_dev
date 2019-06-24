@@ -1,5 +1,5 @@
 <template>
-	<view class="train-test">
+	<view class="page-main train-test">
 		<form @submit="formSubmit">
 			<view class="test-content">
 				<view class="test-head">
@@ -157,7 +157,11 @@
 			}
 			data_tests["fun"] = function(res) {
 				if (res.success) {
-					that.tests = res.data.list;
+					let _test = res.data.list;
+					_test.map((obj, index, arr) => {
+						obj["detail"] = obj["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+					});
+					that.tests = _test;
 					that.test_leng = res.data.max;
 					that.test_total = res.data.total;
 				}

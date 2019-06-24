@@ -48,7 +48,7 @@ var api = {
 		}
 	}
 }
-var lks = "wuxi";
+var lks = "dev";
 export default {
 	Interface: {
 		"apiurl": api[lks]["interface"], //space111111

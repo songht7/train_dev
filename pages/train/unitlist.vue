@@ -4,12 +4,11 @@
 			<!-- <view class="photo-album" @click="previewImage">
 				<uni-icon type="xiangce1" size="30" color="#F77C5F"></uni-icon>
 			</view> -->
-			<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular"
-			 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent"
-			 @change="swiperChange">
-				<swiper-item class="swiper-item" v-for="(slide,index) in showList" :key="index">
-					<view class="vli">
-						<view class="vli2 train-swiper-main">
+
+			<!-- 	<uni-swiper-dot :info="showList" :current="swiperCurrent" mode="nav" showPos="top" :dots-styles="dotsStyles" field="name">
+				<swiper class="swiper-box swiper-slide-unit" @change="swiperChange">
+					<swiper-item v-for="(slide,index) in showList" :key="index">
+						<view class="swiper-item">
 							<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 							 mode="aspectFill"></image>
 							<video class="train-video" v-if="slide.media_type=='video'" :src="slide.media_src" @error="videoErrorCallback"
@@ -17,6 +16,20 @@
 							<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name"
 							 author="职照培训" action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
 						</view>
+					</swiper-item>
+				</swiper>
+			</uni-swiper-dot> -->
+			<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular"
+			 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent"
+			 @change="swiperChange">
+				<swiper-item v-for="(slide,index) in showList" :key="index">
+					<view class="swiper-item train-swiper-main">
+						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
+						 mode="aspectFill"></image>
+						<video v-if="slide.media_type=='video'" class="train-video" :src="slide.media_src" @error="videoErrorCallback"
+						 controls></video>
+						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
+						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -67,18 +80,23 @@
 <script>
 	import fixButton from '@/components/fix-button.vue'
 	import uniSegmentedControl from '@/components/uni-segmented-control.vue';
+	import uniSwiperDot from '@/components/uni-swiper-dot/uni-swiper-dot.vue'
 	export default {
 		data() {
 			return {
 				__token: "",
 				courseId: "",
 				data: [],
+				title: "",
 				lessions: [],
 				lessTotal: "",
 				lessDtl: [],
 				cover: [],
 				detailType: "",
-				showList: [],
+				showList: [{
+					"name": "",
+					"original_src": '/img/logo.png'
+				}],
 				swiperList: [],
 				swiperCurrent: 0,
 				lessActive: -1,
@@ -91,7 +109,14 @@
 					'内容'
 				],
 				canTest: false,
-				test_list: false
+				test_list: false,
+				dotsStyles: {
+					backgroundColor: 'rgba(0, 0, 0, .3)',
+					border: '1px rgba(0, 0, 0, .3) solid',
+					color: '#fff',
+					selectedBackgroundColor: 'rgba(0, 0, 0, .9)',
+					selectedBorder: '1px rgba(0, 0, 0, .9) solid'
+				}
 			}
 		},
 		onLoad(e) {
@@ -112,7 +137,8 @@
 		},
 		components: {
 			fixButton,
-			uniSegmentedControl
+			uniSegmentedControl,
+			uniSwiperDot
 		},
 		computed: {
 			swiperleng() {
@@ -134,6 +160,10 @@
 					uni.stopPullDownRefresh()
 					if (res.success) {
 						let _data = res.data;
+						that.title = _data.name;
+						uni.setNavigationBarTitle({
+							title: _data.name
+						});
 						_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						that.data = _data;
 						/*ucStatus:0 未确认 1学习中 2考试通过
@@ -148,10 +178,14 @@
 							that.canTest = true;
 						}
 						let _cover = [{
+							"name": _data.name,
 							"original_src": res.data.original_src || '/img/logo.png'
 						}]
+
 						that.showList = _cover;
 						that.swiperList = _cover;
+						console.log(that.swiperCurrent)
+						console.log(that.showList[that.swiperCurrent]["name"])
 					}
 				}
 				that.$store.dispatch("getData", data_dtl)
@@ -237,10 +271,10 @@
 							_img.push(media)
 						}
 						if (_img) {
+							_img.map((obj) => obj["name"] = res_data.name);
 							// let filter_img = _img.filter((obj, index) => !obj.media_type && index < 3);
 							let filter_img = _img.filter((obj, index) => !obj.media_type);
 							let filter_media = _img.filter((obj, index) => obj.media_type);
-							console.log("filter_media:", filter_media)
 							if (filter_img && filter_media) {
 								that.showList = [...filter_img, ...filter_media];
 							} else if (filter_img && !filter_media) {
@@ -248,6 +282,7 @@
 							} else if (!filter_img && filter_media) {
 								that.showList = [...filter_media];
 							}
+							console.log(that.showList)
 							that.swiperList = _img;
 						}
 					}
@@ -263,7 +298,7 @@
 				var that = this;
 				if (that.current === 1) {
 					that.current = 0;
-				}else{
+				} else {
 					that.$store.dispatch('goback')
 				}
 			},
@@ -410,4 +445,6 @@
 		align-content: center;
 		align-items: center;
 	}
+
+	.media-block {}
 </style>

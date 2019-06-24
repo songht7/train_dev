@@ -15,11 +15,9 @@
 				<view class="swiper-block" :class="['spacing-'+spacing]" v-if="swiperleng">
 					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?'true':'false'" autoplay="autoplay" circular="circular"
 					 interval="3000" duration="500" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
-						<swiper-item class="swiper-item" v-for="(slide,index) in swiperList" :key="index">
-							<view class="vli">
-								<view class="vli2">
-									<image class="slideImg" @click="linkTo(slide.link,slide.id)" lazy-load="true" :src="slide.original_src" mode="aspectFill"></image>
-								</view>
+						<swiper-item v-for="(slide,index) in swiperList" :key="index">
+							<view class="swiper-item">
+								<image class="slideImg" @click="linkTo(slide.link,slide.id)" lazy-load="true" :src="slide.original_src" mode="aspectFill"></image>
 							</view>
 						</swiper-item>
 					</swiper>
