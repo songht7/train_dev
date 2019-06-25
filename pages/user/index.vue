@@ -2,7 +2,7 @@
 	<view class="page-main user-center-main">
 		<view class="list-row">
 			<view class="list-block">
-				<user-center-top :joinCourse="joinCourse" :passCourse="passCourse" :failCourse="failCourse"></user-center-top>
+				<user-center-top :userInfo="userInfo" :joinCourse="joinCourse" :passCourse="passCourse" :failCourse="failCourse"></user-center-top>
 				<view class="user-block" v-if="eStatus==='1'">
 					<view class="user-class-list">
 						<view class="my-class-head">
@@ -91,6 +91,7 @@
 	export default {
 		data() {
 			return {
+				userInfo: {},
 				UserId: "",
 				__token: "",
 				joinCourses: [], //参与的课
@@ -112,6 +113,7 @@
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 2)
 			let _user = that.$store.state.user;
+			that.userInfo = _user;
 			that.__token = _user.token;
 			let _subInfo = _user.userInfo.subInfo
 			that.joinCourse = _subInfo.joinCourse;

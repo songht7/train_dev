@@ -139,6 +139,9 @@ const store = new Vuex.Store({
 				});
 			}
 		},
+		wxXCXLogin(ctx){
+			
+		},
 		logout(ctx) {
 			uni.removeStorage({
 				key: 'user',

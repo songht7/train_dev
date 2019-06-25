@@ -30,7 +30,8 @@
 }
 
 .user-center {
-	padding: 30upx 3%;
+	width: auto;
+	padding: 20upx 3.6%;
 }
 
 .user-center-full {

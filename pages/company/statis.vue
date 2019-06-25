@@ -1,6 +1,7 @@
 <template>
-	<view class="page-main user-center">
-		<user-center-top :enterpriseUserCount="enterpriseUserCount" :joinCourseUserCount="joinCourseUserCount" :courseCount="courseCount"></user-center-top>
+	<view class="page-main pages">
+		<user-center-top :userInfo="userInfo" :enterpriseUserCount="enterpriseUserCount" :joinCourseUserCount="joinCourseUserCount"
+		 :courseCount="courseCount"></user-center-top>
 		<view class="user-block" v-show="statisType===0">
 			<view class="user-class-list">
 				<view class="my-class-head">
@@ -94,6 +95,7 @@
 	export default {
 		data() {
 			return {
+				userInfo: {},
 				UserId: "",
 				statisType: 0,
 				userCenterDatas: {},
@@ -133,11 +135,12 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
-			if (that.$store.state.user.userInfo == undefined) {
+			var _user = that.$store.state.user.userInfo;
+			if (_user == undefined) {
 				return
 			}
-			let _user = that.$store.state.user.userInfo;
 			that.UserId = _user.id || '';
+			that.userInfo = _user;
 			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
 			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
 			that.courseCount = _user.subInfo.courseCount || '0';
