@@ -30,21 +30,24 @@
 				<view class="user-my-class">
 					<view class="my-class-block">
 						<view class="class-overview" v-if="userType!='3'">员工总数</view>
-						<view class="class-count">{{userType!='3'?enterpriseUserCount:joinCourse}}
+						<view class="class-count">
+							<view class="count-txt">{{userType!='3'?enterpriseUserCount:joinCourse}}</view>
 							<uni-icon v-if="userType!='3'" type="wo" :size="18" color="#008CEE"></uni-icon>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">参加课程</view>
 					</view>
 					<view class="my-class-block">
 						<view class="class-overview" v-if="userType!='3'">参与学习</view>
-						<view class="class-count class-state-green">{{userType!='3'?joinCourseUserCount:passCourse}}
+						<view class="class-count">
+							<view class="count-txt class-state-green">{{userType!='3'?joinCourseUserCount:passCourse}}</view>
 							<uni-icon v-if="userType!='3'" type="wo" :size="18" color="#3BC1B0"></uni-icon>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">通过考试</view>
 					</view>
 					<view class="my-class-block">
 						<view class="class-overview" v-if="userType!='3'">总课程数</view>
-						<view class="class-count class-state-red">{{userType!='3'?courseCount:failCourse}}
+						<view class="class-count">
+							<view class="count-txt class-state-red">{{userType!='3'?courseCount:failCourse}}</view>
 							<uni-icon v-if="userType!='3'" type="shuji" :size="18" color="#EE6858"></uni-icon>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">未通过考试</view>
@@ -219,8 +222,18 @@
 	}
 
 	.class-count {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: flex-end;
+		align-content: center;
+		padding: 20upx 0 0;
+	}
+
+	.count-txt {
 		font-size: 52upx;
 		color: #008CEE;
+		line-height: 1;
 	}
 
 	.class-state-green {

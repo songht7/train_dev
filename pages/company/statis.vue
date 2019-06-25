@@ -14,7 +14,7 @@
 				</view>
 				<view class="class-list">
 					<view class="list-statis fRowCenter">
-						<view class="row-block fRowCenter">排名</view>
+						<!-- <view class="row-block fRowCenter">排名</view> -->
 						<view class="row-block fRowCenter">学员</view>
 						<view class="row-block fRowCenter">参与课程</view>
 						<view class="row-block fRowCenter">通过考试</view>
@@ -24,9 +24,11 @@
 						<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
 							<view class="list-block">
 								<view class="list-statis fRowCenter">
-									<view class="row-block fRowCenter">{{k}}</view>
+									<!-- <view class="row-block fRowCenter">{{k+1}}</view> -->
 									<view class="row-block fRowCenter">
-										<img :src="obj.photo" class="photo" />
+										<uni-icon v-if="!obj.photo||obj.photo==''" type="touxiang" :size="20" color="#D8D8D8"></uni-icon>
+										<img v-if="obj.photo&&obj.photo!=''" :src="obj.photo" class="photo" />
+										<!-- <image class="user-portrait photo" v-if="obj.photo&&obj.photo!=''" :src="obj.photo" mode="aspectFill"></image> -->
 										{{obj.NAME}}
 									</view>
 									<view class="row-block fRowCenter">{{obj.joinCourseCount}}</view>
@@ -217,11 +219,10 @@
 		align-content: center;
 		align-items: center;
 		justify-content: center;
-		text-align: center;
 	}
 
 	.row-block {
-		width: 18%;
+		width: 25%;
 	}
 
 	.row-progress {
@@ -229,8 +230,8 @@
 	}
 
 	.photo {
-		width: 60upx;
-		height: 60upx;
+		width: 56upx;
+		height: 56upx;
 		border-radius: 50%;
 		display: block;
 		margin-right: 4upx;
