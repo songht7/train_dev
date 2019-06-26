@@ -139,8 +139,25 @@ const store = new Vuex.Store({
 				});
 			}
 		},
-		wxXCXLogin(ctx){
-			
+		wxXCXLogin(ctx, provider) {
+			var _provider = provider || 'weixin';
+			uni.login({
+				provider: _provider, //登录服务提供商
+				scopes: 'auth_base', //授权类型，默认 auth_base。支持 auth_base（静默授权）/ auth_user（主动授权） / auth_zhima（芝麻信用）
+				success: function(loginRes) {
+					console.log("wx-login-res:", loginRes)
+				},
+				fail(f) {},
+				complete() {}
+			});
+		},
+		checkSession() {
+			/*检查登录状态是否过期*/
+			uni.checkSession({
+				success(e) {},
+				fail(f) {},
+				complete() {}
+			});
 		},
 		logout(ctx) {
 			uni.removeStorage({

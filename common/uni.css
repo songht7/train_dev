@@ -436,6 +436,7 @@ view {
 .page-main {
 	position: relative;
 	padding-bottom: 120upx;
+	min-height: 100%;
 }
 
 progress,

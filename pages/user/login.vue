@@ -31,6 +31,14 @@
 			</view>
 		</uni-popup>
 		<loading></loading>
+
+		<!-- #ifdef MP-WEIXIN -->
+		<view class="mp-login" v-if="MPLogin">
+			<button class="mp-btns" lang="zh_CN" open-type="getUserInfo" @click="bindMP">
+				<uni-icon type="weixin" size="50" color="#80D93C"></uni-icon>
+			</button>
+		</view>
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -47,7 +55,8 @@
 				formData: {
 					"phone": "",
 					"password": ""
-				}
+				},
+				MPLogin:false
 			};
 		},
 		onLoad(e) {
@@ -70,6 +79,9 @@
 			uniPopup
 		},
 		methods: {
+			bindMP(e){
+				console.log(e)
+			},
 			formSubmit: function(e) {
 				var that = this;
 				if (that.loading == true) {
@@ -181,4 +193,19 @@
 
 <style>
 	@import "./center.css";
+
+	.mp-login {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+	}
+	.mp-btns{
+		background: none;
+		color: #007AFF;letter-spacing: 2upx;
+	}
+	.mp-btns::after{
+		border: none;
+	}
 </style>

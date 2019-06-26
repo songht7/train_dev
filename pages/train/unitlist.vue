@@ -101,7 +101,7 @@
 				detailType: "",
 				showList: [{
 					"name": "",
-					"original_src": '/img/logo.png'
+					"original_src": `${this.$store.state.interface.apiurl}/img/logo.png`
 				}],
 				swiperList: [],
 				swiperCurrent: 0,
@@ -125,7 +125,7 @@
 				},
 				videoContext: "",
 				videoShow: false,
-				gesture:false//是否开启控制进度的手势
+				gesture: false //是否开启控制进度的手势
 			}
 		},
 		onLoad(e) {
@@ -188,7 +188,7 @@
 						}
 						let _cover = [{
 							"name": _data.name,
-							"original_src": res.data.original_src || '/img/logo.png'
+							"original_src": res.data.original_src || `${that.$store.state.interface.apiurl}/img/logo.png`
 						}]
 
 						that.showList = _cover;
@@ -230,10 +230,10 @@
 				if (lessid == 'content' && index == -1) {
 					that.lessActive = index;
 					that.swiperList = [{
-						"original_src": that.data.original_src || '/img/logo.png'
+						"original_src": that.data.original_src || `${this.$store.state.interface.apiurl}/img/logo.png`
 					}];
 					that.showList = [{
-						"original_src": that.data.original_src || '/img/logo.png'
+						"original_src": that.data.original_src || `${this.$store.state.interface.apiurl}/img/logo.png`
 					}]
 					return
 				}

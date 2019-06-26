@@ -120,9 +120,13 @@
 		onShow() {
 			console.log("onShow")
 			var that = this;
-			that.$store.dispatch('cheack_user')
-			that.$store.dispatch("cheack_page", 0)
-			var _user=that.$store.state.user;
+			/* #ifdef MP-WEIXIN */
+			that.$store.dispatch('wxXCXLogin');
+			// that.$store.dispatch('authorize');
+			/* #endif */
+			that.$store.dispatch('cheack_user');
+			that.$store.dispatch("cheack_page", 0);
+			var _user = that.$store.state.user;
 			if (_user.token && _user.userType != "3") {
 				uni.redirectTo({
 					url: "/pages/company/statis?t=0"
