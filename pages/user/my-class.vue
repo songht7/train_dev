@@ -51,7 +51,8 @@
 				pageType: "",
 				pageIndex: 1,
 				pageSize: 7,
-				status: "more"
+				status: "more",
+				courseState: 1
 			}
 		},
 		components: {
@@ -62,13 +63,14 @@
 			var that = this;
 			that.pageType = e.t || "";
 			that.pageOverview = e.t ? "企业必须课程" : "我参与的课程";
+			that.courseState = e.cs || 1;
 		},
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
 			that.UserId = that.$store.state.user.userInfo.id || '';
 			that.__token = that.$store.state.user.token;
-			that.getDatas(that.pageType);
+			that.getDatas();
 		},
 		onReachBottom() {
 			var that = this;
@@ -94,6 +96,7 @@
 			},
 			getDatas(type) {
 				var that = this;
+				var type = type || that.pageType;
 				var inter = "joinCourses";
 				if (type) {
 					inter = "enterpriseCourses"
