@@ -51,6 +51,7 @@ var api = {
 var lks = "wuxi";
 export default {
 	Interface: {
+		"site": lks,
 		"apiurl": api[lks]["interface"], //space111111
 		"domain": api[lks]["domain"],
 		"cosConfig": api[lks]["cosConfig"],

@@ -122,9 +122,10 @@
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$store.dispatch("cheack_page", 0)
-			if (that.$store.state.user.token && that.$store.state.user.userType != "3") {
+			var _user=that.$store.state.user;
+			if (_user.token && _user.userType != "3") {
 				uni.redirectTo({
-					url: "/pages/company/statis"
+					url: "/pages/company/statis?t=0"
 				})
 			}
 			uni.getSystemInfo({

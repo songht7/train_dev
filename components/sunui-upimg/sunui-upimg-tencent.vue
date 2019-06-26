@@ -15,7 +15,7 @@
 					<view class="sunsin_add_image" @click='chooseImage(upImgConfig.count)' :style="'background-color:'+upImgConfig.upBgColor+''"
 					 v-show="!upImgConfig.isAddImage || false">
 						<!-- 这里可以改为字体图标/iconfont -->
-						<view class="icon-basic" :class="upImgConfig.upSvgIconName==undefined || upImgConfig.upSvgIconName==''?'icon-addicon':upImgConfig.upSvgIconName"></view>
+						<view class="icon-basic" :class="upImgConfig.upSvgIconName==undefined || upImgConfig.upSvgIconName==''?(site?'icon-addicon-'+site:'icon-addicon'):upImgConfig.upSvgIconName"></view>
 						<view class="icon-text" :style="'color:'+upImgConfig.upIconColor+';width:100%;'">{{upImgConfig.upTextDesc==undefined ||upImgConfig.upTextDesc==''?'上传照片':upImgConfig.upTextDesc}}</view>
 					</view>
 				</view>
@@ -39,7 +39,8 @@
 				upload_picture_list: this.$store.state.portrait ? [{
 					"path_server": this.$store.state.portrait,
 					"upload_percent": 100
-				}] : []
+				}] : [],
+				site: this.$store.state.interface.site || ''
 			};
 		},
 		name: 'sunui-upimg',
@@ -272,7 +273,40 @@
 		background: url('icon/icon-up.svg') no-repeat;
 		/* #endif */
 		/* #ifndef H5 */
-		background: url('https://www.playsort.cn/file/icon-up.svg') no-repeat;
+		background: url('https://api.jobpgroup.com/img/icon-up.svg') no-repeat;
+		/* #endif */
+		background-position: center;
+		background-size: cover;
+	}
+
+	.icon-addicon-wuxi {
+		/* #ifdef H5 */
+		background: url('icon/icon-up.svg') no-repeat;
+		/* #endif */
+		/* #ifndef H5 */
+		background: url('https://api.jobpgroup.com/img/icon-up.svg') no-repeat;
+		/* #endif */
+		background-position: center;
+		background-size: cover;
+	}
+
+	.icon-addicon-dev {
+		/* #ifdef H5 */
+		background: url('icon/icon-up.svg') no-repeat;
+		/* #endif */
+		/* #ifndef H5 */
+		background: url('https://api-test.wsshanghai.com/img/icon-up.svg') no-repeat;
+		/* #endif */
+		background-position: center;
+		background-size: cover;
+	}
+
+	.icon-addicon-formal {
+		/* #ifdef H5 */
+		background: url('icon/icon-up.svg') no-repeat;
+		/* #endif */
+		/* #ifndef H5 */
+		background: url('https://api.bdmartech.com/img/icon-up.svg') no-repeat;
 		/* #endif */
 		background-position: center;
 		background-size: cover;
@@ -283,7 +317,7 @@
 		background: url('icon/card.svg') no-repeat;
 		/* #endif */
 		/* #ifndef H5 */
-		background: url('https://www.playsort.cn/file/icon-up.svg') no-repeat;
+		background: url('https://api.jobpgroup.com/img/icon-up.svg') no-repeat;
 		/* #endif */
 		background-position: center;
 		background-size: cover;
@@ -294,7 +328,7 @@
 		background: url('icon/certificate.svg') no-repeat;
 		/* #endif */
 		/* #ifndef H5 */
-		background: url('https://www.playsort.cn/file/icon-up.svg') no-repeat;
+		background: url('https://api.jobpgroup.com/img/icon-up.svg') no-repeat;
 		/* #endif */
 		background-position: center;
 		background-size: cover;

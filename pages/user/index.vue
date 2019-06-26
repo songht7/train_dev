@@ -113,7 +113,8 @@
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 2)
 			let _user = that.$store.state.user;
-			that.userInfo = _user;
+			console.log(_user.userInfo)
+			that.userInfo = _user.userInfo;
 			that.__token = _user.token;
 			let _subInfo = _user.userInfo.subInfo
 			that.joinCourse = _subInfo.joinCourse;
