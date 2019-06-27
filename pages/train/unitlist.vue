@@ -45,10 +45,10 @@
 							<view class="music-play">
 								<view class="music-info">
 									<view class="music-title">{{slide.name}}</view>
-									<view class="music-duration">{{music.duration}}</view>
+									<view class="music-duration">{{music.duration?music.duration+'秒':''}}</view>
 								</view>
 								<view class="music-progress">
-									123123
+									<slider :value="music.sliderVal" @changing="sliderChanging" @change="sliderChange" show-value min="0" :max="music.duration" />
 								</view>
 							</view>
 						</view>
@@ -148,8 +148,10 @@
 					startTime: 0,
 					loop: false,
 					autoplay: false,
-					duration: '00:00',
-					currentTime: 0
+					buffered: 0,
+					duration: 0,
+					currentTime: 0,
+					sliderVal: 0
 				}
 			}
 		},
@@ -385,25 +387,60 @@
 			},
 			musicSet(type) {
 				var that = this;
-				var _audioContext = that.audioContext;
-				var _music = that.music;
 				switch (type) {
 					case 'play':
-						_audioContext.play();
-						_audioContext.onPlay(() => {
-							_music.duration = _audioContext.duration+"秒";
-							_music.playState = 'pause';
-						});
+						that.musicOnPlay();
 						break;
 					case 'pause':
-						_audioContext.pause();
-						_audioContext.onPause(() => {
-							_music.playState = 'play';
-						});
+						that.musicOnPause();
 						break;
 					default:
 						break;
 				}
+			},
+			musicOnPlay() {
+				var that = this;
+				var _audioContext = that.audioContext;
+				var _music = that.music;
+				_audioContext.play();
+				_audioContext.onPlay(() => {
+					_music.duration = Math.ceil(_audioContext.duration);
+					_music.playState = 'pause';
+					console.log("startTime:", _audioContext.startTime)
+				});
+				_audioContext.onTimeUpdate(() => {
+					let _mcTime = _audioContext.currentTime;
+					let scale = Math.ceil(that.music.duration / 100);
+					let _sv = Math.ceil(scale * _mcTime);
+					if (_sv >= that.music.duration) {
+						_sv = that.music.duration
+					}
+					console.log(_sv)
+					that.music.sliderVal = _sv;
+				});
+			},
+			musicOnPause() {
+				var that = this;
+				var _audioContext = that.audioContext;
+				var _music = that.music;
+				_audioContext.pause();
+				_audioContext.onPause(() => {
+					_music.playState = 'play';
+				});
+				_audioContext.offTimeUpdate();
+			},
+			sliderChanging(e) {
+				var that = this;
+				that.musicOnPause();
+			},
+			sliderChange(e) {
+				var that = this;
+				var changeVal = e.detail.value;
+				var _audioContext = that.audioContext;
+				that.music.sliderVal = changeVal;
+				_audioContext.seek(changeVal);
+				that.musicOnPlay();
+				console.log('value 发生变化：' + e.detail.value)
 			},
 			onClicksegmented(index) {
 				if (this.current !== index) {
