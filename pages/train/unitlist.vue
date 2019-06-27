@@ -34,8 +34,24 @@
 							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
 							 @error="videoErrorCallback" controls :enable-progress-gesture="gesture" @pause="videoPause" @fullscreenchange="videoOperation"></video>
 						</view>
-						<audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
-						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio>
+						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
+						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
+						<view class="media-music" v-if="slide.media_type=='music'">
+							<view class="music-icon">
+								<!-- <uni-icon type="music" size="40" color="#006FFF"></uni-icon> -->
+								<uni-icon type="bofang" size="32" color="#666" v-show="music.playState==='play'" @click="musicSet('play')"></uni-icon>
+								<uni-icon type="suspend_icon" size="32" color="#666" v-show="music.playState==='pause'" @click="musicSet('pause')"></uni-icon>
+							</view>
+							<view class="music-play">
+								<view class="music-info">
+									<view class="music-title">{{slide.name}}</view>
+									<view class="music-duration">{{music.duration}}</view>
+								</view>
+								<view class="music-progress">
+									123123
+								</view>
+							</view>
+						</view>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -99,6 +115,7 @@
 				lessDtl: [],
 				cover: [],
 				detailType: "",
+				media: [],
 				showList: [{
 					"name": "",
 					"original_src": `${this.$store.state.interface.apiurl}/img/logo.png`
@@ -111,8 +128,7 @@
 				isJoinTxt: "加入学习", //"学习完成后开启测试" : "加入学习":"已加入学习"
 				current: 0,
 				segmented: [
-					'课程目录',
-					'内容'
+					'课程目录'
 				],
 				canTest: false,
 				test_list: false,
@@ -125,7 +141,16 @@
 				},
 				videoContext: "",
 				videoShow: false,
-				gesture: false //是否开启控制进度的手势
+				gesture: false, //是否开启控制进度的手势
+				audioContext: "",
+				music: {
+					playState: 'play',
+					startTime: 0,
+					loop: false,
+					autoplay: false,
+					duration: '00:00',
+					currentTime: 0
+				}
 			}
 		},
 		onLoad(e) {
@@ -138,6 +163,10 @@
 		},
 		onShow() {
 			var that = this;
+			var _audioContext = that.audioContext;
+			if (_audioContext) {
+				_audioContext.destroy();
+			}
 		},
 		onReady: function(res) {},
 		onPullDownRefresh() {
@@ -152,6 +181,13 @@
 		computed: {
 			swiperleng() {
 				return this.swiperList.length
+			}
+		},
+		onBackPress() {
+			var that = this;
+			var _audioContext = that.audioContext;
+			if (_audioContext) {
+				_audioContext.destroy();
 			}
 		},
 		methods: {
@@ -222,6 +258,10 @@
 			getLessDtl(lessid, index) {
 				var that = this;
 				console.log(lessid, index)
+				that.segmented = [
+					'课程目录',
+					'内容'
+				]
 				that.detailType = lessid;
 				that.current = 1;
 				if (index == that.lessActive) {
@@ -292,6 +332,7 @@
 								that.showList = [...filter_media];
 							}
 							if (filter_media) {
+								that.media = filter_media;
 								that.setVideo();
 							}
 							//console.log(that.showList)
@@ -327,7 +368,42 @@
 			},
 			setVideo() {
 				var that = this;
-				that.videoContext = uni.createVideoContext('TrainVideo')
+				var _media = that.media;
+				console.log("setVideo:", _media)
+				_media.forEach((obj, i) => {
+					console.log(obj.media_type)
+					if (obj.media_type == "video") {
+						that.videoContext = uni.createVideoContext('TrainVideo')
+					} else if (obj.media_type == "music") {
+						var _audioContext = uni.createInnerAudioContext();
+						that.audioContext = _audioContext;
+						_audioContext.autoplay = that.music.autoplay;
+						_audioContext.src = obj.media_src;
+					}
+				})
+
+			},
+			musicSet(type) {
+				var that = this;
+				var _audioContext = that.audioContext;
+				var _music = that.music;
+				switch (type) {
+					case 'play':
+						_audioContext.play();
+						_audioContext.onPlay(() => {
+							_music.duration = _audioContext.duration+"秒";
+							_music.playState = 'pause';
+						});
+						break;
+					case 'pause':
+						_audioContext.pause();
+						_audioContext.onPause(() => {
+							_music.playState = 'play';
+						});
+						break;
+					default:
+						break;
+				}
 			},
 			onClicksegmented(index) {
 				if (this.current !== index) {
@@ -504,4 +580,47 @@
 	.virtual {
 		opacity: 0.3;
 	}
+
+	.media-music {
+		background: #FCFCFC;
+		border: 1px solid #E0E0E0;
+		color: #333;
+		display: flex;
+		flex-direction: row;
+		align-content: center;
+		align-items: center;
+		justify-content: flex-start;
+		width: 80%;
+		border-radius: 10upx;
+	}
+
+	.music-icon {
+		border-right: 1px solid #E0E0E0;
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		align-items: center;
+		justify-content: center;
+		padding: 10upx;
+		height: 100%;
+		width: 100upx;
+	}
+
+	.music-play {
+		padding: 10upx 20upx;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		flex: 1;
+	}
+
+	.music-info {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-content: center;
+		align-items: center;
+	}
+
+	.music-progress {}
 </style>
