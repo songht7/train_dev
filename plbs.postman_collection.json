@@ -23,7 +23,8 @@
 				"bde10fa4-c9ce-ea8e-1678-be062ec00290",
 				"e235928c-066d-afc1-61be-be156e52539e",
 				"95529a4a-6701-5967-5330-4faddd7bf22a",
-				"696171ac-f3e2-0772-da3b-b8f580737931"
+				"696171ac-f3e2-0772-da3b-b8f580737931",
+				"6a10ad4d-4134-c7e1-09a0-d216efaf8342"
 			],
 			"owner": "1054562",
 			"folders_order": [
@@ -638,6 +639,40 @@
 			"rawModeData": "{\"article_id\":\"2\"}"
 		},
 		{
+			"id": "6a10ad4d-4134-c7e1-09a0-d216efaf8342",
+			"headers": "",
+			"headerData": [],
+			"url": "http://api.alein.lc/v2/ApiWeChat-getWeChatInfo.htm?code=1",
+			"queryParams": [
+				{
+					"key": "code",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1549960074600,
+			"name": "/v2/ApiWeChat-getWeChatInfo.htm copy",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": [],
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
+			"timestamp": null,
+			"isFromCollection": true,
+			"collectionRequestId": "b6cb9315-dc68-dd80-5241-d14fcfc4bb0a"
+		},
+		{
 			"id": "6be642ca-8193-5be1-e9e4-a0750bf3dd96",
 			"headers": "token: 7cd88d3882047bb5ceaea174e2adfe6030698483\nContent-Type: application/json\n",
 			"headerData": [
@@ -801,11 +836,11 @@
 		},
 		{
 			"id": "8b59959e-0336-7dbd-8745-6878d9ec688f",
-			"headers": "token: 08939d8cd6de92654433a443cf4666a0aa0eaa78\n",
+			"headers": "token: 72aa45af1611f530845efa9c19082f2c7aee44d0\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "08939d8cd6de92654433a443cf4666a0aa0eaa78",
+					"value": "72aa45af1611f530845efa9c19082f2c7aee44d0",
 					"description": "",
 					"enabled": true
 				}
@@ -830,7 +865,7 @@
 			"tests": "15\tsupport\t技术支持\t\r\n16\t文库    文章\r\n17\t机遇\t简历那块\t",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557226281135,
+			"time": 1561097871302,
 			"name": "/v4/ApiArticle-supports.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
@@ -1262,11 +1297,11 @@
 		},
 		{
 			"id": "e4282418-2919-4590-7c56-c1215f96d20b",
-			"headers": "token: 7cd88d3882047bb5ceaea174e2adfe6030698483\n",
+			"headers": "token: 54efc084d387f64e82d4c00051004d1726d66f32\n",
 			"headerData": [
 				{
 					"key": "token",
-					"value": "7cd88d3882047bb5ceaea174e2adfe6030698483",
+					"value": "54efc084d387f64e82d4c00051004d1726d66f32",
 					"description": "",
 					"enabled": true
 				}
@@ -1284,7 +1319,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1557822245017,
+			"time": 1561427828048,
 			"name": "/v4/ApiAccount-enterpriseCourses.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
