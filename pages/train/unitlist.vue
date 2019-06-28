@@ -38,8 +38,8 @@
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
 						<view class="media-music" v-if="slide.media_type=='music'">
 							<view class="music-icon">
-								<uni-icon type="bofang" size="32" color="#666" v-show="music.playState==='play'" @click="musicSet('play')"></uni-icon>
-								<uni-icon type="suspend_icon" size="32" color="#666" v-show="music.playState==='pause'" @click="musicSet('pause')"></uni-icon>
+								<uni-icon type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icon>
+								<uni-icon type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icon>
 							</view>
 							<view class="music-play">
 								<view class="music-info">
@@ -178,6 +178,16 @@
 			var that = this;
 			that.pageInit();
 		},
+		onHide() {
+			console.log("onHide")
+			var that = this;
+			that.musicDestroy();
+		},
+		onUnload() {
+			console.log("onUnload")
+			var that = this;
+			that.musicDestroy();
+		},
 		components: {
 			fixButton,
 			uniSegmentedControl,
@@ -187,10 +197,6 @@
 			swiperleng() {
 				return this.swiperList.length
 			}
-		},
-		onBackPress() {
-			var that = this;
-			that.musicDestroy();
 		},
 		methods: {
 			pageInit() {
@@ -420,7 +426,12 @@
 				});
 				_audioContext.onTimeUpdate(() => {
 					let _currentTime = _audioContext.currentTime;
-					let _duration = that.music.duration;
+					var _duration = _music.duration;
+					if (_duration <= 0) {
+						let _d = Math.ceil(_audioContext.duration)
+						that.music.duration = _d;
+						_duration = _d;
+					}
 					var _sliderVal = 0;
 					_sliderVal = parseInt(_currentTime);
 					if (_sliderVal >= _duration) {
@@ -457,6 +468,11 @@
 			musicDestroy() {
 				var that = this;
 				/*音频销毁*/
+				var _music = that.music;
+				_music.playState = 'play';
+				_music.sliderVal = 0;
+				_music.duration = 0;
+				that.hasMusic = false;
 				var _audioContext = that.audioContext;
 				if (_audioContext) {
 					_audioContext.destroy();
@@ -701,7 +717,7 @@
 		justify-content: center;
 		width: 90upx;
 		height: 90upx;
-		top: 8%;
+		top: 5%;
 		right: 5%;
 		opacity: 0.9;
 		z-index: 5;
