@@ -37,15 +37,17 @@
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
 						<view class="media-music" v-if="slide.media_type=='music'">
+							<view class="music-loading">
+								<uni-icon type="music" size="40" color="#006FFF"></uni-icon>
+							</view>
 							<view class="music-icon">
-								<!-- <uni-icon type="music" size="40" color="#006FFF"></uni-icon> -->
 								<uni-icon type="bofang" size="32" color="#666" v-show="music.playState==='play'" @click="musicSet('play')"></uni-icon>
 								<uni-icon type="suspend_icon" size="32" color="#666" v-show="music.playState==='pause'" @click="musicSet('pause')"></uni-icon>
 							</view>
 							<view class="music-play">
 								<view class="music-info">
 									<view class="music-title">{{slide.name}}</view>
-									<view class="music-duration">{{music.duration?music.duration+'秒':''}}</view>
+									<view class="music-duration">时长{{music.duration?music.duration+'秒':''}}</view>
 								</view>
 								<view class="music-progress">
 									<slider :value="music.sliderVal" @changing="sliderChanging" @change="sliderChange" show-value min="0" :max="music.duration" />
@@ -187,10 +189,7 @@
 		},
 		onBackPress() {
 			var that = this;
-			var _audioContext = that.audioContext;
-			if (_audioContext) {
-				_audioContext.destroy();
-			}
+			that.musicDestroy();
 		},
 		methods: {
 			pageInit() {
@@ -269,6 +268,8 @@
 				if (index == that.lessActive) {
 					return
 				}
+				that.musicDestroy();
+
 				if (lessid == 'content' && index == -1) {
 					that.lessActive = index;
 					that.swiperList = [{
@@ -403,20 +404,31 @@
 				var _audioContext = that.audioContext;
 				var _music = that.music;
 				_audioContext.play();
+				_audioContext.onError((res) => {
+					uni.showToast({
+						title: res.errMsg,
+						icon: "none"
+					})
+				})
 				_audioContext.onPlay(() => {
 					_music.duration = Math.ceil(_audioContext.duration);
 					_music.playState = 'pause';
 					console.log("startTime:", _audioContext.startTime)
 				});
 				_audioContext.onTimeUpdate(() => {
-					let _mcTime = _audioContext.currentTime;
-					let scale = Math.ceil(that.music.duration / 100);
-					let _sv = Math.ceil(scale * _mcTime);
-					if (_sv >= that.music.duration) {
-						_sv = that.music.duration
+					let _currentTime = _audioContext.currentTime;
+					let _duration = that.music.duration;
+					var _sliderVal = 0;
+					_sliderVal = parseInt(_currentTime);
+					if (_sliderVal >= _duration) {
+						_sliderVal = _duration
 					}
-					console.log(_sv)
-					that.music.sliderVal = _sv;
+					//console.log(_currentTime, _sliderVal)
+					that.music.sliderVal = _sliderVal;
+				});
+				_audioContext.onEnded(() => {
+					_music.playState = 'play';
+					that.music.sliderVal = 0;
 				});
 			},
 			musicOnPause() {
@@ -429,6 +441,25 @@
 				});
 				_audioContext.offTimeUpdate();
 			},
+			musicOnStop() {
+				var that = this;
+				var _audioContext = that.audioContext;
+				var _music = that.music;
+				_audioContext.stop();
+				_audioContext.onStop(() => {
+					_music.playState = 'play';
+				});
+				_audioContext.offTimeUpdate();
+			},
+			musicDestroy() {
+				var that = this;
+				/*音频销毁*/
+				var _audioContext = that.audioContext;
+				if (_audioContext) {
+					_audioContext.destroy();
+				}
+				/*、音频销毁*/
+			},
 			sliderChanging(e) {
 				var that = this;
 				that.musicOnPause();
@@ -440,7 +471,7 @@
 				that.music.sliderVal = changeVal;
 				_audioContext.seek(changeVal);
 				that.musicOnPlay();
-				console.log('value 发生变化：' + e.detail.value)
+				//console.log('value 发生变化：' + changeVal)
 			},
 			onClicksegmented(index) {
 				if (this.current !== index) {
@@ -659,5 +690,17 @@
 		align-items: center;
 	}
 
-	.music-progress {}
+	.music-loading {
+		position: fixed;
+		display: flex;
+		align-content: center;
+		align-items: center;
+		justify-content: center;
+		width: 90upx;
+		height: 90upx;
+		top:10%;
+		right: 10%;
+		opacity: 0.8;
+		z-index: 5;
+	}
 </style>
