@@ -717,7 +717,7 @@
 		justify-content: center;
 		width: 90upx;
 		height: 90upx;
-		top: 5%;
+		top: 8%;
 		right: 5%;
 		opacity: 0.9;
 		z-index: 5;
