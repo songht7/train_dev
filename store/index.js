@@ -146,6 +146,21 @@ const store = new Vuex.Store({
 				scopes: 'auth_base', //授权类型，默认 auth_base。支持 auth_base（静默授权）/ auth_user（主动授权） / auth_zhima（芝麻信用）
 				success: function(loginRes) {
 					console.log("wx-login-res:", loginRes)
+					var _code = loginRes.code;
+					if (_code) {
+						uni.request({
+							url: ctx.state.interface.apiurl + ctx.state.interface.addr['getWeChatInfo'] + '?code=' + _code,
+							method: "GET",
+							header: {},
+							success(res) {
+								console.log(res)
+							},
+							fail(err) {
+								console.log("getData-err-getWeChatInfo", err)
+							},
+							complete() {}
+						})
+					}
 				},
 				fail(f) {},
 				complete() {}

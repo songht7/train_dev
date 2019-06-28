@@ -120,10 +120,6 @@
 		onShow() {
 			console.log("onShow")
 			var that = this;
-			/* #ifdef MP-WEIXIN */
-			that.$store.dispatch('wxXCXLogin');
-			// that.$store.dispatch('authorize');
-			/* #endif */
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 0);
 			var _user = that.$store.state.user;
@@ -134,7 +130,7 @@
 			}
 			uni.getSystemInfo({
 				success: (res) => {
-					console.log(res)
+					//console.log(res)
 					if (res.screenHeight >= 736 && res.screenHeight < 812) {
 						that.spacing = "medium"
 					} else if (res.screenHeight >= 812) {

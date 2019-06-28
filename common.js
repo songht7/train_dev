@@ -88,6 +88,7 @@ export default {
 			"courseProgresses": "/v4/ApiAccount-courseProgresses.htm", //企业主：课程参与度
 			"testProgresses": "/v4/ApiAccount-testProgresses.htm", //企业主：考试合格率
 			"resume": "/v4/ApiAccount-resume.htm", //获取简历[GET], 编辑简历[PUT], 投递简历[POST]?article_id
+			"getWeChatInfo": "/v2/ApiWeChat-getWeChatInfo.htm", //获取微信信息?code=1
 
 		}
 	}

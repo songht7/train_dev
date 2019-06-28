@@ -6,6 +6,10 @@
 			// 锁定屏幕方向
 			plus.screen.lockOrientation('portrait-primary'); //锁定
 			// #endif
+
+			// #ifdef MP-WEIXIN
+			this.$store.dispatch('wxXCXLogin');
+			// #endif
 		},
 		onShow: function() {
 			console.log('App Show')
