@@ -37,9 +37,6 @@
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
 						<view class="media-music" v-if="slide.media_type=='music'">
-							<view class="music-loading">
-								<uni-icon type="music" size="40" color="#006FFF"></uni-icon>
-							</view>
 							<view class="music-icon">
 								<uni-icon type="bofang" size="32" color="#666" v-show="music.playState==='play'" @click="musicSet('play')"></uni-icon>
 								<uni-icon type="suspend_icon" size="32" color="#666" v-show="music.playState==='pause'" @click="musicSet('pause')"></uni-icon>
@@ -57,6 +54,9 @@
 					</view>
 				</swiper-item>
 			</swiper>
+		</view>
+		<view class="music-loading" v-if="hasMusic" :class="music.playState==='pause'?'rotating':''" @click="musicSet(music.playState)">
+			<uni-icon type="music" size="40" color="#006FFF"></uni-icon>
 		</view>
 		<view class="uni-padding-wrap uni-common-mt segmented-box">
 			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented" styleType="text"
@@ -144,6 +144,7 @@
 				videoContext: "",
 				videoShow: false,
 				gesture: false, //是否开启控制进度的手势
+				hasMusic: false,
 				audioContext: "",
 				music: {
 					playState: 'play',
@@ -378,6 +379,7 @@
 					if (obj.media_type == "video") {
 						that.videoContext = uni.createVideoContext('TrainVideo')
 					} else if (obj.media_type == "music") {
+						that.hasMusic = true;
 						var _audioContext = uni.createInnerAudioContext();
 						that.audioContext = _audioContext;
 						_audioContext.autoplay = that.music.autoplay;
@@ -388,7 +390,8 @@
 			},
 			musicSet(type) {
 				var that = this;
-				switch (type) {
+				var _type = type;
+				switch (_type) {
 					case 'play':
 						that.musicOnPlay();
 						break;
@@ -698,9 +701,24 @@
 		justify-content: center;
 		width: 90upx;
 		height: 90upx;
-		top:10%;
-		right: 10%;
-		opacity: 0.8;
+		top: 8%;
+		right: 5%;
+		opacity: 0.9;
 		z-index: 5;
+		border-radius: 50%;
+	}
+
+	.rotating {
+		animation: rotate 5s linear infinite;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>
