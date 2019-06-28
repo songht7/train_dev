@@ -139,31 +139,40 @@ const store = new Vuex.Store({
 				});
 			}
 		},
-		wxXCXLogin(ctx, provider) {
-			var _provider = provider || 'weixin';
-			uni.login({
-				provider: _provider, //登录服务提供商
-				scopes: 'auth_base', //授权类型，默认 auth_base。支持 auth_base（静默授权）/ auth_user（主动授权） / auth_zhima（芝麻信用）
-				success: function(loginRes) {
-					console.log("wx-login-res:", loginRes)
-					var _code = loginRes.code;
-					if (_code) {
-						uni.request({
-							url: ctx.state.interface.apiurl + ctx.state.interface.addr['getWeChatInfo'] + '?code=' + _code,
-							method: "GET",
-							header: {},
-							success(res) {
-								console.log(res)
+		wxXCXLogin(ctx) {
+			uni.getProvider({
+				service: 'oauth',
+				success: function(res) {
+					console.log("getProvider:", res)
+					if (~res.provider.indexOf('weixin')) {
+						uni.login({
+							provider: 'weixin', //登录服务提供商
+							//scopes: 'auth_user', //授权类型，默认 auth_base。支持 auth_base（静默授权）/ auth_user（主动授权） / auth_zhima（芝麻信用）
+							success: function(loginRes) {
+								console.log("wx-login-res:", loginRes)
+								var _code = loginRes.code;
+								if (_code) {
+									var _url = ctx.state.interface.apiurl + ctx.state.interface.addr['getWeChatInfo'] + '?code=' + _code;
+									console.log("getWeChatInfo-url:", _url)
+									uni.request({
+										url: _url,
+										method: "GET",
+										header: {},
+										success(res) {
+											console.log("getWeChatInfo-success:", res)
+										},
+										fail(err) {
+											console.log("getWeChatInfo-err:", err)
+										},
+										complete() {}
+									})
+								}
 							},
-							fail(err) {
-								console.log("getData-err-getWeChatInfo", err)
-							},
+							fail(f) {},
 							complete() {}
-						})
+						});
 					}
-				},
-				fail(f) {},
-				complete() {}
+				}
 			});
 		},
 		checkSession() {
