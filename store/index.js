@@ -226,6 +226,10 @@ const store = new Vuex.Store({
 					});
 				}
 			});
+			uni.removeStorage({
+				key: 'openid',
+				success: function(res) {}
+			});
 		},
 		makePhoneCall(ctx, contactNumb) {
 			uni.makePhoneCall({
