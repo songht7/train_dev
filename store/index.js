@@ -89,27 +89,6 @@ const store = new Vuex.Store({
 		cheack_user(ctx) {
 			var user = "";
 			var _openid = ctx.state.openid;
-			console.log("cheack_user-openid:", ctx.state.openid)
-			if (_openid && !ctx.state.user.token) {
-				let _data = {
-					"inter": "info",
-					"header": {
-						"openid": _openid
-					}
-				}
-				_data["fun"] = function(ress) {
-					if (ress.success) {
-						uni.setStorage({
-							key: "user",
-							data: ress.data
-						});
-						ctx.dispatch('cheack_user');
-						ctx.commit("change_page", 0)
-					}
-				}
-				ctx.dispatch("getData", _data)
-				return
-			}
 			uni.getStorage({
 				key: "user",
 				success: function(res) {
@@ -186,6 +165,19 @@ const store = new Vuex.Store({
 											console.log("getWeChatInfo-success:", res)
 											if (res.data.success && res.data.data.openid) {
 												var _openid = res.data.data.openid;
+												// var _token = res.data.data.token ? res.data.data.token : '';
+												// uni.getStorage({
+												// 	key: "user",
+												// 	success(ress) {
+												// 		let ress_data = ress.data;
+												// 		ress_data["token"] = _token;
+												// 		uni.setStorage({
+												// 			key: "user",
+												// 			data: ress_data
+												// 		});
+												// 	},
+												// 	fail() {}
+												// })
 												uni.setStorage({
 													key: "openid",
 													data: _openid
@@ -216,20 +208,42 @@ const store = new Vuex.Store({
 			});
 		},
 		logout(ctx) {
-			uni.removeStorage({
-				key: 'user',
-				success: function(res) {
-					ctx.commit("get_user", {})
-					ctx.dispatch("menu_default")
-					uni.redirectTo({
-						url: '/pages/index/index'
-					});
+			var _openid = ctx.state.openid;
+			var _token = ctx.state.user.token;
+			var _data = {
+				"inter": "info",
+				"header": {
+					"token": _token
 				}
-			});
-			uni.removeStorage({
-				key: 'openid',
-				success: function(res) {}
-			});
+			}
+			if (_openid) {
+				_data["header"]["openid"] = _openid
+			}
+			_data["fun"] = function(ress) {
+				if (ress.success) {
+					uni.removeStorage({
+						key: 'user',
+						success: function(res) {},
+						complete() {
+							ctx.commit("get_user", {})
+							ctx.dispatch("menu_default")
+							uni.redirectTo({
+								url: '/pages/index/index'
+							});
+						}
+					});
+					uni.removeStorage({
+						key: 'openid',
+						success: function(res) {}
+					});
+				} else {
+					uni.showToast({
+						icon: "none",
+						title: "退出失败，请重试..."
+					})
+				}
+			}
+			ctx.dispatch("getData", _data)
 		},
 		makePhoneCall(ctx, contactNumb) {
 			uni.makePhoneCall({
