@@ -8,7 +8,7 @@
 			// #endif
 
 			// #ifdef MP-WEIXIN
-			this.$store.dispatch('wxXCXLogin');
+			this.$store.dispatch('wxXCXAuth');
 			// #endif
 		},
 		onShow: function() {

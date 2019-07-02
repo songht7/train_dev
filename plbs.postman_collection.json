@@ -24,7 +24,8 @@
 				"e235928c-066d-afc1-61be-be156e52539e",
 				"95529a4a-6701-5967-5330-4faddd7bf22a",
 				"696171ac-f3e2-0772-da3b-b8f580737931",
-				"6a10ad4d-4134-c7e1-09a0-d216efaf8342"
+				"6a10ad4d-4134-c7e1-09a0-d216efaf8342",
+				"478682e5-e65c-a0df-e90c-df94279be65f"
 			],
 			"owner": "1054562",
 			"folders_order": [
@@ -490,6 +491,37 @@
 			"folder": "1b843d05-6d22-5324-39a2-f37c38432416"
 		},
 		{
+			"id": "478682e5-e65c-a0df-e90c-df94279be65f",
+			"headers": "",
+			"headerData": [],
+			"url": "http://plbs.lc/v4/ApiWeChatMinProgram-getWeChatInfo.htm?code=1",
+			"folder": "7f335a37-67c4-1f34-81e7-fe077ccfadef",
+			"queryParams": [
+				{
+					"key": "code",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1561977930849,
+			"name": "/v4/ApiWeChatMinProgram-getWeChatInfo.htm",
+			"description": "",
+			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
+			"responses": []
+		},
+		{
 			"id": "4f72b152-955d-de5b-d673-4da76734b4ac",
 			"headers": "Content-Type: application/json\ntoken: fb5444fa707c2a758459e66846bb6d264ed3e697\n",
 			"headerData": [
@@ -663,7 +695,7 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"time": 1549960074600,
-			"name": "/v2/ApiWeChat-getWeChatInfo.htm copy",
+			"name": "/v4/ApiWeChat-getWeChatInfo.htm",
 			"description": "",
 			"collectionId": "bce6d1cf-f1a3-4de2-90b1-131ad2776891",
 			"responses": [],

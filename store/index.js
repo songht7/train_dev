@@ -14,6 +14,7 @@ const store = new Vuex.Store({
 		loading: "0",
 		phoneNumber: "4008200000",
 		user: {},
+		openid: "",
 		data: {},
 		haveMsg: false,
 		interface: common.Interface,
@@ -87,6 +88,28 @@ const store = new Vuex.Store({
 		},
 		cheack_user(ctx) {
 			var user = "";
+			var _openid = ctx.state.openid;
+			console.log("cheack_user-openid:", ctx.state.openid)
+			if (_openid && !ctx.state.user.token) {
+				let _data = {
+					"inter": "info",
+					"header": {
+						"openid": _openid
+					}
+				}
+				_data["fun"] = function(ress) {
+					if (ress.success) {
+						uni.setStorage({
+							key: "user",
+							data: ress.data
+						});
+						ctx.dispatch('cheack_user');
+						ctx.commit("change_page", 0)
+					}
+				}
+				ctx.dispatch("getData", _data)
+				return
+			}
 			uni.getStorage({
 				key: "user",
 				success: function(res) {
@@ -139,7 +162,8 @@ const store = new Vuex.Store({
 				});
 			}
 		},
-		wxXCXLogin(ctx) {
+		wxXCXAuth(ctx, type) {
+			var _type = !type || type == "mp" ? 'getWeChatInfoMP' : 'getWeChatInfo';
 			uni.getProvider({
 				service: 'oauth',
 				success: function(res) {
@@ -152,7 +176,7 @@ const store = new Vuex.Store({
 								console.log("wx-login-res:", loginRes)
 								var _code = loginRes.code;
 								if (_code) {
-									var _url = ctx.state.interface.apiurl + ctx.state.interface.addr['getWeChatInfo'] + '?code=' + _code;
+									var _url = ctx.state.interface.apiurl + ctx.state.interface.addr[_type] + '?code=' + _code;
 									console.log("getWeChatInfo-url:", _url)
 									uni.request({
 										url: _url,
@@ -160,6 +184,14 @@ const store = new Vuex.Store({
 										header: {},
 										success(res) {
 											console.log("getWeChatInfo-success:", res)
+											if (res.data.success && res.data.data.openid) {
+												var _openid = res.data.data.openid;
+												uni.setStorage({
+													key: "openid",
+													data: _openid
+												});
+												ctx.state.openid = _openid;
+											}
 										},
 										fail(err) {
 											console.log("getWeChatInfo-err:", err)

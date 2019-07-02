@@ -56,7 +56,7 @@
 					"phone": "",
 					"password": ""
 				},
-				MPLogin:false
+				MPLogin: false
 			};
 		},
 		onLoad(e) {
@@ -79,7 +79,7 @@
 			uniPopup
 		},
 		methods: {
-			bindMP(e){
+			bindMP(e) {
 				console.log(e)
 			},
 			formSubmit: function(e) {
@@ -109,10 +109,17 @@
 				var checkRes = graceChecker.check(_formData, rule);
 				if (checkRes) {
 					//_formData["Portrait"] = "/static/logo.png";
+					var _openid = that.$store.state.openid;
+					console.log(_openid)
 					let data = {
 						"inter": that.UserType == 'company' ? "sign" : "login",
 						"data": _formData,
 						"method": "POST"
+					}
+					if (_openid) {
+						data["header"] = {
+							"openid": _openid
+						}
 					}
 					data["fun"] = function(res) {
 						if (res.success) {
@@ -201,11 +208,14 @@
 		align-content: center;
 		align-items: center;
 	}
-	.mp-btns{
+
+	.mp-btns {
 		background: none;
-		color: #007AFF;letter-spacing: 2upx;
+		color: #007AFF;
+		letter-spacing: 2upx;
 	}
-	.mp-btns::after{
+
+	.mp-btns::after {
 		border: none;
 	}
 </style>

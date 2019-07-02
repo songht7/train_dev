@@ -146,6 +146,9 @@
 			var that = this;
 			that.getDatas('slideShow');
 			that.getDatas('categorys');
+			uni.showLoading({
+				title: "加载中..."
+			})
 		},
 		onPullDownRefresh() {
 			var that = this;
@@ -176,6 +179,9 @@
 							that.swiperList = res.data.list
 							that.swiperleng = res.data.total
 						}
+					}
+					if (inter == "categorys") {
+						uni.hideLoading()
 					}
 				}
 				that.$store.dispatch("getData", data)
