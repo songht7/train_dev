@@ -94,7 +94,7 @@ const store = new Vuex.Store({
 				success: function(res) {
 					user = res.data;
 					let timestamp = Math.round(new Date().getTime() / 1000);
-					if (!user.deathline || timestamp >= user.deathline) {
+					if (!user.deathline || timestamp >= user.deathline && _openid == '') {
 						uni.removeStorage({
 							key: "user"
 						});
