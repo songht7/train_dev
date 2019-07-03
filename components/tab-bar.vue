@@ -92,9 +92,9 @@
 		width: 100%;
 		background: #fff;
 		border-top: 2upx solid #D1D1D1;
-		padding-bottom: 0;
+		/* padding-bottom: 0;
 		padding-bottom: constant(safe-area-inset-bottom);
-		padding-bottom: env(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom); */
 	}
 
 	.tab_main {
