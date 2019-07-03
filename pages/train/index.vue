@@ -85,6 +85,9 @@
 						that.tabBars = _ctg;
 					}
 				}
+				uni.showLoading({
+					title: "加载中..."
+				})
 				that.$store.dispatch("getData", data_ctg)
 			}
 		},
@@ -210,6 +213,7 @@
 					}
 				}
 				data["fun"] = function(res) {
+					uni.hideLoading()
 					uni.stopPullDownRefresh();
 					ni[ti].loadingText = "上拉显示更多";
 					if (res.success) {

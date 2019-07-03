@@ -124,6 +124,7 @@
 			that.$store.dispatch("cheack_page", 0);
 			var _user = that.$store.state.user;
 			if (_user.token && _user.userType != "3") {
+				uni.hideLoading()
 				uni.redirectTo({
 					url: "/pages/company/statis?t=0"
 				})
@@ -144,11 +145,11 @@
 		onReady() {
 			console.log("onReady")
 			var that = this;
-			that.getDatas('slideShow');
-			that.getDatas('categorys');
 			uni.showLoading({
 				title: "加载中..."
 			})
+			that.getDatas('slideShow');
+			that.getDatas('categorys');
 		},
 		onPullDownRefresh() {
 			var that = this;

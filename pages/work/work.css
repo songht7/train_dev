@@ -104,6 +104,11 @@
 }
 
 .work-block-title {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	align-content: center;
+	justify-content: flex-start;
 	font-size: 34upx;
 	color: #222222;
 }
@@ -123,6 +128,7 @@
 
 .work-tag-list {
 	display: flex;
+	flex-direction: row;
 }
 
 .work-tag {

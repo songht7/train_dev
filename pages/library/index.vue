@@ -62,6 +62,9 @@
 		},
 		onShow() {
 			var that = this;
+			uni.showLoading({
+				title: "加载中..."
+			})
 			that.$store.dispatch('cheack_user')
 			that.getDatas()
 		},
@@ -120,6 +123,7 @@
 				}
 				data["fun"] = function(res) {
 					that.status = "more";
+					uni.hideLoading()
 					uni.stopPullDownRefresh()
 					if (res.success) {
 						var _data = res.data.list;

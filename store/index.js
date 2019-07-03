@@ -219,10 +219,12 @@ const store = new Vuex.Store({
 			var _openid = ctx.state.openid;
 			var _token = ctx.state.user.token;
 			var _data = {
-				"inter": "info",
+				"inter": "logout",
 				"header": {
+					"Content-Type": "application/json",
 					"token": _token
-				}
+				},
+				"method": "DELETE"
 			}
 			if (_openid) {
 				_data["header"]["openid"] = _openid

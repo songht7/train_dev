@@ -110,6 +110,9 @@
 		onLoad() {},
 		onShow() {
 			var that = this;
+			uni.showLoading({
+				title: "加载中..."
+			})
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 1)
 			let _user = that.$store.state.user;
@@ -189,6 +192,7 @@
 					}
 				}
 				data["fun"] = function(res) {
+					uni.hideLoading()
 					if (res.success) {
 						let _list = res.data.list;
 						if (_list) {
@@ -214,6 +218,7 @@
 					}
 				}
 				data["fun"] = function(res) {
+					uni.hideLoading()
 					if (res.success) {
 						let _list = res.data.list;
 						if (_list) {
