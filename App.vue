@@ -2,17 +2,18 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			this.$store.dispatch('getSystemInfo')
 			// #ifdef APP-PLUS
 			// 锁定屏幕方向
 			plus.screen.lockOrientation('portrait-primary'); //锁定
 			// #endif
-
-			// #ifdef MP-WEIXIN
-			this.$store.dispatch('wxXCXAuth');
-			// #endif
 		},
 		onShow: function() {
 			console.log('App Show')
+			// #ifdef MP-WEIXIN
+			this.$store.dispatch('wxXCXAuth');
+			// #endif
+			
 			// 			var pages = getCurrentPages();
 			// 			var page = pages[pages.length - 1];
 			// 			console.log(page.route)

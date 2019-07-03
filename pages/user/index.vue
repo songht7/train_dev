@@ -111,9 +111,9 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user');
-			that.$store.dispatch("cheack_page", 2)
+			that.$store.dispatch("cheack_page", 1)
 			let _user = that.$store.state.user;
-			console.log(_user.userInfo)
+			//console.log(_user.userInfo)
 			that.userInfo = _user.userInfo;
 			that.__token = _user.token;
 			let _subInfo = _user.userInfo.subInfo

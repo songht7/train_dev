@@ -94,15 +94,19 @@ const store = new Vuex.Store({
 				success: function(res) {
 					user = res.data;
 					let timestamp = Math.round(new Date().getTime() / 1000);
-					if (!user.deathline || timestamp >= user.deathline && _openid == '') {
-						uni.removeStorage({
-							key: "user"
-						});
-						ctx.dispatch("menu_default");
-						user = {};
-						uni.redirectTo({
-							url: "/pages/index/index"
-						})
+					if (!user.deathline || timestamp >= user.deathline) {
+						if (_openid) {
+							ctx.dispatch("wxXCXAuth");
+						} else {
+							uni.removeStorage({
+								key: "user"
+							});
+							ctx.dispatch("menu_default");
+							user = {};
+							uni.redirectTo({
+								url: "/pages/index/index"
+							})
+						}
 					} else {
 						ctx.dispatch("menu_" + user.tabBarType);
 					}
@@ -146,17 +150,17 @@ const store = new Vuex.Store({
 			uni.getProvider({
 				service: 'oauth',
 				success: function(res) {
-					console.log("getProvider:", res)
+					//console.log("getProvider:", res)
 					if (~res.provider.indexOf('weixin')) {
 						uni.login({
 							provider: 'weixin', //登录服务提供商
 							//scopes: 'auth_user', //授权类型，默认 auth_base。支持 auth_base（静默授权）/ auth_user（主动授权） / auth_zhima（芝麻信用）
 							success: function(loginRes) {
-								console.log("wx-login-res:", loginRes)
+								//console.log("wx-login-res:", loginRes)
 								var _code = loginRes.code;
 								if (_code) {
 									var _url = ctx.state.interface.apiurl + ctx.state.interface.addr[_type] + '?code=' + _code;
-									console.log("getWeChatInfo-url:", _url)
+									//console.log("getWeChatInfo-url:", _url)
 									uni.request({
 										url: _url,
 										method: "GET",
@@ -165,19 +169,23 @@ const store = new Vuex.Store({
 											console.log("getWeChatInfo-success:", res)
 											if (res.data.success && res.data.data.openid) {
 												var _openid = res.data.data.openid;
-												// var _token = res.data.data.token ? res.data.data.token : '';
-												// uni.getStorage({
-												// 	key: "user",
-												// 	success(ress) {
-												// 		let ress_data = ress.data;
-												// 		ress_data["token"] = _token;
-												// 		uni.setStorage({
-												// 			key: "user",
-												// 			data: ress_data
-												// 		});
-												// 	},
-												// 	fail() {}
-												// })
+												var _token = res.data.data.token ? res.data.data.token : '';
+												var deathline = res.data.data.deathline ? res.data.data.deathline : '';
+												if (_token && deathline) {
+													uni.getStorage({
+														key: "user",
+														success(ress) {
+															let ress_data = ress.data;
+															ress_data["token"] = _token;
+															ress_data["deathline"] = deathline;
+															uni.setStorage({
+																key: "user",
+																data: ress_data
+															});
+														},
+														fail() {}
+													})
+												}
 												uni.setStorage({
 													key: "openid",
 													data: _openid
@@ -255,6 +263,7 @@ const store = new Vuex.Store({
 			uni.getSystemInfo({
 				success(res) {
 					systemInfo = res
+					console.log(systemInfo);
 				},
 				complete() {
 					ctx.commit("setSystemInfo", systemInfo)
