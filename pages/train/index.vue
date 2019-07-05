@@ -49,6 +49,9 @@
 			var that = this;
 			that.tabIndex = e.c || 0;
 			that.ctgId = e.ctg_id;
+		},
+		onShow(e) {
+			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$loading()
 			if (!that.$store.state.user.userInfo) {
@@ -56,6 +59,9 @@
 					url: "/pages/index/index"
 				})
 			} else {
+				uni.showLoading({
+					title: "加载中..."
+				})
 				/*分类*/
 				let data_ctg = {
 					"inter": "categorys",
@@ -85,14 +91,8 @@
 						that.tabBars = _ctg;
 					}
 				}
-				uni.showLoading({
-					title: "加载中..."
-				})
 				that.$store.dispatch("getData", data_ctg)
 			}
-		},
-		onShow(e) {
-			var that = this;
 		},
 		onReady() {
 			var that = this;

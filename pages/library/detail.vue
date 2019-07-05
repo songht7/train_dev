@@ -2,7 +2,7 @@
 	<view class="page-main article-detail">
 		<block v-if="datas.id">
 			<view class="banner">
-				<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFit"></image>
+				<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFill"></image>
 				<!-- <view class="banner-title">{{datas.name}}</view> -->
 			</view>
 			<view class="banner-title-block">{{datas.name}}</view>

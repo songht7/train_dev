@@ -163,8 +163,6 @@
 			that.courseId = e.id;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token;
-			that.cheackTestLng();
-			that.pageInit();
 		},
 		onShow() {
 			var that = this;
@@ -172,6 +170,8 @@
 			if (_audioContext) {
 				_audioContext.destroy();
 			}
+			that.cheackTestLng();
+			that.pageInit();
 		},
 		onReady: function(res) {},
 		onPullDownRefresh() {

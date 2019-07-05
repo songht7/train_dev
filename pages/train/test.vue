@@ -121,10 +121,10 @@
 		data() {
 			return {
 				courseId: "",
-				__token: "",
 				current: 1,
 				tests: [],
-				test_leng: 5,
+				__token: "",
+				test_leng: "5",
 				test_total: 0,
 				countdown: 5, //分钟
 				countdownShow: false,
@@ -142,11 +142,15 @@
 		onLoad(e) {
 			var that = this;
 			that.courseId = e.course_id;
-			that.$store.dispatch('cheack_user')
-			that.__token = that.$store.state.user.token;
 			uni.setNavigationBarTitle({
 				title: "理论测试"
 			})
+		},
+		onShow() {
+			var that = this;
+			this.$store.dispatch('cheack_user')
+			that.__token = that.$store.state.user.token;
+			this.$store.dispatch('getSystemInfo');
 			/* tests */
 			let data_tests = {
 				"inter": "tests",
@@ -168,11 +172,7 @@
 			}
 			that.$store.dispatch("getData", data_tests)
 		},
-		onShow() {
-			this.$store.dispatch('cheack_user')
-			this.$store.dispatch('getSystemInfo');
-		},
-		onBackPress() {
+		onHide() {
 			if (this.type !== '') {
 				this.type = '';
 				return true;
@@ -188,21 +188,6 @@
 					_fixBtn = "static";
 				}
 				return _fixBtn;
-			},
-			selectType(val) {
-				var _val = val;
-				switch (val) {
-					case '对':
-						_val = '<text class="TorF true">✔</text>'
-						break;
-					case '错':
-						_val = '<text class="TorF false">✘</text>'
-						break;
-					default:
-						_val = val
-						break;
-				}
-				return _val
 			}
 		},
 		components: {
@@ -396,6 +381,7 @@
 
 	.score-star {
 		display: flex;
+		flex-direction: row;
 		justify-content: space-around;
 		width: 80%;
 		align-items: center;
@@ -476,6 +462,7 @@
 
 	.test-title-box {
 		display: flex;
+		flex-direction: row;
 		justify-content: space-between;
 		align-content: center;
 		align-items: flex-start;

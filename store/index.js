@@ -63,12 +63,12 @@ const store = new Vuex.Store({
 				method: parm.method || "GET",
 				header: parm.header || {},
 				success(res) {
+					console.log("getData-success-", parm.inter, "：", res)
 					//console.log(res)
 					if (res.success) {
 						ctx.commit("update_data", res.data.data)
 					}
 					result = res.data
-					console.log("getData-success-", parm.inter, "：", result)
 				},
 				fail(err) {
 					console.log("getData-err-", parm.inter, "：", err)
