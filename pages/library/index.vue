@@ -27,7 +27,7 @@
 								<!-- <view class="list-browse">1896 浏览</view> -->
 							</view>
 							<view class="list-right">
-								<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/data/image_doc/358aaf312fbb4cac05b05044b5a0e824.png'"
+								<image class="image-full" :src="obj.original_src?obj.original_src:'/static/default.png'"
 								 mode="aspectFill"></image>
 							</view>
 						</view>

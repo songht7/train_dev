@@ -1,8 +1,8 @@
 <template>
-	<view class="article-detail">
+	<view class="page-main article-detail">
 		<block v-if="datas.id">
 			<view class="banner">
-				<image class="banner-img" :src="sourceUrl+datas.original_src"></image>
+				<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFit"></image>
 				<!-- <view class="banner-title">{{datas.name}}</view> -->
 			</view>
 			<view class="banner-title-block">{{datas.name}}</view>
@@ -40,6 +40,9 @@
 		},
 		onShow() {
 			var that = this;
+			uni.showLoading({
+				title: "加载中..."
+			})
 			that.$store.dispatch('cheack_user')
 			that.getDatas()
 		},
@@ -58,6 +61,7 @@
 					}
 				}
 				data["fun"] = function(res) {
+					uni.hideLoading()
 					if (res.success) {
 						let _data = res.data;
 						that.datas = _data;
