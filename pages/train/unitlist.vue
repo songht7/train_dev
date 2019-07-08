@@ -132,6 +132,8 @@
 				segmented: [
 					'课程目录'
 				],
+				currentPage: 1,
+				pageSize: 100,
 				canTest: false,
 				test_list: false,
 				dotsStyles: {
@@ -204,7 +206,7 @@
 				/* course-detail */
 				let data_dtl = {
 					"inter": "course",
-					"parm": `?course_id=${that.courseId}`,
+					"parm": `?course_id=${that.courseId}&currentPage=${that.currentPage}&pagesize=${that.pageSize}`,
 					"header": {
 						"token": that.__token
 					}
