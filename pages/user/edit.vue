@@ -20,7 +20,7 @@
 							</view>
 							<view class="uni-btn-block">
 								<view class="btns" v-if="companyName" :class="companyStatu=='0'?'btns-big':''" @click="$store.dispatch('makePhoneCall',companyPhone)">联系企业</text></view>
-								<view class="btns btns-full" :class="companyName==''?'btns-big':''" v-if="companyStatu!='0'" @click="bindCompany(companyStatu=='1'?'unbind':'')">{{companyStatu!="1"?"绑定":"解绑"}}</view>
+								<view class="btns btns-full" :class="companyName==''?'btns-big':''" v-if="companyStatu!='0'" @click="bindCompany(companyStatu=='1'?'unbind':'')">{{companyStatu!="1"?"绑定":"已绑"}}</view>
 							</view>
 						</form>
 					</view>
@@ -236,7 +236,7 @@
 				console.log(type);
 				var that = this;
 				if (type === 'unbind') {
-					that.getDatas(type);
+					//that.getDatas(type);
 					return
 				}
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))

@@ -22,7 +22,7 @@
 											<view class="list-title">{{obj.name}}</view>
 											<view class="class-progress">
 												<view class="progress-box">
-													<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progres+"%"}}</view>
+													<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progress+"%"}}</view>
 													<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
 												</view>
 											</view>
