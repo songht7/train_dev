@@ -52,6 +52,7 @@
 				title: "加载中..."
 			})
 			that.$store.dispatch('cheack_user')
+			that.$store.dispatch("cheack_page", 1)
 			that.getDatas()
 		},
 		onReady: function(res) {},
