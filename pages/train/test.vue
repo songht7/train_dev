@@ -75,7 +75,7 @@
 				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_total" @click="test_more('next')">下一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-if="!submitted" @click="formSubmit">提交</view>
-				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">继续学习</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">{{testType=='exam'?'返回':'继续学习'}}</view>
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
@@ -98,7 +98,7 @@
 				</view>
 				<view class="score-block score-bottom">
 					<view class="score-btn score-back-btn" @click="togglePopup('')">查看结果</view>
-					<view class="score-btn" :class="scoreState" @click="goToList">继续学习</view>
+					<view class="score-btn" :class="scoreState" @click="goToList">{{testType=='exam'?'返回':'继续学习'}}</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -120,7 +120,8 @@
 	export default {
 		data() {
 			return {
-				courseId: "",
+				testId: "",
+				testType: "",
 				current: 1,
 				tests: [],
 				__token: "",
@@ -141,7 +142,8 @@
 		},
 		onLoad(e) {
 			var that = this;
-			that.courseId = e.course_id;
+			that.testType = e.type || "";
+			that.testId = e.course_id || e.examination_id;
 			uni.setNavigationBarTitle({
 				title: "理论测试"
 			})
@@ -154,9 +156,18 @@
 			/* tests */
 			let data_tests = {
 				"inter": "tests",
-				"parm": `?course_id=${that.courseId}`,
+				"parm": `?course_id=${that.testId}`,
 				"header": {
 					"token": that.__token
+				}
+			}
+			if (that.testType == 'exam') {
+				data_tests = {
+					"inter": "examination",
+					"parm": `?examination_id=${that.testId}`,
+					"header": {
+						"token": that.__token
+					}
 				}
 			}
 			data_tests["fun"] = function(res) {
@@ -215,14 +226,19 @@
 				}
 			},
 			answerAgain() {
+				var that = this;
+				var _url = that.testType == 'exam' ? `/pages/train/test?type=exam&examination_id=${this.testId}` :
+					`/pages/train/test?course_id=${this.testId}`;
 				uni.redirectTo({
-					url: `/pages/train/test?course_id=${this.courseId}`
+					url: _url
 				})
 			},
 			goToList() {
-				this.togglePopup('');
+				var that = this;
+				that.togglePopup('');
+				var _url = that.testType == 'exam' ? '/pages/exam/index' : `/pages/train/unitlist?id=${this.testId}`;
 				uni.redirectTo({
-					url: `/pages/train/unitlist?id=${this.courseId}`
+					url: _url
 				})
 			},
 			setData(e) {
@@ -270,10 +286,17 @@
 				that.loading = true
 				console.log(formData);
 
-				let _data = {
-					"course_id": that.courseId,
-					"aws": formData
-				};
+				if (that.testType == 'exam') {
+					var _data = {
+						"examination_id": that.testId,
+						"aws": formData
+					};
+				} else {
+					var _data = {
+						"course_id": that.testId,
+						"aws": formData
+					};
+				}
 				/* send test */
 				let data_test = {
 					"inter": "test",

@@ -63,6 +63,17 @@
 				"navigationBarTitleText": "工作详情",
 				"enablePullDownRefresh": true
 			}
+		}, {
+			"path": "pages/exam/index",
+			"style": {
+				"navigationBarTitleText": "试卷",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/exam/detail",
+			"style": {
+				"navigationBarTitleText": "试卷详细"
+			}
 		},
 		{
 			"path": "pages/user/login",
