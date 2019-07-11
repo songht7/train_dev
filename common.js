@@ -88,7 +88,7 @@ export default {
 			"courseProgresses": "/v4/ApiAccount-courseProgresses.htm", //企业主：课程参与度
 			"testProgresses": "/v4/ApiAccount-testProgresses.htm", //企业主：考试合格率
 			"resume": "/v4/ApiAccount-resume.htm", //获取简历[GET], 编辑简历[PUT], 投递简历[POST]?article_id
-			"examinations": "/v4/ApiExamination-examinations.htm", //试卷列表
+			"examinations": "/v4/ApiExamination-examinations.htm", //试卷列表 passStatus 0 没考 1 考过 2 没及格
 			"examination": "/v4/ApiExamination-examination.htm", //试卷详细?examination_id=6
 			"getWeChatInfo": "/v4/ApiWeChat-getWeChatInfo.htm", //获取微信信息-公众号?code=1
 			"getWeChatInfoMP":"/v4/ApiWeChatMinProgram-getWeChatInfo.htm",//获取微信信息-小程序?code=1

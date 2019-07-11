@@ -6,19 +6,23 @@
 					<view class="exam-block">
 						<view class="exam-title">{{obj.name}}</view>
 						<view class="exam-status">
-							<!-- <view class="exam-res">
-								<view class="exam-mark txt-green">
-									90
+							<block v-if="obj.passStatus=='0'||obj.passStatus=='2'">
+								<view class="exam-btns">
+									<view class="exam-btn" :class="obj.passStatus=='2'?'exam-btn-red':''" @click="goDetail(obj.id)">
+										{{obj.passStatus=='0'?'参与考试':'点击重考'}}
+									</view>
 								</view>
-								<view class="exam-ovs">
-									通过考试
+							</block>
+							<block v-if="obj.passStatus=='1'">
+								<view class="exam-res">
+									<view class="exam-mark txt-green">
+										{{obj.passStatus?obj.passStatus:'-'}}
+									</view>
+									<view class="exam-ovs">
+										通过考试
+									</view>
 								</view>
-							</view> -->
-							<view class="exam-btns">
-								<view class="exam-btn" @click="goDetail(obj.id)">
-									参与考试
-								</view>
-							</view>
+							</block>
 						</view>
 					</view>
 				</view>
@@ -188,5 +192,10 @@
 		color: #008CEE;
 		padding: 5upx 15upx;
 		border-radius: 10upx;
+	}
+
+	.exam-btn-red {
+		border-color: #EE6858;
+		color: #EE6858;
 	}
 </style>
