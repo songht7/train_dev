@@ -1,33 +1,48 @@
 <template>
 	<view class="exam">
 		<view class="page-main">
-			<block v-for="(obj,index) in datas" :key="index">
-				<view class="exam-row">
-					<view class="exam-block">
-						<view class="exam-title">{{obj.name}}</view>
-						<view class="exam-status">
-							<block v-if="obj.passStatus=='0'||obj.passStatus=='2'">
-								<view class="exam-btns">
-									<view class="exam-btn" :class="obj.passStatus=='2'?'exam-btn-red':''" @click="goDetail(obj.id)">
-										{{obj.passStatus=='0'?'参与考试':'点击重考'}}
-									</view>
-								</view>
-							</block>
-							<block v-if="obj.passStatus=='1'">
-								<view class="exam-res">
-									<view class="exam-mark txt-green">
-										{{obj.maxPoint?obj.maxPoint:'-'}}
-									</view>
-									<view class="exam-ovs">
-										通过考试
-									</view>
-								</view>
-							</block>
-						</view>
+			<block v-if="datas.length<=0">
+				<view class="exam-null">
+					<view class="exam-null-icon">
+						<uni-icon class="icon-wenhao" type="qm" size="50" color="#929292"></uni-icon>
+						<uni-icon type="hezi401" size="120" color="#929292"></uni-icon>
+					</view>
+					<view class="exam-null-info">
+						目前还没有单元考试哦
 					</view>
 				</view>
 			</block>
-			<uni-load-more :status="status"></uni-load-more>
+			<block v-else="">
+				<view class="exam-box">
+					<block v-for="(obj,index) in datas" :key="index">
+						<view class="exam-row">
+							<view class="exam-block">
+								<view class="exam-title">{{obj.name}}</view>
+								<view class="exam-status">
+									<block v-if="obj.passStatus=='0'||obj.passStatus=='2'">
+										<view class="exam-btns">
+											<view class="exam-btn" :class="obj.passStatus=='2'?'exam-btn-red':''" @click="goDetail(obj.id)">
+												{{obj.passStatus=='0'?'参与考试':'点击重考'}}
+											</view>
+										</view>
+									</block>
+									<block v-if="obj.passStatus=='1'">
+										<view class="exam-res">
+											<view class="exam-mark txt-green">
+												{{obj.maxPoint?obj.maxPoint:'-'}}
+											</view>
+											<view class="exam-ovs">
+												通过考试
+											</view>
+										</view>
+									</block>
+								</view>
+							</view>
+						</view>
+					</block>
+					<uni-load-more :status="status"></uni-load-more>
+				</view>
+			</block>
 		</view>
 		<tab-bar></tab-bar>
 	</view>
@@ -197,5 +212,33 @@
 	.exam-btn-red {
 		border-color: #EE6858;
 		color: #EE6858;
+	}
+
+	.exam-null {
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.exam-null-icon {
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+	}
+
+	.icon-wenhao {
+		position: relative;
+		top: 82upx;
+		z-index: 2;
+	}
+
+	.exam-null-info {
+		color: #929292;
+		font-size: 36upx;
 	}
 </style>
