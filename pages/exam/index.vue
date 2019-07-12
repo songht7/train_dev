@@ -16,7 +16,7 @@
 							<block v-if="obj.passStatus=='1'">
 								<view class="exam-res">
 									<view class="exam-mark txt-green">
-										{{obj.passStatus?obj.passStatus:'-'}}
+										{{obj.maxPoint?obj.maxPoint:'-'}}
 									</view>
 									<view class="exam-ovs">
 										通过考试
