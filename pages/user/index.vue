@@ -114,7 +114,7 @@
 				title: "加载中..."
 			})
 			that.$store.dispatch('cheack_user');
-			that.$store.dispatch("cheack_page", 2)
+			that.$store.dispatch("cheack_page", 1)
 			let _user = that.$store.state.user;
 			//console.log(_user.userInfo)
 			that.userInfo = _user.userInfo;
