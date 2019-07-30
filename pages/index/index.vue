@@ -120,6 +120,9 @@
 		onShow() {
 			console.log("onShow")
 			var that = this;
+			uni.setNavigationBarTitle({
+				title: that.$store.state.appName || "培训"
+			})
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 0);
 			var _user = that.$store.state.user;

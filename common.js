@@ -8,6 +8,7 @@ var api = {
 	"formal": {
 		"interface": "https://api.bdmartech.com", //接口
 		"domain": "http://m.bdmartech.com",
+		"appName": "培训星",
 		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
@@ -22,6 +23,7 @@ var api = {
 	"dev": {
 		"interface": "https://api-test.wsshanghai.com", //接口
 		"domain": "http://train.wsshanghai.com",
+		"appName": "培训星",
 		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
@@ -36,6 +38,7 @@ var api = {
 	"wuxi": {
 		"interface": "https://api.jobpgroup.com", //接口
 		"domain": "http://jobpgroup.com",
+		"appName": "职照培训平台",
 		"cosConfig": { //`https://jobpassport-1259247972.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'jobpassport-1259247972',
 			"Region": 'ap-shanghai',
@@ -48,13 +51,14 @@ var api = {
 		}
 	}
 }
-var lks = "wuxi";
+var lks = "dev";
 export default {
 	Interface: {
 		"site": lks,
 		"apiurl": api[lks]["interface"], //space111111
 		"domain": api[lks]["domain"],
 		"cosConfig": api[lks]["cosConfig"],
+		"appName": api[lks]["appName"],
 		"addr": {
 			"slideShow": "/v2/ApiHome-slideShow.htm", //首页列表
 			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
@@ -91,7 +95,7 @@ export default {
 			"examinations": "/v4/ApiExamination-examinations.htm", //试卷列表 passStatus 0 没考 1 考过 2 没及格
 			"examination": "/v4/ApiExamination-examination.htm", //试卷详细?examination_id=6
 			"getWeChatInfo": "/v4/ApiWeChat-getWeChatInfo.htm", //获取微信信息-公众号?code=1
-			"getWeChatInfoMP":"/v4/ApiWeChatMinProgram-getWeChatInfo.htm",//获取微信信息-小程序?code=1
+			"getWeChatInfoMP": "/v4/ApiWeChatMinProgram-getWeChatInfo.htm", //获取微信信息-小程序?code=1
 
 		}
 	}

@@ -12,6 +12,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		loading: "0",
+		appName: common.Interface.appName,
 		phoneNumber: "4008200000",
 		user: {},
 		openid: "",
