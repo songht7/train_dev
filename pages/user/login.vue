@@ -110,7 +110,7 @@
 				if (checkRes) {
 					//_formData["Portrait"] = "/static/logo.png";
 					var _openid = that.$store.state.openid;
-					console.log(_openid)
+					//console.log(_openid)
 					let data = {
 						"inter": that.UserType == 'company' ? "sign" : "login",
 						"data": _formData,
@@ -137,6 +137,7 @@
 									ress["data"]["tabBarType"] = that.UserType;
 									ress["data"]["token"] = _token;
 									ress["data"]["deathline"] = deathline;
+									ress["data"]["openid"] = _openid;
 									uni.setStorage({
 										key: "user",
 										data: ress.data

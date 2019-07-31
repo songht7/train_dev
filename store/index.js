@@ -89,14 +89,15 @@ const store = new Vuex.Store({
 		},
 		cheack_user(ctx) {
 			var user = "";
-			var _openid = ctx.state.openid;
+			var _openid = "";
 			uni.getStorage({
 				key: "user",
 				success: function(res) {
 					user = res.data;
 					let timestamp = Math.round(new Date().getTime() / 1000);
+					console.log(!user.deathline, user.deathline, user.openid)
 					if (!user.deathline || timestamp >= user.deathline) {
-						if (_openid) {
+						if (user.openid) {
 							ctx.dispatch("wxXCXAuth");
 						} else {
 							uni.removeStorage({
@@ -151,7 +152,7 @@ const store = new Vuex.Store({
 			uni.getProvider({
 				service: 'oauth',
 				success: function(res) {
-					//console.log("getProvider:", res)
+					console.log("getProvider:", res)
 					if (~res.provider.indexOf('weixin')) {
 						uni.login({
 							provider: 'weixin', //登录服务提供商
@@ -167,7 +168,7 @@ const store = new Vuex.Store({
 										method: "GET",
 										header: {},
 										success(res) {
-											console.log("getWeChatInfo-success:", res)
+											//console.log("getWeChatInfo-success:", res)
 											if (res.data.success && res.data.data.openid) {
 												var _openid = res.data.data.openid;
 												var _token = res.data.data.token ? res.data.data.token : '';
@@ -179,6 +180,7 @@ const store = new Vuex.Store({
 															let ress_data = ress.data;
 															ress_data["token"] = _token;
 															ress_data["deathline"] = deathline;
+															ress_data["openid"] = _openid;
 															uni.setStorage({
 																key: "user",
 																data: ress_data
@@ -218,6 +220,7 @@ const store = new Vuex.Store({
 		},
 		logout(ctx) {
 			var _openid = ctx.state.openid;
+			console.log("_openid:", _openid)
 			var _token = ctx.state.user.token;
 			var _data = {
 				"inter": "logout",

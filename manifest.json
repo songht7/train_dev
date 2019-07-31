@@ -1,5 +1,5 @@
 {
-    "name" : "培训星",
+    "name" : "职照培训平台",
     "appid" : "__UNI__F049441",
     "description" : "职照，培训",
     "versionName" : "1.0.0",
@@ -59,7 +59,7 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wxeaf6d3cdbb53e013",
+        "appid" : "wx69ecaa1a4fb809ff",
         "setting" : {
             "urlCheck" : false,
             "minified" : true

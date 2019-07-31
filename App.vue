@@ -2,6 +2,9 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			// #ifdef MP-WEIXIN
+			this.$store.dispatch('wxXCXAuth');
+			// #endif
 			this.$store.dispatch('getSystemInfo')
 			// #ifdef APP-PLUS
 			// 锁定屏幕方向
@@ -10,9 +13,6 @@
 		},
 		onShow: function() {
 			console.log('App Show')
-			// #ifdef MP-WEIXIN
-			this.$store.dispatch('wxXCXAuth');
-			// #endif
 			
 			// 			var pages = getCurrentPages();
 			// 			var page = pages[pages.length - 1];
