@@ -98,7 +98,8 @@ const store = new Vuex.Store({
 					console.log(!user.deathline, user.deathline, user.openid)
 					if (!user.deathline || timestamp >= user.deathline) {
 						if (user.openid) {
-							ctx.dispatch("wxXCXAuth");
+							ctx.dispatch("menu_" + user.tabBarType);
+							ctx.dispatch("wxXCXAuth", 'reCheack');
 						} else {
 							uni.removeStorage({
 								key: "user"
@@ -148,6 +149,7 @@ const store = new Vuex.Store({
 			}
 		},
 		wxXCXAuth(ctx, type) {
+			var checkType = type;
 			var _type = !type || type == "mp" ? 'getWeChatInfoMP' : 'getWeChatInfo';
 			uni.getProvider({
 				service: 'oauth',
@@ -194,6 +196,9 @@ const store = new Vuex.Store({
 													data: _openid
 												});
 												ctx.state.openid = _openid;
+												if (checkType == 'reCheack') {
+													ctx.dispatch("cheack_user");
+												}
 											}
 										},
 										fail(err) {

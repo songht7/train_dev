@@ -106,7 +106,7 @@
 				data_total: 0,
 				pageIndex: 1,
 				pageSize: 5,
-				status: "more",
+				status: "loading",
 				interList: [{
 					"inter": "personalProgresses",
 					"dataFor": "personal"
@@ -126,13 +126,22 @@
 		},
 		computed: {},
 		onLoad(e) {
+			//console.log("onLoad")
 			var that = this;
 			let p = e.t || 0
 			that.statisType = parseInt(p);
 			that.$store.dispatch("cheack_page", p)
-			console.log(that.statisType)
+			//console.log(that.statisType)
 		},
 		onShow() {
+			//console.log("onShow")
+			var that = this;
+			// interList.forEach((obj, key) => {
+			// 	that.getDatas(obj.inter, obj.dataFor)
+			// })
+		},
+		onReady() {
+			//console.log("onReady")
 			var that = this;
 			that.$store.dispatch('cheack_user');
 			var _user = that.$store.state.user.userInfo;
@@ -145,13 +154,11 @@
 			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
 			that.courseCount = _user.subInfo.courseCount || '0';
 			that.getDatas()
-			// interList.forEach((obj, key) => {
-			// 	that.getDatas(obj.inter, obj.dataFor)
-			// })
 		},
 		onPullDownRefresh() {
 			var that = this;
 			that.pageIndex = 1;
+			that.status = "loading";
 			that.getDatas()
 		},
 		onReachBottom() {
@@ -164,6 +171,7 @@
 				return;
 			}
 			that.pageIndex = that.pageIndex + 1;
+			that.status = "loading";
 			that.getDatas()
 		},
 		methods: {

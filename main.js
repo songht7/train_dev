@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App'
+
+// #ifdef MP-WEIXIN
 import './common/baidu/mtj-wx-sdk';
+// #endif
 
 Vue.config.productionTip = false
 // 引入vuex 状态库
