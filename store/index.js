@@ -97,7 +97,7 @@ const store = new Vuex.Store({
 					let timestamp = Math.round(new Date().getTime() / 1000);
 					console.log(!user.deathline, user.deathline, user.openid)
 					if (!user.deathline || timestamp >= user.deathline) {
-						if (user.openid) {
+						if (user.openid && user.userType == "3") {
 							ctx.dispatch("menu_" + user.tabBarType);
 							ctx.dispatch("wxXCXAuth", 'reCheack');
 						} else {
@@ -180,13 +180,15 @@ const store = new Vuex.Store({
 														key: "user",
 														success(ress) {
 															let ress_data = ress.data;
-															ress_data["token"] = _token;
-															ress_data["deathline"] = deathline;
-															ress_data["openid"] = _openid;
-															uni.setStorage({
-																key: "user",
-																data: ress_data
-															});
+															if (ress_data.userType == "3") {
+																ress_data["token"] = _token;
+																ress_data["deathline"] = deathline;
+																ress_data["openid"] = _openid;
+																uni.setStorage({
+																	key: "user",
+																	data: ress_data
+																});
+															}
 														},
 														fail() {}
 													})

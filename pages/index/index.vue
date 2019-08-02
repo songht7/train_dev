@@ -125,13 +125,6 @@
 			})
 			that.$store.dispatch('cheack_user');
 			that.$store.dispatch("cheack_page", 0);
-			var _user = that.$store.state.user;
-			if (_user.token && _user.userType != "3") {
-				uni.hideLoading()
-				uni.redirectTo({
-					url: "/pages/company/statis?t=0"
-				})
-			}
 			uni.getSystemInfo({
 				success: (res) => {
 					//console.log(res)
@@ -148,6 +141,14 @@
 		onReady() {
 			console.log("onReady")
 			var that = this;
+			var _user = that.$store.state.user;
+			if (_user.token && _user.userType != "3") {
+				uni.hideLoading()
+				uni.redirectTo({
+					url: "/pages/company/statis?t=0"
+				})
+				return
+			}
 			uni.showLoading({
 				title: "加载中..."
 			})
