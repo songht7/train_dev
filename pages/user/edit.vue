@@ -172,10 +172,10 @@
 		},
 		onLoad(e) {
 			var that = this;
+			that.$store.dispatch('cheack_user')
 		},
 		onShow() {
 			var that = this;
-			that.$store.dispatch('cheack_user')
 			let _userInfo = that.$store.state.user.userInfo;
 			that.imageList = _userInfo.photo ? [`${_userInfo.photo}`] : [];
 			that.$store.state.portrait = _userInfo.photo;
