@@ -167,6 +167,10 @@
 			that.__token = that.$store.state.user.token;
 		},
 		onShow() {
+			console.log("onShow")
+		},
+		onReady: function(res) {
+			console.log("onReady")
 			var that = this;
 			var _audioContext = that.audioContext;
 			if (_audioContext) {
@@ -175,7 +179,6 @@
 			that.cheackTestLng();
 			that.pageInit();
 		},
-		onReady: function(res) {},
 		onPullDownRefresh() {
 			var that = this;
 			that.pageInit();
