@@ -13,7 +13,7 @@ const store = new Vuex.Store({
 	state: {
 		loading: "0",
 		appName: common.Interface.appName,
-		phoneNumber: "4008200000",
+		phoneNumber: common.Interface.phoneNumber,
 		user: {},
 		openid: "",
 		wxType: "mp", //mp:小程序，gzh：公众号

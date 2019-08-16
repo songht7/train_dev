@@ -9,6 +9,7 @@ var api = {
 		"interface": "https://api.bdmartech.com", //接口
 		"domain": "http://m.bdmartech.com",
 		"appName": "培训星",
+		"phoneNumber": "4008200000",
 		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
@@ -24,6 +25,7 @@ var api = {
 		"interface": "https://api-test.wsshanghai.com", //接口
 		"domain": "http://train.wsshanghai.com",
 		"appName": "培训星",
+		"phoneNumber": "4008200000",
 		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
@@ -39,6 +41,7 @@ var api = {
 		"interface": "https://api.jobpgroup.com", //接口
 		"domain": "http://jobpgroup.com",
 		"appName": "职照培训平台",
+		"phoneNumber": "4008200000",
 		"cosConfig": { //`https://jobpassport-1259247972.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'jobpassport-1259247972',
 			"Region": 'ap-shanghai',
@@ -59,6 +62,7 @@ export default {
 		"domain": api[lks]["domain"],
 		"cosConfig": api[lks]["cosConfig"],
 		"appName": api[lks]["appName"],
+		"phoneNumber": api[lks]["phoneNumber"],
 		"addr": {
 			"slideShow": "/v2/ApiHome-slideShow.htm", //首页列表
 			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
