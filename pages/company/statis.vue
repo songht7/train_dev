@@ -206,6 +206,10 @@
 							that.status = "noMore";
 							return;
 						}
+					}else{
+						if(res.msg=="令牌错误"){
+							that.logout()
+						}
 					}
 				}
 				that.$store.dispatch("getData", data)
