@@ -140,7 +140,7 @@
 			var _user = that.$store.state.user.userInfo;
 			that.UserId = _user.id || '';
 			that.userInfo = _user;
-			console.log("user:", _user)
+			//console.log("user:", _user)
 			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
 			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
 			that.courseCount = _user.subInfo.courseCount || '0';
@@ -206,9 +206,9 @@
 							that.status = "noMore";
 							return;
 						}
-					}else{
-						if(res.msg=="令牌错误"){
-							that.logout()
+					} else {
+						if (res.msg == "令牌错误") {
+							that.$store.dispatch('logout')
 						}
 					}
 				}

@@ -134,27 +134,42 @@
 							_data["fun"] = function(ress) {
 								that.loading = false
 								if (ress.success) {
+									var toastTitle = "登录成功";
+									var setUserStorage = true;
 									ress["data"]["tabBarType"] = that.UserType;
 									ress["data"]["token"] = _token;
 									ress["data"]["deathline"] = deathline;
 									ress["data"]["openid"] = _openid;
 									uni.setStorage({
 										key: "user",
-										data: ress.data
+										data: ress.data,
+										success() {
+											//console.log("setStorage-user-success")
+											that.$store.dispatch('cheack_user');
+										},
+										fail() {
+											console.log("setStorage-user-fail")
+											toastTitle = "登录失败，请重试";
+											setUserStorage = false;
+										},
+										complete() {
+											console.log("setStorage-user-complete")
+											uni.showToast({
+												title: toastTitle,
+												icon: "success",
+												duration: 1500
+											})
+											if (setUserStorage) {
+												setTimeout(() => {
+													that.$store.commit("change_page", 0)
+													var _url = that.UserType == 'company' ? "/pages/company/statis?t=0" : "/pages/index/index";
+													uni.redirectTo({
+														url: _url
+													})
+												}, 1500)
+											}
+										}
 									});
-									uni.showToast({
-										title: "登录成功",
-										icon: "success",
-										duration: 1500
-									})
-									that.$store.dispatch('cheack_user');
-									setTimeout(() => {
-										that.$store.commit("change_page", 0)
-										var _url = that.UserType == 'company' ? "/pages/company/statis?t=0" : "/pages/index/index";
-										uni.redirectTo({
-											url: _url
-										})
-									}, 1500)
 								}
 							}
 							that.$store.dispatch("getData", _data)
