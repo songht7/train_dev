@@ -136,6 +136,15 @@
 		onShow() {
 			//console.log("onShow")
 			var that = this;
+			that.$store.dispatch('cheack_user');
+			var _user = that.$store.state.user.userInfo;
+			that.UserId = _user.id || '';
+			that.userInfo = _user;
+			console.log("user:", _user)
+			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
+			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
+			that.courseCount = _user.subInfo.courseCount || '0';
+			that.getDatas()
 			// interList.forEach((obj, key) => {
 			// 	that.getDatas(obj.inter, obj.dataFor)
 			// })
@@ -143,17 +152,6 @@
 		onReady() {
 			//console.log("onReady")
 			var that = this;
-			that.$store.dispatch('cheack_user');
-			var _user = that.$store.state.user.userInfo;
-			if (_user == undefined) {
-				return
-			}
-			that.UserId = _user.id || '';
-			that.userInfo = _user;
-			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
-			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
-			that.courseCount = _user.subInfo.courseCount || '0';
-			that.getDatas()
 		},
 		onPullDownRefresh() {
 			var that = this;
