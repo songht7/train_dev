@@ -18,7 +18,7 @@ var api = {
 		},
 		"wx": {
 			"AppID": "wxeaf6d3cdbb53e013",
-			"AppSecret": ""
+			"ast": ""
 		}
 	},
 	"dev": {
@@ -34,7 +34,7 @@ var api = {
 		},
 		"wx": {
 			"AppID": "wxeaf6d3cdbb53e013",
-			"AppSecret": ""
+			"ast": ""
 		}
 	},
 	"wuxi": {
@@ -50,7 +50,7 @@ var api = {
 		},
 		"wx": {
 			"AppID": "wx69ecaa1a4fb809ff",
-			"AppSecret": "411e2c42798cb38bab46f47ddf779ccf"
+			"ast": "NDExZTJjNDI3OThjYjM4YmFiNDZmNDdkZGY3NzljY2Y="
 		}
 	}
 }
