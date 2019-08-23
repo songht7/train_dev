@@ -203,7 +203,7 @@
 							// })
 						}
 						that.joinCourses = _list;
-						that.joinCourse = res.data.total;
+						that.joinCourse = res.data.total || 0;
 					}
 				}
 				that.$store.dispatch("getData", data)
@@ -225,7 +225,7 @@
 							_list.map(item => item.progress = parseInt(item.progress));
 						}
 						that.ECourses = _list;
-						that.ECoursesTotal = res.data.total;
+						that.ECoursesTotal = res.data.total || 0;
 					}
 				}
 				that.$store.dispatch("getData", data)
