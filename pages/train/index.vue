@@ -86,6 +86,9 @@
 							};
 							that.newsitems.push(aryItem)
 							_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
+							if (that.ctgId && that.ctgId == _ctg[i].id) {
+								that.changeTab(i);
+							}
 							that.getList("init", _ctg[i].id, i)
 						}
 						that.tabBars = _ctg;
@@ -126,7 +129,7 @@
 				that.getList('getMore');
 			},
 			async changeTab(e) {
-				let index = e.detail.current;
+				let index = e.detail && e.detail.current ? e.detail.current : e;
 				if (this.isClickChange) {
 					this.tabIndex = index;
 					this.isClickChange = false;
@@ -217,7 +220,7 @@
 					uni.stopPullDownRefresh();
 					ni[ti].loadingText = "上拉显示更多";
 					if (res.success) {
-						console.log("getlist-tabIndex:", ti)
+						//console.log("getlist-tabIndex:", ti)
 						ni[ti]["pageIndex"] = mPI;
 						if (res.data.list) {
 							var res_list = res.data.list;
@@ -245,7 +248,7 @@
 									// Array.prototype.push.apply(d1, res_list);
 								}
 							}
-							console.log("getlist-newsitems:", ni)
+							//console.log("getlist-newsitems:", ni)
 						} else {
 							if (getType == "init") {
 								ni[index]["total"] = res.data.total;
