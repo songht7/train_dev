@@ -7,7 +7,7 @@
 						答题倒计时 <uni-countdown color="#f40" border-color="#f40" :show-day="false" :minute="countdown" :second="0" @timeup="toSubmit"></uni-countdown>
 						后自动提交
 					</view>
-					<view class="test-total">本章节测试，共{{test_total}}题</view>
+					<view class="test-total">{{testType=='workExam'?'求职前测试':'本章节测试'}}，共{{test_total}}题</view>
 				</view>
 				<block v-for="(t,i) in tests" :key="i">
 					<view v-show="current === i+1">
@@ -143,7 +143,7 @@
 		onLoad(e) {
 			var that = this;
 			that.testType = e.type || "";
-			that.testId = e.course_id || e.examination_id;
+			that.testId = e.course_id || e.id;
 			uni.setNavigationBarTitle({
 				title: "理论测试"
 			})
@@ -154,21 +154,26 @@
 			that.__token = that.$store.state.user.token;
 			this.$store.dispatch('getSystemInfo');
 			/* tests */
-			let data_tests = {
-				"inter": "tests",
-				"parm": `?course_id=${that.testId}`,
+			var data_tests = {
 				"header": {
 					"token": that.__token
 				}
 			}
-			if (that.testType == 'exam') {
-				data_tests = {
-					"inter": "examination",
-					"parm": `?examination_id=${that.testId}`,
-					"header": {
-						"token": that.__token
-					}
-				}
+			switch (that.testType) {
+				case 'exam':
+					/*在线考试*/
+					data_tests['inter'] = "examination";
+					data_tests['parm'] = `?examination_id=${that.testId}`;
+					break;
+				case 'workExam':
+					/*工作机会提交简历前测试---临时测试*/
+					data_tests['inter'] = "tests";
+					data_tests['parm'] = `?course_id=29`;
+					break;
+				default:
+					data_tests['inter'] = "tests";
+					data_tests['parm'] = `?course_id=${that.testId}`;
+					break;
 			}
 			data_tests["fun"] = function(res) {
 				if (res.success) {
@@ -236,7 +241,18 @@
 			goToList() {
 				var that = this;
 				that.togglePopup('');
-				var _url = that.testType == 'exam' ? '/pages/exam/index' : `/pages/train/unitlist?id=${this.testId}`;
+				var _url = "";
+				switch (that.testType) {
+					case 'exam':
+						_url = '/pages/exam/index';
+						break;
+					case 'workExam':
+						_url = `/pages/work/detail?id=${this.testId}`;
+						break;
+					default:
+						_url = `/pages/train/unitlist?id=${this.testId}`;
+						break;
+				}
 				uni.redirectTo({
 					url: _url
 				})
@@ -285,17 +301,19 @@
 				}
 				that.loading = true
 				console.log(formData);
-
-				if (that.testType == 'exam') {
-					var _data = {
-						"examination_id": that.testId,
-						"aws": formData
-					};
-				} else {
-					var _data = {
-						"course_id": that.testId,
-						"aws": formData
-					};
+				var _data = {
+					"aws": formData
+				};
+				switch (that.testType) {
+					case 'exam':
+						_data["examination_id"] = that.testId;
+						break;
+					case 'workExam':
+						_data["examination_id"] = that.testId;
+						break;
+					default:
+						_data["course_id"] = that.testId;
+						break;
 				}
 				/* send test */
 				let data_test = {

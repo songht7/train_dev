@@ -48,7 +48,7 @@
 			</view>
 			<fix-button>
 				<!-- btnType="fbtn-full" -->
-				<block v-if="datas.needExam">
+				<block v-if="!datas.needExam">
 					<view class="fbtns fbtns-clr-full btn-totest" @click="workExam">求职前小测试</view>
 				</block>
 				<block v-else>
@@ -125,7 +125,8 @@
 					if (res.success) {
 						var _data = res.data
 						_data['tags'] = _data["tag"].split("，")
-						_data["responsibilities"] = _data["responsibilities"].replace(/\<img/gi,'<img style="max-width:100%;height:auto" ');
+						_data["responsibilities"] = _data["responsibilities"].replace(/\<img/gi,
+							'<img style="max-width:100%;height:auto" ');
 						_data["qualifications"] = _data["qualifications"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						that.datas = _data;
 						that.disabled = _data.resume_article ? true : false;
@@ -176,7 +177,12 @@
 				}
 				that.$store.dispatch("getData", _data)
 			},
-			workExam() {},
+			workExam() {
+				var that = this;
+				uni.navigateTo({
+					url: `/pages/train/test?type=workExam&id=${that.article_id}`
+				})
+			},
 			showResume() {
 				var that = this;
 				if (that.disabled) {

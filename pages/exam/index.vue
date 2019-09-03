@@ -137,7 +137,7 @@
 			},
 			goDetail: function(id) {
 				uni.navigateTo({
-					url: "/pages/train/test?type=exam&examination_id=" + id
+					url: "/pages/train/test?type=exam&id=" + id
 				})
 			},
 		}
