@@ -120,6 +120,8 @@
 					if (res.success) {
 						var _data = res.data
 						_data['tags'] = _data["tag"].split("，")
+						_data["responsibilities"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						_data["qualifications"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						that.datas = _data;
 						that.disabled = _data.resume_article ? true : false;
 						uni.setNavigationBarTitle({
