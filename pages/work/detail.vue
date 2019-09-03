@@ -48,7 +48,12 @@
 			</view>
 			<fix-button>
 				<!-- btnType="fbtn-full" -->
-				<view class="fbtns fbtns-clr-full btn-totest" :class="!disabled?'':'btn-disabled'" @click="showResume">{{datas.resume_article==1?'简历已投递':'发送简历'}}</view>
+				<block v-if="datas.needExam">
+					<view class="fbtns fbtns-clr-full btn-totest" @click="workExam">求职前小测试</view>
+				</block>
+				<block v-else>
+					<view class="fbtns fbtns-clr-full btn-totest" :class="!disabled?'':'btn-disabled'" @click="showResume">{{datas.resume_article==1?'简历已投递':'发送简历'}}</view>
+				</block>
 			</fix-button>
 		</view>
 		<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
@@ -120,8 +125,8 @@
 					if (res.success) {
 						var _data = res.data
 						_data['tags'] = _data["tag"].split("，")
-						_data["responsibilities"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
-						_data["qualifications"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						_data["responsibilities"] = _data["responsibilities"].replace(/\<img/gi,'<img style="max-width:100%;height:auto" ');
+						_data["qualifications"] = _data["qualifications"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						that.datas = _data;
 						that.disabled = _data.resume_article ? true : false;
 						uni.setNavigationBarTitle({
@@ -171,6 +176,7 @@
 				}
 				that.$store.dispatch("getData", _data)
 			},
+			workExam() {},
 			showResume() {
 				var that = this;
 				if (that.disabled) {
@@ -212,7 +218,8 @@
 							var checkRes = graceChecker.check(that.temp, rule);
 							if (checkRes) {
 								that.saveData = that.temp;
-								that.saveData["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : '';
+								that.saveData["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self :
+									'';
 								//that.saveDatas(that.saveData);
 							} else {
 								uni.showToast({
