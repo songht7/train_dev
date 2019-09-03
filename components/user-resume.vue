@@ -436,11 +436,14 @@
 
 	.date-box {
 		display: flex;
+		flex-direction: row;
 		width: 100%;
 		align-content: center;
 		align-items: center;
 	}
-
+	.basic-row{
+		flex-direction: row;
+	}
 	.block-full {
 		width: 100%;
 	}
@@ -471,6 +474,7 @@
 
 	.edits {
 		display: flex;
+		flex-direction: row;
 		align-items: center;
 	}
 
