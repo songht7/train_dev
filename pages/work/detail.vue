@@ -48,7 +48,7 @@
 			</view>
 			<fix-button>
 				<!-- btnType="fbtn-full" -->
-				<block v-if="!datas.needExam">
+				<block v-if="datas.needExam">
 					<view class="fbtns fbtns-clr-full btn-totest" @click="workExam">求职前小测试</view>
 				</block>
 				<block v-else>
