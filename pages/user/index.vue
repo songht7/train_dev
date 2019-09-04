@@ -124,6 +124,7 @@
 			that.passCourse = _subInfo.passCourse;
 			that.failCourse = _subInfo.failCourse;
 			that.setPageData(_user.userInfo)
+			that.getUserInfo()
 		},
 		onPullDownRefresh() {
 			var that = this;
