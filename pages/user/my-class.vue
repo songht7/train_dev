@@ -1,36 +1,38 @@
 <template>
 	<view class="user-center">
-		<view class="user-block">
-			<view class="user-class-list">
-				<view class="my-class-head">
-					<view class="class-tip">
-						<view class="class-icon" :class="{'class-icon-qy':pageType}">
-							<uni-icon v-if="!pageType" type="shuji" :size="20" color="#FFFFFF"></uni-icon>
-							<uni-icon v-if="pageType" type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
+		<view class="page-main">
+			<view class="user-block">
+				<view class="user-class-list">
+					<view class="my-class-head">
+						<view class="class-tip">
+							<view class="class-icon" :class="{'class-icon-qy':pageType}">
+								<uni-icon v-if="!pageType" type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+								<uni-icon v-if="pageType" type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
+							</view>
+							<view class="txt-sross">{{pageOverview}}</view>
 						</view>
-						<view class="txt-sross">{{pageOverview}}</view>
 					</view>
-				</view>
-				<view class="class-list">
-					<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
-						<view class="list-block" @click="navToTrain(obj.id)">
-							<view class="list-more">
-								<view class="list-left class-list-left">
-									<view class="list-title">{{obj.name}}</view>
-									<view class="class-progress">
-										<view class="progress-box">
-											<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progress+"%"}}</view>
-											<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+					<view class="class-list">
+						<view class="list-row class-list-row" v-for="(obj,k) in datas" :key="k">
+							<view class="list-block" @click="navToTrain(obj.id)">
+								<view class="list-more">
+									<view class="list-left class-list-left">
+										<view class="list-title">{{obj.name}}</view>
+										<view class="class-progress">
+											<view class="progress-box">
+												<view class="percent">{{obj.progress<=0?"开始学习":"已学"+obj.progress+"%"}}</view>
+												<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+											</view>
 										</view>
 									</view>
-								</view>
-								<view class="list-right">
-									<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/img/logo.png'" mode="aspectFill"></image>
+									<view class="list-right">
+										<image class="image-full" :src="obj.original_src?obj.original_src:sourceUrl+'/img/logo.png'" mode="aspectFill"></image>
+									</view>
 								</view>
 							</view>
 						</view>
+						<uni-load-more :status="status"></uni-load-more>
 					</view>
-					<uni-load-more :status="status"></uni-load-more>
 				</view>
 			</view>
 		</view>
@@ -113,6 +115,7 @@
 					that.status = "more";
 					if (res.success) {
 						var _data = res.data.list;
+						var _total = parseInt(res.data.total);
 						if (_data) {
 							_data.map(item => item["progress"] = parseInt(item["progress"]));
 							if (that.pageIndex == 1) {
@@ -124,9 +127,9 @@
 									that.datas.push(item);
 								});
 							}
-							that.data_total = res.data.total;
+							that.data_total = _total;
 						}
-						if (that.datas.length >= res.data.total || res.data.total <= 0) {
+						if (that.datas.length >= _total || _total <= 0 || !_data) {
 							that.status = "noMore";
 							return;
 						}
