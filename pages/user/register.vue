@@ -12,9 +12,22 @@
 						</view>
 						<view class="get-code" :class="btnLoading" @click="getCode">{{getCodeTxt}}</view>
 					</view>
-					<view class="uni-form-item uni-column" v-if="regType==='register'">
-						<input class="uni-input train-input" name="name" data-key="name" @input="setData" placeholder="请输入真实姓名" />
-					</view>
+					<block v-if="regType==='register'">
+						<view class="uni-form-item uni-column">
+							<input class="uni-input train-input" name="name" data-key="name" @input="setData" placeholder="请输入真实姓名" />
+						</view>
+						<view class="uni-form-item uni-column">
+							<view class="check-agreement">
+								<view>
+									<checkbox-group name="Agreement" @change="checkboxChange">
+										<label>
+											<checkbox value="true" checked="true" /><text class="agmt-txt">接受</text></label>
+									</checkbox-group>
+								</view>
+								<view class="agreement agmt-txt" @click="popupIntro('agreement')">《声明条款》</view>
+							</view>
+						</view>
+					</block>
 					<view class="uni-btn-block">
 						<view class="btns btns-full btns-big" @click="regNext(1)">下一步</view>
 					</view>
@@ -34,11 +47,21 @@
 				</view>
 			</form>
 		</view>
+		<!-- 弹出层 -->
+		<lvv-popup position="top" ref="lvvpopref">
+			<view class="pop-inner" :class="'pop-inner-'+popType">
+				<block v-if="popType=='agreement'">
+					<agreement @click="closeIntro"></agreement>
+				</block>
+			</view>
+		</lvv-popup>
+		<!-- 弹出层 -->
 		<loading></loading>
 	</view>
 </template>
 
 <script>
+	import lvvPopup from '../../components/lvv-popup.vue'
 	var graceChecker = require("@/common/graceChecker.js");
 	export default {
 		data() {
@@ -54,9 +77,11 @@
 					"phone": "",
 					"code": "",
 					"name": "",
+					"Agreement": "",
 					"password": "",
 					"cfn_password": ""
-				}
+				},
+				popType: "agreement"
 			};
 		},
 		onLoad(e) {
@@ -75,7 +100,9 @@
 
 		},
 		computed: {},
-		components: {},
+		components: {
+			lvvPopup
+		},
 		methods: {
 			formSubmit: function(e) {
 				var that = this;
@@ -176,7 +203,14 @@
 						checkRule: "",
 						errorMsg: "请输入真实姓名"
 					};
+					let am = {
+						name: "Agreement",
+						checkType: "notnull",
+						checkRule: "",
+						errorMsg: "请接受声明条款"
+					}
 					rule.push(n)
+					rule.push(am)
 				}
 				let _formData = that.formData;
 				var checkRes = graceChecker.check(_formData, rule);
@@ -253,6 +287,14 @@
 					});
 				}
 
+			},
+			popupIntro(type) {
+				this.popType = type;
+				this.$refs.lvvpopref.show();
+			},
+			checkboxChange(e){
+				var that = this;
+				that.formData['Agreement'] = e.detail.value;
 			},
 			setData(e) {
 				//console.log(e);

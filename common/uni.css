@@ -50,6 +50,12 @@
 	font-weight: 600;
 }
 
+.loginTip {
+	font-size: 40upx;
+	line-height: 2;
+	color: #F69A22;
+}
+
 .pages {
 	padding: 20upx 3.6%;
 }
@@ -179,6 +185,14 @@
 	left: 0;
 	bottom: 0;
 	overflow-y: auto;
+}
+
+.pop-inner-agreement {
+	bottom: auto;
+	top: 10%;
+	max-height: 75%;
+	width: 90%;
+	left: 5%;
 }
 
 .pop-box {

@@ -17,6 +17,10 @@ Vue.component("uni-icon", uniIcon)
 import tabBar from "./components/tab-bar.vue"
 Vue.component("tab-bar", tabBar)
 
+/*用户协议*/
+import agreement from "./components/agreement.vue"
+Vue.component("agreement", agreement)
+
 Vue.prototype.websiteUrl = 'http://wsshanghai.com';
 Vue.prototype.sourceUrl = 'http://api_test.wsshanghai.com';
 /*

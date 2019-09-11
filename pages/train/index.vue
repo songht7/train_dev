@@ -54,48 +54,42 @@
 			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.$loading()
-			if (!that.$store.state.user.userInfo) {
-				uni.redirectTo({
-					url: "/pages/index/index"
-				})
-			} else {
-				uni.showLoading({
-					title: "加载中..."
-				})
-				/*分类*/
-				let data_ctg = {
-					"inter": "categorys",
-					"parm": "?cat_id=1",
-					"header": {
-						"token": that.$store.state.user.token || ""
-					}
+			// uni.showLoading({
+			// 	title: "加载中..."
+			// })
+			/*分类*/
+			let data_ctg = {
+				"inter": "categorys",
+				"parm": "?cat_id=1",
+				"header": {
+					"token": that.$store.state.user.token || ""
 				}
-				data_ctg["fun"] = function(res) {
-					that.$loading(0)
-					if (res.success) {
-						let _ctg = res.data.list;
-						_ctg = _ctg.filter(element => element.parent_id == 1);
-						for (let i = 0, length = _ctg.length; i < length; i++) {
-							/*分类下列表*/
-							let aryItem = {
-								loadingText: '上拉显示更多',
-								pageIndex: 1,
-								ctgId: _ctg[i].id,
-								total: 0,
-								data: []
-							};
-							that.newsitems.push(aryItem)
-							_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
-							if (that.ctgId && that.ctgId == _ctg[i].id) {
-								that.changeTab(i);
-							}
-							that.getList("init", _ctg[i].id, i)
-						}
-						that.tabBars = _ctg;
-					}
-				}
-				that.$store.dispatch("getData", data_ctg)
 			}
+			data_ctg["fun"] = function(res) {
+				that.$loading(0)
+				if (res.success) {
+					let _ctg = res.data.list;
+					_ctg = _ctg.filter(element => element.parent_id == 1);
+					for (let i = 0, length = _ctg.length; i < length; i++) {
+						/*分类下列表*/
+						let aryItem = {
+							loadingText: '上拉显示更多',
+							pageIndex: 1,
+							ctgId: _ctg[i].id,
+							total: 0,
+							data: []
+						};
+						that.newsitems.push(aryItem)
+						_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
+						if (that.ctgId && that.ctgId == _ctg[i].id) {
+							that.changeTab(i);
+						}
+						that.getList("init", _ctg[i].id, i)
+					}
+					that.tabBars = _ctg;
+				}
+			}
+			that.$store.dispatch("getData", data_ctg)
 		},
 		onReady() {
 			var that = this;

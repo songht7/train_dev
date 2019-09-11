@@ -1,3 +1,14 @@
+.check-agreement {
+	display: flex;
+	justify-content: flex-start;
+	align-content: center;
+	align-items: center;
+	padding: 20upx 0 0;
+}
+
+.agmt-txt {
+	font-size: 28upx;
+}
 .train-input {
 	background: #F4F4F4;
 	border-radius: 5upx;

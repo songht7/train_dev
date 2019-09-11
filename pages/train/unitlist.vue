@@ -85,19 +85,26 @@
 							<rich-text class="course-detail" :nodes="data.detail"></rich-text>
 						</block>
 						<block v-else="">
-							<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
+							<block v-if="$store.state.user.token">
+								<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
+							</block>
+							<block v-else>
+								<view class="loginTip">登录账号即可查看详细内容</view>
+							</block>
 						</block>
 					</view>
 				</view>
 			</view>
 		</view>
 
-		<fix-button gobackShow="hide">
-			<view class="fbtns btn-goback" @click="goback">返回</view>
-			<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
-			<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
-			 @click="to_test(courseId)">开始测试</view>
-		</fix-button>
+		<block v-if="$store.state.user.token">
+			<fix-button gobackShow="hide">
+				<view class="fbtns btn-goback" @click="goback">返回</view>
+				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
+				<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
+				 @click="to_test(courseId)">开始测试</view>
+			</fix-button>
+		</block>
 	</view>
 </template>
 
@@ -206,6 +213,9 @@
 		methods: {
 			pageInit() {
 				var that = this;
+				if (!that.__token) {
+					return
+				}
 				/* course-detail */
 				let data_dtl = {
 					"inter": "course",

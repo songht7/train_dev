@@ -204,13 +204,16 @@
 			},
 			navTo(url) {
 				var that = this;
-				if (that.$store.state.user.userInfo) {
-					uni.navigateTo({
-						url: url
-					})
-				} else {
-					that.poptype = "getNotUser";
-				}
+				uni.navigateTo({
+					url: url
+				})
+				// if (that.$store.state.user.userInfo) {
+				// 	uni.navigateTo({
+				// 		url: url
+				// 	})
+				// } else {
+				// 	that.poptype = "getNotUser";
+				// }
 			},
 			togglePopup(type) {
 				this.poptype = type;
