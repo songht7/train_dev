@@ -54,7 +54,7 @@ var api = {
 		}
 	}
 }
-var lks = "wuxi";
+var lks = "dev";
 export default {
 	Interface: {
 		"site": lks,
