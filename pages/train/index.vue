@@ -84,6 +84,7 @@
 						that.newsitems.push(aryItem)
 						_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
 						if (that.ctgId && that.ctgId == _ctg[i].id) {
+							console.log("i:", i)
 							that.changeTab(i);
 						}
 						that.getList("init", _ctg[i].id, i)
@@ -125,7 +126,9 @@
 				that.getList('getMore');
 			},
 			async changeTab(e) {
-				let index = e.detail && e.detail.current ? e.detail.current : e;
+				//console.log("changeTab:", e)
+				let index = e.detail ? e.detail.current : e;
+				//console.log("index:", index);
 				if (this.isClickChange) {
 					this.tabIndex = index;
 					this.isClickChange = false;
