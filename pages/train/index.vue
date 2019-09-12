@@ -34,6 +34,7 @@
 				tabIndex: 0,
 				newsitems: [],
 				ctgId: "",
+				__token: "",
 				pageSize: 7,
 				list: {
 					// "id": 1,
@@ -53,6 +54,7 @@
 		onShow(e) {
 			var that = this;
 			that.$store.dispatch('cheack_user')
+			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
 			that.$loading()
 			// uni.showLoading({
 			// 	title: "加载中..."
@@ -62,7 +64,7 @@
 				"inter": "categorys",
 				"parm": "?cat_id=1",
 				"header": {
-					"token": that.$store.state.user.token || ""
+					"token": that.__token
 				}
 			}
 			data_ctg["fun"] = function(res) {
@@ -206,7 +208,7 @@
 					"inter": "courses",
 					"parm": `?cat_id=${__ctg_id}&currentPage=${mPI}&pagesize=${that.pageSize}`,
 					"header": {
-						"token": that.$store.state.user.token
+						"token": that.__token
 					}
 				}
 				data["fun"] = function(res) {

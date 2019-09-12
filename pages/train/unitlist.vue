@@ -171,7 +171,7 @@
 			var that = this;
 			that.courseId = e.id;
 			that.$store.dispatch('cheack_user')
-			that.__token = that.$store.state.user.token;
+			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
 		},
 		onShow() {
 			console.log("onShow")
@@ -214,7 +214,7 @@
 			pageInit() {
 				var that = this;
 				if (!that.__token) {
-					return
+					//return
 				}
 				/* course-detail */
 				let data_dtl = {
