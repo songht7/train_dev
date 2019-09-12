@@ -1,23 +1,31 @@
 <template>
-	<view class="page-main article-detail">
-		<block v-if="datas.id">
-			<view class="banner">
-				<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFit"></image>
-			</view>
-			<view class="banner-title">{{datas.name}}</view>
-			<!-- <view class="article-meta">
+	<view class="article-detail">
+		<block v-if="$store.state.user.token">
+			<view class="page-main">
+				<block v-if="datas.id">
+					<view class="banner">
+						<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFit"></image>
+					</view>
+					<view class="banner-title">{{datas.name}}</view>
+					<!-- <view class="article-meta">
 				<text class="article-author">21人已办理</text>
 			</view> -->
-			<view class="article-content">
-				<rich-text :nodes="datas.detail"></rich-text>
+					<view class="article-content">
+						<rich-text :nodes="datas.detail"></rich-text>
+					</view>
+				</block>
+
+				<fix-button>
+					<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
+						<uni-icon type="dianhua1" size="25" color="#fff"></uni-icon>咨询我们
+					</view>
+				</fix-button>
 			</view>
 		</block>
-
-		<fix-button>
-			<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
-				<uni-icon type="dianhua1" size="25" color="#fff"></uni-icon>咨询我们
-			</view>
-		</fix-button>
+		<block v-else>
+			<view class="loginTip">{{$store.state.loginTips}}</view>
+			<tab-bar></tab-bar>
+		</block>
 	</view>
 </template>
 <script>

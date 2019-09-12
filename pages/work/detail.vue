@@ -1,67 +1,73 @@
 <template>
 	<view class="content">
-		<view class="pages page-main">
-			<view class="work-dtl-head">
-				<view class="work-head-main">
-					<view class="work-head-list">
-						<view class="work-block">
-							<view class="work-block-title work-dtl-name">{{datas.name}} | {{datas.type}}</view>
+		<block v-if="$store.state.user.token">
+			<view class="pages page-main">
+				<view class="work-dtl-head">
+					<view class="work-head-main">
+						<view class="work-head-list">
+							<view class="work-block">
+								<view class="work-block-title work-dtl-name">{{datas.name}} | {{datas.type}}</view>
+							</view>
+							<view class="work-block">
+								<view class="work-require">{{datas.province?datas.province+' | ':''}}{{datas.city?datas.city+' | ':''}}{{datas.age_min}}-{{datas.age_max}}年
+									| {{datas.education?datas.education:'无学历要求'}}</view>
+							</view>
+							<view class="work-block">
+								<view class="work-salary">{{datas.salary}}</view>
+							</view>
+							<view class="work-block">
+								<view class="work-tag-list">
+									<block v-for="(t,i) in datas.tags" :key="i">
+										<view class="work-tag">{{t}}</view>
+									</block>
+								</view>
+							</view>
 						</view>
-						<view class="work-block">
-							<view class="work-require">{{datas.province?datas.province+' | ':''}}{{datas.city?datas.city+' | ':''}}{{datas.age_min}}-{{datas.age_max}}年
-								| {{datas.education?datas.education:'无学历要求'}}</view>
-						</view>
-						<view class="work-block">
-							<view class="work-salary">{{datas.salary}}</view>
-						</view>
-						<view class="work-block">
-							<view class="work-tag-list">
-								<block v-for="(t,i) in datas.tags" :key="i">
-									<view class="work-tag">{{t}}</view>
-								</block>
+						<view class="work-head-list">
+							<view class="work-block">
+								<view class="work-block-title">
+									<uni-icon type="weizhi" size="20" color="#898989"></uni-icon>{{datas.province?datas.province+' - ':''}}{{datas.city?datas.city:''}}
+								</view>
+							</view>
+							<view class="work-block">
+								<view class="work-address">{{datas.address?datas.address:''}}</view>
 							</view>
 						</view>
 					</view>
-					<view class="work-head-list">
-						<view class="work-block">
-							<view class="work-block-title">
-								<uni-icon type="weizhi" size="20" color="#898989"></uni-icon>{{datas.province?datas.province+' - ':''}}{{datas.city?datas.city:''}}
-							</view>
-						</view>
-						<view class="work-block">
-							<view class="work-address">{{datas.address?datas.address:''}}</view>
-						</view>
+				</view>
+				<view class="work-detail-overview">
+					<view class="work-block-title title-block">岗位职责</view>
+					<view class="work-content">
+						<rich-text :nodes="datas.responsibilities"></rich-text>
 					</view>
 				</view>
-			</view>
-			<view class="work-detail-overview">
-				<view class="work-block-title title-block">岗位职责</view>
-				<view class="work-content">
-					<rich-text :nodes="datas.responsibilities"></rich-text>
+				<view class="work-detail-overview">
+					<view class="work-block-title title-block">任职资格</view>
+					<view class="work-content">
+						<rich-text :nodes="datas.qualifications"></rich-text>
+					</view>
 				</view>
+				<fix-button>
+					<!-- btnType="fbtn-full" -->
+					<block v-if="datas.needExam">
+						<view class="fbtns fbtns-clr-full btn-totest" @click="workExam">求职前小测试</view>
+					</block>
+					<block v-else>
+						<view class="fbtns fbtns-clr-full btn-totest" :class="!disabled?'':'btn-disabled'" @click="showResume">{{datas.resume_article==1?'简历已投递':'发送简历'}}</view>
+					</block>
+				</fix-button>
 			</view>
-			<view class="work-detail-overview">
-				<view class="work-block-title title-block">任职资格</view>
-				<view class="work-content">
-					<rich-text :nodes="datas.qualifications"></rich-text>
+			<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
+				<view class="train-show-modal-box">
+					<user-resume :editBlock="editBlock" isSendResume="true" :temp="temp" :datas="resume_temp" @switchResume="switchResume"
+					 @sendResume="sendResume"></user-resume>
 				</view>
-			</view>
-			<fix-button>
-				<!-- btnType="fbtn-full" -->
-				<block v-if="datas.needExam">
-					<view class="fbtns fbtns-clr-full btn-totest" @click="workExam">求职前小测试</view>
-				</block>
-				<block v-else>
-					<view class="fbtns fbtns-clr-full btn-totest" :class="!disabled?'':'btn-disabled'" @click="showResume">{{datas.resume_article==1?'简历已投递':'发送简历'}}</view>
-				</block>
-			</fix-button>
-		</view>
-		<uni-popup :show="poptype === 'showReume'" position="middle" mode="posfixed" width="80" @hidePopup="togglePopup('')">
-			<view class="train-show-modal-box">
-				<user-resume :editBlock="editBlock" isSendResume="true" :temp="temp" :datas="resume_temp" @switchResume="switchResume"
-				 @sendResume="sendResume"></user-resume>
-			</view>
-		</uni-popup>
+			</uni-popup>
+		</block>
+		<block v-else>
+			<view class="loginTip">{{$store.state.loginTips}}</view>
+			<tab-bar></tab-bar>
+		</block>
 	</view>
 </template>
 

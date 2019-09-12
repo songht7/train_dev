@@ -22,7 +22,8 @@ const store = new Vuex.Store({
 		interface: common.Interface,
 		systemInfo: {},
 		portrait: "",
-		cosConfig: common.Interface.cosConfig
+		cosConfig: common.Interface.cosConfig,
+		loginTips:"登录账号即可查看详细内容"
 	},
 	mutations: {
 		switch_loading(state, status) {

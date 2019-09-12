@@ -89,7 +89,7 @@
 								<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 							</block>
 							<block v-else>
-								<view class="loginTip">登录账号即可查看详细内容</view>
+								<view class="loginTip">{{$store.state.loginTips}}</view>
 							</block>
 						</block>
 					</view>
@@ -104,6 +104,9 @@
 				<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
 				 @click="to_test(courseId)">开始测试</view>
 			</fix-button>
+		</block>
+		<block v-else>
+			<tab-bar></tab-bar>
 		</block>
 	</view>
 </template>

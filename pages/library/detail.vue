@@ -1,27 +1,35 @@
 <template>
-	<view class="page-main article-detail">
-		<block v-if="datas.id">
-			<view class="banner">
-				<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFill"></image>
-				<!-- <view class="banner-title">{{datas.name}}</view> -->
-			</view>
-			<view class="banner-title-block">{{datas.name}}</view>
-			<view class="article-meta">
-				<text class="article-time">{{datas.add_time}}</text>
-				<text class="article-author">{{datas.author_name?datas.author_name:"管理员"}}</text>
-			</view>
-			<view class="article-content">
-				<rich-text :nodes="datas.detail"></rich-text>
+	<view class="article-detail">
+		<block v-if="$store.state.user.token">
+			<view class="page-main">
+				<block v-if="datas.id">
+					<view class="banner">
+						<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFill"></image>
+						<!-- <view class="banner-title">{{datas.name}}</view> -->
+					</view>
+					<view class="banner-title-block">{{datas.name}}</view>
+					<view class="article-meta">
+						<text class="article-time">{{datas.add_time}}</text>
+						<text class="article-author">{{datas.author_name?datas.author_name:"管理员"}}</text>
+					</view>
+					<view class="article-content">
+						<rich-text :nodes="datas.detail"></rich-text>
+					</view>
+				</block>
+				<fix-button btnType="fbtn-big">
+					<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(datas.id)">
+						<view>
+							<uni-icon :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icon>
+							<view>收藏</view>
+						</view>
+					</view>
+				</fix-button>
 			</view>
 		</block>
-		<fix-button btnType="fbtn-big">
-			<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(datas.id)">
-				<view>
-					<uni-icon :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icon>
-					<view>收藏</view>
-				</view>
-			</view>
-		</fix-button>
+		<block v-else>
+			<view class="loginTip">{{$store.state.loginTips}}</view>
+			<tab-bar></tab-bar>
+		</block>
 	</view>
 </template>
 <script>

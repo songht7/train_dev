@@ -54,6 +54,8 @@
 	font-size: 40upx;
 	line-height: 2;
 	color: #F69A22;
+	display: flex;
+	justify-content: center;
 }
 
 .pages {
