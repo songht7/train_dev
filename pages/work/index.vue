@@ -56,7 +56,7 @@
 						 placeholder="想要查找的工作" placeholder-style="color:#999" />
 						<view class="search-btn" @click="searchConfirm">搜索</view>
 					</view>
-					<view class="search-show-all" @click="searchAll">查全部</view>
+					<view class="search-show-all" @click="searchAll">全部</view>
 				</view>
 			</view>
 			<block v-for="(obj,index) in datas" :key="index">

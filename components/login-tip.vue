@@ -1,7 +1,7 @@
 <template>
 	<view class="loginTipBox">
-		<image class="ad-img" src="/static/img-2.png" mode="widthFix"></image>
-		<view class="loginTip">{{$store.state.loginTips}}</view>
+		<image class="ad-img" src="/static/img-2.jpg" mode="widthFix"></image>
+		<view class="loginTip">登录账号查看详细内容</view>
 	</view>
 </template>
 
