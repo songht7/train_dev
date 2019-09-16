@@ -50,14 +50,6 @@
 	font-weight: 600;
 }
 
-.loginTip {
-	font-size: 40upx;
-	line-height: 2;
-	color: #F69A22;
-	display: flex;
-	justify-content: center;
-}
-
 .pages {
 	padding: 20upx 3.6%;
 }

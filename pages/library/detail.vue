@@ -27,7 +27,7 @@
 			</view>
 		</block>
 		<block v-else>
-			<view class="loginTip">{{$store.state.loginTips}}</view>
+			<login-tip></login-tip>
 			<tab-bar></tab-bar>
 		</block>
 	</view>

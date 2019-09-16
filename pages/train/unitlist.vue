@@ -84,12 +84,12 @@
 							</view>
 							<rich-text class="course-detail" :nodes="data.detail"></rich-text>
 						</block>
-						<block v-else="">
+						<block v-else>
 							<block v-if="$store.state.user.token">
 								<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 							</block>
 							<block v-else>
-								<view class="loginTip">{{$store.state.loginTips}}</view>
+								<login-tip></login-tip>
 							</block>
 						</block>
 					</view>

@@ -17,6 +17,9 @@ Vue.component("uni-icon", uniIcon)
 import tabBar from "./components/tab-bar.vue"
 Vue.component("tab-bar", tabBar)
 
+import loginTip from "./components/login-tip.vue"
+Vue.component("login-tip", loginTip)
+
 /*用户协议*/
 import agreement from "./components/agreement.vue"
 Vue.component("agreement", agreement)
