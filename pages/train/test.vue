@@ -269,7 +269,7 @@
 					_val = _v;
 				}
 				//console.log(_val)
-				that.formData[`'${e.currentTarget.dataset.key}'`] = _val;
+				that.formData[`${e.currentTarget.dataset.key}`] = _val;
 			},
 			setFixBtn(type) {
 				var that = this;
