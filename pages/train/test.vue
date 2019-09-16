@@ -14,7 +14,7 @@
 						<view class="test-block">
 							<block v-if="submitted==true">
 								<view class="test-marking">
-									<uni-icon :type="t.serialization==formData[t.id]?'buoumaotubiao49':'kulian'" size="80" :color="t.serialization==formData[t.id]?'#5FC1B7':'#DE544C'"></uni-icon>
+									<uni-icon :type="t.serialization==formData[`'${t.id}'`]?'buoumaotubiao49':'kulian'" size="80" :color="t.serialization==formData[`'${t.id}'`]?'#5FC1B7':'#DE544C'"></uni-icon>
 								</view>
 							</block>
 							<view class="test-title-box">
@@ -131,7 +131,7 @@
 				countdownShow: false,
 				loading: false,
 				submitted: false,
-				formData: [],
+				formData: {},
 				type: "",
 				scoreDes: "成绩不合格",
 				score: 0,
@@ -175,6 +175,7 @@
 					data_tests['parm'] = `?course_id=${that.testId}`;
 					break;
 			}
+			//console.log("test-list：", data_tests)
 			data_tests["fun"] = function(res) {
 				if (res.success) {
 					let _test = res.data.list;
@@ -267,7 +268,8 @@
 					})
 					_val = _v;
 				}
-				that.formData[`${e.currentTarget.dataset.key}`] = _val;
+				//console.log(_val)
+				that.formData[`'${e.currentTarget.dataset.key}'`] = _val;
 			},
 			setFixBtn(type) {
 				var that = this;
@@ -287,7 +289,7 @@
 				var that = this;
 				//console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value))
 				let formData = that.formData; //e.detail.value;
-				// console.log(formData)
+				//console.log("formData:", formData)
 				// return
 				if (that.loading == true) {
 					return
@@ -300,7 +302,6 @@
 					return
 				}
 				that.loading = true
-				console.log(formData);
 				var _data = {
 					"aws": formData
 				};
@@ -315,6 +316,7 @@
 						_data["course_id"] = that.testId;
 						break;
 				}
+				//console.log(_data);
 				/* send test */
 				let data_test = {
 					"inter": "test",
