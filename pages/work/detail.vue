@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<block v-if="$store.state.user.token">
+		<block v-if="__token">
 			<view class="pages page-main">
 				<view class="work-dtl-head">
 					<view class="work-head-main">
@@ -98,7 +98,7 @@
 		onShow() {
 			var that = this;
 			that.$store.dispatch('cheack_user')
-			that.__token = that.$store.state.user.token;
+			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
 			that.getDatas();
 			that.getResume();
 		},

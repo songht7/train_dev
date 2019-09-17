@@ -85,7 +85,7 @@
 							<rich-text class="course-detail" :nodes="data.detail"></rich-text>
 						</block>
 						<block v-else>
-							<block v-if="$store.state.user.token">
+							<block v-if="__token">
 								<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 							</block>
 							<block v-else>
@@ -97,7 +97,7 @@
 			</view>
 		</view>
 
-		<block v-if="$store.state.user.token">
+		<block v-if="__token">
 			<fix-button gobackShow="hide">
 				<view class="fbtns btn-goback" @click="goback">返回</view>
 				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>

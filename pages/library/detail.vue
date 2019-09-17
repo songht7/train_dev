@@ -1,6 +1,6 @@
 <template>
 	<view class="article-detail">
-		<block v-if="$store.state.user.token">
+		<block v-if="__token">
 			<view class="page-main">
 				<block v-if="datas.id">
 					<view class="banner">
@@ -37,6 +37,7 @@
 	export default {
 		data() {
 			return {
+				__token: "",
 				article_id: "",
 				isCollect: false,
 				datas: []
@@ -51,7 +52,8 @@
 			uni.showLoading({
 				title: "加载中..."
 			})
-			that.$store.dispatch('cheack_user')
+			that.$store.dispatch('cheack_user');
+			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
 			that.getDatas()
 		},
 		components: {
