@@ -6,46 +6,46 @@
 					<view class="block-title">基本信息</view>
 					<view class="block-edit" @click="edit('basic')">
 						<view class="edit-name">编辑</view>
-						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
+						<uni-icon type="bianji" size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
-				<view class="resume-basic" v-if="data.name">
+				<view class="resume-basic" v-if="datas.name">
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">名字</view>
-							<view class="basic-val">{{data.name}}</view>
+							<view class="basic-val">{{datas.name}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">生日</view>
-							<view class="basic-val">{{data.brithday}}</view>
+							<view class="basic-val">{{datas.brithday}}</view>
 						</view>
 						<view class="basic-block">
 							<view class="basic-title">性别</view>
-							<view class="basic-val">{{data.sex}}</view>
+							<view class="basic-val">{{datas.sex}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">学历</view>
-							<view class="basic-val">{{data.education}}</view>
+							<view class="basic-val">{{datas.education}}</view>
 						</view>
 						<view class="basic-block">
 							<view class="basic-title">工作年限</view>
-							<view class="basic-val">{{data.age_work}}</view>
+							<view class="basic-val">{{datas.age_work}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">手机</view>
-							<view class="basic-val">{{data.phone}}</view>
+							<view class="basic-val">{{datas.phone}}</view>
 						</view>
 					</view>
 					<view class="basic-row">
 						<view class="basic-block">
 							<view class="basic-title">电子邮箱</view>
-							<view class="basic-val">{{data.email}}</view>
+							<view class="basic-val">{{datas.email}}</view>
 						</view>
 					</view>
 				</view>
@@ -55,11 +55,11 @@
 					<view class="block-title">工作经历</view>
 					<view class="block-edit" @click="edit('company')">
 						<view class="edit-name">添加</view>
-						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
+						<uni-icon type="tianjia" size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-if="data.company&&obj.id" v-for="(obj, index) in data.company">
+					<block v-if="datas.company&&obj.id" v-for="(obj, index) in datas.company" v-bind:key="obj.id">
 						<view class="work-row">
 							<view class="work-title">{{obj.start_time}} - {{obj.end_time}} {{obj.company}} {{obj.job}}</view>
 							<view class="work-overview">
@@ -69,7 +69,7 @@
 							</view>
 							<view class="block-edit work-edit" @click="edit('company',index)">
 								<view class="edit-name">编辑</view>
-								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
+								<uni-icon type="bianji" size="16" color="#929292"></uni-icon>
 							</view>
 						</view>
 					</block>
@@ -84,7 +84,7 @@
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-if="data.school&&obj.id" v-for="(obj, index) in data.school">
+					<block v-if="datas.school&&obj.id" v-for="(obj, index) in datas.school" v-bind:key="obj.id">
 						<view class="work-row">
 							<view class="work-title">{{obj.start_time}} - {{obj.end_time}}</view>
 							<view class="work-val">{{obj.school}} {{obj.profession}}</view>
@@ -101,11 +101,11 @@
 					<view class="block-title">项目经历</view>
 					<view class="block-edit" @click="edit('project')">
 						<view class="edit-name">添加</view>
-						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
+						<uni-icon type="tianjia" size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
-					<block v-if="data.project&&obj.id" v-for="(obj, index) in data.project">
+					<block v-if="datas.project&&obj.id" v-for="(obj, index) in datas.project" v-bind:key="obj.id">
 						<view class="work-row">
 							<view class="work-title">{{obj.start_time}} - {{obj.end_time}} {{obj.name}}</view>
 							<view class="work-overview">
@@ -115,7 +115,7 @@
 							</view>
 							<view class="block-edit work-edit" @click="edit('project',index)">
 								<view class="edit-name">编辑</view>
-								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
+								<uni-icon type="bianji" size="16" color="#929292"></uni-icon>
 							</view>
 						</view>
 					</block>
@@ -126,12 +126,12 @@
 					<view class="block-title">自我描述</view>
 					<view class="block-edit" @click="edit('about_self')">
 						<view class="edit-name">编辑</view>
-						<uni-icon type="bianji" :size="16" color="#008CEE"></uni-icon>
+						<uni-icon type="bianji" size="16" color="#008CEE"></uni-icon>
 					</view>
 				</view>
 				<view class="resume-work">
 					<view class="self-des">
-						<textarea :value="data.about_self||''" disabled />
+						<textarea :value="datas.about_self||''" disabled />
 						</view>
 				</view>
 			</view>
@@ -159,7 +159,7 @@
 				editBlock: "",
 				editKey: -1,
 				isDelete: false,
-				data: [],
+				datas: [],
 				basic: {},
 				temp: {},
 				saveData: []
@@ -194,33 +194,41 @@
 				var that = this;
 				switch (that.editBlock) {
 					case 'basic':
-						that.saveData = that.temp;
+						//that.saveData = that.temp;
+						that.saveData = that.$store.state.resumeTemp;
 						break;
 					case 'about_self':
-						that.saveData = that.temp;
+						//that.saveData = that.temp;
+						that.saveData = that.$store.state.resumeTemp;
 						break;
 					case 'company':
 						var _basic = that.basic;
 						if (that.isDelete) {
-							that.temp["delete"] = 1;
+							//that.temp["delete"] = 1;
+							that.$store.state.resumeTemp["delete"] = 1;
 						}
-						_basic["company"] = [that.temp];
+						//_basic["company"] = [that.temp];
+						_basic["company"] = [that.$store.state.resumeTemp];
 						that.saveData = _basic;
 						break;
 					case 'school':
 						var _basic = that.basic;
 						if (that.isDelete) {
-							that.temp["delete"] = 1;
+							//that.temp["delete"] = 1;
+							that.$store.state.resumeTemp["delete"] = 1;
 						}
-						_basic["school"] = [that.temp];
+						//_basic["school"] = [that.temp];
+						_basic["school"] = [that.$store.state.resumeTemp];
 						that.saveData = _basic;
 						break;
 					case 'project':
 						var _basic = that.basic;
 						if (that.isDelete) {
-							that.temp["delete"] = 1;
+							//that.temp["delete"] = 1;
+							that.$store.state.resumeTemp["delete"] = 1;
 						}
-						_basic["project"] = [that.temp];
+						//_basic["project"] = [that.temp];
+						_basic["project"] = [that.$store.state.resumeTemp];
 						that.saveData = _basic;
 						break;
 					default:
@@ -274,7 +282,7 @@
 								"email": _info.email,
 								"about_self": _info.about_self
 							}
-							that.data = _info;
+							that.datas = _info;
 						}
 					} else {
 						uni.showToast({
@@ -317,7 +325,8 @@
 							setTimeout(() => {
 								that.isDelete = false;
 								that.saveData = [];
-								that.temp = {}
+								that.temp = {};
+								that.$store.state.resumeTemp = {};
 								that.poptype = "";
 							}, 1500)
 						}
@@ -334,18 +343,23 @@
 				switch (that.editBlock) {
 					case 'basic':
 						that.temp = that.basic;
+						that.$store.state.resumeTemp = that.basic;
 						break;
 					case 'about_self':
 						that.temp = that.basic;
+						that.$store.state.resumeTemp = that.basic;
 						break;
 					case 'company':
-						that.temp = key != undefined && key >= 0 ? that.data.company[key] : {}
+						that.temp = key != undefined && key >= 0 ? that.datas.company[key] : {};
+						that.$store.state.resumeTemp = key != undefined && key >= 0 ? that.datas.company[key] : {};
 						break;
 					case 'school':
-						that.temp = key != undefined && key >= 0 ? that.data.school[key] : {}
+						that.temp = key != undefined && key >= 0 ? that.datas.school[key] : {};
+						that.$store.state.resumeTemp = key != undefined && key >= 0 ? that.datas.school[key] : {};
 						break;
 					case 'project':
-						that.temp = key != undefined && key >= 0 ? that.data.project[key] : {}
+						that.temp = key != undefined && key >= 0 ? that.datas.project[key] : {};
+						that.$store.state.resumeTemp = key != undefined && key >= 0 ? that.datas.project[key] : {};
 						break;
 					default:
 						break;
@@ -356,7 +370,8 @@
 				var that = this;
 				that.poptype = type;
 				that.editKey = -1;
-				that.temp = {}
+				that.temp = {};
+				that.$store.state.resumeTemp={};
 			}
 		}
 	}

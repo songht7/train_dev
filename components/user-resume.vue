@@ -375,40 +375,47 @@
 			setData(e) {
 				var that = this;
 				that.temp[e.currentTarget.dataset.key] = e.detail.value;
+				that.$store.state.resumeTemp[e.currentTarget.dataset.key] = e.detail.value;
 				//console.log(that.temp)
 			},
 			pickerGender(e) {
 				var that = this;
 				var key = e.target.value;
 				that.genderIndex = key;
-				that.temp['sex'] = that.gender[key]
+				that.temp['sex'] = that.gender[key];
+				that.$store.state.resumeTemp['sex'] = that.gender[key];
 			},
 			pickerEdu(e) {
 				var that = this;
 				var key = e.target.value;
 				that.eduIndex = key;
-				that.temp['education'] = that.education[key]
+				that.temp['education'] = that.education[key];
+				that.$store.state.resumeTemp['education'] = that.education[key];
 			},
 			pickerWork(e) {
 				var that = this;
 				var key = e.target.value;
 				that.workIndex = key;
-				that.temp['age_work'] = that.workAge[key]
+				that.temp['age_work'] = that.workAge[key];
+				that.$store.state.resumeTemp['age_work'] = that.workAge[key];
 			},
 			pickerDate(e) {
 				var that = this;
 				that.date = e.target.value
-				that.temp['brithday'] = e.target.value
+				that.temp['brithday'] = e.target.value;
+				that.$store.state.resumeTemp['brithday'] = e.target.value;
 			},
 			workStartDate(e) {
 				var that = this;
 				that.start_date = e.target.value
-				that.temp['start_time'] = e.target.value
+				that.temp['start_time'] = e.target.value;
+				that.$store.state.resumeTemp['start_time'] = e.target.value;
 			},
 			workEndDate(e) {
 				var that = this;
-				that.end_date = e.target.value
-				that.temp['end_time'] = e.target.value
+				that.end_date = e.target.value;
+				that.temp['end_time'] = e.target.value;
+				that.$store.state.resumeTemp['end_time'] = e.target.value;
 			},
 			getDate(type) {
 				const date = new Date();

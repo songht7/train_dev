@@ -19,6 +19,7 @@ const store = new Vuex.Store({
 		wxType: "mp", //mp:小程序，gzh：公众号
 		data: {},
 		haveMsg: false,
+		resumeTemp: {},
 		interface: common.Interface,
 		systemInfo: {},
 		portrait: "",
