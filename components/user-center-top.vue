@@ -7,7 +7,7 @@
 					<image class="user-portrait" v-if="userInfo.photo&&userInfo.photo!=''" :src="userInfo.photo" mode="aspectFill"></image>
 				</view>
 				<view class="user-infos">
-					<view class="user-name txt-sross">{{userInfo.name||"用户名"}}<text class="logout" @click="$store.dispatch('logout')">[退出]</text></view>
+					<view class="user-name txt-sross">{{userInfo.name||"用户名"}}<text class="logout" @click="logout">[退出]</text></view>
 					<view class="user-type">
 						<block v-if="userType!='3'">
 							<view class="user-more job"><text>{{userType=='1'?'管理员':'企业主'}}</text></view>
@@ -66,7 +66,7 @@
 			userInfo: {
 				type: Object,
 				default: function(e) {
-					return this.$store.state.user ? this.$store.state.user.userInfo : {}
+					return {}
 				}
 			},
 			enterpriseUserCount: { //员工总数
@@ -96,11 +96,15 @@
 		},
 		data() {
 			return {
+				//userInfo: this.$store.state.user ? this.$store.state.user.userInfo : {},
 				userType: this.$store.state.user.userType || ""
 			};
 		},
 		computed: {},
 		methods: {
+			logout() {
+				this.$store.dispatch('logout')
+			},
 			navTo(page) {
 				uni.navigateTo({
 					url: `/pages/user/${page}`
@@ -108,7 +112,7 @@
 			},
 			navToCourse(type) {
 				var that = this;
-					return
+				return
 				if (that.userType != '3') {
 					return
 				}

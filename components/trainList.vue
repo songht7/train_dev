@@ -1,17 +1,17 @@
 <template>
 	<view>
 		<view class="list-cell" hover-class="uni-list-cell-hover" @click="bindClick">
-			<view class="train-list" v-if="data.id">
+			<view class="train-list" v-if="datas.id">
 				<view class="train-block">
 					<view v-if="showImg" class="image-section">
-						<image class="image-full" :src="data.original_src?data.original_src:sourceUrl+'/img/logo.png'"></image>
+						<image class="image-full" :src="datas.original_src?datas.original_src:sourceUrl+'/img/logo.png'"></image>
 					</view>
 					<view class="train-infos">
 						<view class="train-title">
-							<text class="media-title">{{data.name}}</text>
-							<text v-if="data.overview">{{data.overview}}</text>
+							<text class="media-title">{{datas.name}}</text>
+							<text v-if="datas.overview">{{datas.overview}}</text>
 						</view>
-						<view class="train-count" v-if="data.lessCount">共{{data.lessCount}}门课程</view>
+						<view class="train-count" v-if="datas.lessCount">共{{datas.lessCount}}门课程</view>
 					</view>
 				</view>
 			</view>
@@ -22,7 +22,7 @@
 <script>
 	export default {
 		props: {
-			data: {
+			datas: {
 				type: Object,
 				default: function(e) {
 					return {}
@@ -32,7 +32,7 @@
 		computed: {
 			showImg() {
 				return true
-				//return this.data.original_src
+				//return this.datas.original_src
 			}
 		},
 		methods: {

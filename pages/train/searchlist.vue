@@ -12,7 +12,7 @@
 			<view class="search-show-all" @click="searchAll">查看全部</view>
 		</view>
 		<block v-for="(s,i) in searchList" :key="i">
-			<train-list :data="s" @click="goDetail(s)"></train-list>
+			<train-list :datas="s" @click="goDetail(s)"></train-list>
 		</block>
 		<view class="uni-tab-bar-loading">
 			{{loadingText}}

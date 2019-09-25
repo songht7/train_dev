@@ -14,7 +14,12 @@
 						<view class="test-block">
 							<block v-if="submitted==true">
 								<view class="test-marking">
-									<uni-icon :type="t.serialization==formData[`'${t.id}'`]?'buoumaotubiao49':'kulian'" size="80" :color="t.serialization==formData[`'${t.id}'`]?'#5FC1B7':'#DE544C'"></uni-icon>
+									<block v-if="t.serialization==formData[`${t.id}`]">
+										<uni-icon type="buoumaotubiao49" size="80" color="#5FC1B7"></uni-icon>
+									</block>
+									<block v-else>
+										<uni-icon type="kulian" size="80" color="#DE544C"></uni-icon>
+									</block>
 								</view>
 							</block>
 							<view class="test-title-box">

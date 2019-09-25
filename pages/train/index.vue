@@ -8,7 +8,7 @@
 			<swiper-item v-for="(tab,index1) in newsitems" :key="index1">
 				<scroll-view class="list" scroll-y @scrolltolower="loadMore(index1)">
 					<block v-for="(newsitem,index2) in tab.data" :key="index2">
-						<train-list :data="newsitem" @click="goDetail(newsitem)"></train-list>
+						<train-list :datas="newsitem" @click="goDetail(newsitem)"></train-list>
 					</block>
 					<view class="uni-tab-bar-loading">
 						{{tab.loadingText}}
