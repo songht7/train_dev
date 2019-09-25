@@ -72,7 +72,9 @@
 						uni.setNavigationBarTitle({
 							title: res.data.name
 						});
-						_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						if (_data["detail"]) {
+							_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						}
 						that.datas = _data;
 					}
 				}

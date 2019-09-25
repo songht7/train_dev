@@ -180,7 +180,9 @@
 				if (res.success) {
 					let _test = res.data.list;
 					_test.map((obj, index, arr) => {
-						obj["detail"] = obj["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						if (obj["detail"]) {
+							obj["detail"] = obj["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						}
 					});
 					that.tests = _test;
 					that.test_leng = res.data.max;

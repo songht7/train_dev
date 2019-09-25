@@ -74,7 +74,9 @@
 					uni.hideLoading()
 					if (res.success) {
 						let _data = res.data;
-						_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						if (_data["detail"]) {
+							_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						}
 						that.datas = _data;
 						if (_data.favorites === 1) {
 							that.isCollect = true;
