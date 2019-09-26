@@ -62,6 +62,10 @@
 	color: #FFFFFF;
 	background-color: rgba(0,0,0,0.8);
 	border-radius: 20upx;
+	justify-content: center;
+	flex-direction: row;
+	align-content: center;
+	align-items: center;
 	
 }
 .loading image{
