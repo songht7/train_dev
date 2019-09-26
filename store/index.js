@@ -18,8 +18,9 @@ const store = new Vuex.Store({
 		openid: "",
 		wxType: "mp", //mp:小程序，gzh：公众号
 		data: {},
-		haveMsg: false,
-		resumeTemp: {},
+		haveMsg: false, //是否有消息
+		resumeTemp: {}, //简历临时模板
+		percentage: 60, //考试及格线
 		interface: common.Interface,
 		systemInfo: {},
 		portrait: "",

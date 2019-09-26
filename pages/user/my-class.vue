@@ -6,8 +6,8 @@
 					<view class="my-class-head">
 						<view class="class-tip">
 							<view class="class-icon" :class="{'class-icon-qy':pageType}">
-								<uni-icon v-if="!pageType" type="shuji" :size="20" color="#FFFFFF"></uni-icon>
-								<uni-icon v-if="pageType" type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
+								<uni-icons v-if="!pageType" type="shuji" :size="20" color="#FFFFFF"></uni-icons>
+								<uni-icons v-if="pageType" type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icons>
 							</view>
 							<view class="txt-sross">{{pageOverview}}</view>
 						</view>

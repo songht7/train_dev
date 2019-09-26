@@ -45,12 +45,12 @@
 </template>
 
 <script>
-	import uniIcon from './uni-icon.vue'
+	import uniIcons from './uni-icons.vue'
 	export default {
 		name: "agreement",
 		props: {},
 		components: {
-			uniIcon
+			uniIcons
 		},
 		methods: {
 			onClick() {

@@ -4,7 +4,7 @@
 			<view :class="['tab_item','tab-'+item.name_code]" v-for="(item,index) in footer_nav" :key="index" :style="'width:'+item_width">
 				<view :class="['tab_block','tab-bk-'+item.name_code,item.flex_dir,index==now_index?'tab_bat_active':'',tabHaveMsg?'tab-haveMsg':'']"
 				 @click="navto(index,item.link)">
-					<uni-icon :type="item.icon" v-if="item.icon" :size="25" :color="iconColor(item,index)"></uni-icon>
+					<uni-icons :type="item.icon" v-if="item.icon" :size="25" :color="iconColor(item,index)"></uni-icons>
 					<view class="tab_name">
 						{{item.name}}
 					</view>

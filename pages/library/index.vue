@@ -3,7 +3,7 @@
 		<view class="page-main">
 			<view class="search-main">
 				<view class="serch-fex-btn" @click="searchMod" v-show="!searchShow">
-					<uni-icon type="shousuo" size="32" color="#919191"></uni-icon>
+					<uni-icons type="shousuo" size="32" color="#919191"></uni-icons>
 				</view>
 				<view class="search-result" v-show="searchShow">
 					<view class="block search-box search-box-inn">

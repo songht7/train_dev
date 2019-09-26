@@ -26,7 +26,7 @@
 						<view class="work-head-list">
 							<view class="work-block">
 								<view class="work-block-title">
-									<uni-icon type="weizhi" size="20" color="#898989"></uni-icon>{{datas.province?datas.province+' - ':''}}{{datas.city?datas.city:''}}
+									<uni-icons type="weizhi" size="20" color="#898989"></uni-icons>{{datas.province?datas.province+' - ':''}}{{datas.city?datas.city:''}}
 								</view>
 							</view>
 							<view class="work-block">

@@ -6,16 +6,16 @@
 					<view class="filter-val">
 						<text>{{filterPram["company"]||"公司"}}</text>
 					</view>
-					<uni-icon type="sanjiao" size="18" color="#929292"></uni-icon>
+					<uni-icons type="sanjiao" size="18" color="#929292"></uni-icons>
 				</view>
 				<view class="filter-block" @click="showPicker(1)">
 					<view class="filter-val">
 						<text>{{filterPram["trade"]||"行业"}}</text>
 					</view>
-					<uni-icon type="sanjiao" size="18" color="#929292"></uni-icon>
+					<uni-icons type="sanjiao" size="18" color="#929292"></uni-icons>
 				</view>
 				<view class="filter-block filter-more-btn">
-					<uni-icon type="gengduo3" size="32" color="#929292" @click="showDrawer(true)"></uni-icon>
+					<uni-icons type="gengduo3" size="32" color="#929292" @click="showDrawer(true)"></uni-icons>
 					<uni-drawer :visible="drawerBox" mode="right" @close="showDrawer(false)">
 						<view class="filter-more-box">
 							<view class="filter-list">
@@ -45,7 +45,7 @@
 		<view class="page-main">
 			<view class="search-main">
 				<view class="serch-fex-btn" @click="searchMod" v-show="!searchShow">
-					<uni-icon type="shousuo" size="32" color="#919191"></uni-icon>
+					<uni-icons type="shousuo" size="32" color="#919191"></uni-icons>
 				</view>
 				<view class="search-result" v-show="searchShow">
 					<view class="block search-box search-box-inn">

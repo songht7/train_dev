@@ -8,7 +8,7 @@
 						<view class="my-class-head">
 							<view class="class-tip">
 								<view class="class-icon class-icon-qy">
-									<uni-icon type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icon>
+									<uni-icons type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icons>
 								</view>
 								<view class="txt-sross">企业必须课程</view>
 							</view>
@@ -34,7 +34,7 @@
 								</view>
 							</view>
 							<navigator url="/pages/user/my-class?t=ECourses" class="btns-more">
-								查看更多<uni-icon type="gengduo2" size="16" color="#919191"></uni-icon>
+								查看更多<uni-icons type="gengduo2" size="16" color="#919191"></uni-icons>
 							</navigator>
 						</view>
 					</view>
@@ -48,7 +48,7 @@
 						<view class="my-class-head">
 							<view class="class-tip">
 								<view class="class-icon">
-									<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+									<uni-icons type="shuji" :size="20" color="#FFFFFF"></uni-icons>
 								</view>
 								<view class="txt-sross">我参与的课程</view>
 							</view>
@@ -74,7 +74,7 @@
 								</view>
 							</view>
 							<navigator url="/pages/user/my-class" class="btns-more">
-								查看更多<uni-icon type="gengduo2" size="16" color="#919191"></uni-icon>
+								查看更多<uni-icons type="gengduo2" size="16" color="#919191"></uni-icons>
 							</navigator>
 						</view>
 					</view>

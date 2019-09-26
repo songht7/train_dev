@@ -19,7 +19,7 @@
 				<fix-button btnType="fbtn-big">
 					<view class="fbtns collect" :class="isCollect?'collected':''" @click="collect(datas.id)">
 						<view>
-							<uni-icon :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icon>
+							<uni-icons :type="isCollect?'shoucang1':'shoucang'" size="25" :color="isCollect?'#008CEE':'#929292'"></uni-icons>
 							<view>收藏</view>
 						</view>
 					</view>

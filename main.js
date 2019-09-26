@@ -11,8 +11,8 @@ import store from "./store";
 Vue.prototype.$store = store;
 
 /*全局组件引用*/
-import uniIcon from "./components/uni-icon.vue"
-Vue.component("uni-icon", uniIcon)
+import uniIcons from "./components/uni-icons.vue"
+Vue.component("uni-icons", uniIcons)
 
 import tabBar from "./components/tab-bar.vue"
 Vue.component("tab-bar", tabBar)

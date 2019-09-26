@@ -7,7 +7,7 @@
 				<view class="my-class-head">
 					<view class="class-tip">
 						<view class="class-icon">
-							<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+							<uni-icons type="shuji" :size="20" color="#FFFFFF"></uni-icons>
 						</view>
 						<view class="txt-sross">员工学习进度</view>
 					</view>
@@ -27,7 +27,7 @@
 								<view class="list-statis fRowCenter">
 									<!-- <view class="row-block fRowCenter">{{k+1}}</view> -->
 									<view class="row-block fRowCenter">
-										<uni-icon v-if="!obj.photo||obj.photo==''" type="touxiang" :size="20" color="#D8D8D8"></uni-icon>
+										<uni-icons v-if="!obj.photo||obj.photo==''" type="touxiang" :size="20" color="#D8D8D8"></uni-icons>
 										<img v-if="obj.photo&&obj.photo!=''" :src="obj.photo" class="photo" />
 										<!-- <image class="user-portrait photo" v-if="obj.photo&&obj.photo!=''" :src="obj.photo" mode="aspectFill"></image> -->
 										{{obj.NAME}}
@@ -51,7 +51,7 @@
 				<view class="my-class-head">
 					<view class="class-tip">
 						<view class="class-icon">
-							<uni-icon type="shuji" :size="20" color="#FFFFFF"></uni-icon>
+							<uni-icons type="shuji" :size="20" color="#FFFFFF"></uni-icons>
 						</view>
 						<view class="txt-sross">{{statisType==1?'课程参与情况':'课程合格情况'}}</view>
 					</view>

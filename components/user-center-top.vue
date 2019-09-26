@@ -3,7 +3,7 @@
 		<view class="user-block">
 			<view class="user-head">
 				<view class="portrait">
-					<uni-icon v-if="!userInfo.photo||userInfo.photo==''" type="touxiang" :size="62" color="#D8D8D8"></uni-icon>
+					<uni-icons v-if="!userInfo.photo||userInfo.photo==''" type="touxiang" :size="62" color="#D8D8D8"></uni-icons>
 					<image class="user-portrait" v-if="userInfo.photo&&userInfo.photo!=''" :src="userInfo.photo" mode="aspectFill"></image>
 				</view>
 				<view class="user-infos">
@@ -20,7 +20,7 @@
 				</view>
 				<block v-if="userType=='3'">
 					<view class="user-edit" @click="navTo('edit')">
-						<uni-icon type="shezhi" :size="30" color="#D8D8D8"></uni-icon>
+						<uni-icons type="shezhi" :size="30" color="#D8D8D8"></uni-icons>
 					</view>
 				</block>
 			</view>
@@ -32,7 +32,7 @@
 						<view class="class-overview" v-if="userType!='3'">员工总数</view>
 						<view class="class-count">
 							<view class="count-txt">{{userType!='3'?enterpriseUserCount:joinCourse}}</view>
-							<uni-icon v-if="userType!='3'" type="wo" :size="18" color="#008CEE"></uni-icon>
+							<uni-icons v-if="userType!='3'" type="wo" :size="18" color="#008CEE"></uni-icons>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">参加课程</view>
 					</view>
@@ -40,7 +40,7 @@
 						<view class="class-overview" v-if="userType!='3'">参与学习</view>
 						<view class="class-count">
 							<view class="count-txt class-state-green">{{userType!='3'?joinCourseUserCount:passCourse}}</view>
-							<uni-icon v-if="userType!='3'" type="wo" :size="18" color="#3BC1B0"></uni-icon>
+							<uni-icons v-if="userType!='3'" type="wo" :size="18" color="#3BC1B0"></uni-icons>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">通过考试</view>
 					</view>
@@ -48,7 +48,7 @@
 						<view class="class-overview" v-if="userType!='3'">总课程数</view>
 						<view class="class-count">
 							<view class="count-txt class-state-red">{{userType!='3'?courseCount:failCourse}}</view>
-							<uni-icon v-if="userType!='3'" type="shuji" :size="18" color="#EE6858"></uni-icon>
+							<uni-icons v-if="userType!='3'" type="shuji" :size="18" color="#EE6858"></uni-icons>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">未通过考试</view>
 					</view>

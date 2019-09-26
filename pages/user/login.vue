@@ -35,7 +35,7 @@
 		<!-- #ifdef MP-WEIXIN -->
 		<view class="mp-login" v-if="MPLogin">
 			<button class="mp-btns" lang="zh_CN" open-type="getUserInfo" @click="bindMP">
-				<uni-icon type="weixin" size="50" color="#80D93C"></uni-icon>
+				<uni-icons type="weixin" size="50" color="#80D93C"></uni-icons>
 			</button>
 		</view>
 		<!-- #endif -->

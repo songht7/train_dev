@@ -17,7 +17,7 @@
 
 				<fix-button>
 					<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
-						<uni-icon type="dianhua1" size="25" color="#fff"></uni-icon>咨询我们
+						<uni-icons type="dianhua1" size="25" color="#fff"></uni-icons>咨询我们
 					</view>
 				</fix-button>
 			</view>

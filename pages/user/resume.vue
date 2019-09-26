@@ -6,7 +6,7 @@
 					<view class="block-title">基本信息</view>
 					<view class="block-edit" @click="edit('basic')">
 						<view class="edit-name">编辑</view>
-						<uni-icon type="bianji" size="16" color="#008CEE"></uni-icon>
+						<uni-icons type="bianji" size="16" color="#008CEE"></uni-icons>
 					</view>
 				</view>
 				<view class="resume-basic" v-if="datas.name">
@@ -55,7 +55,7 @@
 					<view class="block-title">工作经历</view>
 					<view class="block-edit" @click="edit('company')">
 						<view class="edit-name">添加</view>
-						<uni-icon type="tianjia" size="16" color="#008CEE"></uni-icon>
+						<uni-icons type="tianjia" size="16" color="#008CEE"></uni-icons>
 					</view>
 				</view>
 				<view class="resume-work">
@@ -69,7 +69,7 @@
 							</view>
 							<view class="block-edit work-edit" @click="edit('company',index)">
 								<view class="edit-name">编辑</view>
-								<uni-icon type="bianji" size="16" color="#929292"></uni-icon>
+								<uni-icons type="bianji" size="16" color="#929292"></uni-icons>
 							</view>
 						</view>
 					</block>
@@ -80,7 +80,7 @@
 					<view class="block-title">教育经历</view>
 					<view class="block-edit" @click="edit('school')">
 						<view class="edit-name">添加</view>
-						<uni-icon type="tianjia" :size="16" color="#008CEE"></uni-icon>
+						<uni-icons type="tianjia" :size="16" color="#008CEE"></uni-icons>
 					</view>
 				</view>
 				<view class="resume-work">
@@ -90,7 +90,7 @@
 							<view class="work-val">{{obj.school}} {{obj.profession}}</view>
 							<view class="block-edit work-edit" @click="edit('school',index)">
 								<view class="edit-name">编辑</view>
-								<uni-icon type="bianji" :size="16" color="#929292"></uni-icon>
+								<uni-icons type="bianji" :size="16" color="#929292"></uni-icons>
 							</view>
 						</view>
 					</block>
@@ -101,7 +101,7 @@
 					<view class="block-title">项目经历</view>
 					<view class="block-edit" @click="edit('project')">
 						<view class="edit-name">添加</view>
-						<uni-icon type="tianjia" size="16" color="#008CEE"></uni-icon>
+						<uni-icons type="tianjia" size="16" color="#008CEE"></uni-icons>
 					</view>
 				</view>
 				<view class="resume-work">
@@ -115,7 +115,7 @@
 							</view>
 							<view class="block-edit work-edit" @click="edit('project',index)">
 								<view class="edit-name">编辑</view>
-								<uni-icon type="bianji" size="16" color="#929292"></uni-icon>
+								<uni-icons type="bianji" size="16" color="#929292"></uni-icons>
 							</view>
 						</view>
 					</block>
@@ -126,7 +126,7 @@
 					<view class="block-title">自我描述</view>
 					<view class="block-edit" @click="edit('about_self')">
 						<view class="edit-name">编辑</view>
-						<uni-icon type="bianji" size="16" color="#008CEE"></uni-icon>
+						<uni-icons type="bianji" size="16" color="#008CEE"></uni-icons>
 					</view>
 				</view>
 				<view class="resume-work">

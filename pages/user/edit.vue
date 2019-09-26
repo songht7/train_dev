@@ -79,7 +79,7 @@
 									<view class="block-title">密码修改</view>
 									<view class="block-edit" @click="blockShow('password')">
 										<view class="edit-name">编辑</view>
-										<uni-icon type="bianji" :size="18" color="#008CEE"></uni-icon>
+										<uni-icons type="bianji" :size="18" color="#008CEE"></uni-icons>
 									</view>
 								</view>
 								<block v-if="editBlock==='password'">

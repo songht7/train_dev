@@ -1,11 +1,11 @@
-<template name="uni-icon">
+<template name="UniIcons">
 	<view class="uni-icon" :class="['uni-icon-'+type,isGradient,iconBig]" :style="{color:color,'font-size':fontSize}"
-	 @click="onClick()"></view>
+	 @click="onClick()"/>
 </template>
 
 <script>
 	export default {
-		name: "uni-icon",
+		name: "UniIcons",
 		props: {
 			/**
 			 * 图标类型

@@ -2,7 +2,7 @@
 	<view class="page-main unit-list">
 		<view class="swiper-main">
 			<!-- <view class="photo-album" @click="previewImage">
-				<uni-icon type="xiangce1" size="30" color="#F77C5F"></uni-icon>
+				<uni-icons type="xiangce1" size="30" color="#F77C5F"></uni-icons>
 			</view> -->
 
 			<!-- 	<uni-swiper-dot :info="showList" :current="swiperCurrent" mode="nav" showPos="top" :dots-styles="dotsStyles" field="name">
@@ -29,7 +29,7 @@
 						<view class="video-block" v-if="slide.media_type=='video'">
 							<image class="slideImg virtual" lazy-load="true" src="/static/default.png" mode="aspectFill"></image>
 							<view class="video-btn">
-								<uni-icon type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icon>
+								<uni-icons type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icons>
 							</view>
 							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
 							 @error="videoErrorCallback" controls :enable-progress-gesture="gesture" @pause="videoPause" @fullscreenchange="videoOperation"></video>
@@ -38,8 +38,8 @@
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
 						<view class="media-music" v-if="slide.media_type=='music'">
 							<view class="music-icon">
-								<uni-icon type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icon>
-								<uni-icon type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icon>
+								<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>
+								<uni-icons type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
 							</view>
 							<view class="music-play">
 								<view class="music-info">
@@ -56,7 +56,7 @@
 			</swiper>
 		</view>
 		<view class="music-loading" v-if="hasMusic" :class="music.playState==='pause'?'rotating':''" @click="musicSet(music.playState)">
-			<uni-icon type="music" size="40" color="#006FFF"></uni-icon>
+			<uni-icons type="music" size="40" color="#006FFF"></uni-icons>
 		</view>
 		<view class="uni-padding-wrap uni-common-mt segmented-box">
 			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented" styleType="text"
@@ -237,6 +237,9 @@
 						});
 						_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						that.data = _data;
+						if (_data.percentage) {
+							that.$store.state.percentage = _data.percentage;
+						}
 						/*ucStatus:0 未确认 1学习中 2考试通过
 						 * */
 						that.isJoined = _data.ucStatus == "1" || _data.ucStatus == "2" ? true : false;

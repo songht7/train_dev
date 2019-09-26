@@ -4,8 +4,8 @@
 			<block v-if="datas.length<=0">
 				<view class="exam-null">
 					<view class="exam-null-icon">
-						<uni-icon class="icon-wenhao" type="qm" size="50" color="#929292"></uni-icon>
-						<uni-icon type="hezi401" size="120" color="#929292"></uni-icon>
+						<uni-icons class="icon-wenhao" type="qm" size="50" color="#929292"></uni-icons>
+						<uni-icons type="hezi401" size="120" color="#929292"></uni-icons>
 					</view>
 					<view class="exam-null-info">
 						目前还没有单元考试哦

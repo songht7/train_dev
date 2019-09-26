@@ -15,10 +15,10 @@
 							<block v-if="submitted==true">
 								<view class="test-marking">
 									<block v-if="t.serialization==formData[`${t.id}`]">
-										<uni-icon type="buoumaotubiao49" size="80" color="#5FC1B7"></uni-icon>
+										<uni-icons type="buoumaotubiao49" size="80" color="#5FC1B7"></uni-icons>
 									</block>
 									<block v-else>
-										<uni-icon type="kulian" size="80" color="#DE544C"></uni-icon>
+										<uni-icons type="kulian" size="80" color="#DE544C"></uni-icons>
 									</block>
 								</view>
 							</block>
@@ -90,11 +90,11 @@
 				<view class="score-block score-top" :class="scoreState">
 					<view class="score-top-val score-des">{{scoreDes}}</view>
 					<view class="score-top-val score-star">
-						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35"
-						 color="#FFDA76"></uni-icon>
-						<uni-icon type="al-star" isGradient="isGradient" iconBig="icon-big" size="50" color="#FFDA76"></uni-icon>
-						<uni-icon type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35"
-						 color="#FFDA76"></uni-icon>
+						<uni-icons type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35"
+						 color="#FFDA76"></uni-icons>
+						<uni-icons type="al-star" isGradient="isGradient" iconBig="icon-big" size="50" color="#FFDA76"></uni-icons>
+						<uni-icons type="al-star" isGradient="isGradient" v-if="scoreState=='stateGreen'" iconBig="icon-big" size="35"
+						 color="#FFDA76"></uni-icons>
 					</view>
 				</view>
 				<view class="score-block score-middle">
@@ -341,7 +341,8 @@
 						that.score = _point;
 						that.countdown = 0;
 						that.submitted = true;
-						if (_point >= 60) {
+						var _percentage = that.$store.state.percentage ? that.$store.state.percentage : 60;
+						if (_point >= parseInt(_percentage)) {
 							that.scoreDes = "成绩合格";
 							that.scoreState = "stateGreen";
 						} else {

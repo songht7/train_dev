@@ -3,7 +3,7 @@
 		<view class="page-main">
 			<view class="block search-box">
 				<view class="flex-left">
-					<uni-icon type="shousuo" size="20" color="#919191"></uni-icon>
+					<uni-icons type="shousuo" size="20" color="#919191"></uni-icons>
 				</view>
 				<view class="search-block">
 					<input type="text" class="search-input" confirm-type="search" v-model="serchModel" :value="keywords" @confirm="searchConfirm"
@@ -28,7 +28,7 @@
 					<block v-for="(ctg,c) in category" :key="c">
 						<view class="ctg-link" :class="['spacing-'+spacing]" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
 							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
-								<uni-icon :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icon>
+								<uni-icons :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icons>
 							</view>
 							<text class="ctg-txt">{{ctg.val}}</text>
 						</view>
@@ -39,7 +39,7 @@
 						<view class="ctg-link ctg-link-sub" :class="['spacing-'+spacing]">
 							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
-									<uni-icon v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icon>
+									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
 									<image v-if="ctg.src" class="ctgImg" lazy-load="true" :src="ctg.src" mode="aspectFill"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
