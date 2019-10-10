@@ -49,7 +49,7 @@
 				</view>
 				<fix-button>
 					<!-- btnType="fbtn-full" -->
-					<block v-if="datas.needExam">
+					<block v-if="datas.needExam&&!is_pass_exam">
 						<view class="fbtns fbtns-clr-full btn-totest" @click="workExam">求职前小测试</view>
 					</block>
 					<block v-else>
@@ -82,6 +82,7 @@
 				article_id: "",
 				examination_id: "",
 				__token: "",
+				is_pass_exam: false,
 				datas: [],
 				saveData: {},
 				temp: {},
@@ -95,6 +96,7 @@
 		onLoad(e) {
 			var that = this;
 			that.article_id = e.id;
+			//console.log(e)
 		},
 		onShow() {
 			var that = this;
@@ -145,7 +147,8 @@
 							that.examination_id = _data["examination_id"];
 						}
 						if (_data["is_pass_exam"] && _data["is_pass_exam"]["value"] && _data["resume_article"] != 1) {
-							that.poptype = "showReume";
+							//that.poptype = "showReume";
+							that.is_pass_exam = true;
 						}
 						that.datas = _data;
 						that.disabled = _data.resume_article ? true : false;

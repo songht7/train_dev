@@ -259,7 +259,7 @@
 						_url = '/pages/exam/index';
 						break;
 					case 'workExam':
-						_url = `/pages/work/detail?id=${this.pageId}`;
+						_url = `/pages/work/detail?id=${this.pageId}&passType=${this.examPass}`;
 						break;
 					default:
 						_url = `/pages/train/unitlist?id=${this.testId}`;
