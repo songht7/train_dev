@@ -80,6 +80,7 @@
 		data() {
 			return {
 				article_id: "",
+				examination_id: "",
 				__token: "",
 				datas: [],
 				saveData: {},
@@ -138,6 +139,11 @@
 						if (_data["qualifications"]) {
 							_data["qualifications"] = _data["qualifications"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
 						}
+
+						if (_data["examination_id"] && _data["is_pass_exam"] && _data["resume_article"] != 1) {
+							_data["needExam"] = true
+							that.examination_id = _data["examination_id"];
+						}
 						that.datas = _data;
 						that.disabled = _data.resume_article ? true : false;
 						uni.setNavigationBarTitle({
@@ -190,7 +196,7 @@
 			workExam() {
 				var that = this;
 				uni.navigateTo({
-					url: `/pages/train/test?type=workExam&id=${that.article_id}`
+					url: `/pages/train/test?type=workExam&id=${that.examination_id}&pid=${that.article_id}`
 				})
 			},
 			showResume() {

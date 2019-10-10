@@ -80,7 +80,7 @@
 				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_total" @click="test_more('next')">下一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-if="!submitted" @click="formSubmit">提交</view>
-				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">{{testType=='exam'?'返回':'继续学习'}}</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">{{testType=='exam'||testType=='workExam'?'返回':'继续学习'}}</view>
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
@@ -103,7 +103,7 @@
 				</view>
 				<view class="score-block score-bottom">
 					<view class="score-btn score-back-btn" @click="togglePopup('')">查看结果</view>
-					<view class="score-btn" :class="scoreState" @click="goToList">{{testType=='exam'?'返回':'继续学习'}}</view>
+					<view class="score-btn" :class="scoreState" @click="goToList">{{testType=='exam'||testType=='workExam'?'返回':'继续学习'}}</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -126,6 +126,7 @@
 		data() {
 			return {
 				testId: "",
+				pageId: "",
 				testType: "",
 				current: 1,
 				tests: [],
@@ -141,6 +142,8 @@
 				scoreDes: "成绩不合格",
 				score: 0,
 				scoreState: "stateRed", //stateRed不合格 /stateGreen合格
+				examPass: false,
+				backBtnTxt: "返回",
 				fixBtn: "fixed",
 				closeBtnShow: false
 			}
@@ -149,6 +152,7 @@
 			var that = this;
 			that.testType = e.type || "";
 			that.testId = e.course_id || e.id;
+			that.pageId = e.pid;
 			uni.setNavigationBarTitle({
 				title: "理论测试"
 			})
@@ -171,9 +175,9 @@
 					data_tests['parm'] = `?examination_id=${that.testId}`;
 					break;
 				case 'workExam':
-					/*工作机会提交简历前测试---临时测试*/
-					data_tests['inter'] = "tests";
-					data_tests['parm'] = `?course_id=29`;
+					/*工作机会提交简历前测试*/
+					data_tests['inter'] = "examination";
+					data_tests['parm'] = `?examination_id=${that.testId}`;
 					break;
 				default:
 					data_tests['inter'] = "tests";
@@ -255,7 +259,7 @@
 						_url = '/pages/exam/index';
 						break;
 					case 'workExam':
-						_url = `/pages/work/detail?id=${this.testId}`;
+						_url = `/pages/work/detail?id=${this.pageId}`;
 						break;
 					default:
 						_url = `/pages/train/unitlist?id=${this.testId}`;
@@ -345,9 +349,17 @@
 						if (_point >= parseInt(_percentage)) {
 							that.scoreDes = "成绩合格";
 							that.scoreState = "stateGreen";
+							that.examPass = true;
+							if (that.testType == "workExam") {
+								that.examPass = "返回继续提交简历";
+							}
 						} else {
 							that.scoreDes = "成绩不合格";
 							that.scoreState = "stateRed";
+							that.examPass = false;
+							if (that.testType == "workExam") {
+								that.examPass = "返回";
+							}
 						}
 					}
 				}
