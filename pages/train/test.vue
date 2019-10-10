@@ -80,7 +80,7 @@
 				<view class="fbtns btn-totest" v-show="current>1" @click="test_more('prev')">上一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current<test_total" @click="test_more('next')">下一题</view>
 				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-if="!submitted" @click="formSubmit">提交</view>
-				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">{{testType=='exam'||testType=='workExam'?'返回':'继续学习'}}</view>
+				<view class="fbtns fbtns-clr-full btn-totest" v-show="current===test_total" v-else @click="goToList">{{testType=='exam'||testType=='workExam'?backBtnTxt:'继续学习'}}</view>
 				<!-- 	<button class="fbtns fbtns-clr-full btn-totest btn-button" v-show="current===test_total" formType="submit" type="primary">提交</button> -->
 			</fix-button>
 		</form>
@@ -103,7 +103,7 @@
 				</view>
 				<view class="score-block score-bottom">
 					<view class="score-btn score-back-btn" @click="togglePopup('')">查看结果</view>
-					<view class="score-btn" :class="scoreState" @click="goToList">{{testType=='exam'||testType=='workExam'?'返回':'继续学习'}}</view>
+					<view class="score-btn" :class="scoreState" @click="goToList">{{testType=='exam'||testType=='workExam'?backBtnTxt:'继续学习'}}</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -351,14 +351,14 @@
 							that.scoreState = "stateGreen";
 							that.examPass = true;
 							if (that.testType == "workExam") {
-								that.examPass = "返回继续提交简历";
+								that.backBtnTxt = "继续下一步";
 							}
 						} else {
 							that.scoreDes = "成绩不合格";
 							that.scoreState = "stateRed";
 							that.examPass = false;
 							if (that.testType == "workExam") {
-								that.examPass = "返回";
+								that.backBtnTxt = "返回";
 							}
 						}
 					}

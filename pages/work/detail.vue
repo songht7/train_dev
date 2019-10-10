@@ -144,6 +144,9 @@
 							_data["needExam"] = true
 							that.examination_id = _data["examination_id"];
 						}
+						if (_data["is_pass_exam"] && _data["is_pass_exam"]["value"] && _data["resume_article"] != 1) {
+							that.poptype = "showReume";
+						}
 						that.datas = _data;
 						that.disabled = _data.resume_article ? true : false;
 						uni.setNavigationBarTitle({
