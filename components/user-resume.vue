@@ -48,7 +48,7 @@
 							<view class="basic-title">学历</view>
 							<view class="basic-val">
 								<picker name="Education" @change="pickerEdu" :value="eduIndex" :range="education">
-									<view>{{temp.education||education[eduIndex]}}</view>
+									<view>{{educationVal||temp.education?(educationVal?educationVal:temp.education):"请选择"}}</view>
 								</picker>
 							</view>
 						</view>
@@ -56,7 +56,7 @@
 							<view class="basic-title">工作年限</view>
 							<view class="basic-val">
 								<picker name="WorkAge" @change="pickerWork" :value="workIndex" :range="workAge">
-									<view>{{temp.age_work||workAge[workIndex]}}</view>
+									<view>{{ageWorkVal||temp.age_work?(ageWorkVal?ageWorkVal:temp.age_work):"请选择"}}</view>
 								</picker>
 							</view>
 						</view>
@@ -339,8 +339,10 @@
 				genderIndex: 0,
 				education: ['请选择', '初中', '高中', '大专', '本科', '本科以上'],
 				eduIndex: 0,
+				educationVal:"",
 				workAge: ['请选择', '3年以下', '4年', '5年', '6年', '7年', '8年以上'],
 				workIndex: 0,
+				ageWorkVal:"",
 				date: this.getDate({
 					format: true
 				}),
@@ -380,6 +382,7 @@
 			},
 			pickerGender(e) {
 				var that = this;
+				console.log(e)
 				var key = e.target.value;
 				that.genderIndex = key;
 				that.temp['sex'] = that.gender[key];
@@ -387,17 +390,21 @@
 			},
 			pickerEdu(e) {
 				var that = this;
+				//console.log(e)
 				var key = e.target.value;
 				that.eduIndex = key;
 				that.temp['education'] = that.education[key];
 				that.$store.state.resumeTemp['education'] = that.education[key];
+				that.educationVal=that.education[key];
 			},
 			pickerWork(e) {
 				var that = this;
+				//console.log(e)
 				var key = e.target.value;
 				that.workIndex = key;
 				that.temp['age_work'] = that.workAge[key];
 				that.$store.state.resumeTemp['age_work'] = that.workAge[key];
+				that.ageWorkVal=that.workAge[key];
 			},
 			pickerDate(e) {
 				var that = this;

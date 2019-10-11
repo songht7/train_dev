@@ -6,7 +6,7 @@
 					<uni-icons type="shousuo" size="20" color="#919191"></uni-icons>
 				</view>
 				<view class="search-block">
-					<input type="text" class="search-input" confirm-type="search" v-model="serchModel" :value="keywords" @confirm="searchConfirm"
+					<input type="text" class="search-input" confirm-type="search" v-model="serchModel" @confirm="searchConfirm"
 					 placeholder="质检进阶课程" placeholder-style="color:#999" @input="checkModel" />
 					<view class="search-home-btn" @click="searchConfirm" v-show="searchBtnShow">搜索</view>
 				</view>

@@ -5,7 +5,7 @@
 				<view class="flex-left">
 					关键词：
 				</view>
-				<input type="text" class="search-input" confirm-type="search" v-model="serchModel" :value="keywords" @confirm="searchConfirm"
+				<input type="text" class="search-input" confirm-type="search" v-model="serchModel" @confirm="searchConfirm"
 				 placeholder="质检进阶课程" placeholder-style="color:#999" />
 				<view class="search-btn" @click="searchConfirm">搜索</view>
 			</view>

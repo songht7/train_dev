@@ -214,6 +214,10 @@
 			},
 			switchResume(type) {
 				var that = this;
+				var rTemp = that.$store.state.resumeTemp;
+				var temp = that.temp;
+				var resumeData = that.resume_temp;
+				console.log(that.editBlock)
 				if (type == "next") {
 					switch (that.editBlock) {
 						case "basic":
@@ -243,12 +247,20 @@
 								}
 							];
 							//进行表单检查
-							var checkRes = graceChecker.check(that.temp, rule);
+							that.saveData["name"] = rTemp.name ? rTemp.name : temp.name;
+							that.saveData["brithday"] = rTemp.brithday ? rTemp.brithday : temp.brithday;
+							that.saveData["sex"] = rTemp.sex ? rTemp.sex : temp.sex;
+							that.saveData["education"] = rTemp.education ? rTemp.education : temp.education;
+							that.saveData["age_work"] = rTemp.age_work ? rTemp.age_work : temp.age_work;
+							that.saveData["phone"] = rTemp.phone ? rTemp.phone : temp.phone;
+							that.saveData["email"] = rTemp.email ? rTemp.email : temp.email;
+							var checkRes = graceChecker.check(that.saveData, rule);
 							if (checkRes) {
-								that.saveData = that.temp;
-								that.saveData["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self :
-									'';
+								//that.saveData = basicData;
 								//that.saveDatas(that.saveData);
+								that.editBlock = "company";
+								that.temp = resumeData && resumeData.company ? resumeData.company[0] : {};
+								console.log(that.saveData)
 							} else {
 								uni.showToast({
 									title: graceChecker.error,
@@ -256,28 +268,49 @@
 								});
 								return
 							}
-							that.editBlock = "company";
-							that.temp = that.resume_temp && that.resume_temp.company ? that.resume_temp.company[0] : {};
 							break;
 						case "company":
-							that.saveData["company"] = [that.temp];
+							let company = {};
+							if (resumeData.company && resumeData.company[0] && resumeData.company[0]["id"]) {
+								company["id"] = resumeData.company[0]["id"];
+							}
+							company["company"] = rTemp.company ? rTemp.company : temp.company;
+							company["start_time"] = rTemp.start_time ? rTemp.start_time : temp.start_time;
+							company["end_time"] = rTemp.end_time ? rTemp.end_time : temp.end_time;
+							company["job"] = rTemp.job ? rTemp.job : temp.job;
+							company["infomation"] = rTemp.infomation ? rTemp.infomation : temp.infomation;
+							that.saveData["company"] = [company];
 							//that.saveDatas(that.saveData);
-							that.temp = that.resume_temp && that.resume_temp.school ? that.resume_temp.school[0] : {};
+							that.temp = resumeData && resumeData.school ? resumeData.school[0] : {};
 							that.editBlock = "school";
 							break;
 						case "school":
-							that.saveData["school"] = [that.temp];
+							let school = {};
+							if (resumeData.school && resumeData.school[0] && resumeData.school[0]["id"]) {
+								school["id"] = resumeData.school[0]["id"];
+							}
+							school["school"] = rTemp.school ? rTemp.school : temp.school;
+							school["start_time"] = rTemp.start_time ? rTemp.start_time : temp.start_time;
+							school["end_time"] = rTemp.end_time ? rTemp.end_time : temp.end_time;
+							school["profession"] = rTemp.profession ? rTemp.profession : temp.profession;
+							that.saveData["school"] = [school];
 							//that.saveDatas(that.saveData);
-							that.temp = that.resume_temp && that.resume_temp.project ? that.resume_temp.project[0] : {};
+							that.temp = resumeData && resumeData.project ? resumeData.project[0] : {};
 							that.editBlock = "project";
 							break;
 						case "project":
-							that.saveData["project"] = [that.temp];
-							//that.saveDatas(that.saveData);
-							let _as = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self : ''
-							that.temp = {
-								'about_self': _as
+							let project = {};
+							if (resumeData.project && resumeData.project[0] && resumeData.project[0]["id"]) {
+								project["id"] = resumeData.project[0]["id"];
 							}
+							project["name"] = rTemp.name ? rTemp.name : temp.name;
+							project["start_time"] = rTemp.start_time ? rTemp.start_time : temp.start_time;
+							project["end_time"] = rTemp.end_time ? rTemp.end_time : temp.end_time;
+							project["overview"] = rTemp.overview ? rTemp.overview : temp.overview;
+							that.saveData["project"] = [project];
+							//that.saveDatas(that.saveData);
+							let _as = resumeData && resumeData.about_self ? resumeData.about_self : '';
+							that.temp["about_self"] = rTemp.about_self ? rTemp.about_self : _as;
 							that.editBlock = "about_self";
 							break;
 						default:
@@ -288,19 +321,23 @@
 					switch (that.editBlock) {
 						case "about_self":
 							that.editBlock = "project";
-							that.temp = that.resume_temp && that.resume_temp.project ? that.resume_temp.project[0] : {};
+							that.temp = that.saveData.project[0];
+							//that.temp = that.resume_temp && that.resume_temp.project ? that.resume_temp.project[0] : {};
 							break;
 						case "project":
 							that.editBlock = "school";
-							that.temp = that.resume_temp && that.resume_temp.school ? that.resume_temp.school[0] : {};
+							that.temp = that.saveData.school[0];
+							//that.temp = that.resume_temp && that.resume_temp.school ? that.resume_temp.school[0] : {};
 							break;
 						case "school":
 							that.editBlock = "company";
-							that.temp = that.resume_temp && that.resume_temp.company ? that.resume_temp.company[0] : {};
+							that.temp = that.saveData.company[0];
+							//that.temp = that.resume_temp && that.resume_temp.company ? that.resume_temp.company[0] : {};
 							break;
 						case "company":
 							that.editBlock = "basic";
-							that.temp = that.resume_temp
+							that.temp = that.saveData;
+							//that.temp = that.resume_temp
 							break;
 						default:
 							break;
@@ -316,7 +353,12 @@
 					})
 					return
 				}
-				that.saveData["about_self"] = that.temp.about_self;
+				//that.saveData["about_self"] = that.resume_temp && that.resume_temp.about_self ? that.resume_temp.about_self :'';
+				let rt = that.$store.state.resumeTemp;
+				let _as = rt.about_self ? rt.about_self : that.temp.about_self;
+				that.saveData["about_self"] = _as
+				//that.temp.about_self;
+				console.log(that.saveData)
 				that.saveDatas(that.saveData);
 				/*发送简历*/
 				let data = {
