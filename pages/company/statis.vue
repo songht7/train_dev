@@ -136,15 +136,8 @@
 		onShow() {
 			//console.log("onShow")
 			var that = this;
-			that.$store.dispatch('cheack_user');
-			var _user = that.$store.state.user.userInfo;
-			that.UserId = _user.id || '';
-			that.userInfo = _user;
-			//console.log("user:", _user)
-			that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
-			that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
-			that.courseCount = _user.subInfo.courseCount || '0';
-			that.getDatas()
+			that.setPageData();
+			that.getDatas();
 			// interList.forEach((obj, key) => {
 			// 	that.getDatas(obj.inter, obj.dataFor)
 			// })
@@ -158,6 +151,7 @@
 			that.pageIndex = 1;
 			that.status = "loading";
 			that.getDatas()
+			that.getUserInfo()
 		},
 		onReachBottom() {
 			var that = this;
@@ -173,6 +167,17 @@
 			that.getDatas()
 		},
 		methods: {
+			setPageData() {
+				var that = this;
+				that.$store.dispatch('cheack_user');
+				var _user = that.$store.state.user.userInfo;
+				that.UserId = _user.id || '';
+				that.userInfo = _user;
+				that.enterpriseUserCount = _user.subInfo.enterpriseUserCount || '0';
+				that.joinCourseUserCount = _user.subInfo.joinCourseUserCount || '0';
+				that.courseCount = _user.subInfo.courseCount || '0';
+				//console.log("_user:", _user)
+			},
 			getDatas() {
 				var that = this;
 				let data = {
@@ -213,6 +218,37 @@
 					}
 				}
 				that.$store.dispatch("getData", data)
+			},
+			getUserInfo() {
+				var that = this;
+				let _data = {
+					"inter": "info",
+					"header": {
+						"token": that.$store.state.user.token || ""
+					}
+				}
+				_data["fun"] = function(res) {
+					uni.stopPullDownRefresh()
+					if (res.success) {
+						var getUser_res = res.data;
+						uni.getStorage({
+							key: "user",
+							success: function(ress) {
+								let ress_data = ress.data;
+								ress_data["userInfo"] = getUser_res.userInfo;
+								uni.setStorage({
+									key: "user",
+									data: ress_data,
+									success: function() {
+										that.setPageData();
+									}
+								});
+							},
+							fail() {}
+						})
+					}
+				}
+				that.$store.dispatch("getData", _data)
 			},
 			navToTrain(id) {
 				uni.navigateTo({
