@@ -2,7 +2,7 @@
 	<view class="page-main pages">
 		<user-center-top :userInfo="userInfo" :enterpriseUserCount="enterpriseUserCount" :joinCourseUserCount="joinCourseUserCount"
 		 :courseCount="courseCount"></user-center-top>
-		<view class="user-block" v-show="statisType===0">
+		<view class="user-block" v-if="statisType===0">
 			<view class="user-class-list">
 				<view class="my-class-head">
 					<view class="class-tip">
@@ -46,7 +46,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="user-block" v-show="statisType==1||statisType==2">
+		<view class="user-block" v-if="statisType==1||statisType==2">
 			<view class="user-class-list">
 				<view class="my-class-head">
 					<view class="class-tip">
@@ -67,8 +67,9 @@
 											<view class="list-title">{{obj.name}}</view>
 											<view class="class-progress">
 												<view class="progress-box">
-													<view class="percent">{{statisType==1?"参与度"+obj.progress+"%":"合格率"+obj.progress+"%"}}</view>
-													<progress :percent="obj.progress" stroke-width="4" activeColor="#008CEE" backgroundColor="#E0E0E0" />
+													<view class="percent">{{statisType==1?"参与度"+obj.progress+"%":(obj.passExam!=null?"合格率"+obj.progress+"%":"无试题")}}</view>
+													<progress :percent="obj.progress&&obj.progress>=0?obj.progress:'0'" stroke-width="4" activeColor="#008CEE"
+													 backgroundColor="#E0E0E0" />
 												</view>
 											</view>
 										</view>
@@ -95,6 +96,7 @@
 	export default {
 		data() {
 			return {
+				pageKey: 0,
 				userInfo: {},
 				UserId: "",
 				statisType: 0,
@@ -128,7 +130,8 @@
 		onLoad(e) {
 			//console.log("onLoad")
 			var that = this;
-			let p = e.t || 0
+			let p = e.t || 0;
+			that.pageKey = p;
 			that.statisType = parseInt(p);
 			that.$store.dispatch("cheack_page", p)
 			//console.log(that.statisType)
@@ -138,6 +141,7 @@
 			var that = this;
 			that.setPageData();
 			that.getDatas();
+			that.$store.dispatch("cheack_page", that.pageKey)
 			// interList.forEach((obj, key) => {
 			// 	that.getDatas(obj.inter, obj.dataFor)
 			// })
