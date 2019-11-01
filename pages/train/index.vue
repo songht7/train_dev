@@ -50,9 +50,6 @@
 			var that = this;
 			that.tabIndex = e.c || 0;
 			that.ctgId = e.ctg_id;
-		},
-		onShow(e) {
-			var that = this;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
 			that.$loading()
@@ -93,6 +90,9 @@
 				}
 			}
 			that.$store.dispatch("getData", data_ctg)
+		},
+		onShow(e) {
+			var that = this;
 		},
 		onReady() {
 			var that = this;
