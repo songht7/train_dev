@@ -65,6 +65,7 @@ export default {
 		"phoneNumber": api[lks]["phoneNumber"],
 		"addr": {
 			"slideShow": "/v2/ApiHome-slideShow.htm", //首页列表
+			"checkSystem": "/v4/ApiBase-checkSystem.htm", //检测机遇是否开启
 			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
 			"sign": "/v4/ApiAuth-sign.htm", //登录--B
 			"register": "/v4/ApiAuth-register.htm", //注册[POST] A

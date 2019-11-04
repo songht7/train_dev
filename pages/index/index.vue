@@ -26,7 +26,7 @@
 			<view class="block category-box">
 				<view class="ctgs">
 					<block v-for="(ctg,c) in category" :key="c">
-						<view class="ctg-link" :class="['spacing-'+spacing]" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
+						<view class="ctg-link" v-if="ctg.show" :class="['spacing-'+spacing]" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
 							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
 								<uni-icons :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icons>
 							</view>
@@ -84,21 +84,24 @@
 						"link": "/pages/train/index",
 						"icon": "boshimao1",
 						"size": 50,
-						"ctg_id": ""
+						"ctg_id": "",
+						"show": true
 					},
 					{
 						"id": 2,
 						"icon": "icon_likegood_fill",
 						"val": "技术支持",
 						"link": "/pages/technical/index",
-						"ctg_id": "15"
+						"ctg_id": "15",
+						"show": true
 					},
 					{
 						"id": 3,
 						"icon": "ai-book",
 						"val": "文库",
 						"link": "/pages/library/index",
-						"ctg_id": "16"
+						"ctg_id": "16",
+						"show": true
 					},
 					{
 						"id": 4,
@@ -106,7 +109,8 @@
 						"val": "工作机会",
 						"link": "/pages/work/index",
 						"size": 40,
-						"ctg_id": "17"
+						"ctg_id": "17",
+						"show": false
 					},
 				],
 				categorySub: [],
@@ -154,6 +158,7 @@
 			})
 			that.getDatas('slideShow');
 			that.getDatas('categorys');
+			that.getDatas('checkSystem');
 		},
 		onPullDownRefresh() {
 			var that = this;
@@ -176,13 +181,24 @@
 				data["fun"] = function(res) {
 					uni.stopPullDownRefresh()
 					if (res.success) {
-						if (inter == "categorys") {
-							let _ctg = res.data.list;
-							that.categorySub = _ctg.filter(element => element.parent_id == 1);
-							that.category[0]["ctg_id"] = that.categorySub[0]["id"];
-						} else if (inter == "slideShow") {
-							that.swiperList = res.data.list
-							that.swiperleng = res.data.total
+						switch (inter) {
+							case "categorys":
+								let _ctg = res.data.list;
+								that.categorySub = _ctg.filter(element => element.parent_id == 1);
+								that.category[0]["ctg_id"] = that.categorySub[0]["id"];
+								break;
+							case "slideShow":
+								that.swiperList = res.data.list
+								that.swiperleng = res.data.total
+								break;
+							case "checkSystem":
+								let _show = res.data.info == '1' ? true : false;
+								that.category.map((c, k) => {
+									if(c.id == "4") c.show = _show;
+								})
+								break;
+							default:
+								break;
 						}
 					}
 					if (inter == "categorys") {
@@ -263,9 +279,13 @@
 	.ctgs {
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
+		justify-content: space-around;
 		flex-wrap: wrap;
 		padding-bottom: 10upx;
+	}
+
+	.ctgs-sub {
+		justify-content: flex-start;
 	}
 
 	.ctg-link {
