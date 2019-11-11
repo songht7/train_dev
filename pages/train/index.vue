@@ -126,12 +126,16 @@
 				that.getList('getMore');
 			},
 			async changeTab(e) {
+				var that = this;
 				//console.log("changeTab:", e)
 				let index = e.detail ? e.detail.current : e;
 				//console.log("index:", index);
-				if (this.isClickChange) {
-					this.tabIndex = index;
-					this.isClickChange = false;
+				var current_ctg = that.tabBars.filter((c, k) => k == index)[0];
+				that.ctgId = current_ctg.id;
+
+				if (that) {
+					that.tabIndex = index;
+					that.isClickChange = false;
 					return;
 				}
 				let tabBar = await this.getElSize("tab-bar"),
