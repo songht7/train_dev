@@ -125,6 +125,8 @@
 				lessions: [],
 				lessTotal: "",
 				lessDtl: [],
+				cLessId: 0,
+				cLessIndex: 0,
 				cover: [],
 				detailType: "",
 				media: [],
@@ -191,7 +193,18 @@
 		},
 		onPullDownRefresh() {
 			var that = this;
-			that.pageInit();
+			switch (that.current) {
+				case 0:
+					that.pageInit();
+					break;
+				case 1:
+					let _cLessId = that.cLessId;
+					let _cLessIndex = that.cLessIndex;
+					that.getLessDtl(_cLessId, _cLessIndex);
+					break;
+				default:
+					break;
+			}
 		},
 		onHide() {
 			console.log("onHide")
@@ -286,7 +299,6 @@
 			},
 			getLessDtl(lessid, index) {
 				var that = this;
-				console.log(lessid, index)
 				that.segmented = [
 					'课程目录',
 					'内容'
@@ -294,7 +306,7 @@
 				that.detailType = lessid;
 				that.current = 1;
 				if (index == that.lessActive) {
-					return
+					//return
 				}
 				that.musicDestroy();
 
@@ -308,6 +320,8 @@
 					}]
 					return
 				}
+				that.cLessId = lessid;
+				that.cLessIndex = index;
 				/* lessons */
 				let data_ldtl = {
 					"inter": "lesson",
@@ -317,6 +331,7 @@
 					}
 				}
 				data_ldtl["fun"] = function(res) {
+					uni.stopPullDownRefresh()
 					that.swiperCurrent = 0;
 					that.lessActive = index;
 					that.current = 1;
