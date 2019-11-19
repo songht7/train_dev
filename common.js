@@ -41,7 +41,7 @@ var api = {
 		"interface": "https://api.jobpgroup.com", //接口
 		"domain": "http://jobpgroup.com",
 		"appName": "职照培训平台",
-		"phoneNumber": "4008200000",
+		"phoneNumber": "15026551292",
 		"cosConfig": { //`https://jobpassport-1259247972.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'jobpassport-1259247972',
 			"Region": 'ap-shanghai',
