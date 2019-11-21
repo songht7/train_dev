@@ -39,6 +39,9 @@ const store = new Vuex.Store({
 			}
 
 		},
+		set_phoneNumber(state, data) {
+			state.phoneNumber = data
+		},
 		get_user(state, data) {
 			console.log("store-get_user：", data)
 			state.user = data
@@ -279,7 +282,20 @@ const store = new Vuex.Store({
 			}
 			ctx.dispatch("getData", _data)
 		},
+		getBasePhone(ctx) {
+			var _data = {
+				"inter": "getBasePhone"
+			}
+			_data["fun"] = function(res) {
+				console.log(res)
+				if (res.success) {
+					ctx.commit("set_phoneNumber", res.data.info)
+				}
+			}
+			ctx.dispatch("getData", _data)
+		},
 		makePhoneCall(ctx, contactNumb) {
+			//console.log(contactNumb || ctx.state.phoneNumber)
 			uni.makePhoneCall({
 				phoneNumber: contactNumb || ctx.state.phoneNumber
 			});

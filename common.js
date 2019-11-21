@@ -64,6 +64,7 @@ export default {
 		"appName": api[lks]["appName"],
 		"phoneNumber": api[lks]["phoneNumber"],
 		"addr": {
+			"getBasePhone": "/v4/ApiBase-phone.htm", //获取客服电话
 			"slideShow": "/v2/ApiHome-slideShow.htm", //首页列表
 			"checkSystem": "/v4/ApiBase-checkSystem.htm", //检测机遇是否开启
 			"login": "/v4/ApiAuth-login.htm", //登录[POST]--A
