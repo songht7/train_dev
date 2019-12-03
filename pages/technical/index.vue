@@ -53,7 +53,7 @@
 				datas: [],
 				data_total: 0,
 				pageIndex: 1,
-				pageSize: 5,
+				pageSize: 10,
 				status: "more",
 				keywords: "",
 				serchModel: "",
@@ -155,9 +155,9 @@
 				that.$store.dispatch("getData", data)
 			},
 			goDetail: function(id) {
-				uni.navigateTo({
-					url: "/pages/technical/detail?id=" + id
-				})
+				// uni.navigateTo({
+				// 	url: "/pages/technical/detail?id=" + id
+				// })
 			},
 		}
 	}
