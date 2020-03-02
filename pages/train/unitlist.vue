@@ -27,8 +27,8 @@
 						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 						 mode="aspectFill"></image>
 						<view class="video-block" v-if="slide.media_type=='video'">
-							<image class="slideImg virtual" lazy-load="true" src="/static/default.png" mode="aspectFill"></image>
-							<view class="video-btn">
+							<image class="slideImg virtual" v-show="!videoShow" lazy-load="true" src="/static/default.png" mode="aspectFill"></image>
+							<view class="video-btn" v-show="!videoShow">
 								<uni-icons type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icons>
 							</view>
 							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
@@ -180,6 +180,8 @@
 		},
 		onShow() {
 			console.log("onShow")
+			var that = this;
+			that.pageInit();
 		},
 		onReady: function(res) {
 			console.log("onReady")
@@ -189,7 +191,6 @@
 				_audioContext.destroy();
 			}
 			that.cheackTestLng();
-			that.pageInit();
 		},
 		onPullDownRefresh() {
 			var that = this;
@@ -407,9 +408,9 @@
 					console.log("fullscreenchange:", e.target.fullScreen)
 					var vd = that.videoContext;
 					console.log(vd)
-					//vd.pause();
-					//vd.exitFullScreen();
-					that.videoShow = false;
+					vd.pause();
+					vd.exitFullScreen();
+					//that.videoShow = false;
 				}
 			},
 			setVideo() {
