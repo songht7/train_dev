@@ -249,7 +249,9 @@
 						uni.setNavigationBarTitle({
 							title: _data.name
 						});
-						_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						if (_data["detail"]) {
+							_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						}
 						that.data = _data;
 						if (_data.percentage) {
 							that.$store.state.percentage = _data.percentage;
@@ -355,7 +357,9 @@
 
 					if (res.success) {
 						var res_data = res.data;
-						res_data["detail"] = res_data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						if (res_data["detail"]) {
+							res_data["detail"] = res_data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+						}
 						that.lessDtl = res_data;
 						var _img = res_data.images ? res_data.images : [];
 						if (res_data.src && res_data.type) {
@@ -417,19 +421,25 @@
 				var that = this;
 				var _media = that.media;
 				console.log("setVideo:", _media)
-				_media.forEach((obj, i) => {
-					console.log(obj.media_type)
-					if (obj.media_type == "video") {
-						that.videoContext = uni.createVideoContext('TrainVideo')
-					} else if (obj.media_type == "music") {
-						that.hasMusic = true;
-						var _audioContext = uni.createInnerAudioContext();
-						that.audioContext = _audioContext;
-						_audioContext.autoplay = that.music.autoplay;
-						_audioContext.src = obj.media_src;
-					}
-				})
-
+				if (_media && _media.length > 0) {
+					_media.forEach((obj, i) => {
+						console.log(obj.media_type)
+						switch (obj.media_type) {
+							case "video":
+								that.videoContext = uni.createVideoContext('TrainVideo')
+								break;
+							case "music":
+								that.hasMusic = true;
+								var _audioContext = uni.createInnerAudioContext();
+								that.audioContext = _audioContext;
+								_audioContext.autoplay = that.music.autoplay;
+								_audioContext.src = obj.media_src;
+								break;
+							default:
+								break;
+						}
+					})
+				}
 			},
 			musicSet(type) {
 				var that = this;
