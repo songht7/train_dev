@@ -31,6 +31,7 @@
 
 <script>
 	let COS = require('./tencent-cos/cos-wx-sdk-v5.js');
+	import { Base64 } from 'js-base64';
 
 	export default {
 		data() {
@@ -172,12 +173,13 @@
 	// 选择图片(通用)
 	const cImage = (_this, count, configs) => {
 		console.log("cImage:", configs);
+		console.log("base64:", Base64.decode(configs.cosConfig.SKey));
 		let config = {
 			cosConfig: {
 				Bucket: configs.cosConfig.Bucket, //replace with yours
 				Region: configs.cosConfig.Region, //replace with yours
 				SecretId: configs.cosConfig.SecretId, //replace with yours
-				SecretKey: configs.cosConfig.SecretKey //replace with yours
+				SecretKey: Base64.decode(configs.cosConfig.SKey) //replace with yours
 			},
 			count,
 			notli: configs.notli,

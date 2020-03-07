@@ -14,7 +14,7 @@ var api = {
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
 			"SecretId": 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
-			"SecretKey": 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF'
+			"SKey": 'dERJOGpTMlZXYVhQRHdVcnlvR2JsejJaOEIxazFRdEY='
 		},
 		"wx": {
 			"AppID": "wxeaf6d3cdbb53e013",
@@ -30,7 +30,7 @@ var api = {
 			"Bucket": 'plbs-test-1257286922',
 			"Region": 'ap-shanghai',
 			"SecretId": 'AKIDujJnIXMBSeeOuVMVt0sa2Jh5A90rcJoh',
-			"SecretKey": 'tDI8jS2VWaXPDwUryoGblz2Z8B1k1QtF'
+			"SKey": 'dERJOGpTMlZXYVhQRHdVcnlvR2JsejJaOEIxazFRdEY='
 		},
 		"wx": {
 			"AppID": "wxeaf6d3cdbb53e013",
@@ -46,7 +46,7 @@ var api = {
 			"Bucket": 'jobpassport-1259247972',
 			"Region": 'ap-shanghai',
 			"SecretId": 'AKIDRbLQM4DqRnKgpzR1NlEUWP9jD7pJt1K3',
-			"SecretKey": 'mNnzhBSUHtb6SWP4bulOmwwazA8RWTCV'
+			"SKey": 'bU5uemhCU1VIdGI2U1dQNGJ1bE9td3dhekE4UldUQ1Y='
 		},
 		"wx": {
 			"AppID": "wx69ecaa1a4fb809ff",
