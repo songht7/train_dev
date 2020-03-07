@@ -127,10 +127,10 @@
 			Key: configs.path + configs.photoType + Key + ".jpg",
 			FilePath: filePath,
 		};
-		console.log("opt:", opt)
+		//console.log("opt:", opt)
 		cos.postObject(opt, (err, data) => {
-			console.log("err:", err)
-			console.log("data:", data)
+			// console.log("err:", err)
+			// console.log("data:", data)
 			if (err == null) {
 				// console.log(`%c 腾讯云上传(成功返回地址):${data.headers.Location}`, 'color:#1AAD19');
 				// upload_picture_list[j]['path_server'] = data.headers.Location;
@@ -150,8 +150,8 @@
 
 	// 上传图片(通用)
 	const uImage = async (_this, config) => {
-		console.log("uImage:")
-		console.log(_this.upload_picture_list)
+		// console.log("uImage:")
+		// console.log(_this.upload_picture_list)
 		for (let j = 0, len = _this.upload_picture_list.length; j < len; j++) {
 			if (_this.upload_picture_list[j]['upload_percent'] == 0) {
 				await upload_file_server(_this, config, _this.upload_picture_list, j)
@@ -172,8 +172,7 @@
 
 	// 选择图片(通用)
 	const cImage = (_this, count, configs) => {
-		console.log("cImage:", configs);
-		console.log("base64:", Base64.decode(configs.cosConfig.SKey));
+		//console.log("cImage:", configs);
 		let config = {
 			cosConfig: {
 				Bucket: configs.cosConfig.Bucket, //replace with yours
@@ -190,7 +189,7 @@
 			photoType: configs.photoType,
 		}
 
-		console.log("config:", config);
+		//console.log("config:", config);
 
 		uni.chooseImage({
 			count: config.notli ? config.count = 9 : _this.upload_after_list.length == 0 ? config.count : config.count -
