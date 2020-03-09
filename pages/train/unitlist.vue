@@ -36,7 +36,7 @@
 						</view>
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
-						<view class="media-music" v-if="slide.media_type=='music'&&slide.media_src">
+						<view class="media-music" v-if="hasMusic">
 							<view class="music-icon">
 								<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>
 								<uni-icons type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
@@ -386,7 +386,7 @@
 								that.media = filter_media;
 								that.setVideo();
 							}
-							//console.log(that.showList)
+							console.log("showList:", that.showList)
 							that.swiperList = _img;
 						}
 					}
@@ -423,20 +423,15 @@
 				console.log("setVideo:", _media)
 				if (_media && _media.length > 0) {
 					_media.forEach((obj, i) => {
-						console.log(obj.media_type)
-						switch (obj.media_type) {
-							case "video":
-								that.videoContext = uni.createVideoContext('TrainVideo')
-								break;
-							case "music":
-								that.hasMusic = true;
-								var _audioContext = uni.createInnerAudioContext();
-								that.audioContext = _audioContext;
-								_audioContext.autoplay = that.music.autoplay;
-								_audioContext.src = obj.media_src;
-								break;
-							default:
-								break;
+						//console.log(obj)
+						if (obj.media_type == 'video') {
+							that.videoContext = uni.createVideoContext('TrainVideo')
+						} else if (obj.media_type == "music" && obj.media_src!="0") {
+							that.hasMusic = true;
+							var _audioContext = uni.createInnerAudioContext();
+							that.audioContext = _audioContext;
+							_audioContext.autoplay = that.music.autoplay;
+							_audioContext.src = obj.media_src;
 						}
 					})
 				}
