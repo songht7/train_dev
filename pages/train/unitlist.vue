@@ -26,7 +26,7 @@
 					<view class="swiper-item train-swiper-main">
 						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 						 mode="aspectFill"></image>
-						<view class="video-block" v-if="slide.media_type=='video'">
+						<view class="video-block" v-if="slide.media_type=='video'&&slide.media_src">
 							<image class="slideImg virtual" v-show="!videoShow" lazy-load="true" src="/static/default.png" mode="aspectFill"></image>
 							<view class="video-btn" v-show="!videoShow">
 								<uni-icons type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icons>
@@ -36,7 +36,7 @@
 						</view>
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
-						<view class="media-music" v-if="slide.media_type=='music'">
+						<view class="media-music" v-if="slide.media_type=='music'&&slide.media_src">
 							<view class="music-icon">
 								<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>
 								<uni-icons type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
