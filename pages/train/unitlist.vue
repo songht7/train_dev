@@ -339,22 +339,23 @@
 					that.lessActive = index;
 					that.current = 1;
 					/* 记录已读 */
-					let data_lean = {
-						"inter": "accountLesson",
-						"data": {
-							"lesson_id": lessid
-						},
-						"method": "POST",
-						"header": {
-							"Content-Type": "application/json",
-							"token": that.__token
+					if (that.isJoined) {
+						let data_lean = {
+							"inter": "accountLesson",
+							"data": {
+								"lesson_id": lessid
+							},
+							"method": "POST",
+							"header": {
+								"Content-Type": "application/json",
+								"token": that.__token
+							}
 						}
+						data_lean["fun"] = function(res) {
+							if (res.success) {}
+						}
+						that.$store.dispatch("getData", data_lean)
 					}
-					data_lean["fun"] = function(res) {
-						if (res.success) {}
-					}
-					that.$store.dispatch("getData", data_lean)
-
 					if (res.success) {
 						var res_data = res.data;
 						if (res_data["detail"]) {
@@ -426,7 +427,7 @@
 						//console.log(obj)
 						if (obj.media_type == 'video') {
 							that.videoContext = uni.createVideoContext('TrainVideo')
-						} else if (obj.media_type == "music" && obj.media_src!="0") {
+						} else if (obj.media_type == "music" && obj.media_src != "0") {
 							that.hasMusic = true;
 							var _audioContext = uni.createInnerAudioContext();
 							that.audioContext = _audioContext;
