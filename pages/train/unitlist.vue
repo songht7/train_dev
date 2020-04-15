@@ -264,7 +264,7 @@
 						} else {
 							that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
 						}
-						if (_data.lessonCount == _data.lessonStartCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
+						if (_data.lessonStartCount >= _data.lessonCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
 							that.canTest = true;
 						}
 						let _cover = [{
