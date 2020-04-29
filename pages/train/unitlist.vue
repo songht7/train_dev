@@ -87,6 +87,12 @@
 						<block v-else>
 							<block v-if="__token">
 								<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
+								<view :class="['less-more',!lessDtl.less_prev?'less-fist':'']">
+									<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index)">上一章
+										[{{lessDtl.less_prev.name}}]</view>
+									<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index)">下一章
+										[{{lessDtl.less_next.name}}]</view>
+								</view>
 							</block>
 							<block v-else>
 								<login-tip></login-tip>
@@ -368,6 +374,18 @@
 						}
 						that.lessDtl = res_data;
 						var _img = res_data.images ? res_data.images : [];
+						that.lessions.filter((obj, k) => {
+							if (index - 1 == k) {
+								obj['index'] = k;
+								res_data['less_prev'] = obj;
+							}
+							if (index + 1 == k) {
+								obj['index'] = k;
+								res_data['less_next'] = obj;
+							}
+						});
+						console.log('res_data:', res_data)
+						// prevId
 						if (res_data.src && res_data.type) {
 							let media = {
 								"name": res_data.name,
@@ -674,145 +692,5 @@
 </script>
 
 <style>
-	.swiper-main {
-		position: relative;
-	}
-
-	.photo-album {
-		position: absolute;
-		right: 20upx;
-		top: 80upx;
-		z-index: 3;
-		padding: 20upx;
-	}
-
-	.swiper-slide-unit {
-		height: 422upx;
-	}
-
-	.segmented-box {
-		border-bottom: 2upx solid #D1D1D1
-	}
-
-	.unit-content {
-		padding-bottom: 30upx;
-	}
-
-	.course-inner {
-		padding: 30upx;
-	}
-
-	.is-joined {
-		background: #929292;
-		color: #FFFFFF;
-		border-color: #929292;
-	}
-
-	.course-detail-box {
-		border-bottom: 20upx solid #F4F4F4;
-	}
-
-	.course-detail-box:last-child {
-		border-bottom: none;
-	}
-
-	.less-active {
-		color: #008CEE;
-	}
-
-	.train-swiper-main {
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		align-items: center;
-	}
-
-	.video-block {
-		width: 100%;
-		height: 100%;
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		align-content: center;
-	}
-
-	.video-btn {
-		position: absolute;
-	}
-
-	.virtual {
-		opacity: 0.3;
-	}
-
-	.media-music {
-		background: #FCFCFC;
-		border: 1px solid #E0E0E0;
-		color: #333;
-		display: flex;
-		flex-direction: row;
-		align-content: center;
-		align-items: center;
-		justify-content: flex-start;
-		width: 80%;
-		border-radius: 10upx;
-	}
-
-	.music-icon {
-		border-right: 1px solid #E0E0E0;
-		display: flex;
-		flex-direction: column;
-		align-content: center;
-		align-items: center;
-		justify-content: center;
-		padding: 10upx;
-		height: 100%;
-		width: 100upx;
-	}
-
-	.music-play {
-		padding: 10upx 20upx;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		flex: 1;
-	}
-
-	.music-info {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-content: center;
-		align-items: center;
-	}
-
-	.music-loading {
-		position: fixed;
-		display: flex;
-		align-content: center;
-		align-items: center;
-		justify-content: center;
-		width: 90upx;
-		height: 90upx;
-		top: 8%;
-		right: 5%;
-		opacity: 0.9;
-		z-index: 5;
-		border-radius: 50%;
-	}
-
-	.rotating {
-		animation: rotate 5s linear infinite;
-	}
-
-	@keyframes rotate {
-		from {
-			transform: rotate(0deg);
-		}
-
-		to {
-			transform: rotate(360deg);
-		}
-	}
+	@import url("./train.css");
 </style>
