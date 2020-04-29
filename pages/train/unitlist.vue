@@ -127,6 +127,7 @@
 				lessDtl: [],
 				cLessId: 0,
 				cLessIndex: 0,
+				storage_LessId: "",
 				cover: [],
 				detailType: "",
 				media: [],
@@ -169,7 +170,9 @@
 					duration: 0,
 					currentTime: 0,
 					sliderVal: 0
-				}
+				},
+				learn_begin: "",
+				learn_end: ""
 			}
 		},
 		onLoad(e) {
@@ -215,6 +218,7 @@
 		onUnload() {
 			console.log("onUnload")
 			var that = this;
+			that.learnTime(); //统计时长
 			that.musicDestroy();
 		},
 		components: {
@@ -311,6 +315,7 @@
 				if (index == that.lessActive) {
 					//return
 				}
+				that.learn_begin = Math.round(new Date().getTime() / 1000); //记录进入时间
 				that.musicDestroy();
 
 				if (lessid == 'content' && index == -1) {
@@ -387,7 +392,7 @@
 								that.media = filter_media;
 								that.setVideo();
 							}
-							console.log("showList:", that.showList)
+							// console.log("showList:", that.showList)
 							that.swiperList = _img;
 						}
 					}
@@ -397,7 +402,7 @@
 			videoPlay(type) {
 				var that = this;
 				let vc = that.videoContext;
-				console.log(vc)
+				// console.log(vc)
 				that.videoShow = true;
 				vc.play();
 				vc.requestFullScreen();
@@ -410,9 +415,9 @@
 				var that = this;
 				console.log(e)
 				if (!e.detail.fullScreen) {
-					console.log("fullscreenchange:", e.target.fullScreen)
+					// console.log("fullscreenchange:", e.target.fullScreen)
 					var vd = that.videoContext;
-					console.log(vd)
+					// console.log(vd)
 					vd.pause();
 					vd.exitFullScreen();
 					//that.videoShow = false;
@@ -421,7 +426,7 @@
 			setVideo() {
 				var that = this;
 				var _media = that.media;
-				console.log("setVideo:", _media)
+				// console.log("setVideo:", _media)
 				if (_media && _media.length > 0) {
 					_media.forEach((obj, i) => {
 						//console.log(obj)
@@ -465,7 +470,7 @@
 				_audioContext.onPlay(() => {
 					_music.duration = Math.ceil(_audioContext.duration);
 					_music.playState = 'pause';
-					console.log("startTime:", _audioContext.startTime)
+					// console.log("startTime:", _audioContext.startTime)
 				});
 				_audioContext.onTimeUpdate(() => {
 					let _currentTime = _audioContext.currentTime;
@@ -536,8 +541,10 @@
 				//console.log('value 发生变化：' + changeVal)
 			},
 			onClicksegmented(index) {
-				if (this.current !== index) {
-					this.current = index;
+				var that = this;
+				if (that.current !== index) {
+					that.current = index;
+					that.learnTime(); //统计时长
 				}
 			},
 			goback() {
@@ -559,7 +566,7 @@
 					indicator: "number",
 					current: _current //.toString()
 				}
-				console.log(uniPreviewImg)
+				// console.log(uniPreviewImg)
 				uni.previewImage(uniPreviewImg);
 			},
 			videoErrorCallback: function(e) {
@@ -633,6 +640,34 @@
 					}
 				}
 				that.$store.dispatch("getData", data_tests)
+			},
+			learnTime() {
+				// 课时学习时长 进入时间-退出时间
+				var that = this;
+				let learn_begin = that.learn_begin; //记录出去时间
+				let learn_end = Math.round(new Date().getTime() / 1000); //记录出去时间
+				//let time_over = parseInt(learn_end) - parseInt(learn_begin);
+
+				console.log('cLessId：%s, learn_begin %s, learn_end: %s', that.cLessId, learn_begin, learn_end)
+
+				/* lessons */
+				let param = {
+					"inter": "lesson",
+					"parm": `?lesson_id=${that.cLessId}`,
+					"header": {
+						"token": that.__token
+					}
+				}
+				param["fun"] = function(res) {
+					if (res.success) {
+						//that.test_list = res.data.list;
+					}
+				}
+				setTimeout(() => {
+					that.learn_begin = "";
+					that.learn_end = "";
+				}, 1000);
+				//that.$store.dispatch("getData", param)
 			}
 		}
 	}
