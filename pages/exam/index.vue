@@ -22,7 +22,7 @@
 									<block v-if="obj.passStatus=='0'||obj.passStatus=='2'">
 										<view class="exam-btns">
 											<view class="exam-btn" :class="obj.passStatus=='2'?'exam-btn-red':''" @click="goDetail(obj.id)">
-												{{obj.passStatus=='0'?'参与考试':'点击重考'}}
+												{{obj.passStatus=='0'?'参与考试':'重新考试'}}
 											</view>
 										</view>
 									</block>

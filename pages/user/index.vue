@@ -10,7 +10,7 @@
 								<view class="class-icon class-icon-qy">
 									<uni-icons type="dashaxiaoqudizhi01" :size="16" color="#FFFFFF"></uni-icons>
 								</view>
-								<view class="txt-sross">企业必须课程</view>
+								<view class="txt-sross">企业必修课程</view>
 							</view>
 							<navigator url="/pages/user/my-class?t=ECourses" class="class-more">全部{{ECoursesTotal}}个></navigator>
 						</view>
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+	var b64 = require('@/common/base64.js').CusBASE64;
 	import userCenterTop from '@/components/user-center-top.vue'
 	import uniGrid from '@/components/uni-grid.vue'
 	export default {

@@ -127,12 +127,12 @@
 			},
 			async changeTab(e) {
 				var that = this;
-				//console.log("changeTab:", e)
+				console.log("changeTab:", e)
 				let index = e.detail ? e.detail.current : e;
 				// console.log("------------------:");
 				// console.log("index:", index);
 				var current_ctg = that.tabBars.filter((c, k) => k == index)[0];
-				//console.log(current_ctg);
+				console.log("current_ctg:", current_ctg);
 				if (current_ctg) {
 					that.ctgId = current_ctg.id;
 				}

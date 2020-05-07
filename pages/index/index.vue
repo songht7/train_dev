@@ -54,6 +54,9 @@
 					<image class="ad-img" src="/static/img-1.png" mode="widthFix"></image>
 				</view>
 			</view>
+			<!-- <view class="wx-login">
+				<button type="primary" lang="zh_CN" open-type="getPhoneNumber" @getphonenumber="getphonenumber">微信授权登录</button>
+			</view> -->
 		</view>
 		<uni-popup :show="poptype === 'getNotUser'" position="middle" mode="fixed" width="70" @hidePopup="togglePopup('')">
 			<view class="train-show-modal-box">
@@ -170,6 +173,12 @@
 		},
 		computed: {},
 		methods: {
+			getphonenumber(e) {
+				console.log("getwxinfo:", e)
+				console.log(e.detail.errMsg);
+				console.log(e.detail.iv);
+				console.log(e.detail.encryptedData);
+			},
 			getDatas(inter) {
 				var that = this;
 				let data = {
@@ -194,7 +203,7 @@
 							case "checkSystem":
 								let _show = res.data.info == '1' ? true : false;
 								that.category.map((c, k) => {
-									if(c.id == "4") c.show = _show;
+									if (c.id == "4") c.show = _show;
 								})
 								break;
 							default:
