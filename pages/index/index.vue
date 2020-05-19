@@ -227,6 +227,14 @@
 					this.navTo(url)
 				}
 			},
+			linkTo(link, slideId) {
+				var that = this;
+				if (link) {
+					uni.navigateTo({
+						url: link //'/pages/train/unitlist?id=257'
+					})
+				}
+			},
 			navTo(url) {
 				var that = this;
 				uni.navigateTo({

@@ -572,6 +572,7 @@
 				} else {
 					that.$store.dispatch('goback')
 				}
+				that.learnTime(); //统计时长
 			},
 			previewImage() {
 				var that = this;
@@ -662,30 +663,34 @@
 			learnTime() {
 				// 课时学习时长 进入时间-退出时间
 				var that = this;
-				let learn_begin = that.learn_begin; //记录出去时间
-				let learn_end = Math.round(new Date().getTime() / 1000); //记录出去时间
-				//let time_over = parseInt(learn_end) - parseInt(learn_begin);
-
-				console.log('cLessId：%s, learn_begin %s, learn_end: %s', that.cLessId, learn_begin, learn_end)
-
-				/* lessons */
-				let param = {
-					"inter": "lesson",
-					"parm": `?lesson_id=${that.cLessId}`,
-					"header": {
-						"token": that.__token
+				if (that.isJoined) {
+					let learn_begin = that.learn_begin; //记录出去时间
+					let learn_end = Math.round(new Date().getTime() / 1000); //记录出去时间
+					let time_over = parseFloat(learn_end - learn_begin);
+					//console.log('cLessId：%s, learn_begin %s, learn_end: %s, time_over: %s', that.cLessId, learn_begin, learn_end,time_over)
+					/* lessons */
+					let param = {
+						"inter": "saveTime",
+						"data": {
+							lesson_id: that.cLessId,
+							duration: time_over
+						},
+						method: "POST",
+						"header": {
+							"token": that.__token
+						}
 					}
-				}
-				param["fun"] = function(res) {
-					if (res.success) {
-						//that.test_list = res.data.list;
+					param["fun"] = function(res) {
+						if (res.success) {
+							//that.test_list = res.data.list;
+						}
 					}
+					setTimeout(() => {
+						that.learn_begin = "";
+						that.learn_end = "";
+					}, 1000);
+					that.$store.dispatch("getData", param)
 				}
-				setTimeout(() => {
-					that.learn_begin = "";
-					that.learn_end = "";
-				}, 1000);
-				//that.$store.dispatch("getData", param)
 			}
 		}
 	}

@@ -102,6 +102,8 @@ export default {
 			"examination": "/v4/ApiExamination-examination.htm", //试卷详细?examination_id=6
 			"getWeChatInfo": "/v4/ApiWeChat-getWeChatInfo.htm", //获取微信信息-公众号?code=1
 			"getWeChatInfoMP": "/v4/ApiWeChatMinProgram-getWeChatInfo.htm", //获取微信信息-小程序?code=1
+			
+			"saveTime": "/v4/ApiAccount-saveTime.htm", //记录课时的上课时间
 
 		}
 	}
