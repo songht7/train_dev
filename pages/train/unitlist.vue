@@ -682,14 +682,12 @@
 						}
 					}
 					param["fun"] = function(res) {
+						that.learn_begin = "";
+						that.learn_end = "";
 						if (res.success) {
 							//that.test_list = res.data.list;
 						}
 					}
-					setTimeout(() => {
-						that.learn_begin = "";
-						that.learn_end = "";
-					}, 1000);
 					that.$store.dispatch("getData", param)
 				}
 			}
