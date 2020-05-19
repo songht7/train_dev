@@ -3,8 +3,8 @@
 		<block v-if="__token">
 			<view class="page-main">
 				<block v-if="datas.id">
-					<view class="banner">
-						<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFill"></image>
+					<view class="banner" :style="{'background-image':`url(${datas.original_src})`}">
+						<!-- <image class="banner-img" :src="datas.original_src||'/static/default.png'" :mode="$store.state.systemInfo.screenWidth<=375?'widthFix':'aspectFill'"></image> -->
 						<!-- <view class="banner-title">{{datas.name}}</view> -->
 					</view>
 					<view class="banner-title-block">{{datas.name}}</view>
@@ -122,10 +122,14 @@
 
 <style>
 	.banner {
-		height: 360upx;
+		height: 400upx;
 		overflow: hidden;
 		position: relative;
 		background-color: #ccc;
+		background-image: url(../../static/default.png);
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: cover;
 	}
 
 	.banner-img {
