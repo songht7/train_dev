@@ -667,6 +667,7 @@
 					let learn_begin = that.learn_begin; //记录出去时间
 					let learn_end = Math.round(new Date().getTime() / 1000); //记录出去时间
 					let time_over = parseFloat(learn_end - learn_begin);
+					time_over = time_over <= 0 ? 1 : time_over;
 					//console.log('cLessId：%s, learn_begin %s, learn_end: %s, time_over: %s', that.cLessId, learn_begin, learn_end,time_over)
 					/* lessons */
 					let param = {
