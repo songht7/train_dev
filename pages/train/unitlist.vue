@@ -86,9 +86,9 @@
 								<block v-if="__token">
 									<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 									<view :class="['less-more',!lessDtl.less_prev?'less-fist':'']">
-										<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index)">上一章
+										<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index,'lessMore')">上一章
 											[{{lessDtl.less_prev.name}}]</view>
-										<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index)">下一章
+										<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index,'lessMore')">下一章
 											[{{lessDtl.less_next.name}}]</view>
 									</view>
 								</block>
@@ -224,6 +224,7 @@
 			console.log("onHide")
 			var that = this;
 			that.musicDestroy();
+			that.learnTime(); //统计时长
 		},
 		onUnload() {
 			console.log("onUnload")
@@ -314,7 +315,7 @@
 				}
 				that.$store.dispatch("getData", data_les)
 			},
-			getLessDtl(lessid, index) {
+			getLessDtl(lessid, index, type) {
 				var that = this;
 				that.segmented = [
 					'课程目录',
@@ -325,7 +326,9 @@
 				if (index == that.lessActive) {
 					//return
 				}
-				that.learn_begin = Math.round(new Date().getTime() / 1000); //记录进入时间
+				if (type == 'lessMore') {
+					that.learnTime(); //统计时长
+				}
 				that.musicDestroy();
 
 				if (lessid == 'content' && index == -1) {
@@ -350,6 +353,7 @@
 				}
 				data_ldtl["fun"] = function(res) {
 					uni.stopPullDownRefresh()
+					that.learn_begin = Math.round(new Date().getTime() / 1000); //记录进入时间
 					that.swiperCurrent = 0;
 					that.lessActive = index;
 					that.current = 1;
@@ -564,9 +568,14 @@
 			},
 			onClicksegmented(index) {
 				var that = this;
+				// console.log(that.current, index)
 				if (that.current !== index) {
 					that.current = index;
+				}
+				if (index <= 0) {
 					that.learnTime(); //统计时长
+				} else if (index >= 1) {
+					that.learn_begin = Math.round(new Date().getTime() / 1000); //记录进入时间
 				}
 			},
 			goback() {
@@ -672,14 +681,13 @@
 					let learn_end = Math.round(new Date().getTime() / 1000); //记录出去时间
 					let time_over = parseFloat(learn_end - learn_begin);
 					time_over = time_over <= 0 ? 1 : time_over;
-					//console.log('cLessId：%s, learn_begin %s, learn_end: %s, time_over: %s', that.cLessId, learn_begin, learn_end,time_over)
+					console.log('learnTime::: cLessId：%s, learn_begin %s, learn_end: %s, time_over: %s', that.cLessId, learn_begin,
+						learn_end, time_over)
 					/* lessons */
 					let param = {
 						"inter": "saveTime",
 						"data": {
 							lesson_id: that.cLessId,
-							learn_begin: learn_begin,
-							learn_end: learn_end,
 							duration: time_over,
 						},
 						method: "POST",
@@ -688,13 +696,43 @@
 						}
 					}
 					param["fun"] = function(res) {
-						that.learn_begin = 0;
-						that.learn_end = 0;
+						// that.learn_begin = 0;
+						// that.learn_end = 0;
 						if (res.success) {
 							//that.test_list = res.data.list;
 						}
 					}
-					that.$store.dispatch("getData", param)
+					that.$store.dispatch("getData", param);
+
+
+					// let param1 = {
+					// 	"inter": "saveTime",
+					// 	"data": {
+					// 		lesson_id: that.cLessId,
+					// 		delete: 1,
+					// 		duration: learn_begin,
+					// 	},
+					// 	method: "POST",
+					// 	"header": {
+					// 		"token": that.__token
+					// 	}
+					// }
+					// param1["fun"] = function(res) {}
+					// let param2 = {
+					// 	"inter": "saveTime",
+					// 	"data": {
+					// 		lesson_id: that.cLessId,
+					// 		delete: 2,
+					// 		duration: learn_end,
+					// 	},
+					// 	method: "POST",
+					// 	"header": {
+					// 		"token": that.__token
+					// 	}
+					// }
+					// param2["fun"] = function(res) {}
+					// that.$store.dispatch("getData", param1)
+					// that.$store.dispatch("getData", param2)
 				}
 			}
 		}

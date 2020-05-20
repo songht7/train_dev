@@ -6,6 +6,7 @@ page {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	padding-bottom: 0;
 }
 
 .swiper-main {
@@ -35,11 +36,11 @@ page {
 }
 
 .unit-content {
-	padding-bottom: 30upx;
+	padding-bottom: 80upx;
 }
 
 .course-inner {
-	padding: 30upx 30upx 110upx;
+	padding: 30upx;
 }
 
 .is-joined {
