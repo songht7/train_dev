@@ -55,54 +55,58 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<view class="music-loading" v-if="hasMusic" :class="music.playState==='pause'?'rotating':''" @click="musicSet(music.playState)">
-			<uni-icons type="music" size="40" color="#006FFF"></uni-icons>
-		</view>
 		<view class="uni-padding-wrap uni-common-mt segmented-box">
 			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented" styleType="text"
 			 activeColor="#008CEE"></uni-segmented-control>
 		</view>
-		<view class="unit-content">
-			<view v-show="current === 0">
-				<view class="course-lessions">
-					<view class="course-inner">
-						<!-- <view class="less-row" :class='[lessActive==-1?"less-active":""]' @click="getLessDtl('content',-1)">章节介绍</view> -->
-						<block v-for="(less,i) in lessions" :key="i">
-							<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
-						</block>
+		<scroll-view scroll-y class="train-detail-main">
+			<view class="unit-content">
+				<view v-show="current === 0">
+					<view class="course-lessions">
+						<view class="course-inner">
+							<!-- <view class="less-row" :class='[lessActive==-1?"less-active":""]' @click="getLessDtl('content',-1)">章节介绍</view> -->
+							<block v-for="(less,i) in lessions" :key="i">
+								<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
+							</block>
+						</view>
 					</view>
 				</view>
-			</view>
-			<view v-show="current === 1">
-				<view class="course-detail-box">
-					<view class="course-inner">
-						<block v-if="detailType==='content'">
-							<view class="course-title">{{data.name}}</view>
-							<view class="course-more list-more">
-								<!-- <view>123人在学</view> -->
-								<view>共{{lessTotal}}门课程</view>
-							</view>
-							<rich-text class="course-detail" :nodes="data.detail"></rich-text>
-						</block>
-						<block v-else>
-							<block v-if="__token">
-								<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
-								<view :class="['less-more',!lessDtl.less_prev?'less-fist':'']">
-									<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index)">上一章
-										[{{lessDtl.less_prev.name}}]</view>
-									<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index)">下一章
-										[{{lessDtl.less_next.name}}]</view>
+				<view v-show="current === 1">
+					<view class="course-detail-box">
+						<view class="course-inner">
+							<block v-if="detailType==='content'">
+								<view class="course-title">{{data.name}}</view>
+								<view class="course-more list-more">
+									<!-- <view>123人在学</view> -->
+									<view>共{{lessTotal}}门课程</view>
 								</view>
+								<rich-text class="course-detail" :nodes="data.detail"></rich-text>
 							</block>
 							<block v-else>
-								<login-tip></login-tip>
+								<block v-if="__token">
+									<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
+									<view :class="['less-more',!lessDtl.less_prev?'less-fist':'']">
+										<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index)">上一章
+											[{{lessDtl.less_prev.name}}]</view>
+										<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index)">下一章
+											[{{lessDtl.less_next.name}}]</view>
+									</view>
+								</block>
+								<block v-else>
+									<login-tip></login-tip>
+								</block>
 							</block>
-						</block>
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 
+		<block v-if="hasMusic">
+			<view class="music-loading" :class="music.playState==='pause'?'rotating':''" @click="musicSet(music.playState)">
+				<uni-icons type="music" size="40" color="#006FFF"></uni-icons>
+			</view>
+		</block>
 		<block v-if="__token">
 			<fix-button gobackShow="hide">
 				<view class="fbtns btn-goback" @click="goback">返回</view>
@@ -177,8 +181,8 @@
 					currentTime: 0,
 					sliderVal: 0
 				},
-				learn_begin: "",
-				learn_end: ""
+				learn_begin: 0,
+				learn_end: 0
 			}
 		},
 		onLoad(e) {
@@ -674,7 +678,9 @@
 						"inter": "saveTime",
 						"data": {
 							lesson_id: that.cLessId,
-							duration: time_over
+							learn_begin: learn_begin,
+							learn_end: learn_end,
+							duration: time_over,
 						},
 						method: "POST",
 						"header": {
@@ -682,8 +688,8 @@
 						}
 					}
 					param["fun"] = function(res) {
-						that.learn_begin = "";
-						that.learn_end = "";
+						that.learn_begin = 0;
+						that.learn_end = 0;
 						if (res.success) {
 							//that.test_list = res.data.list;
 						}
@@ -695,6 +701,6 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	@import url("./train.css");
 </style>

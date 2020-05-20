@@ -80,7 +80,7 @@
 		lines: 3;
 		text-overflow: ellipsis;
 		font-size: 32upx;
-		font-weight: 600;
+		font-weight: 700;
 		padding-bottom: 10rpx;
 	}
 
