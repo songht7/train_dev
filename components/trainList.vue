@@ -9,7 +9,7 @@
 					<view class="train-infos">
 						<view class="train-title">
 							<text class="media-title">{{datas.name}}</text>
-							<text v-if="datas.overview">{{datas.overview}}</text>
+							<text class="media-ov" v-if="datas.overview">{{datas.overview}}</text>
 						</view>
 						<view class="train-count" v-if="datas.lessCount">共{{datas.lessCount}}门课程</view>
 					</view>
@@ -80,7 +80,15 @@
 		lines: 3;
 		text-overflow: ellipsis;
 		font-size: 32upx;
-		color: #555555;
+		font-weight: 600;
+		padding-bottom: 10rpx;
+	}
+
+	.media-ov {
+		color: #666;
+		line-height: 1.4;
+		letter-spacing: 4upx;
+		font-size: 26upx;
 	}
 
 	.train-infos {
@@ -102,5 +110,4 @@
 		border-radius: 15upx;
 		overflow: hidden;
 	}
-
 </style>
