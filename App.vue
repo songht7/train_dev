@@ -30,7 +30,6 @@
 </script>
 
 <style>
-	@import '/common/animate/animate.min.css';
 	/*每个页面公共css */
 	@import "./common/uni.css";
 
@@ -39,4 +38,5 @@
 	*/
 	/* @import "//at.alicdn.com/t/font_1094459_61yev6hioiu.css"; */
 	@import "./common/fonts/iconfont.css";
+	@import "./common/animate.min.css";
 </style>
