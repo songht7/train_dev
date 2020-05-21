@@ -1,6 +1,6 @@
 <template>
 	<view class="page-main unit-list">
-		<view class="swiper-main">
+		<view :class="['swiper-main','animate__animated',showList.length<=0?'animate__hide':'animate__show']">
 			<!-- <view class="photo-album" @click="previewImage">
 				<uni-icons type="xiangce1" size="30" color="#F77C5F"></uni-icons>
 			</view> -->
@@ -19,7 +19,7 @@
 					</swiper-item>
 				</swiper>
 			</uni-swiper-dot> -->
-			<swiper class="swiper-box swiper-slide-unit" :indicator-dots="swiperleng?'true':'false'" circular="circular"
+			<swiper :class="['swiper-box','swiper-slide-unit']" :indicator-dots="swiperleng?'true':'false'" circular="circular"
 			 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent"
 			 @change="swiperChange">
 				<swiper-item v-for="(slide,index) in showList" :key="index">
@@ -143,7 +143,7 @@
 				media: [],
 				showList: [{
 					"name": "",
-					"original_src": `${this.$store.state.interface.apiurl}/img/logo.png`
+					"original_src": '/static/default.png'
 				}],
 				swiperList: [],
 				swiperCurrent: 0,
@@ -282,9 +282,10 @@
 						if (_data.lessonStartCount >= _data.lessonCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
 							that.canTest = true;
 						}
+						let _original_src = res.data.original_src;
 						let _cover = [{
 							"name": _data.name,
-							"original_src": res.data.original_src || `${that.$store.state.interface.apiurl}/img/logo.png`
+							"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src : '/static/default.png'
 						}]
 
 						that.showList = _cover;
@@ -333,11 +334,12 @@
 
 				if (lessid == 'content' && index == -1) {
 					that.lessActive = index;
+					let _original_src = that.data.original_src;
 					that.swiperList = [{
-						"original_src": that.data.original_src || `${this.$store.state.interface.apiurl}/img/logo.png`
+						"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src : '/static/default.png'
 					}];
 					that.showList = [{
-						"original_src": that.data.original_src || `${this.$store.state.interface.apiurl}/img/logo.png`
+						"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src : '/static/default.png'
 					}]
 					return
 				}
@@ -418,7 +420,7 @@
 								that.media = filter_media;
 								that.setVideo();
 							}
-							// console.log("showList:", that.showList)
+							console.log("showList:", that.showList)
 							that.swiperList = _img;
 						}
 					}

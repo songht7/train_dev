@@ -30,6 +30,7 @@
 </script>
 
 <style>
+	@import '/common/animate/animate.min.css';
 	/*每个页面公共css */
 	@import "./common/uni.css";
 
