@@ -61,9 +61,13 @@
         "appid" : "wx69ecaa1a4fb809ff",
         "setting" : {
             "urlCheck" : false,
-            "minified" : true
+            "minified" : true,
+            "es6" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : false
+        }
     },
     "h5" : {
         "title" : "职照培训平台",

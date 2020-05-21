@@ -15,20 +15,9 @@ page {
 }
 
 .animate__hide {
-	-webkit-animation-name: animateHide;
 	animation-name: animateHide;
-}
-
-@-webkit-keyframes animateHide {
-	from {
-		height: 422upx;
-		opacity: 1;
-	}
-
-	to {
-		height: 0;
-		opacity: 0;
-	}
+	animation-duration:1s;
+	/* -webkit-animation-name: animateHide; */
 }
 
 @keyframes animateHide {
@@ -43,21 +32,23 @@ page {
 	}
 }
 
-.animate__show {
-	-webkit-animation-name: animateShow;
-	animation-name: animateShow;
-}
-
-@-webkit-keyframes animateShow {
+/* @-webkit-keyframes animateHide {
 	from {
-		height: 0;
-		opacity: 0;
-	}
-
-	to {
 		height: 422upx;
 		opacity: 1;
 	}
+
+	to {
+		height: 0;
+		opacity: 0;
+	}
+}
+ */
+
+.animate__show {
+	animation-name: animateShow;
+	animation-duration:1s;
+	/* -webkit-animation-name: animateShow; */
 }
 
 @keyframes animateShow {
@@ -71,6 +62,19 @@ page {
 		opacity: 1;
 	}
 }
+
+/* @-webkit-keyframes animateShow {
+	from {
+		height: 0;
+		opacity: 0;
+	}
+
+	to {
+		height: 422upx;
+		opacity: 1;
+	}
+}
+ */
 
 .photo-album {
 	position: absolute;

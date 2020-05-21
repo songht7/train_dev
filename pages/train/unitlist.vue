@@ -59,7 +59,7 @@
 			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented" styleType="text"
 			 activeColor="#008CEE"></uni-segmented-control>
 		</view>
-		<scroll-view scroll-y class="train-detail-main">
+		<scroll-view scroll-y class="train-detail-main" :scroll-top="scrollTop" @scroll="scroll">
 			<view class="unit-content">
 				<view v-show="current === 0">
 					<view class="course-lessions">
@@ -182,7 +182,11 @@
 					sliderVal: 0
 				},
 				learn_begin: 0,
-				learn_end: 0
+				learn_end: 0,
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				}
 			}
 		},
 		onLoad(e) {
@@ -331,7 +335,6 @@
 					that.learnTime(); //统计时长
 				}
 				that.musicDestroy();
-
 				if (lessid == 'content' && index == -1) {
 					that.lessActive = index;
 					let _original_src = that.data.original_src;
@@ -420,12 +423,25 @@
 								that.media = filter_media;
 								that.setVideo();
 							}
+							if (that.showList.length <= 0) {
+								// that.showList = [{
+								// 	"name": "",
+								// 	"original_src": '/static/default.png'
+								// }]
+							}
 							console.log("showList:", that.showList)
 							that.swiperList = _img;
 						}
+						that.scrollTop = that.old.scrollTop
+						that.$nextTick(function() {
+							that.scrollTop = 0
+						});
 					}
 				}
 				that.$store.dispatch("getData", data_ldtl)
+			},
+			scroll(e) {
+				this.old.scrollTop = e.detail.scrollTop
 			},
 			videoPlay(type) {
 				var that = this;
