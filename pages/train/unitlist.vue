@@ -1,6 +1,6 @@
 <template>
 	<view class="page-main unit-list">
-		<view :class="['swiper-main','animate__animated',showList.length<=0?'animate__hide':'animate__show']">
+		<view :class="['swiper-main','animate__animated',showListLen]">
 			<!-- <view class="photo-album" @click="previewImage">
 				<uni-icons type="xiangce1" size="30" color="#F77C5F"></uni-icons>
 			</view> -->
@@ -244,6 +244,9 @@
 		computed: {
 			swiperleng() {
 				return this.swiperList.length
+			},
+			showListLen() {
+				return this.showList.length <= 0 ? 'animate__hide' : 'animate__show';
 			}
 		},
 		methods: {
