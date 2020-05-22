@@ -87,9 +87,11 @@
 									<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 									<view :class="['less-more',!lessDtl.less_prev?'less-fist':'']">
 										<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index,'lessMore')">上一章
-											[{{lessDtl.less_prev.name}}]</view>
+											<!-- [{{lessDtl.less_prev.name}}] -->
+										</view>
 										<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index,'lessMore')">下一章
-											[{{lessDtl.less_next.name}}]</view>
+											<!-- [{{lessDtl.less_next.name}}] -->
+										</view>
 									</view>
 								</block>
 								<block v-else>

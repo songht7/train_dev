@@ -16,7 +16,7 @@ page {
 
 .animate__hide {
 	animation-name: animateHide;
-	animation-duration:1s;
+	animation-duration: 1s;
 	/* -webkit-animation-name: animateHide; */
 }
 
@@ -47,7 +47,7 @@ page {
 
 .animate__show {
 	animation-name: animateShow;
-	animation-duration:1s;
+	animation-duration: 1s;
 	/* -webkit-animation-name: animateShow; */
 }
 
@@ -231,11 +231,41 @@ page {
 	justify-content: flex-end;
 }
 
-.less-prev,
-.less-next {
-	padding: 5rpx 10rpx;
-}
-
 .less-m-btn {
 	color: #666;
+	font-size: 32rpx;
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: row;
+	align-items: center;
+	align-content: center;
+}
+
+.less-prev,
+.less-next {
+	padding: 10rpx 0;
+	width: 48%;
+	text-align: left;
+}
+
+.less-next {
+	justify-content: flex-end;
+	text-align: right;
+}
+
+/* « » */
+.less-m-btn:before {
+	content: "«";
+	padding-right: 10rpx;
+	font-size: inherit;
+	color: inherit;
+}
+
+.less-m-btn.less-next:before {
+	content: "";
+}
+
+.less-m-btn.less-next:after {
+	content: "»";
+	padding-left: 10rpx;
 }
