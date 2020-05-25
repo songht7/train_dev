@@ -225,6 +225,7 @@ page {
 	flex-direction: row;
 	align-items: center;
 	align-content: center;
+	padding: 20rpx 0;
 }
 
 .less-fist {
@@ -233,12 +234,18 @@ page {
 
 .less-m-btn {
 	color: #666;
-	font-size: 32rpx;
+	font-size: 28rpx;
 	display: flex;
 	justify-content: flex-start;
 	flex-direction: row;
 	align-items: center;
 	align-content: center;
+	color: #008CEE;
+}
+
+.less-m-btn text {
+	padding-left: 5rpx;
+	/* font-size: 26rpx; */
 }
 
 .less-prev,
@@ -269,3 +276,4 @@ page {
 	content: "»";
 	padding-left: 10rpx;
 }
+
