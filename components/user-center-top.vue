@@ -39,7 +39,7 @@
 					<view class="my-class-block" @click="navToCourse('passCourse')">
 						<view class="class-overview" v-if="userType!='3'">参与学习</view>
 						<view class="class-count">
-							<view class="count-txt class-state-green">{{userType!='3'?joinCourseUserCount:passCourse}}</view>
+							<view class="count-txt ">{{userType!='3'?joinCourseUserCount:passCourse}}</view><!-- class-state-green -->
 							<uni-icons v-if="userType!='3'" type="wo" :size="18" color="#3BC1B0"></uni-icons>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">已通过考试</view>
@@ -47,11 +47,17 @@
 					<view class="my-class-block" @click="navToCourse('failCourse')">
 						<view class="class-overview" v-if="userType!='3'">总课程数</view>
 						<view class="class-count">
-							<view class="count-txt class-state-red">{{userType!='3'?courseCount:failCourse}}</view>
+							<view class="count-txt ">{{userType!='3'?courseCount:failCourse}}</view><!-- class-state-red -->
 							<uni-icons v-if="userType!='3'" type="shuji" :size="18" color="#EE6858"></uni-icons>
 						</view>
 						<view class="class-overview" v-if="userType=='3'">未通过考试</view>
 					</view>
+					<!-- <view class="my-class-block" v-if="userType=='3'">
+						<view class="class-count">
+							<view class="count-txt">999.9</view>
+						</view>
+						<view class="class-overview">学习时长(时)</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -213,9 +219,10 @@
 	}
 
 	.user-class-info {
-		border: 2upx solid #E0E0E0;
 		border-radius: 8upx;
-		box-shadow: 0 0 10upx 3upx #E0E0E0;
+		/* border: 2upx solid #E0E0E0;
+		box-shadow: 0 0 10upx 3upx #E0E0E0; */
+		box-shadow: 0px 8rpx 10rpx 3rpx #f1eded;
 	}
 
 	.user-my-class {
@@ -244,6 +251,8 @@
 
 	.class-overview {
 		font-size: 24upx;
+		color: #929292;
+		padding-top: 10rpx;
 	}
 
 	.class-count {
@@ -257,7 +266,8 @@
 
 	.count-txt {
 		font-size: 52upx;
-		color: #008CEE;
+		/* color: #008CEE; */
+		color: #333;
 		line-height: 1;
 	}
 

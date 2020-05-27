@@ -146,11 +146,16 @@ page {
 }
 
 .virtual {
-	opacity: 0.3;
+	/* opacity: 0.3; */
 }
 
+.media-music-box{
+	background: url(../../static/bg-m.png) 0 0 #cce5fd;
+	background-size: cover;
+}
 .media-music {
 	background: #FCFCFC;
+	opacity: 0.8;
 	border: 1px solid #E0E0E0;
 	color: #333;
 	display: flex;
@@ -200,7 +205,7 @@ page {
 	height: 90upx;
 	top: 8%;
 	right: 5%;
-	opacity: 0.9;
+	opacity: 0;/****/
 	z-index: 5;
 	border-radius: 50%;
 }
@@ -276,4 +281,3 @@ page {
 	content: "»";
 	padding-left: 10rpx;
 }
-

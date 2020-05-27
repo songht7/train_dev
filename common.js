@@ -24,7 +24,7 @@ var api = {
 	"dev": {
 		"interface": "https://api-test.wsshanghai.com", //接口
 		"domain": "http://train.wsshanghai.com",
-		"appName": "培训星",
+		"appName": "职照培训平台",
 		"phoneNumber": "4008200000",
 		"cosConfig": { //`https://plbs-test-1257286922.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'plbs-test-1257286922',

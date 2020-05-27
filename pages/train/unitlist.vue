@@ -27,30 +27,32 @@
 						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
 						 mode="aspectFill"></image>
 						<view class="video-block" v-if="slide.media_type=='video'&&slide.media_src">
-							<image class="slideImg virtual" v-show="!videoShow" lazy-load="true" src="/static/default.png" mode="aspectFill"></image>
+							<image class="slideImg virtual" v-show="!videoShow" lazy-load="true" src="/static/bg-v.png" mode="aspectFill"></image>
 							<view class="video-btn" v-show="!videoShow">
-								<uni-icons type="bofang1" size="80" color="#666" @click="videoPlay"></uni-icons>
+								<uni-icons type="bofang1" size="80" color="#fff" @click="videoPlay"></uni-icons>
 							</view>
 							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
 							 @error="videoErrorCallback" controls :enable-progress-gesture="gesture" @pause="videoPause" @fullscreenchange="videoOperation"></video>
 						</view>
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
-						<view class="media-music" v-if="hasMusic">
-							<view class="music-icon">
-								<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>
-								<uni-icons type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
-							</view>
-							<view class="music-play">
-								<view class="music-info">
-									<view class="music-title">{{slide.name}}</view>
-									<view class="music-duration">时长{{music.duration?music.duration+'秒':''}}</view>
+						<div class="video-block media-music-box" v-if="hasMusic">
+							<view class="media-music">
+								<view class="music-icon">
+									<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>
+									<uni-icons type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
 								</view>
-								<view class="music-progress">
-									<slider :value="music.sliderVal" @changing="sliderChanging" @change="sliderChange" show-value min="0" :max="music.duration" />
+								<view class="music-play">
+									<view class="music-info">
+										<view class="music-title">{{slide.name}}</view>
+										<view class="music-duration">时长{{music.duration?music.duration+'秒':''}}</view>
+									</view>
+									<view class="music-progress">
+										<slider :value="music.sliderVal" @changing="sliderChanging" @change="sliderChange" show-value min="0" :max="music.duration" />
+									</view>
 								</view>
 							</view>
-						</view>
+						</div>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -701,6 +703,10 @@
 				var that = this;
 				if (that.isJoined) {
 					let learn_begin = that.learn_begin; //记录出去时间
+					if (learn_begin <= 0) {
+						console.log("**learnTime return***")
+						return
+					}
 					let learn_end = Math.round(new Date().getTime() / 1000); //记录出去时间
 					let time_over = parseFloat(learn_end - learn_begin);
 					time_over = time_over <= 0 ? 1 : time_over;
@@ -722,9 +728,9 @@
 						}
 					}
 					param["fun"] = function(res) {
-						// that.learn_begin = 0;
-						// that.learn_end = 0;
 						if (res.success) {
+							that.learn_begin = 0;
+							that.learn_end = 0;
 							//that.test_list = res.data.list;
 						}
 					}

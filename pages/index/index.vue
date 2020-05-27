@@ -34,13 +34,15 @@
 						</view>
 					</block>
 				</view>
-				<view class="ctgs ctgs-sub">
+				<view :class="['ctgs',subCtgLine!=2?'ctgs-sub':'']">
 					<block v-for="(ctg,s) in categorySub" :key="s">
-						<view class="ctg-link ctg-link-sub" :class="['spacing-'+spacing]">
+						<view :style="{'width':subCtgWidth}" :class="['ctg-link','ctg-link-sub','spacing-'+spacing,s%hideMultiple>0?'cChildren':'cParent']"
+						 v-show="s%hideMultiple>0&&hideMultiple!=-1?false:true">
 							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
-									<image v-if="ctg.src" class="ctgImg" lazy-load="true" :src="ctg.src" mode="aspectFill"></image>
+									<image v-if="ctg.src" class="ctgImg" :style="{'height':subCtgLine>=4?'50rpx':'100rpx','backgroundColor':subCtgLine<=2?'#f9f6f6':'none'}"
+									 lazy-load="true" :src="ctg.src" mode="aspectFit"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
 							</view>
@@ -83,7 +85,7 @@
 				poptype: "",
 				category: [{
 						"id": 1,
-						"val": "培训",
+						"val": "专业培训",
 						"link": "/pages/train/index",
 						"icon": "boshimao1",
 						"size": 50,
@@ -101,7 +103,7 @@
 					{
 						"id": 3,
 						"icon": "ai-book",
-						"val": "文库",
+						"val": "知识文库",
 						"link": "/pages/library/index",
 						"ctg_id": "16",
 						"show": true
@@ -117,6 +119,8 @@
 					},
 				],
 				categorySub: [],
+				subCtgLine: 4, //二级分类每行个数 2,4
+				hideMultiple: -1, //只显示的倍数 -1全显示 隐藏4的倍数
 				spacing: "" //default 、medium、big
 			}
 		},
@@ -171,7 +175,13 @@
 		components: {
 			uniPopup
 		},
-		computed: {},
+		computed: {
+			subCtgWidth() {
+				let w = 100 / this.subCtgLine;
+				w = w == 50 ? 49 : w;
+				return w + '%'
+			}
+		},
 		methods: {
 			getphonenumber(e) {
 				console.log("getwxinfo:", e)
@@ -315,6 +325,10 @@
 		padding-bottom: 30upx;
 	}
 
+	.ctg-link-sub {
+		width: 50%;
+	}
+
 	.spacing-medium {
 		padding-bottom: 40upx;
 	}
@@ -345,7 +359,8 @@
 		text-align: center;
 		width: 95upx;
 		height: 95upx;
-		border-radius: 8upx;
+		border-radius: 10rpx;
+		/* border-radius: 50%; */
 	}
 
 	.ctg-boshimao1 {
@@ -365,14 +380,33 @@
 	}
 
 	.ctg-icon-sub {
+		width: 100%;
 		background: none;
 		display: flex;
 		justify-content: center;
 	}
 
+	/* .cParent {
+		width: 100% !important;
+		padding-bottom: 10rpx !important;
+	}
+
+	.cParent .ctgImg {
+		height: 100rpx !important;
+	}
+
+	.cParent .link-btn {
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+
+	.cParent .ctg-txt {
+		font-size: 32rpx;
+	} */
+
 	.ctgImg {
-		width: 28px;
-		height: 28px;
+		width: 100%;
+		height: 100rpx;
 	}
 
 	.ad-img {
