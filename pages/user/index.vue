@@ -2,7 +2,8 @@
 	<view class="page-main user-center-main">
 		<view class="list-row">
 			<view class="list-block">
-				<user-center-top :userInfo="userInfo" :joinCourse="joinCourse" :passCourse="passCourse" :failCourse="failCourse"></user-center-top>
+				<user-center-top :userInfo="userInfo" :joinCourse="joinCourse" :passCourse="passCourse" :failCourse="failCourse"
+				 :learnTime="learnTime"></user-center-top>
 				<view class="user-block" v-if="eStatus==='1'">
 					<view class="user-class-list">
 						<view class="my-class-head">
@@ -99,6 +100,7 @@
 				joinCourse: "0",
 				passCourse: "0", //通过考试数
 				failCourse: "0", //未通过考试数
+				learnTime: {}, //学习时长
 				ECourses: [], //企业必须课
 				ECoursesTotal: 0,
 				eStatus: ""
@@ -124,6 +126,7 @@
 			that.joinCourse = _subInfo.joinCourse;
 			that.passCourse = _subInfo.passCourse;
 			that.failCourse = _subInfo.failCourse;
+			that.learnTime = _subInfo.learn;
 			that.setPageData(_user.userInfo)
 			that.getUserInfo()
 		},

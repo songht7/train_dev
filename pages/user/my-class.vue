@@ -72,6 +72,9 @@
 			that.$store.dispatch('cheack_user');
 			that.UserId = that.$store.state.user.userInfo.id || '';
 			that.__token = that.$store.state.user.token;
+		},
+		onReady() {
+			var that = this;
 			that.getDatas();
 		},
 		onReachBottom() {

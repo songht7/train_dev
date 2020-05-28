@@ -52,12 +52,12 @@
 						</view>
 						<view class="class-overview" v-if="userType=='3'">未通过考试</view>
 					</view>
-					<!-- <view class="my-class-block" v-if="userType=='3'">
+					<view class="my-class-block" v-if="userType=='3'">
 						<view class="class-count">
-							<view class="count-txt">999.9</view>
+							<view class="count-txt">{{countLearnTime}}</view>
 						</view>
 						<view class="class-overview">学习时长(时)</view>
-					</view> -->
+					</view>
 				</view>
 			</view>
 		</view>
@@ -98,6 +98,13 @@
 			failCourse: { //未通过考试
 				type: String,
 				default: "0"
+
+			},
+			learnTime: {
+				type: Object,
+				default: function(e) {
+					return {}
+				}
 			}
 		},
 		data() {
@@ -106,7 +113,19 @@
 				userType: this.$store.state.user.userType || ""
 			};
 		},
-		computed: {},
+		computed: {
+			countLearnTime() {
+				var that = this;
+				let h = that.learnTime.hour,
+					m = that.learnTime.minute,
+					s = that.learnTime.second,
+					__d = that.learnTime._d;
+				let result = parseInt(__d);
+				let __h = Math.floor(result / 3600 * 100) / 100; //(result / 3600).toFixed(3);
+				// console.log("countLearnTimecountLearnTimecountLearnTime:", __h)
+				return __h ///`${h}.${m}`
+			}
+		},
 		methods: {
 			logout() {
 				this.$store.dispatch('logout')
