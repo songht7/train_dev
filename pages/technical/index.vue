@@ -19,6 +19,7 @@
 			</view>
 			<block v-for="(obj,index) in datas" :key="index">
 				<view class="lib-row" @click="goDetail(obj.id)">
+					<!-- @click="goDetail(obj.id)" -->
 					<view class="lib-block">
 						<view class="lib-more">
 							<view class="lib-m-left">
@@ -26,8 +27,7 @@
 								<view class="lib-ov">{{obj.overview}}</view>
 							</view>
 							<view class="lib-m-right">
-								<image class="image-full" :src="obj.original_src?obj.original_src:'/static/default.png'"
-								 mode="aspectFill"></image>
+								<image class="image-full" :src="obj.original_src?obj.original_src:'/static/default.png'" mode="aspectFill"></image>
 							</view>
 						</view>
 					</view>
@@ -155,9 +155,9 @@
 				that.$store.dispatch("getData", data)
 			},
 			goDetail: function(id) {
-				// uni.navigateTo({
-				// 	url: "/pages/technical/detail?id=" + id
-				// })
+				uni.navigateTo({
+					url: "/pages/technical/detail?id=" + id
+				})
 			},
 		}
 	}

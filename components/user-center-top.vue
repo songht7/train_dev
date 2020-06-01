@@ -121,7 +121,7 @@
 					s = that.learnTime.second,
 					__d = that.learnTime._d;
 				let result = parseInt(__d);
-				let __h = Math.floor(result / 3600 * 100) / 100; //(result / 3600).toFixed(3);
+				let __h = Math.floor(result / 3600 * 10) / 10; //(result / 3600).toFixed(1);Math.floor(result / 3600 * 10) / 10
 				// console.log("countLearnTimecountLearnTimecountLearnTime:", __h)
 				return __h ///`${h}.${m}`
 			}

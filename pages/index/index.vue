@@ -119,7 +119,7 @@
 					},
 				],
 				categorySub: [],
-				subCtgLine: 4, //二级分类每行个数 2,4
+				subCtgLine: 4, //二级分类每行个数 1,2,3,4
 				hideMultiple: -1, //只显示的倍数 -1全显示 隐藏4的倍数
 				spacing: "" //default 、medium、big
 			}
