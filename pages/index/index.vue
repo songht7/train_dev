@@ -26,7 +26,7 @@
 			<view class="block category-box">
 				<view class="ctgs">
 					<block v-for="(ctg,c) in category" :key="c">
-						<view class="ctg-link" v-if="ctg.show" :class="['spacing-'+spacing]" @click="navTo(`${ctg.link}?c=${c}&ctg_id=${ctg.ctg_id}`)">
+						<view class="ctg-link" v-if="ctg.show" :class="['spacing-'+spacing]" @click="navTo(ctg.link,{p1:c,p2:ctg.ctg_id})">
 							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
 								<uni-icons :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icons>
 							</view>
@@ -38,7 +38,7 @@
 					<block v-for="(ctg,s) in categorySub" :key="s">
 						<view :style="{'width':subCtgWidth}" :class="['ctg-link','ctg-link-sub','spacing-'+spacing,s%hideMultiple>0?'cChildren':'cParent']"
 						 v-show="s%hideMultiple>0&&hideMultiple!=-1?false:true">
-							<view class="link-btn link-btn-sub" @click="navTo(`/pages/train/index?c=${s}&ctg_id=${ctg.id}`)">
+							<view class="link-btn link-btn-sub" @click="navTo('/pages/train/index',{p1:s,p2:ctg.id})">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
 									<image v-if="ctg.src" class="ctgImg" :style="{'height':subCtgLine>=4?'50rpx':'100rpx','backgroundColor':subCtgLine<=2?'#f9f6f6':'none'}"
@@ -77,6 +77,7 @@
 	export default {
 		data() {
 			return {
+				user: {},
 				serchModel: "",
 				keywords: "",
 				searchBtnShow: false,
@@ -119,8 +120,8 @@
 					},
 				],
 				categorySub: [],
-				subCtgLine: 4, //二级分类每行个数 1,2,3,4
-				hideMultiple: -1, //只显示的倍数 -1全显示 隐藏4的倍数
+				subCtgLine: 2, //二级分类每行个数 1,2,3,4
+				hideMultiple: 4, //只显示的倍数 -1全显示 隐藏4的倍数
 				spacing: "" //default 、medium、big
 			}
 		},
@@ -245,8 +246,20 @@
 					})
 				}
 			},
-			navTo(url) {
+			navTo(url, parm = {
+				p1: -1,
+				p2: -1
+			}) {
 				var that = this;
+				let user = that.$store.state.user ? that.$store.state.user : {};
+				if (user.token && user.userInfo.eStatus == '1' && parm.p1 >= 0) {
+					// 企业用户登录点击显示当前列
+					url = `${url}?c=${parm.p1}&ctg_id=${parm.p2}`
+				} else if (parm.p1 >= 0) {
+					//未登录 非企业用户点击1，5，9，13显示对应下一列
+					url = `${url}?c=${parm.p1+1}&ctg_id=${that.categorySub[parm.p1+1]['id']}`
+				}
+				// console.log(parm.p1, that.categorySub[parm.p1 + 1]['id'], url)
 				uni.navigateTo({
 					url: url
 				})
