@@ -150,10 +150,15 @@ page {
 }
 
 .media-music-box{
-	background: url(../../static/bg-m.png) 0 0 #cce5fd;
-	background-size: cover;
+	position: relative;
+}
+.media-music-bg{
+	position: absolute;
+	z-index: 1;
 }
 .media-music {
+	position: relative;
+	z-index: 2;
 	background: #FCFCFC;
 	opacity: 0.8;
 	border: 1px solid #E0E0E0;

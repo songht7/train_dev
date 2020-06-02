@@ -42,9 +42,9 @@
 							<view class="count-txt ">{{userType!='3'?joinCourseUserCount:passCourse}}</view><!-- class-state-green -->
 							<uni-icons v-if="userType!='3'" type="wo" :size="18" color="#3BC1B0"></uni-icons>
 						</view>
-						<view class="class-overview" v-if="userType=='3'">已通过考试</view>
+						<view class="class-overview" v-if="userType=='3'">通过考试</view>
 					</view>
-					<view class="my-class-block" @click="navToCourse('failCourse')">
+					<view v-if="userType!='3'" class="my-class-block" @click="navToCourse('failCourse')">
 						<view class="class-overview" v-if="userType!='3'">总课程数</view>
 						<view class="class-count">
 							<view class="count-txt ">{{userType!='3'?courseCount:failCourse}}</view><!-- class-state-red -->

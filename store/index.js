@@ -24,7 +24,10 @@ const store = new Vuex.Store({
 		interface: common.Interface,
 		systemInfo: {},
 		portrait: "",
-		cosConfig: common.Interface.cosConfig
+		cosConfig: common.Interface.cosConfig,
+		subCtgLine: 4, //分类：二级分类每行个数 1,2,3,4
+		ignoredNum: 0, //分类：忽略的个数，0不忽略 1忽略第一个
+		hideMultiple: -1, //分类：只显示的倍数 -1全显示 隐藏4的倍数
 	},
 	mutations: {
 		switch_loading(state, status) {

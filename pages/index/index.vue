@@ -34,14 +34,14 @@
 						</view>
 					</block>
 				</view>
-				<view :class="['ctgs',subCtgLine!=2?'ctgs-sub':'']">
+				<view :class="['ctgs',$store.state.subCtgLine!=2?'ctgs-sub':'']">
 					<block v-for="(ctg,s) in categorySub" :key="s">
-						<view :style="{'width':subCtgWidth}" :class="['ctg-link','ctg-link-sub','spacing-'+spacing,s%hideMultiple>0?'cChildren':'cParent']"
-						 v-show="s%hideMultiple>0&&hideMultiple!=-1?false:true">
+						<!-- v-show="s%hideMultiple>0&&hideMultiple!=-1?false:true" -->
+						<view :style="{'width':subCtgWidth}" :class="['ctg-link','ctg-link-sub','spacing-'+spacing,s%$store.state.hideMultiple>0?'cChildren':'cParent']">
 							<view class="link-btn link-btn-sub" @click="navTo('/pages/train/index',{p1:s,p2:ctg.id})">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
-									<image v-if="ctg.src" class="ctgImg" :style="{'height':subCtgLine>=4?'50rpx':'100rpx','backgroundColor':subCtgLine<=2?'#f9f6f6':'none'}"
+									<image v-if="ctg.src" class="ctgImg" :style="{'height':$store.state.subCtgLine>=4?'50rpx':'100rpx','backgroundColor':$store.state.subCtgLine<=2?'#f9f6f6':'none'}"
 									 lazy-load="true" :src="ctg.src" mode="aspectFit"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
@@ -120,8 +120,6 @@
 					},
 				],
 				categorySub: [],
-				subCtgLine: 2, //二级分类每行个数 1,2,3,4
-				hideMultiple: 4, //只显示的倍数 -1全显示 隐藏4的倍数
 				spacing: "" //default 、medium、big
 			}
 		},
@@ -178,7 +176,7 @@
 		},
 		computed: {
 			subCtgWidth() {
-				let w = 100 / this.subCtgLine;
+				let w = 100 / this.$store.state.subCtgLine;
 				w = w == 50 ? 49 : w;
 				return w + '%'
 			}
@@ -204,7 +202,21 @@
 						switch (inter) {
 							case "categorys":
 								let _ctg = res.data.list;
-								that.categorySub = _ctg.filter(element => element.parent_id == 1);
+								let user = that.$store.state.user ? that.$store.state.user : {};
+								let fc = _ctg.filter((element, index) => element.parent_id == 1 && index <= that.$store.state.ignoredNum - 1); //第一个
+								let oc = _ctg;
+								if (that.$store.state.ignoredNum > 0) {
+									oc = _ctg.filter((element, index) => element.parent_id == 1 && index > that.$store.state.ignoredNum - 1); //除第一个
+								}
+								if (that.$store.state.hideMultiple != -1) { //是否隐藏倍数
+									that.categorySub = oc.filter((e, index) => e.parent_id == 1 && index % that.$store.state.hideMultiple <= 0);
+								} else {
+									that.categorySub = oc.filter((e, index) => e.parent_id == 1);
+								}
+								if (user.token && (user.userInfo && user.userInfo.eStatus == '1') && that.$store.state.ignoredNum > 0) {
+									that.categorySub = [...fc, ...that.categorySub];
+								}
+								//console.log("that.categorythat.category:", that.category)
 								that.category[0]["ctg_id"] = that.categorySub[0]["id"];
 								break;
 							case "slideShow":
@@ -256,8 +268,9 @@
 					// 企业用户登录点击显示当前列
 					url = `${url}?c=${parm.p1}&ctg_id=${parm.p2}`
 				} else if (parm.p1 >= 0) {
+					url = `${url}?c=${parm.p1}&ctg_id=${parm.p2}`
 					//未登录 非企业用户点击1，5，9，13显示对应下一列
-					url = `${url}?c=${parm.p1+1}&ctg_id=${that.categorySub[parm.p1+1]['id']}`
+					// url = `${url}?c=${parm.p1+1}&ctg_id=${that.categorySub[parm.p1+1]['id']}`
 				}
 				// console.log(parm.p1, that.categorySub[parm.p1 + 1]['id'], url)
 				uni.navigateTo({

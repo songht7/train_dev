@@ -37,6 +37,7 @@
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
 						<div class="video-block media-music-box" v-if="hasMusic">
+							<image class="slideImg virtual media-music-bg" lazy-load="true" src="/static/bg-m.png" mode="aspectFill"></image>
 							<view class="media-music">
 								<view class="music-icon">
 									<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>

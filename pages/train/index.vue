@@ -68,7 +68,11 @@
 				that.$loading(0)
 				if (res.success) {
 					let _ctg = res.data.list;
-					_ctg = _ctg.filter(element => element.parent_id == 1);
+					if (that.$store.state.ignoredNum > 0) { //是否存在忽略的个数
+						_ctg = _ctg.filter((element, index) => element.parent_id == 1 && index > that.$store.state.ignoredNum - 1);
+					} else {
+						_ctg = _ctg.filter(element => element.parent_id == 1);
+					}
 					for (let i = 0, length = _ctg.length; i < length; i++) {
 						/*分类下列表*/
 						let aryItem = {
