@@ -17,23 +17,25 @@
 					<view class="search-show-all" @click="searchAll">全部</view>
 				</view>
 			</view>
-			<block v-for="(obj,index) in datas" :key="index">
-				<view class="lib-row" @click="goDetail(obj.id)">
-					<!-- @click="goDetail(obj.id)" -->
-					<view class="lib-block">
-						<view class="lib-more">
-							<view class="lib-m-left">
-								<view class="lib-title">{{obj.name}}</view>
-								<view class="lib-ov">{{obj.overview}}</view>
-							</view>
-							<view class="lib-m-right">
-								<image class="image-full" :src="obj.original_src?obj.original_src:'/static/default.png'" mode="aspectFill"></image>
+			<view class="technical-list">
+				<block v-for="(obj,index) in datas" :key="index">
+					<view class="lib-row">
+						<!-- @click="goDetail(obj.id)" -->
+						<view class="lib-block">
+							<view class="lib-more">
+								<view class="lib-m-left">
+									<view class="lib-title">{{obj.name}}</view>
+									<view class="lib-ov">{{obj.overview}}</view>
+								</view>
+								<view class="lib-m-right">
+									<image class="image-full" :src="obj.original_src?obj.original_src:'/static/default.png'" mode="aspectFill"></image>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>
-			</block>
-			<uni-load-more :status="status"></uni-load-more>
+				</block>
+				<uni-load-more :status="status"></uni-load-more>
+			</view>
 		</view>
 		<fix-button>
 			<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
@@ -166,10 +168,11 @@
 <style>
 	.lib-row {
 		background: #FFFFFF;
+		border-bottom: 1px solid #f3f3f3;
 	}
 
 	.lib-block {
-		padding: 30upx 20upx;
+		padding: 40upx;
 	}
 
 	.lib-block,
@@ -186,6 +189,10 @@
 		color: #929292;
 		font-size: 26upx;
 		line-height: 1.4;
+	}
+
+	.lib-row:nth-child(even) .lib-more {
+		flex-direction: row;
 	}
 
 	.lib-title {
@@ -210,8 +217,8 @@
 	}
 
 	.lib-m-right {
-		width: 175upx;
-		height: 175upx;
+		width: 135upx;
+		height: 135upx;
 		border-radius: 50%;
 		overflow: hidden;
 	}

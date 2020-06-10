@@ -41,8 +41,8 @@
 							<view class="link-btn link-btn-sub" @click="navTo('/pages/train/index',{p1:s,p2:ctg.id})">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
-									<image v-if="ctg.src" class="ctgImg" :style="{'height':$store.state.subCtgLine>=4?'50rpx':'100rpx','backgroundColor':$store.state.subCtgLine<=2?'#f9f6f6':'none'}"
-									 lazy-load="true" :src="ctg.src" mode="aspectFit"></image>
+									<image v-if="ctg.src" class="ctgImg" :style="{'height':ctgImgHeight,'backgroundColor':bgColor}" lazy-load="true"
+									 :src="ctg.src" mode="aspectFit"></image>
 								</view>
 								<text class="ctg-txt">{{ctg.name}}</text>
 							</view>
@@ -179,6 +179,14 @@
 				let w = 100 / this.$store.state.subCtgLine;
 				w = w == 50 ? 49 : w;
 				return w + '%'
+			},
+			ctgImgHeight() {
+				let h = this.$store.state.subCtgLine >= 4 ? '50rpx' : '100rpx';
+				return h
+			},
+			bgColor() {
+				let bg = this.$store.state.subCtgLine <= 2 ? '#f9f6f6' : 'none';
+				return bg
 			}
 		},
 		methods: {

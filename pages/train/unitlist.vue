@@ -199,11 +199,11 @@
 			that.courseId = e.id;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
+			that.pageInit();
 		},
 		onShow() {
 			console.log("onShow")
 			var that = this;
-			that.pageInit();
 		},
 		onReady: function(res) {
 			console.log("onReady")
@@ -232,7 +232,8 @@
 		onHide() {
 			console.log("onHide")
 			var that = this;
-			that.musicDestroy();
+			// that.musicDestroy();//音频销毁
+			//that.sliderChanging();//音频暂停
 			that.learnTime(); //统计时长
 		},
 		onUnload() {
