@@ -114,7 +114,7 @@
 		</block>
 		<block v-if="__token">
 			<fix-button gobackShow="hide">
-				<view class="fbtns btn-goback" @click="goback">返回</view>
+				<view class="fbtns btn-goback" @click="goback">{{current == 1?'返回':'返回'}}</view>
 				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
 				<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
 				 @click="to_test(courseId)">开始测试</view>
@@ -233,7 +233,7 @@
 			console.log("onHide")
 			var that = this;
 			// that.musicDestroy();//音频销毁
-			//that.sliderChanging();//音频暂停
+			that.musicOnPause(); //音频暂停musicOnPause
 			that.learnTime(); //统计时长
 		},
 		onUnload() {
@@ -609,6 +609,7 @@
 				var that = this;
 				if (that.current === 1) {
 					that.current = 0;
+					that.musicOnPause(); //音频暂停musicOnPause
 				} else {
 					that.$store.dispatch('goback')
 				}
