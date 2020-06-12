@@ -64,7 +64,7 @@
 		onLoad(e) {
 			var that = this;
 			that.pageType = e.t || "";
-			that.pageOverview = e.t ? "企业必须课程" : "我参与的课程";
+			that.pageOverview = e.t ? "企业必修课程" : "我参与的课程";
 			that.courseState = e.cs || 1;
 		},
 		onShow() {
