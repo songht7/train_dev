@@ -19,9 +19,8 @@
 					</swiper-item>
 				</swiper>
 			</uni-swiper-dot> -->
-			<swiper :class="['swiper-box','swiper-slide-unit']" :indicator-dots="swiperleng?'true':'false'" circular="circular"
-			 interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent"
-			 @change="swiperChange">
+			<swiper :class="['swiper-box','swiper-slide-unit']" :indicator-dots="swiperleng" circular="circular" interval="interval"
+			 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent" @change="swiperChange">
 				<swiper-item v-for="(slide,index) in showList" :key="index">
 					<view class="swiper-item train-swiper-main">
 						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
@@ -249,7 +248,8 @@
 		},
 		computed: {
 			swiperleng() {
-				return this.swiperList.length
+				let l = this.swiperList.length > 1 ? true : false;
+				return l
 			},
 			showListLen() {
 				return this.showList.length <= 0 ? 'animate__hide' : 'animate__show';
@@ -482,7 +482,6 @@
 				// console.log("setVideo:", _media)
 				if (_media && _media.length > 0) {
 					_media.forEach((obj, i) => {
-						//console.log(obj)
 						if (obj.media_type == 'video') {
 							that.videoContext = uni.createVideoContext('TrainVideo')
 						} else if (obj.media_type == "music" && obj.media_src != "0") {
