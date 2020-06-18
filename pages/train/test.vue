@@ -187,6 +187,9 @@
 			//console.log("test-list：", data_tests)
 			data_tests["fun"] = function(res) {
 				if (res.success) {
+					if (that.testType == 'exam' && res.data.info.percentage) {
+						that.$store.state.percentage = parseInt(res.data.info.percentage);
+					}
 					let _test = res.data.list;
 					_test.map((obj, index, arr) => {
 						if (obj["detail"]) {

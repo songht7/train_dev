@@ -44,7 +44,9 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ]
             },
-            "ios" : {},
+            "ios" : {
+				"UIBackgroundModes" : [ "audio" ]
+			},
             /* ios打包配置 */
             "sdkConfigs" : {}
         },
@@ -58,6 +60,7 @@
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
+		"requiredBackgroundModes": ["audio"],
         "appid" : "wx69ecaa1a4fb809ff",
         "setting" : {
             "urlCheck" : false,
