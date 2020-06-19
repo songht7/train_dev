@@ -176,6 +176,7 @@
 				hasMusic: false,
 				audioContext: "",
 				music: {
+					src: '',
 					playState: 'play',
 					startTime: 0,
 					loop: false,
@@ -183,7 +184,10 @@
 					buffered: 0,
 					duration: 0,
 					currentTime: 0,
-					sliderVal: 0
+					sliderVal: 0,
+					init: false, //是否可进入初始化（背景音频）
+					coverImgUrl: '/static/logo.png',
+					singer: '职照学习平台'
 				},
 				learn_begin: 0,
 				learn_end: 0,
@@ -489,22 +493,22 @@
 							that.videoContext = uni.createVideoContext('TrainVideo')
 						} else if (obj.media_type == "music" && obj.media_src != "0") {
 							that.hasMusic = true;
-							//var _audioContext = uni.createInnerAudioContext();
-							//var _audioContext = uni.getBackgroundAudioManager();//背景音频管理器 
+							that.music.src = obj.media_src; //缓存背景音频SRC
 							// #ifndef H5
-							var _audioContext = uni.getBackgroundAudioManager()
+							var _audioContext = uni.getBackgroundAudioManager(); //背景音频管理器 
+							that.music.init = true; //可进入初始化
 							// #endif
 							// #ifdef H5
 							var _audioContext = uni.createInnerAudioContext();
+							_audioContext.src = obj.media_src;
 							// #endif
 
 							that.audioContext = _audioContext;
 							//_audioContext.autoplay = that.music.autoplay;
 							_audioContext.title = obj.name;
-							_audioContext.coverImgUrl = '/static/logo.png';
-							_audioContext.singer = '职照学习平台';
-							_audioContext.pause();
-							_audioContext.src = obj.media_src;
+							_audioContext.coverImgUrl = that.music.coverImgUrl;
+							_audioContext.singer = that.music.singer;
+							that.musicOnPause();
 						}
 					})
 				}
@@ -527,6 +531,12 @@
 				var that = this;
 				var _audioContext = that.audioContext;
 				var _music = that.music;
+				// #ifndef H5
+				if (that.music.init) {
+					_audioContext.src = _music.src;
+					that.music.init = false;
+				}
+				// #endif
 				_audioContext.play();
 				_audioContext.onError((res) => {
 					uni.showToast({
@@ -574,7 +584,6 @@
 				_audioContext.onPause(() => {
 					_music.playState = 'play';
 				});
-
 				_audioContext.offTimeUpdate();
 				// #endif
 			},
@@ -606,6 +615,9 @@
 				// #ifndef H5
 				if (_audioContext) {
 					_audioContext.stop();
+					// that.music.src = '';
+					// that.music.init = false;
+					// _audioContext.src = '';
 				}
 				// #endif
 				// #ifdef H5
@@ -639,7 +651,7 @@
 				} else if (index >= 1) {
 					that.learn_begin = Math.round(new Date().getTime() / 1000); //记录进入时间
 				}
-				if (index >= 0) {
+				if (index === 0) {
 					that.musicOnPause(); //音频暂停musicOnPause
 				}
 			},
