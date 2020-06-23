@@ -499,6 +499,7 @@
 							that.music.src = obj.media_src; //缓存背景音频SRC
 							// #ifndef H5
 							var _audioContext = uni.getBackgroundAudioManager(); //背景音频管理器 
+							_audioContext.src = obj.media_src;
 							that.music.init = true; //可进入初始化
 							// #endif
 							// #ifdef H5
@@ -508,11 +509,10 @@
 
 							that.audioContext = _audioContext;
 							//_audioContext.autoplay = that.music.autoplay;
-							// _audioContext.src = "";
 							_audioContext.title = obj.name;
 							_audioContext.coverImgUrl = that.music.coverImgUrl;
 							_audioContext.singer = that.music.singer;
-
+							that.currentTimeChange();
 							that.$nextTick(function() {
 								that.musicOnPause();
 							});
@@ -540,7 +540,7 @@
 				var _music = that.music;
 				// #ifndef H5
 				if (that.music.init) {
-					_audioContext.src = _music.src;
+					// _audioContext.src = _music.src;
 					that.music.init = false;
 				}
 				// #endif
