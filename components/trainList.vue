@@ -4,7 +4,7 @@
 			<view class="train-list" v-if="datas.id">
 				<view class="train-block">
 					<view v-if="showImg" class="image-section">
-						<image class="image-full" :src="datas.original_src?datas.original_src:sourceUrl+'/img/logo.png'"></image>
+						<image class="image-full" mode="aspectFill" :src="datas.original_src?datas.original_src:sourceUrl+'/img/logo.png'"></image>
 					</view>
 					<view class="train-infos">
 						<view class="train-title">

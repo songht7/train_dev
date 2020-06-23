@@ -247,6 +247,7 @@
 			var that = this;
 			that.learnTime(); //统计时长
 			that.musicDestroy();
+			that.audioContext = "";
 		},
 		components: {
 			fixButton,
@@ -351,6 +352,8 @@
 					that.learnTime(); //统计时长
 				}
 				that.musicDestroy();
+				that.musicOnPause();
+				that.audioContext = "";
 				if (lessid == 'content' && index == -1) {
 					that.lessActive = index;
 					let _original_src = that.data.original_src;
@@ -505,10 +508,14 @@
 
 							that.audioContext = _audioContext;
 							//_audioContext.autoplay = that.music.autoplay;
+							// _audioContext.src = "";
 							_audioContext.title = obj.name;
 							_audioContext.coverImgUrl = that.music.coverImgUrl;
 							_audioContext.singer = that.music.singer;
-							that.musicOnPause();
+
+							that.$nextTick(function() {
+								that.musicOnPause();
+							});
 						}
 					})
 				}
@@ -576,15 +583,19 @@
 				var _music = that.music;
 
 				// #ifndef H5
-				_audioContext.pause();
+				if (_audioContext) {
+					_audioContext.pause();
+				}
 				_music.playState = 'play';
 				// #endif
 				// #ifdef H5
-				_audioContext.pause();
-				_audioContext.onPause(() => {
-					_music.playState = 'play';
-				});
-				_audioContext.offTimeUpdate();
+				if (_audioContext) {
+					_audioContext.pause();
+					_audioContext.onPause(() => {
+						_music.playState = 'play';
+					});
+					_audioContext.offTimeUpdate();
+				}
 				// #endif
 			},
 			musicOnStop() {
