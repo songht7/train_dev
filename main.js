@@ -46,6 +46,16 @@ Vue.prototype.$loading = function(status) {
 		store.commit("switch_loading", 'change')
 	}
 };
+
+
+// #ifndef H5
+var gaudioctx=uni.getBackgroundAudioManager()
+// #endif
+// #ifdef H5
+var gaudioctx=uni.createInnerAudioContext()
+// #endif
+Vue.prototype.$audio = gaudioctx
+
 App.mpType = 'app'
 
 const app = new Vue({

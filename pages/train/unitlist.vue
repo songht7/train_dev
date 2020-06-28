@@ -212,10 +212,10 @@
 		onReady: function(res) {
 			console.log("onReady")
 			var that = this;
-			var _audioContext = that.audioContext;
-			if (_audioContext) {
-				_audioContext.destroy();
-			}
+			// var _audioContext = this.$audio;
+			// if (_audioContext) {
+			// 	_audioContext.destroy();
+			// }
 			that.cheackTestLng();
 		},
 		onPullDownRefresh() {
@@ -498,24 +498,12 @@
 							that.hasMusic = true;
 							that.music.src = obj.media_src; //缓存背景音频SRC
 							// #ifndef H5
-							var _audioContext = uni.getBackgroundAudioManager(); //背景音频管理器 
-							_audioContext.src = obj.media_src;
 							that.music.init = true; //可进入初始化
 							// #endif
 							// #ifdef H5
-							var _audioContext = uni.createInnerAudioContext();
-							_audioContext.src = obj.media_src;
+							that.$audio.src = obj.media_src;
 							// #endif
-
-							that.audioContext = _audioContext;
-							//_audioContext.autoplay = that.music.autoplay;
-							_audioContext.title = obj.name;
-							_audioContext.coverImgUrl = that.music.coverImgUrl;
-							_audioContext.singer = that.music.singer;
-							that.currentTimeChange();
-							that.$nextTick(function() {
-								that.musicOnPause();
-							});
+							that.music.title = obj.name;
 						}
 					})
 				}
@@ -536,11 +524,14 @@
 			},
 			musicOnPlay() {
 				var that = this;
-				var _audioContext = that.audioContext;
+				var _audioContext = this.$audio;
 				var _music = that.music;
 				// #ifndef H5
 				if (that.music.init) {
-					// _audioContext.src = _music.src;
+					this.$audio.src = _music.src;
+					this.$audio.title = _music.title;
+					this.$audio.singer = _music.singer;
+					this.$audio.coverImgUrl = _music.coverImgUrl;
 					that.music.init = false;
 				}
 				// #endif
@@ -579,7 +570,7 @@
 			},
 			musicOnPause() {
 				var that = this;
-				var _audioContext = that.audioContext;
+				var _audioContext = this.$audio;
 				var _music = that.music;
 
 				// #ifndef H5
@@ -600,7 +591,7 @@
 			},
 			musicOnStop() {
 				var that = this;
-				var _audioContext = that.audioContext;
+				var _audioContext = this.$audio;
 				var _music = that.music;
 
 				// #ifndef H5
@@ -617,15 +608,15 @@
 			},
 			musicDestroy() {
 				var that = this;
-				var _audioContext = that.audioContext;
+				var _audioContext = this.$audio;
 				var _music = that.music;
 				_music.playState = 'play';
 				_music.sliderVal = 0;
 				_music.duration = 0;
 				that.hasMusic = false;
 				// #ifndef H5
-				if (_audioContext) {
-					_audioContext.stop();
+				if (this.$audio) {
+					this.$audio.stop();
 					// that.music.src = '';
 					// that.music.init = false;
 					// _audioContext.src = '';
@@ -633,8 +624,8 @@
 				// #endif
 				// #ifdef H5
 				/*H5音频销毁*/
-				if (_audioContext) {
-					_audioContext.destroy();
+				if (this.$audio) {
+					this.$audio.destroy();
 				}
 				// #endif
 			},
@@ -645,7 +636,7 @@
 			sliderChange(e) {
 				var that = this;
 				var changeVal = e.detail.value;
-				var _audioContext = that.audioContext;
+				var _audioContext = this.$audio;
 				that.music.sliderVal = changeVal;
 				_audioContext.seek(changeVal);
 				that.musicOnPlay();
