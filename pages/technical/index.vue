@@ -38,8 +38,8 @@
 			</view>
 		</view>
 		<fix-button>
-			<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('makePhoneCall')">
-				<uni-icons type="dianhua1" size="25" color="#fff"></uni-icons>咨询我们
+			<view class="fbtns fbtns-clr-full btn-totest" @click="$store.dispatch('contactUs')">
+				<!-- <uni-icons type="dianhua1" size="25" color="#fff"></uni-icons> -->联系我们
 			</view>
 		</fix-button>
 	</view>
@@ -191,9 +191,9 @@
 		line-height: 1.4;
 	}
 
-	.lib-row:nth-child(even) .lib-more {
+/* 	.lib-row:nth-child(even) .lib-more {
 		flex-direction: row;
-	}
+	} */
 
 	.lib-title {
 		color: #222222;

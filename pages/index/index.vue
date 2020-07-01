@@ -396,6 +396,7 @@
 
 	.ctg-txt {
 		font-size: 24upx;
+		color: #666;
 	}
 
 	.ctg-icon {
