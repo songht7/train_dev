@@ -27,12 +27,21 @@
 				<view class="ctgs">
 					<block v-for="(ctg,c) in category" :key="c">
 						<view class="ctg-link" v-if="ctg.show" :class="['spacing-'+spacing]" @click="navTo(ctg.link,{p1:c,p2:ctg.ctg_id})">
-							<view class="ctg-icon" :class="['ctg-'+ctg.icon]">
-								<uni-icons :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:30" color="#999"></uni-icons>
+							<view class="ctg-icon">
+								<!-- :class="['ctg-'+ctg.icon]" -->
+								<image :src="'/static/icon-'+ctg.id+'.png'" class="ctg-icon-img" mode="aspectFill"></image>
 							</view>
 							<text class="ctg-txt">{{ctg.val}}</text>
 						</view>
 					</block>
+				</view>
+				<view class="less-ovs">
+					<view class="less-title">
+						系列课程
+					</view>
+					<view class="less-more" @click="navTo('/pages/train/index',{p1:0,p2:categoryFrist})">
+						更多<uni-icons type="gengduo2" size="14" color="#999"></uni-icons>
+					</view>
 				</view>
 				<view :class="['ctgs',$store.state.subCtgLine!=2?'ctgs-sub':'']">
 					<block v-for="(ctg,s) in categorySub" :key="s">
@@ -41,17 +50,18 @@
 							<view class="link-btn link-btn-sub" @click="navTo('/pages/train/index',{p1:s,p2:ctg.id})">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
 									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
-									<image v-if="ctg.src" class="ctgImg" :style="{'height':ctgImgHeight,'backgroundColor':bgColor}" lazy-load="true"
-									 :src="ctg.src" mode="aspectFit"></image>
+									<image v-if="$store.state.subCtgLine>1" class="ctgImg" :style="{'height':ctgImgHeight,'backgroundColor':bgColor}"
+									 lazy-load="true" :src="ctg.src" mode="aspectFill"></image>
+									<img v-if="$store.state.subCtgLine==1" :src="'/static/banner.png'" style="width: 100%;" alt=""><!-- /static/banner.png -->
 								</view>
-								<text class="ctg-txt">{{ctg.name}}</text>
+								<text class="ctg-txt" v-if="$store.state.subCtgLine>1">{{ctg.name}}</text>
 							</view>
 						</view>
 					</block>
 				</view>
 			</view>
 			<view class="block">
-				<view @click="$store.dispatch('makePhoneCall')">
+				<view @click="$store.dispatch('contactUs')">
 					<!-- <img class="ad-img" src="/static/img-1.png" /> -->
 					<image class="ad-img" src="/static/img-1.png" mode="widthFix"></image>
 				</view>
@@ -84,6 +94,7 @@
 				swiperList: [],
 				swiperleng: 0,
 				poptype: "",
+				categoryFrist: "",
 				category: [{
 						"id": 1,
 						"val": "专业培训",
@@ -138,13 +149,14 @@
 			uni.getSystemInfo({
 				success: (res) => {
 					//console.log(res)
-					if (res.screenHeight >= 736 && res.screenHeight < 812) {
-						that.spacing = "medium"
-					} else if (res.screenHeight >= 812) {
-						that.spacing = "big"
-					} else {
-						that.spacing = "default"
-					}
+					// if (res.screenHeight >= 736 && res.screenHeight < 812) {
+					// 	that.spacing = "medium"
+					// } else if (res.screenHeight >= 812) {
+					// 	that.spacing = "big"
+					// } else {
+					// 	that.spacing = "default"
+					// }
+					that.spacing = "default"
 				}
 			})
 		},
@@ -181,7 +193,7 @@
 				return w + '%'
 			},
 			ctgImgHeight() {
-				let h = this.$store.state.subCtgLine >= 4 ? '50rpx' : '100rpx';
+				let h = this.$store.state.subCtgLine >= 4 ? '50rpx' : '120rpx';
 				return h
 			},
 			bgColor() {
@@ -226,6 +238,7 @@
 								}
 								//console.log("that.categorythat.category:", that.category)
 								that.category[0]["ctg_id"] = that.categorySub[0]["id"];
+								that.categoryFrist = that.categorySub[0]["id"];
 								break;
 							case "slideShow":
 								that.swiperList = res.data.list
@@ -356,7 +369,7 @@
 		align-content: center;
 		align-items: center;
 		width: 25%;
-		padding-bottom: 30upx;
+		margin-bottom: 30upx;
 	}
 
 	.ctg-link-sub {
@@ -391,26 +404,13 @@
 		align-content: center;
 		align-items: center;
 		text-align: center;
-		width: 95upx;
-		height: 95upx;
-		border-radius: 10rpx;
-		/* border-radius: 50%; */
+		width: 120upx;
+		height: 120upx;
 	}
 
-	.ctg-boshimao1 {
-		background: linear-gradient(#ED8265, #E2574D);
-	}
-
-	.ctg-icon_likegood_fill {
-		background: linear-gradient(#EDB055, #E57D29);
-	}
-
-	.ctg-ai-book {
-		background: linear-gradient(#74CFF3, #5596E8);
-	}
-
-	.ctg-gongwenbao1 {
-		background: linear-gradient(#68D0BF, #58AFBE);
+	.ctg-icon-img {
+		width: 100%;
+		height: 100%;
 	}
 
 	.ctg-icon-sub {
@@ -445,5 +445,38 @@
 
 	.ad-img {
 		width: 100%;
+	}
+
+	.less-ovs {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		align-content: center;
+		padding-bottom: 20rpx;
+		color: #999999;
+	}
+
+	.less-title {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		line-height: 1;
+		height: 36rpx;
+	}
+
+	.less-title:before {
+		content: "";
+		width: 10rpx;
+		height: 90%;
+		background: #CCCCCC;
+		margin-right: 10rpx;
+	}
+
+	.less-more {
+		font-size: 14rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
 	}
 </style>

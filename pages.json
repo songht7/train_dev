@@ -123,6 +123,12 @@
 				"navigationBarTitleText": "考试合格率",
 				"enablePullDownRefresh": true
 			}
+		}, {
+			"path": "pages/about/index",
+			"style": {
+				"navigationBarTitleText": "联系我们",
+				"enablePullDownRefresh": true
+			}
 		}
 	],
 	"globalStyle": {

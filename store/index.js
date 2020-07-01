@@ -14,6 +14,7 @@ const store = new Vuex.Store({
 		loading: "0",
 		appName: common.Interface.appName,
 		phoneNumber: common.Interface.phoneNumber,
+		email: "",
 		user: {},
 		openid: "",
 		wxType: "mp", //mp:小程序，gzh：公众号
@@ -25,9 +26,9 @@ const store = new Vuex.Store({
 		systemInfo: {},
 		portrait: "",
 		cosConfig: common.Interface.cosConfig,
-		subCtgLine: 4, //分类：二级分类每行个数 1,2,3,4
-		ignoredNum: 0, //分类：忽略的个数，0不忽略 1忽略第一个
-		hideMultiple: -1, //分类：只显示的倍数 -1全显示 隐藏4的倍数
+		subCtgLine: 1, //分类：二级分类每行个数 1,2,3,4
+		ignoredNum: 4, //分类：忽略的个数，0不忽略 1忽略第一个
+		hideMultiple: 4, //分类：只显示的倍数 -1全显示 隐藏4的倍数
 	},
 	mutations: {
 		switch_loading(state, status) {
@@ -44,6 +45,9 @@ const store = new Vuex.Store({
 		},
 		set_phoneNumber(state, data) {
 			state.phoneNumber = data
+		},
+		set_email(state, data) {
+			state.email = data
 		},
 		get_user(state, data) {
 			console.log("store-get_user：", data)
@@ -292,7 +296,9 @@ const store = new Vuex.Store({
 			_data["fun"] = function(res) {
 				console.log(res)
 				if (res.success) {
-					ctx.commit("set_phoneNumber", res.data.info)
+					let v = res.data.info.split(',')
+					ctx.commit("set_phoneNumber", v[0])
+					ctx.commit("set_email", v[1])
 				}
 			}
 			ctx.dispatch("getData", _data)
@@ -301,6 +307,12 @@ const store = new Vuex.Store({
 			//console.log(contactNumb || ctx.state.phoneNumber)
 			uni.makePhoneCall({
 				phoneNumber: contactNumb || ctx.state.phoneNumber
+			});
+		},
+		contactUs(ctx, pram) {
+			console.log(123)
+			uni.navigateTo({
+				url: '/pages/about/index'
 			});
 		},
 		getSystemInfo(ctx) {
