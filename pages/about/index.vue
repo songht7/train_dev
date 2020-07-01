@@ -8,13 +8,13 @@
 				<view class="cus-row">
 					<uni-icons type="dianhua" size="20" color="#919191"></uni-icons>
 					<view class="cus-val" @click="$store.dispatch('makePhoneCall')">
-						{{$store.state.phoneNumber}}
+						{{phoneNumber}}
 					</view>
 				</view>
 				<view class="cus-row">
 					<uni-icons type="youjian" size="20" color="#919191"></uni-icons>
 					<view class="cus-val">
-						<a class="mailto" :href="'Mailto:'+$store.state.email">{{$store.state.email}}</a>
+						<a class="mailto" :href="'Mailto:'+email">{{email}}</a>
 					</view>
 				</view>
 			</view>
@@ -26,13 +26,17 @@
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+				phoneNumber: "",
+				email: ""
+			}
 		},
 		onLoad(e) {
-			var that = this;
 		},
 		onReady() {
 			var that = this;
+			that.phoneNumber = this.$store.state.phoneNumber;
+			that.email = this.$store.state.email;
 		},
 		onShow() {
 			var that = this;

@@ -49,12 +49,12 @@
 						<view :style="{'width':subCtgWidth}" :class="['ctg-link','ctg-link-sub','spacing-'+spacing,s%$store.state.hideMultiple>0?'cChildren':'cParent']">
 							<view class="link-btn link-btn-sub" @click="navTo('/pages/train/index',{p1:s,p2:ctg.id})">
 								<view class="ctg-icon-sub" :class="['ctg-'+ctg.id]">
-									<uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons>
-									<image v-if="$store.state.subCtgLine>1" class="ctgImg" :style="{'height':ctgImgHeight,'backgroundColor':bgColor}"
-									 lazy-load="true" :src="ctg.src" mode="aspectFill"></image>
-									<img v-if="$store.state.subCtgLine==1" :src="'/static/banner.png'" style="width: 100%;" alt=""><!-- /static/banner.png -->
+									<!-- <uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons> -->
+									<!-- <image v-if="$store.state.subCtgLine>1" class="ctgImg" :style="{'height':ctgImgHeight,'backgroundColor':bgColor}"
+									 lazy-load="true" :src="ctg.src" mode="aspectFill"></image> -->
+									<image class="ad-img" :src="ctg.src" mode="widthFix"></image><!-- /static/banner.png -->
 								</view>
-								<text class="ctg-txt" v-if="$store.state.subCtgLine>1">{{ctg.name}}</text>
+								<text class="ctg-txt">{{ctg.name}}</text>
 							</view>
 						</view>
 					</block>
@@ -131,7 +131,7 @@
 					},
 				],
 				categorySub: [],
-				spacing: "" //default 、medium、big
+				spacing: "default" //default 、medium、big
 			}
 		},
 		onLoad() {
@@ -159,10 +159,6 @@
 					that.spacing = "default"
 				}
 			})
-		},
-		onReady() {
-			console.log("onReady")
-			var that = this;
 			var _user = that.$store.state.user;
 			if (_user.token && _user.userType != "3") {
 				uni.hideLoading()
@@ -177,6 +173,10 @@
 			that.getDatas('slideShow');
 			that.getDatas('categorys');
 			that.getDatas('checkSystem');
+		},
+		onReady() {
+			console.log("onReady")
+			var that = this;
 		},
 		onPullDownRefresh() {
 			var that = this;
@@ -234,7 +234,7 @@
 									that.categorySub = oc.filter((e, index) => e.parent_id == 1);
 								}
 								if (user.token && (user.userInfo && user.userInfo.eStatus == '1') && that.$store.state.ignoredNum > 0) {
-									that.categorySub = [...fc, ...that.categorySub];
+									that.categorySub = [fc[0], ...that.categorySub];
 								}
 								//console.log("that.categorythat.category:", that.category)
 								that.category[0]["ctg_id"] = that.categorySub[0]["id"];
@@ -474,7 +474,7 @@
 	}
 
 	.less-more {
-		font-size: 14rpx;
+		font-size: 24rpx;
 		display: flex;
 		justify-content: center;
 		align-items: center;
