@@ -54,7 +54,7 @@
 									 lazy-load="true" :src="ctg.src" mode="aspectFill"></image> -->
 									<image class="ad-img" :src="ctg.src" mode="widthFix"></image><!-- /static/banner.png -->
 								</view>
-								<text class="ctg-txt">{{ctg.name}}</text>
+								<text class="ctg-txt" v-if="$store.state.subCtgLine>1">{{ctg.name}}</text>
 							</view>
 						</view>
 					</block>
