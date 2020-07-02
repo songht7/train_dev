@@ -9,7 +9,7 @@ const nav_default = [{
 		name: '个人用户',
 		name_code: 'user',
 		link: "/pages/user/login?type=user",
-		icon: 'wo',
+		icon: 'tbwode',
 		flex_dir: "flex-row"
 	}
 
@@ -62,14 +62,14 @@ export default {
 					name: '首页',
 					name_code: 'user-home',
 					link: "/pages/index/index",
-					icon: 'home-full',
+					icon: 'tbshouye',
 					flex_dir: "flex-column"
 				},
 				{
 					name: '在线考试',
 					name_code: 'user-test',
 					link: "/pages/exam/index",
-					icon: 'kaoshi',
+					icon: 'tbzaixiankaoshi',
 					flex_dir: "flex-column"
 				},
 				// {
@@ -83,7 +83,7 @@ export default {
 					name: '我的',
 					name_code: 'user-my',
 					link: "/pages/user/index",
-					icon: 'wo',
+					icon: 'tbwode',
 					flex_dir: "flex-column"
 				},
 			]

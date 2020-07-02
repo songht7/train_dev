@@ -8,12 +8,12 @@
 				<view class="search-block">
 					<input type="text" class="search-input" confirm-type="search" v-model="serchModel" @confirm="searchConfirm"
 					 placeholder="质检进阶课程" placeholder-style="color:#999;font-size:12px" @input="checkModel" />
-					<view class="search-home-btn" @click="searchConfirm" v-show="searchBtnShow">搜索</view>
+					<!-- <view class="search-home-btn" @click="searchConfirm" v-show="searchBtnShow">搜索</view> -->
 				</view>
 			</view>
 			<view class="block slidebox">
 				<view class="swiper-block" :class="['spacing-'+spacing]" v-if="swiperleng">
-					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?'true':'false'" autoplay="autoplay" circular="circular"
+					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?true:false" autoplay="autoplay" circular="circular"
 					 interval="3000" duration="500" indicator-color="#E0E0E0" indicator-active-color="#999">
 						<swiper-item v-for="(slide,index) in swiperList" :key="index">
 							<view class="swiper-item">
@@ -330,6 +330,10 @@
 
 	.flex-left {
 		padding-left: 10upx;
+		display: flex;
+		height: inherit;
+		align-items: center;
+		align-content: center;
 	}
 
 	.search-block {
@@ -341,6 +345,7 @@
 
 	.search-input {
 		padding: 4upx 20upx 4upx 10upx;
+		line-height: 2;
 		flex: 1;
 	}
 
@@ -354,11 +359,13 @@
 		flex-direction: row;
 		align-items: center;
 	}
-	.slidebox{
+
+	.slidebox {
 		margin-bottom: 30rpx;
 	}
+
 	.ctgs {
-		
+
 		display: flex;
 		flex-direction: row;
 		justify-content: space-around;
@@ -378,6 +385,8 @@
 		align-items: center;
 		width: 25%;
 		margin-bottom: 12upx;
+		border-radius: 20rpx;
+		overflow: hidden;
 	}
 
 	.ctg-link-sub {
@@ -400,6 +409,10 @@
 		align-items: center;
 		flex: 1;
 		width: 100%;
+	}
+
+	.category-box {
+		margin-bottom: 40upx;
 	}
 
 	.ctg-txt {
@@ -464,6 +477,7 @@
 		align-content: center;
 		padding-bottom: 20rpx;
 		color: #929292;
+		letter-spacing: 1px;
 	}
 
 	.less-title {
@@ -476,7 +490,7 @@
 
 	.less-title:before {
 		content: "";
-		width: 10rpx;
+		width: 6rpx;
 		height: 90%;
 		background: #CCCCCC;
 		margin-right: 10rpx;

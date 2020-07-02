@@ -4,7 +4,7 @@
 			<view :class="['tab_item','tab-'+item.name_code]" v-for="(item,index) in footer_nav" :key="index" :style="'width:'+item_width">
 				<view :class="['tab_block','tab-bk-'+item.name_code,item.flex_dir,index==now_index?'tab_bat_active':'',tabHaveMsg?'tab-haveMsg':'']"
 				 @click="navto(index,item.link)">
-					<uni-icons :type="item.icon" v-if="item.icon" :size="25" :color="iconColor(item,index)"></uni-icons>
+					<uni-icons :type="item.icon" v-if="item.icon" :size="28" :color="iconColor(item,index)"></uni-icons>
 					<view class="tab_name">
 						{{item.name}}
 					</view>
@@ -91,7 +91,7 @@
 		left: 0;
 		width: 100%;
 		background: #fff;
-		border-top: 2upx solid #D1D1D1;
+		border-top: 2upx solid #EEEEEE;
 		/* padding-bottom: 0;
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom); */
@@ -169,6 +169,8 @@
 
 	.tab_name {
 		line-height: 1;
+		padding-top: 6upx;
+		font-size: 24upx;
 	}
 
 	.tab_bat_active .tab_name {

@@ -307,7 +307,13 @@
 		font-size: 28upx;
 		color: #999;
 	}
-	.swiper-tab-list{
+
+	.swiper-tab-list {
 		/* width: 25%; */
+		color: #929292;
+	}
+
+	.swiper-tab-list.active {
+		color: #007AFF;
 	}
 </style>
