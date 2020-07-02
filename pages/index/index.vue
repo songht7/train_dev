@@ -7,14 +7,14 @@
 				</view>
 				<view class="search-block">
 					<input type="text" class="search-input" confirm-type="search" v-model="serchModel" @confirm="searchConfirm"
-					 placeholder="质检进阶课程" placeholder-style="color:#999" @input="checkModel" />
+					 placeholder="质检进阶课程" placeholder-style="color:#999;font-size:12px" @input="checkModel" />
 					<view class="search-home-btn" @click="searchConfirm" v-show="searchBtnShow">搜索</view>
 				</view>
 			</view>
 			<view class="block slidebox">
 				<view class="swiper-block" :class="['spacing-'+spacing]" v-if="swiperleng">
 					<swiper class="swiper-box swiper-slide" :indicator-dots="swiperleng>1?'true':'false'" autoplay="autoplay" circular="circular"
-					 interval="3000" duration="500" indicator-color="#E0E0E0" indicator-active-color="#008CEE">
+					 interval="3000" duration="500" indicator-color="#E0E0E0" indicator-active-color="#999">
 						<swiper-item v-for="(slide,index) in swiperList" :key="index">
 							<view class="swiper-item">
 								<image class="slideImg" @click="linkTo(slide.link,slide.id)" lazy-load="true" :src="slide.original_src" mode="aspectFill"></image>
@@ -29,7 +29,7 @@
 						<view class="ctg-link" v-if="ctg.show" :class="['spacing-'+spacing]" @click="navTo(ctg.link,{p1:c,p2:ctg.ctg_id})">
 							<view class="ctg-icon">
 								<!-- :class="['ctg-'+ctg.icon]" -->
-								<image :src="'/static/icon-'+ctg.id+'.png'" class="ctg-icon-img" mode="aspectFill"></image>
+								<image :src="'/static/icon-'+ctg.id+'.png'" class="ctg-icon-img" mode="aspectFit"></image>
 							</view>
 							<text class="ctg-txt">{{ctg.val}}</text>
 						</view>
@@ -312,7 +312,12 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.swiper-box {
+		border-radius: 20rpx;
+		overflow: hidden;
+	}
+
 	.search-box {
 		background: #F0F0F0;
 		border-radius: 5upx;
@@ -349,8 +354,11 @@
 		flex-direction: row;
 		align-items: center;
 	}
-
+	.slidebox{
+		margin-bottom: 30rpx;
+	}
 	.ctgs {
+		
 		display: flex;
 		flex-direction: row;
 		justify-content: space-around;
@@ -369,7 +377,7 @@
 		align-content: center;
 		align-items: center;
 		width: 25%;
-		margin-bottom: 30upx;
+		margin-bottom: 12upx;
 	}
 
 	.ctg-link-sub {
@@ -396,7 +404,8 @@
 
 	.ctg-txt {
 		font-size: 24upx;
-		color: #666;
+		color: #929292;
+		letter-spacing: 1.5px;
 	}
 
 	.ctg-icon {
@@ -454,7 +463,7 @@
 		align-items: center;
 		align-content: center;
 		padding-bottom: 20rpx;
-		color: #999999;
+		color: #929292;
 	}
 
 	.less-title {

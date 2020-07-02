@@ -166,8 +166,15 @@
 
 .slidebox .uni-swiper-dots-horizontal {
 	padding: 5upx 10upx;
-	background: rgba(54, 54, 54, 0.5);
+	background: rgba(54, 54, 54, 0);
 	border-radius: 8upx;
+}
+uni-swiper .uni-swiper-dots-horizontal{
+	bottom: 8rpx;
+}
+uni-swiper .uni-swiper-dot{
+	width: 10rpx;
+	height: 10rpx;
 }
 
 /* 弹出层 */

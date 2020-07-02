@@ -59,7 +59,7 @@
 			/*分类*/
 			let data_ctg = {
 				"inter": "categorys",
-				"parm": "?cat_id=1",
+				"parm": `?cat_id=1`,
 				"header": {
 					"token": that.__token
 				}
@@ -69,11 +69,18 @@
 				if (res.success) {
 					let _ctg = res.data.list;
 					let user = that.$store.state.user ? that.$store.state.user : {};
+					let parentIndex = parseInt(that.tabIndex) * that.$store.state.hideMultiple;
 					if ((!user.token || (user.userInfo && user.userInfo.eStatus != '1')) && that.$store.state.ignoredNum > 0) { //是否存在忽略的个数
 						_ctg = _ctg.filter((element, index) => element.parent_id == 1 && index > that.$store.state.ignoredNum - 1);
 					} else {
 						_ctg = _ctg.filter(element => element.parent_id == 1);
 					}
+					_ctg = _ctg.filter(function(obj, k) {
+						if (k >= parentIndex && k <= parentIndex + 3) {
+							console.log(k, parentIndex)
+							return obj;
+						}
+					});
 					for (let i = 0, length = _ctg.length; i < length; i++) {
 						/*分类下列表*/
 						let aryItem = {
@@ -86,7 +93,6 @@
 						that.newsitems.push(aryItem)
 						_ctg[i]["tab_id"] = "tab_" + _ctg[i].id;
 						if (that.ctgId && that.ctgId == _ctg[i].id) {
-							console.log("i:", i)
 							that.changeTab(i);
 						}
 						that.getList("init", _ctg[i].id, i)
@@ -132,12 +138,10 @@
 			},
 			async changeTab(e) {
 				var that = this;
-				console.log("changeTab:", e)
 				let index = e.detail ? e.detail.current : e;
 				// console.log("------------------:");
 				// console.log("index:", index);
 				var current_ctg = that.tabBars.filter((c, k) => k == index)[0];
-				console.log("current_ctg:", current_ctg);
 				if (current_ctg) {
 					that.ctgId = current_ctg.id;
 				}
@@ -195,7 +199,7 @@
 				var that = this;
 				var ary = [],
 					ni = that.newsitems,
-					ti = that.tabIndex, //当前tab index
+					ti = 0, //that.tabIndex, //当前tab index
 					cPI = ni[ti] && ni[ti].pageIndex ? ni[ti].pageIndex : 1; //当前页码
 				var mPI = "";
 				switch (getType) {
@@ -212,12 +216,11 @@
 						mPI = cPI;
 						break;
 				}
-				console.log(mPI);
 				if (mPI === "tapTab") {
 					return
 				}
-				if (ni[ti] && ni[ti].loadingText) {
-					ni[ti].loadingText = "正在加载...";
+				if (ni[ti] && ni[ti]["loadingText"]) {
+					ni[ti]["loadingText"] = "正在加载...";
 				}
 				let __ctg_id = ctgId || that.ctgId;
 				let data = {
@@ -230,22 +233,23 @@
 				data["fun"] = function(res) {
 					uni.hideLoading()
 					uni.stopPullDownRefresh();
-					ni[ti].loadingText = "上拉显示更多";
+					ni[ti]["loadingText"] = "上拉显示更多";
 					if (res.success) {
 						//console.log("getlist-tabIndex:", ti)
 						ni[ti]["pageIndex"] = mPI;
 						if (res.data.list) {
 							var res_list = res.data.list;
+							var data_total = parseInt(res.data.total);
 							if (getType == "refresh") {
 								ni[ti]["data"] = res_list;
-								if (res.data.total <= ni[ti]["total"]) {
-									ni[ti].loadingText = "没有更多数据了";
+								if (data_total <= ni[ti]["total"]) {
+									ni[ti]["loadingText"] = "没有更多数据了";
 								}
 							} else {
 								if (getType == "init") {
 									ni[index]["data"] = res_list;
-									ni[index]["total"] = res.data.total;
-									if (res.data.total <= res_list.length) {
+									ni[index]["total"] = data_total;
+									if (data_total <= res_list.length) {
 										ni[index]["loadingText"] = "没有更多数据了";
 									}
 								} else {
@@ -253,8 +257,8 @@
 										ni[ti]["data"].push(item);
 									});
 									//ni[ti]["data"].push(res_list);
-									if (res.data.total <= ni[ti]["data"].length) {
-										ni[ti].loadingText = "没有更多数据了";
+									if (data_total <= ni[ti]["data"].length) {
+										ni[ti]["loadingText"] = "没有更多数据了";
 									}
 									// let d1 = ni[ti].data;
 									// Array.prototype.push.apply(d1, res_list);
@@ -262,11 +266,12 @@
 							}
 							//console.log("getlist-newsitems:", ni)
 						} else {
+							var data_total = parseInt(res.data.total);
 							if (getType == "init") {
-								ni[index]["total"] = res.data.total;
+								ni[index]["total"] = data_total;
 								ni[index]["loadingText"] = "没有更多数据了";
 							} else {
-								ni[ti].loadingText = "没有更多数据了";
+								ni[ti]["loadingText"] = "没有更多数据了";
 							}
 						}
 					}
@@ -301,5 +306,8 @@
 		text-align: center;
 		font-size: 28upx;
 		color: #999;
+	}
+	.swiper-tab-list{
+		/* width: 25%; */
 	}
 </style>
