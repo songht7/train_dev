@@ -9,7 +9,7 @@ const nav_default = [{
 		name: '个人用户',
 		name_code: 'user',
 		link: "/pages/user/login?type=user",
-		icon: 'tbwode',
+		icon: 'wo',
 		flex_dir: "flex-row"
 	}
 
