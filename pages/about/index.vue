@@ -14,7 +14,7 @@
 				<view class="cus-row">
 					<uni-icons type="youjian" size="20" color="#919191"></uni-icons>
 					<view class="cus-val">
-						<a class="mailto" :href="'Mailto:'+email">{{email}}</a>
+						<text class="mailto">{{email}}</text>
 					</view>
 				</view>
 			</view>
@@ -31,8 +31,7 @@
 				email: ""
 			}
 		},
-		onLoad(e) {
-		},
+		onLoad(e) {},
 		onReady() {
 			var that = this;
 			that.phoneNumber = this.$store.state.phoneNumber;
