@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="page-main">
 			<view class="cus-map">
-				<image src="/static/map.png" mode="aspectFill" class="cmap"></image>
+				<image src="/static/map.png" mode="aspectFit" class="cmap"></image>
 			</view>
 			<view class="cus-main">
 				<view class="cus-row">

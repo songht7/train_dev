@@ -136,6 +136,10 @@
 		position: relative;
 	}
 
+	.flex-row .tab_name {
+		padding-left: 10rpx;
+	}
+
 	.tab-bk-user-msg.tab-haveMsg::before {
 		position: absolute;
 		top: 0;
