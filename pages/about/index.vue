@@ -6,16 +6,20 @@
 			</view>
 			<view class="cus-main">
 				<view class="cus-row">
-					<uni-icons type="dianhua" size="20" color="#919191"></uni-icons>
+					<uni-icons type="phone" size="20" color="#919191"></uni-icons>
 					<view class="cus-val" @click="$store.dispatch('makePhoneCall')">
 						{{phoneNumber}}
 					</view>
 				</view>
 				<view class="cus-row">
-					<uni-icons type="youjian" size="20" color="#919191"></uni-icons>
+					<uni-icons type="email" size="20" color="#919191"></uni-icons>
 					<view class="cus-val">
 						<text class="mailto">{{email}}</text>
 					</view>
+				</view>
+				<view class="cus-row">
+					<uni-icons type="position" size="20" color="#919191"></uni-icons>
+					<view class="cus-val">上海中心大厦F13</view>
 				</view>
 			</view>
 			<tab-bar></tab-bar>
