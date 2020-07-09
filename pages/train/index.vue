@@ -32,6 +32,7 @@
 				scrollLeft: 0,
 				isClickChange: false,
 				tabIndex: 0,
+				ctgIndex: 0,
 				newsitems: [],
 				ctgId: "",
 				__token: "",
@@ -48,7 +49,8 @@
 		},
 		onLoad: function(e) {
 			var that = this;
-			that.tabIndex = e.c || 0;
+			// that.tabIndex = e.c || 0;
+			that.ctgIndex = e.c || 0;
 			that.ctgId = e.ctg_id;
 			that.$store.dispatch('cheack_user')
 			that.__token = that.$store.state.user.token ? that.$store.state.user.token : "";
@@ -69,7 +71,7 @@
 				if (res.success) {
 					let _ctg = res.data.list;
 					let user = that.$store.state.user ? that.$store.state.user : {};
-					let parentIndex = parseInt(that.tabIndex) * that.$store.state.hideMultiple;
+					let parentIndex = parseInt(that.ctgIndex) * that.$store.state.hideMultiple;
 					if ((!user.token || (user.userInfo && user.userInfo.eStatus != '1')) && that.$store.state.ignoredNum > 0) { //是否存在忽略的个数
 						_ctg = _ctg.filter((element, index) => element.parent_id == 1 && index > that.$store.state.ignoredNum - 1);
 					} else {
@@ -77,7 +79,6 @@
 					}
 					_ctg = _ctg.filter(function(obj, k) {
 						if (k >= parentIndex && k <= parentIndex + 3) {
-							console.log(k, parentIndex)
 							return obj;
 						}
 					});
@@ -162,6 +163,7 @@
 				let winWidth = uni.getSystemInfoSync().windowWidth,
 					nowElement = await this.getElSize(this.tabBars[index].tab_id),
 					nowWidth = nowElement.width;
+				console.log("iiii", e, width + nowWidth - tabBarScrollLeft, winWidth, tabBarScrollLeft)
 				if (width + nowWidth - tabBarScrollLeft > winWidth) {
 					this.scrollLeft = width + nowWidth - winWidth;
 				}
