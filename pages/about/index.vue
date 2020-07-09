@@ -2,24 +2,24 @@
 	<view class="content">
 		<view class="page-main">
 			<view class="cus-map">
-				<image src="/static/map.png" mode="aspectFit" class="cmap"></image>
+				<image src="/static/map.png" mode="aspectFit" class="cmap" @click="previewImage"></image>
 			</view>
 			<view class="cus-main">
-				<view class="cus-row">
+				<view class="cus-row" v-if="$store.state.phoneNumber">
 					<uni-icons type="phone" size="20" color="#919191"></uni-icons>
 					<view class="cus-val" @click="$store.dispatch('makePhoneCall')">
-						{{phoneNumber}}
+						{{$store.state.phoneNumber}}
 					</view>
 				</view>
-				<view class="cus-row">
+				<view class="cus-row" v-if="$store.state.email">
 					<uni-icons type="email" size="20" color="#919191"></uni-icons>
 					<view class="cus-val">
-						<text class="mailto">{{email}}</text>
+						<text class="mailto">{{$store.state.email}}</text>
 					</view>
 				</view>
-				<view class="cus-row">
+				<view class="cus-row" v-if="$store.state.address">
 					<uni-icons type="position" size="20" color="#919191"></uni-icons>
-					<view class="cus-val">上海中心大厦F13</view>
+					<view class="cus-val">{{$store.state.address}}</view>
 				</view>
 			</view>
 			<tab-bar></tab-bar>
@@ -36,18 +36,22 @@
 			}
 		},
 		onLoad(e) {},
-		onReady() {
-			var that = this;
-			that.phoneNumber = this.$store.state.phoneNumber;
-			that.email = this.$store.state.email;
-		},
 		onShow() {
+			var that = this;
+			this.$store.dispatch('getBasePhone');
+		},
+		onReady() {
 			var that = this;
 		},
 		components: {},
 		computed: {},
 		methods: {
-
+			previewImage() {
+				uni.previewImage({
+					urls: ['/static/map.png'],
+					current: 0
+				});
+			}
 		}
 	}
 </script>

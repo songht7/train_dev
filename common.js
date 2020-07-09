@@ -42,6 +42,8 @@ var api = {
 		"domain": "http://jobpgroup.com",
 		"appName": "职照培训平台",
 		"phoneNumber": "15026551292",
+		"email": "yong.zhao@rbdgroup.com.cn",
+		"address": "上海中心13楼173室",
 		"cosConfig": { //`https://jobpassport-1259247972.cos.ap-shanghai.myqcloud.com/...`
 			"Bucket": 'jobpassport-1259247972',
 			"Region": 'ap-shanghai',
@@ -102,7 +104,7 @@ export default {
 			"examination": "/v4/ApiExamination-examination.htm", //试卷详细?examination_id=6
 			"getWeChatInfo": "/v4/ApiWeChat-getWeChatInfo.htm", //获取微信信息-公众号?code=1
 			"getWeChatInfoMP": "/v4/ApiWeChatMinProgram-getWeChatInfo.htm", //获取微信信息-小程序?code=1
-			
+
 			"saveTime": "/v4/ApiAccount-saveTime.htm", //记录课时的上课时间
 
 		}

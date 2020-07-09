@@ -14,7 +14,8 @@ const store = new Vuex.Store({
 		loading: "0",
 		appName: common.Interface.appName,
 		phoneNumber: common.Interface.phoneNumber,
-		email: "",
+		email: common.Interface.email,
+		address: common.Interface.address,
 		user: {},
 		openid: "",
 		wxType: "mp", //mp:小程序，gzh：公众号
@@ -48,6 +49,9 @@ const store = new Vuex.Store({
 		},
 		set_email(state, data) {
 			state.email = data
+		},
+		set_address(state, data) {
+			state.address = data
 		},
 		get_user(state, data) {
 			console.log("store-get_user：", data)
@@ -299,6 +303,7 @@ const store = new Vuex.Store({
 					let v = res.data.info.split(',')
 					ctx.commit("set_phoneNumber", v[0])
 					ctx.commit("set_email", v[1])
+					ctx.commit("set_address", v[2])
 				}
 			}
 			ctx.dispatch("getData", _data)

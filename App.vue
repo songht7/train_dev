@@ -10,7 +10,6 @@
 		},
 		onShow: function() {
 			console.log('App Show')
-			this.$store.dispatch('getBasePhone');
 			// #ifdef MP-WEIXIN
 			this.$store.dispatch('wxXCXAuth');
 			// #endif
