@@ -52,7 +52,7 @@
 									<!-- <uni-icons v-if="ctg.icon" :type="ctg.icon" isGradient="isGradient" :size="ctg.size?ctg.size:25" color="#999"></uni-icons> -->
 									<!-- <image v-if="$store.state.subCtgLine>1" class="ctgImg" :style="{'height':ctgImgHeight,'backgroundColor':bgColor}"
 									 lazy-load="true" :src="ctg.src" mode="aspectFill"></image> -->
-									<image class="ad-img" :src="ctg.src" mode="widthFix"></image><!-- /static/banner.png -->
+									<image class="ad-img" :lazy-load="ctg.src" :src="ctg.src" mode="widthFix"></image><!-- /static/banner.png -->
 								</view>
 								<text class="ctg-txt" v-if="$store.state.subCtgLine>1">{{ctg.name}}</text>
 							</view>

@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="page-main">
 			<view class="cus-map">
-				<image src="/static/map.png" mode="aspectFit" class="cmap" @click="previewImage"></image>
+				<image :src="map" mode="aspectFit" class="cmap" @click="previewImage"></image>
 			</view>
 			<view class="cus-main">
 				<view class="cus-row" v-if="$store.state.phoneNumber">
@@ -32,7 +32,8 @@
 		data() {
 			return {
 				phoneNumber: "",
-				email: ""
+				email: "",
+				map: "/static/map.jpg"
 			}
 		},
 		onLoad(e) {},
@@ -48,7 +49,7 @@
 		methods: {
 			previewImage() {
 				uni.previewImage({
-					urls: ['/static/map.png'],
+					urls: [this.map],
 					current: 0
 				});
 			}
