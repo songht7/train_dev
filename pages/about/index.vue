@@ -5,21 +5,21 @@
 				<image :src="map" mode="aspectFit" class="cmap" @click="previewImage"></image>
 			</view>
 			<view class="cus-main">
-				<view class="cus-row" v-if="$store.state.phoneNumber">
+				<view class="cus-row" v-if="phoneNumber">
 					<uni-icons type="phone" size="20" color="#919191"></uni-icons>
 					<view class="cus-val" @click="$store.dispatch('makePhoneCall')">
-						{{$store.state.phoneNumber}}
+						{{phoneNumber}}
 					</view>
 				</view>
-				<view class="cus-row" v-if="$store.state.email">
+				<view class="cus-row" v-if="email">
 					<uni-icons type="email" size="20" color="#919191"></uni-icons>
 					<view class="cus-val">
-						<text class="mailto">{{$store.state.email}}</text>
+						<text class="mailto">{{email}}</text>
 					</view>
 				</view>
-				<view class="cus-row" v-if="$store.state.address">
+				<view class="cus-row" v-if="address">
 					<uni-icons type="position" size="20" color="#919191"></uni-icons>
-					<view class="cus-val">{{$store.state.address}}</view>
+					<view class="cus-val">{{address}}</view>
 				</view>
 			</view>
 			<tab-bar></tab-bar>
@@ -33,13 +33,26 @@
 			return {
 				phoneNumber: "",
 				email: "",
-				map: "/static/map.jpg"
+				address: "",
+				map: ""
 			}
 		},
 		onLoad(e) {},
 		onShow() {
 			var that = this;
-			this.$store.dispatch('getBasePhone');
+			var data = {
+				"inter": "getBasePhone"
+			}
+			data["fun"] = function(res) {
+				if (res.success) {
+					let v = res.data.info.split(',')
+					that.phoneNumber = v[0];
+					that.email = v[1];
+					that.address = v[2];
+					that.map = v[3] ? v[3] : "/static/map.jpg";
+				}
+			}
+			that.$store.dispatch("getData", data)
 		},
 		onReady() {
 			var that = this;
@@ -48,8 +61,9 @@
 		computed: {},
 		methods: {
 			previewImage() {
+				var that = this;
 				uni.previewImage({
-					urls: [this.map],
+					urls: [that.map],
 					current: 0
 				});
 			}
