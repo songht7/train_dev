@@ -50,6 +50,11 @@
 					that.email = v[1];
 					that.address = v[2];
 					that.map = v[3] ? v[3] : "/static/map.jpg";
+				} else {
+					that.phoneNumber = that.$store.state.phoneNumber;
+					that.email = that.$store.state.email;
+					that.address = that.$store.state.address;
+					that.map = "/static/map.jpg";
 				}
 			}
 			that.$store.dispatch("getData", data)
