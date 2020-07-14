@@ -130,6 +130,7 @@
 				var data_obj = that.newsitems[e],
 					data_leng = data_obj.data.length,
 					data_total = data_obj.total;
+				console.log("loadMore:", parseInt(data_leng), parseInt(data_total))
 				if (parseInt(data_leng) >= parseInt(data_total)) {
 					data_obj.loadingText = "没有更多数据了";
 					return;
@@ -201,7 +202,7 @@
 				var that = this;
 				var ary = [],
 					ni = that.newsitems,
-					ti = 0, //that.tabIndex, //当前tab index
+					ti = that.tabIndex, //当前tab index
 					cPI = ni[ti] && ni[ti].pageIndex ? ni[ti].pageIndex : 1; //当前页码
 				var mPI = "";
 				switch (getType) {
