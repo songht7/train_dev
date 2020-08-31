@@ -4,7 +4,8 @@
 			<view class="page-main">
 				<block v-if="datas.id">
 					<view class="banner">
-						<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="aspectFit"></image>
+						<!-- <img :src="datas.original_src||'/static/default.png'" class="banner-img" alt=""> -->
+						<image class="banner-img" :src="datas.original_src||'/static/default.png'" mode="widthFix"></image>
 					</view>
 					<view class="banner-title">{{datas.name}}</view>
 					<!-- <view class="article-meta">
@@ -86,10 +87,10 @@
 
 <style>
 	.banner {
-		height: 360upx;
+		/* height: 360upx; */
 		overflow: hidden;
 		position: relative;
-		background-color: #ccc;
+		/* background-color: #ccc; */
 	}
 
 	.banner-img {
