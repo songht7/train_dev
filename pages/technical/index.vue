@@ -172,7 +172,7 @@
 	}
 
 	.lib-block {
-		padding: 40upx;
+		padding: 30upx;
 	}
 
 	.lib-block,
@@ -217,9 +217,8 @@
 	}
 
 	.lib-m-right {
-		width: 135upx;
-		height: 135upx;
-		border-radius: 50%;
+		width: 150upx;
+		height: 150upx;
 		overflow: hidden;
 	}
 </style>
