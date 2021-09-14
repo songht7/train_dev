@@ -118,9 +118,9 @@
 				var that = this;
 				let __h = 0;
 				if (that.learnTime && that.learnTime._d) {
-					let h = that.learnTime.hour,
-						m = that.learnTime.minute,
-						s = that.learnTime.second,
+					let h = parseInt(that.learnTime.hour),
+						m = parseInt(that.learnTime.minute),
+						s = parseInt(that.learnTime.second),
 						__d = that.learnTime._d;
 					let result = parseInt(__d);
 					__h = Math.floor(result / 3600 * 10) / 10; //(result / 3600).toFixed(1);Math.floor(result / 3600 * 10) / 10

@@ -19,28 +19,36 @@
 					</swiper-item>
 				</swiper>
 			</uni-swiper-dot> -->
-			<swiper :class="['swiper-box','swiper-slide-unit']" :indicator-dots="swiperleng" circular="circular" interval="interval"
-			 duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE" :current="swiperCurrent" @change="swiperChange">
+			<swiper :class="['swiper-box','swiper-slide-unit']" :indicator-dots="swiperleng" circular="circular"
+				interval="interval" duration="duration" indicator-color="#E0E0E0" indicator-active-color="#008CEE"
+				:current="swiperCurrent" @change="swiperChange">
 				<swiper-item v-for="(slide,index) in showList" :key="index">
 					<view class="swiper-item train-swiper-main">
-						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true" :src="slide.original_src"
-						 mode="aspectFill"></image>
+						<image class="slideImg" v-if="!slide.media_type" @click="previewImage" lazy-load="true"
+							:src="slide.original_src" mode="aspectFill"></image>
 						<view class="video-block" v-if="slide.media_type=='video'&&slide.media_src">
-							<image class="slideImg virtual" v-show="!videoShow" lazy-load="true" src="/static/bg-v.png" mode="aspectFill"></image>
+							<image class="slideImg virtual" v-show="!videoShow" lazy-load="true" src="/static/bg-v.png"
+								mode="aspectFill"></image>
 							<view class="video-btn" v-show="!videoShow">
 								<uni-icons type="bofang1" size="80" color="#fff" @click="videoPlay"></uni-icons>
 							</view>
-							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo" class="train-video" :src="slide.media_src"
-							 @error="videoErrorCallback" controls :enable-progress-gesture="gesture" @pause="videoPause" @fullscreenchange="videoOperation"></video>
+							<video v-if="slide.media_type=='video'" v-show="videoShow" id="TrainVideo"
+								class="train-video" :src="slide.media_src" @error="videoErrorCallback" controls
+								:show-progress='showProgress' :enable-progress-gesture="gesture" @pause="videoPause"
+								@fullscreenchange="videoOperation" @timeupdate='timeUpdate'
+								:initial-time="initial_time"></video>
 						</view>
 						<!-- <audio v-if="slide.media_type=='music'" style="text-align: left" :src="slide.media_src" :name="slide.name" author="职照培训"
 						 action="{method: 'pause'}" controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/audio/music.jpg"></audio> -->
 						<div class="video-block media-music-box" v-if="hasMusic">
-							<image class="slideImg virtual media-music-bg" lazy-load="true" src="/static/bg-m.png" mode="aspectFill"></image>
+							<image class="slideImg virtual media-music-bg" lazy-load="true" src="/static/bg-m.png"
+								mode="aspectFill"></image>
 							<view class="media-music">
 								<view class="music-icon">
-									<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'" @click="musicSet('play')"></uni-icons>
-									<uni-icons type="suspend_icon" size="32" color="#666" v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
+									<uni-icons type="bofang" size="32" color="#666" v-if="music.playState=='play'"
+										@click="musicSet('play')"></uni-icons>
+									<uni-icons type="suspend_icon" size="32" color="#666"
+										v-if="music.playState=='pause'" @click="musicSet('pause')"></uni-icons>
 								</view>
 								<view class="music-play">
 									<view class="music-info">
@@ -48,7 +56,8 @@
 										<view class="music-duration">时长{{music.duration?music.duration+'秒':''}}</view>
 									</view>
 									<view class="music-progress">
-										<slider :value="music.sliderVal" @changing="sliderChanging" @change="sliderChange" show-value min="0" :max="music.duration" />
+										<slider :value="music.sliderVal" @changing="sliderChanging"
+											@change="sliderChange" show-value min="0" :max="music.duration" />
 									</view>
 								</view>
 							</view>
@@ -58,8 +67,8 @@
 			</swiper>
 		</view>
 		<view class="uni-padding-wrap uni-common-mt segmented-box">
-			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented" styleType="text"
-			 activeColor="#008CEE"></uni-segmented-control>
+			<uni-segmented-control :current="current" :values="segmented" v-on:clickItem="onClicksegmented"
+				styleType="text" activeColor="#008CEE"></uni-segmented-control>
 		</view>
 		<scroll-view scroll-y class="train-detail-main" :scroll-top="scrollTop" @scroll="scroll">
 			<view class="unit-content">
@@ -68,7 +77,8 @@
 						<view class="course-inner">
 							<!-- <view class="less-row" :class='[lessActive==-1?"less-active":""]' @click="getLessDtl('content',-1)">章节介绍</view> -->
 							<block v-for="(less,i) in lessions" :key="i">
-								<view class="less-row" :class='[i==lessActive?"less-active":""]' @click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
+								<view class="less-row" :class='[i==lessActive?"less-active":""]'
+									@click="getLessDtl(less.id,i)">{{i+1}}.{{less.name}}</view>
 							</block>
 						</view>
 					</view>
@@ -88,10 +98,14 @@
 								<block v-if="__token">
 									<rich-text class="course-detail" :nodes="lessDtl.detail"></rich-text>
 									<view :class="['less-more',!lessDtl.less_prev?'less-fist':'']">
-										<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev" @click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index,'lessMore')">上一章
+										<view :class="['less-m-btn','less-prev']" v-if="lessDtl.less_prev"
+											@click="getLessDtl(lessDtl.less_prev.id,lessDtl.less_prev.index,'lessMore')">
+											上一章
 											<!-- [{{lessDtl.less_prev.name}}] -->
 										</view>
-										<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next" @click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index,'lessMore')">下一章
+										<view :class="['less-m-btn','less-next']" v-if="lessDtl.less_next"
+											@click="getLessDtl(lessDtl.less_next.id,lessDtl.less_next.index,'lessMore')">
+											下一章
 											<!-- [{{lessDtl.less_next.name}}] -->
 										</view>
 									</view>
@@ -107,16 +121,18 @@
 		</scroll-view>
 
 		<block v-if="hasMusic">
-			<view class="music-loading" :class="music.playState==='pause'?'rotating':''" @click="musicSet(music.playState)">
+			<view class="music-loading" :class="music.playState==='pause'?'rotating':''"
+				@click="musicSet(music.playState)">
 				<uni-icons type="music" size="40" color="#006FFF"></uni-icons>
 			</view>
 		</block>
 		<block v-if="__token">
 			<fix-button gobackShow="hide">
 				<view class="fbtns btn-goback" @click="goback">{{current == 1?'返回':'返回'}}</view>
-				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' " v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
-				<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'" v-if="canTest&&test_list"
-				 @click="to_test(courseId)">开始测试</view>
+				<view class="fbtns fbtns-clr-full btn-totest" :class="isJoined?'is-joined':'' "
+					v-if="!canTest||!test_list" @click="joinlearning(courseId)">{{isJoinTxt}}</view>
+				<view class="fbtns fbtns-clr-full btn-totest" :class="canTest&&test_list?'':'fbtn-disable'"
+					v-if="canTest&&test_list" @click="to_test(courseId)">开始测试</view>
 			</fix-button>
 		</block>
 		<block v-else>
@@ -173,6 +189,9 @@
 				videoContext: "",
 				videoShow: false,
 				gesture: false, //是否开启控制进度的手势
+				showProgress: false,
+				video_real_time: 0, //实时播放进度
+				initial_time: 0, //视频跳转进度 秒
 				hasMusic: false,
 				audioContext: "",
 				music: {
@@ -286,7 +305,8 @@
 							title: _data.name
 						});
 						if (_data["detail"]) {
-							_data["detail"] = _data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+							_data["detail"] = _data["detail"].replace(/\<img/gi,
+								'<img style="max-width:100%;height:auto" ');
 						}
 						that.data = _data;
 						if (_data.percentage) {
@@ -300,13 +320,15 @@
 						} else {
 							that.isJoinTxt = _data.ucStatus == "1" ? "学习完成后开启测试" : "加入学习";
 						}
-						if (_data.lessonStartCount >= _data.lessonCount && _data.lessonCount != "0" && _data.lessonStartCount != "0") {
+						if (_data.lessonStartCount >= _data.lessonCount && _data.lessonCount != "0" && _data
+							.lessonStartCount != "0") {
 							that.canTest = true;
 						}
 						let _original_src = res.data.original_src;
 						let _cover = [{
 							"name": _data.name,
-							"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src : '/static/default.png'
+							"original_src": _original_src && _original_src != "./img/no_img.jpg" ?
+								_original_src : '/static/default.png'
 						}]
 
 						that.showList = _cover;
@@ -358,10 +380,12 @@
 					that.lessActive = index;
 					let _original_src = that.data.original_src;
 					that.swiperList = [{
-						"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src : '/static/default.png'
+						"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src :
+							'/static/default.png'
 					}];
 					that.showList = [{
-						"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src : '/static/default.png'
+						"original_src": _original_src && _original_src != "./img/no_img.jpg" ? _original_src :
+							'/static/default.png'
 					}]
 					return
 				}
@@ -402,7 +426,8 @@
 					if (res.success) {
 						var res_data = res.data;
 						if (res_data["detail"]) {
-							res_data["detail"] = res_data["detail"].replace(/\<img/gi, '<img style="max-width:100%;height:auto" ');
+							res_data["detail"] = res_data["detail"].replace(/\<img/gi,
+								'<img style="max-width:100%;height:auto" ');
 						}
 						that.lessDtl = res_data;
 						var _img = res_data.images ? res_data.images : [];
@@ -485,6 +510,35 @@
 					vd.exitFullScreen();
 					//that.videoShow = false;
 				}
+			},
+			timeUpdate: function(e) {
+				var isReady = 1; // 是否开启可以视频快进 1 禁止开启
+				//跳转到指定播放位置 initial-time 时间为秒
+				let that = this;
+				//播放的总时长
+				var duration = e.detail.duration
+				//实时播放进度 秒数
+				var currentTime = parseInt(e.detail.currentTime)
+				//当前视频进度
+				//console.log("视频播放到第" + currentTime + "秒") //查看正在播放时间，以秒为单位
+				if (that.video_real_time == 0) {
+					var jump_time = parseInt(that.initial_time) + parseInt(that.video_real_time)
+				} else {
+					var jump_time = parseInt(that.video_real_time)
+				}
+				if (isReady == 1) {
+					if (currentTime > jump_time && currentTime - jump_time > 3) {
+						let videoContext = that.videoContext;
+						videoContext.seek(that.video_real_time)
+						// console.log(that.video_real_time)
+						uni.showToast({
+							title: '请完整看完该视频',
+							icon: 'none',
+							duration: 2000
+						});
+					}
+				}
+				that.video_real_time = currentTime //实时播放进度
 			},
 			setVideo() {
 				var that = this;
@@ -768,7 +822,8 @@
 					if (learn_begin <= 0) {
 						time_over = 1;
 					}
-					console.log('learnTime::: cLessId：%s, learn_begin %s, learn_end: %s, time_over: %s', that.cLessId, learn_begin,
+					console.log('learnTime::: cLessId：%s, learn_begin %s, learn_end: %s, time_over: %s', that.cLessId,
+						learn_begin,
 						learn_end, time_over)
 					/* lessons */
 					let param = {
